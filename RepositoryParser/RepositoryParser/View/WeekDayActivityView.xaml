@@ -4,9 +4,68 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RepositoryParser.View"
+        xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         mc:Ignorable="d"
-        Title="WeekDayActivityView" Height="300" Width="300">
+        Title="WeekDayActivityView" Height="600" Width="800"
+        DataContext="{Binding Source={StaticResource Locator}, Path=WeekdayActivity}"
+        Icon="../Assets/Ratings Filled-50.png"
+        >
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" MinHeight="60"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Rectangle Grid.ColumnSpan="1000" Grid.Row="0">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF52802B" Offset="0" />
+                    <GradientStop Color="Green" Offset="1" />
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+
+
+        <Label Grid.Row="0" x:Name="WelcomeLabel" Content="Analiza aktywności według dni tygodnia:" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TabControl Grid.Column="0" Grid.Row="1">
+            <TabItem Header="Wykres aktywności według dni">
+                <StackPanel>
+                    <chartingToolkit:Chart MinHeight="400" x:Name="Chart" Title="Wykres ilości commitów przypadających na dzień tygodnia:" Background="Beige" Margin="0,0,0,50">
+                        <chartingToolkit:Chart.Series>
+                            <chartingToolkit:AreaSeries x:Name="Series" 
+                                    Title=""
+                                    ItemsSource="{Binding KeyCollection, Mode=OneWay}"
+                                    DependentValueBinding="{Binding Path=Value}"
+                                    IndependentValueBinding="{Binding Path=Key}" 
+                                    DataContext="{Binding}"
+                            />
+                        </chartingToolkit:Chart.Series>
+                    </chartingToolkit:Chart>
+
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Lista aktywności według dni">
+                <ListView ItemsSource="{Binding KeyCollection}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding Key}">
+                                <GridViewColumnHeader Content="Dzień tygodnia" />
+                            </GridViewColumn>
+                            <GridViewColumn Width="auto"  DisplayMemberBinding="{Binding Value}">
+                                <GridViewColumnHeader Content="Liczba Commitow" />
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+        </TabControl>
+        <DockPanel Grid.Column="0" Grid.Row="2">
+            <Button x:Name="SaveFileBtn" Command="{Binding ExportFileCommand}" Background="#FF52802B" Width="150" Margin="15,5" Content="Eksportuj do pliku" HorizontalAlignment="Left"/>
+        </DockPanel>
+
     </Grid>
 </Window>
