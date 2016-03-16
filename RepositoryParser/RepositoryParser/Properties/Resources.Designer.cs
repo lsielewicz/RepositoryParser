@@ -115,6 +115,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Changes.
+        /// </summary>
+        public static string Changes {
+            get {
+                return ResourceManager.GetString("Changes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Analysis of activity of the repository users.
         /// </summary>
         public static string ChartWindowTitle {
@@ -228,6 +237,15 @@ namespace RepositoryParser.Properties {
         public static string DifferencesButton {
             get {
                 return ResourceManager.GetString("DifferencesButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comparsion.
+        /// </summary>
+        public static string DifferenceWindowTitle {
+            get {
+                return ResourceManager.GetString("DifferenceWindowTitle", resourceCulture);
             }
         }
         

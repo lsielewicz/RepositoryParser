@@ -141,6 +141,10 @@
     <value>Analiza</value>
     <comment>AnalisysPage</comment>
   </data>
+  <data name="Changes" xml:space="preserve">
+    <value>Zmiany</value>
+    <comment>DifferencesPage</comment>
+  </data>
   <data name="ChartWindowTitle" xml:space="preserve">
     <value>Analiza aktywności poszczególnych użytkowników:</value>
     <comment>ChartPage</comment>
@@ -192,6 +196,10 @@
   <data name="DifferencesButton" xml:space="preserve">
     <value>Porównaj</value>
     <comment>AnalysisPage</comment>
+  </data>
+  <data name="DifferenceWindowTitle" xml:space="preserve">
+    <value>Porównanie:</value>
+    <comment>DifferencesPage</comment>
   </data>
   <data name="ExportToFileButton" xml:space="preserve">
     <value>Eksportuj do pliku</value>
