@@ -128,6 +128,7 @@
     <Compile Include="Models\BranchTable.cs" />
     <Compile Include="Models\ChangesForCommitTable.cs" />
     <Compile Include="Models\ChangesTable.cs" />
+    <Compile Include="Models\CommitForBranchTable.cs" />
     <Compile Include="Models\SqLiteHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\ScrollSynchronizer.cs" />
