@@ -121,6 +121,7 @@
     <Compile Include="ViewModel\ChartWindowViewModel.cs" />
     <Compile Include="ViewModel\DayActivityViewModel.cs" />
     <Compile Include="ViewModel\DifferenceWindowViewModel.cs" />
+    <Compile Include="ViewModel\HourActivityViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="View\AnalysisWindowView.xaml">
