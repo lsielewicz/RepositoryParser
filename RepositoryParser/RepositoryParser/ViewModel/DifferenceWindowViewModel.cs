@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
@@ -24,6 +26,7 @@ namespace RepositoryParser.ViewModel
         private string textA;
         private string textB;
         private string changeQuery;
+        private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
         #endregion
         #region Constructors
 

@@ -250,6 +250,24 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export Succesed!.
+        /// </summary>
+        public static string ExportMessage {
+            get {
+                return ResourceManager.GetString("ExportMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export.
+        /// </summary>
+        public static string ExportTitle {
+            get {
+                return ResourceManager.GetString("ExportTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Export to the File.
         /// </summary>
         public static string ExportToFileButton {

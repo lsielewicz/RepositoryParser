@@ -201,6 +201,12 @@
     <value>Porównanie:</value>
     <comment>DifferencesPage</comment>
   </data>
+  <data name="ExportMessage" xml:space="preserve">
+    <value>Eksport zakończony sukcesem!</value>
+  </data>
+  <data name="ExportTitle" xml:space="preserve">
+    <value>Eksport</value>
+  </data>
   <data name="ExportToFileButton" xml:space="preserve">
     <value>Eksportuj do pliku</value>
     <comment>MainPage</comment>
