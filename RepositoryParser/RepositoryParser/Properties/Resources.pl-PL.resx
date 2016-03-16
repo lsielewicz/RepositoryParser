@@ -261,9 +261,25 @@
     <value>Witaj w "Repository Analyser"</value>
     <comment>MainPage</comment>
   </data>
+  <data name="Month" xml:space="preserve">
+    <value>Miesiąc</value>
+    <comment>MonthAcitvityChartPage</comment>
+  </data>
   <data name="MonthActivityAnalyseButton" xml:space="preserve">
     <value>Analiza miesięczna</value>
     <comment>AnalysisPage</comment>
+  </data>
+  <data name="MonthActivityChartChart" xml:space="preserve">
+    <value>Wykres aktywności według miesięcy</value>
+    <comment>MonthAcitvityChartPage</comment>
+  </data>
+  <data name="MonthActivityChartList" xml:space="preserve">
+    <value>Lista aktywności według miesięcy</value>
+    <comment>MonthAcitvityChartPage</comment>
+  </data>
+  <data name="MonthActivityWindowTitle" xml:space="preserve">
+    <value>Analiza aktywności według miesięcy:</value>
+    <comment>MonthAcitvityChartPage</comment>
   </data>
   <data name="MonthDayActivityAnalyseButton" xml:space="preserve">
     <value>Analiza wg dni</value>
@@ -285,8 +301,24 @@
     <value>Wpisz adres URL repozytorium</value>
     <comment>MainPage</comment>
   </data>
+  <data name="Weekday" xml:space="preserve">
+    <value>Dzień tygodnia</value>
+    <comment>WeekdaysAcitvityChartPage</comment>
+  </data>
   <data name="WeekdayActivityAnalyseButton" xml:space="preserve">
     <value>Analiza wg dni tygodnia</value>
     <comment>AnalysisPage</comment>
+  </data>
+  <data name="WeekdayActivityChartChart" xml:space="preserve">
+    <value>Wykres aktywności według dni tygodnia</value>
+    <comment>WeekdaysAcitvityChartPage</comment>
+  </data>
+  <data name="WeekdayActivityChartList" xml:space="preserve">
+    <value>Lista aktywności według dni tygodnia</value>
+    <comment>WeekdaysAcitvityChartPage</comment>
+  </data>
+  <data name="WeekdayActivityWindowTitle" xml:space="preserve">
+    <value>Analiza aktywności według dni tygodnia:</value>
+    <comment>WeekdaysAcitvityChartPage</comment>
   </data>
 </root>

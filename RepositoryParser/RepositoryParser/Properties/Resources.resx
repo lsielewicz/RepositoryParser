@@ -261,9 +261,25 @@
     <value>Welcome in Repository Analyser</value>
     <comment>MainPage</comment>
   </data>
+  <data name="Month" xml:space="preserve">
+    <value>Month</value>
+    <comment>MonthAcitvityChartPage</comment>
+  </data>
   <data name="MonthActivityAnalyseButton" xml:space="preserve">
     <value>Analysis of month activity</value>
     <comment>AnalysisPage</comment>
+  </data>
+  <data name="MonthActivityChartChart" xml:space="preserve">
+    <value>Chart of activity during months</value>
+    <comment>MonthAcitvityChartPage</comment>
+  </data>
+  <data name="MonthActivityChartList" xml:space="preserve">
+    <value>List of activity during months</value>
+    <comment>MonthAcitvityChartPage</comment>
+  </data>
+  <data name="MonthActivityWindowTitle" xml:space="preserve">
+    <value>Analysis of activity during months:</value>
+    <comment>MonthAcitvityChartPage</comment>
   </data>
   <data name="MonthDayActivityAnalyseButton" xml:space="preserve">
     <value>Daily analisys of activity</value>
@@ -288,8 +304,24 @@
     <value>Write the URL adress of the repository.</value>
     <comment>MainPage</comment>
   </data>
+  <data name="Weekday" xml:space="preserve">
+    <value>Weekday</value>
+    <comment>WeekdaysAcitvityChartPage</comment>
+  </data>
   <data name="WeekdayActivityAnalyseButton" xml:space="preserve">
     <value>Weekdays Analysis of activity</value>
     <comment>AnalysisPage</comment>
+  </data>
+  <data name="WeekdayActivityChartChart" xml:space="preserve">
+    <value>Chart of activity during weekdays</value>
+    <comment>WeekdaysAcitvityChartPage</comment>
+  </data>
+  <data name="WeekdayActivityChartList" xml:space="preserve">
+    <value>List of activity during weekdays</value>
+    <comment>WeekdaysAcitvityChartPage</comment>
+  </data>
+  <data name="WeekdayActivityWindowTitle" xml:space="preserve">
+    <value>Analysis of activity during weekdays:</value>
+    <comment>WeekdaysAcitvityChartPage</comment>
   </data>
 </root>

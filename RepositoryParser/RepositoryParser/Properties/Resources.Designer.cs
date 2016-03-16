@@ -385,11 +385,47 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Month.
+        /// </summary>
+        public static string Month {
+            get {
+                return ResourceManager.GetString("Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Analysis of month activity.
         /// </summary>
         public static string MonthActivityAnalyseButton {
             get {
                 return ResourceManager.GetString("MonthActivityAnalyseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chart of activity during months.
+        /// </summary>
+        public static string MonthActivityChartChart {
+            get {
+                return ResourceManager.GetString("MonthActivityChartChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of activity during months.
+        /// </summary>
+        public static string MonthActivityChartList {
+            get {
+                return ResourceManager.GetString("MonthActivityChartList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Analysis of activity during months:.
+        /// </summary>
+        public static string MonthActivityWindowTitle {
+            get {
+                return ResourceManager.GetString("MonthActivityWindowTitle", resourceCulture);
             }
         }
         
@@ -448,11 +484,47 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Weekday.
+        /// </summary>
+        public static string Weekday {
+            get {
+                return ResourceManager.GetString("Weekday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Weekdays Analysis of activity.
         /// </summary>
         public static string WeekdayActivityAnalyseButton {
             get {
                 return ResourceManager.GetString("WeekdayActivityAnalyseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chart of activity during weekdays.
+        /// </summary>
+        public static string WeekdayActivityChartChart {
+            get {
+                return ResourceManager.GetString("WeekdayActivityChartChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of activity during weekdays.
+        /// </summary>
+        public static string WeekdayActivityChartList {
+            get {
+                return ResourceManager.GetString("WeekdayActivityChartList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Analysis of activity during weekdays:.
+        /// </summary>
+        public static string WeekdayActivityWindowTitle {
+            get {
+                return ResourceManager.GetString("WeekdayActivityWindowTitle", resourceCulture);
             }
         }
     }
