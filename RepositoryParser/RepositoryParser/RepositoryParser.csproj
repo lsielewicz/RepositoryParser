@@ -118,6 +118,8 @@
     <Compile Include="Conventers\BoolToVisibilityConventer.cs" />
     <Compile Include="Conventers\DateFormat.cs" />
     <Compile Include="ViewModel\AnalisysWindowViewModel.cs" />
+    <Compile Include="ViewModel\ChartWindowViewModel.cs" />
+    <Compile Include="ViewModel\DayActivityViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="View\AnalysisWindowView.xaml">
