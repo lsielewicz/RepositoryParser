@@ -313,11 +313,47 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Time.
+        /// </summary>
+        public static string Hour {
+            get {
+                return ResourceManager.GetString("Hour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hours Analysis of activity.
         /// </summary>
         public static string HourActivityAnalyseButton {
             get {
                 return ResourceManager.GetString("HourActivityAnalyseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chart of activity during hours.
+        /// </summary>
+        public static string HoursActivityChartChart {
+            get {
+                return ResourceManager.GetString("HoursActivityChartChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of activity during hours.
+        /// </summary>
+        public static string HoursActivityChartList {
+            get {
+                return ResourceManager.GetString("HoursActivityChartList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Analysis of activity during hours:.
+        /// </summary>
+        public static string HoursActivityWindowTitle {
+            get {
+                return ResourceManager.GetString("HoursActivityWindowTitle", resourceCulture);
             }
         }
         

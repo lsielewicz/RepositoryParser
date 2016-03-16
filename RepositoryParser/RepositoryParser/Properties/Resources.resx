@@ -229,9 +229,25 @@
     <value>Pick Repository:</value>
     <comment>AnalysisPage</comment>
   </data>
+  <data name="Hour" xml:space="preserve">
+    <value>Time</value>
+    <comment>HourAcitvityChartPage</comment>
+  </data>
   <data name="HourActivityAnalyseButton" xml:space="preserve">
     <value>Hours Analysis of activity</value>
     <comment>AnalysisPage</comment>
+  </data>
+  <data name="HoursActivityChartChart" xml:space="preserve">
+    <value>Chart of activity during hours</value>
+    <comment>HourAcitvityChartPage</comment>
+  </data>
+  <data name="HoursActivityChartList" xml:space="preserve">
+    <value>List of activity during hours</value>
+    <comment>HourAcitvityChartPage</comment>
+  </data>
+  <data name="HoursActivityWindowTitle" xml:space="preserve">
+    <value>Analysis of activity during hours:</value>
+    <comment>HourAcitvityChartPage</comment>
   </data>
   <data name="Legend" xml:space="preserve">
     <value>Legend</value>
