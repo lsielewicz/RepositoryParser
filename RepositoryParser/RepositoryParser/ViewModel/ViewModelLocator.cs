@@ -15,6 +15,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
+using RepositoryParser.Core.ViewModel;
 
 namespace RepositoryParser.ViewModel
 {
