@@ -13,21 +13,12 @@ using GalaSoft.MvvmLight.Messaging;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
+using RepositoryParser.View;
+using MessageBox = System.Windows.MessageBox;
+using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 
-namespace RepositoryParser.Core.ViewModel
+namespace RepositoryParser.ViewModel
 {
-    /// <summary>
-    /// This class contains properties that the main View can data bind to.
-    /// <para>
-    /// Use the <strong>mvvminpc</strong> snippet to add bindable properties to this ViewModel.
-    /// </para>
-    /// <para>
-    /// You can also use Blend to data bind with the tool's support.
-    /// </para>
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm
-    /// </para>
-    /// </summary>
     public class MainViewModel : ViewModelBase
     {
         #region Variables
@@ -157,7 +148,7 @@ namespace RepositoryParser.Core.ViewModel
         public void PickFile()
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.SelectedPath = Application.StartupPath;
+            fbd.SelectedPath = System.AppDomain.CurrentDomain.BaseDirectory;
             fbd.Description = "Wybierz folder zawierajacy repozytorium";
 
             if (fbd.ShowDialog() == DialogResult.OK)
@@ -247,10 +238,10 @@ namespace RepositoryParser.Core.ViewModel
 
         private void GoToPageAnalisys()
         {
-           /* AnalysisWindowView _analisysWindow = new AnalysisWindowView();
+            AnalysisWindowView _analisysWindow = new AnalysisWindowView();
             _analisysWindow.Show();
             if (GitRepoInstance != null)
-                SendMessageToAnalisys();*/
+                SendMessageToAnalisys();
         }
 
         public ICommand ClearDataBaseCommand { get; set; }
@@ -294,8 +285,7 @@ namespace RepositoryParser.Core.ViewModel
             dlg.DefaultExt = ".csv";
             dlg.Filter = "Csv documents (.csv)|*.csv";
             // Show save file dialog box
-            dlg.ShowDialog();
-            bool result = true;
+            bool? result = dlg.ShowDialog();
             // Process save file dialog box results
             if (result == true)
             {
@@ -331,8 +321,8 @@ namespace RepositoryParser.Core.ViewModel
             if (sortColumn == column)
             {
                 sortDirection = sortDirection == ListSortDirection.Descending ?
-                                                 ListSortDirection.Ascending :
-                                                 ListSortDirection.Descending;
+                    ListSortDirection.Ascending :
+                    ListSortDirection.Descending;
             }
             else
             {
