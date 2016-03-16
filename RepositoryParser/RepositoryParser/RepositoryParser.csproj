@@ -137,6 +137,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModel\WeekDayActivityViewModel.cs" />
     <Compile Include="View\AnalysisWindowView.xaml.cs">
       <DependentUpon>AnalysisWindowView.xaml</DependentUpon>
     </Compile>
