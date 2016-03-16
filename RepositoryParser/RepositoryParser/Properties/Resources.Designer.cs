@@ -61,6 +61,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Activity Analyse.
+        /// </summary>
+        public static string ActivityAnalyseButton {
+            get {
+                return ResourceManager.GetString("ActivityAnalyseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add a repository.
         /// </summary>
         public static string AddRepositoryButton {
@@ -75,6 +84,15 @@ namespace RepositoryParser.Properties {
         public static string AnalysisButton {
             get {
                 return ResourceManager.GetString("AnalysisButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Analyse.
+        /// </summary>
+        public static string AnalysisWindowTitle {
+            get {
+                return ResourceManager.GetString("AnalysisWindowTitle", resourceCulture);
             }
         }
         
@@ -133,11 +151,83 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Compare.
+        /// </summary>
+        public static string DifferencesButton {
+            get {
+                return ResourceManager.GetString("DifferencesButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Export to the File.
         /// </summary>
         public static string ExportToFileButton {
             get {
                 return ResourceManager.GetString("ExportToFileButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filtering.
+        /// </summary>
+        public static string Filtering {
+            get {
+                return ResourceManager.GetString("Filtering", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Author:.
+        /// </summary>
+        public static string FilteringAuthor {
+            get {
+                return ResourceManager.GetString("FilteringAuthor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date:.
+        /// </summary>
+        public static string FilteringDate {
+            get {
+                return ResourceManager.GetString("FilteringDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message Content:.
+        /// </summary>
+        public static string FilteringMessage {
+            get {
+                return ResourceManager.GetString("FilteringMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick Branch:.
+        /// </summary>
+        public static string FilteringPickBranch {
+            get {
+                return ResourceManager.GetString("FilteringPickBranch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick Repository:.
+        /// </summary>
+        public static string FilteringPickRepository {
+            get {
+                return ResourceManager.GetString("FilteringPickRepository", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hours Activity Analyse.
+        /// </summary>
+        public static string HourActivityAnalyseButton {
+            get {
+                return ResourceManager.GetString("HourActivityAnalyseButton", resourceCulture);
             }
         }
         
@@ -156,6 +246,24 @@ namespace RepositoryParser.Properties {
         public static string MainWindowTitle {
             get {
                 return ResourceManager.GetString("MainWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Month Activity Analyse.
+        /// </summary>
+        public static string MonthActivityAnalyseButton {
+            get {
+                return ResourceManager.GetString("MonthActivityAnalyseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Daily Activity Analyse.
+        /// </summary>
+        public static string MonthDayActivityAnalyseButton {
+            get {
+                return ResourceManager.GetString("MonthDayActivityAnalyseButton", resourceCulture);
             }
         }
         
@@ -187,11 +295,29 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Send data.
+        /// </summary>
+        public static string SendDataButton {
+            get {
+                return ResourceManager.GetString("SendDataButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Write the URL adress of the repository..
         /// </summary>
         public static string UrlAdress {
             get {
                 return ResourceManager.GetString("UrlAdress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weekdays Acitvity Analyse.
+        /// </summary>
+        public static string WeekdayActivityAnalyseButton {
+            get {
+                return ResourceManager.GetString("WeekdayActivityAnalyseButton", resourceCulture);
             }
         }
     }

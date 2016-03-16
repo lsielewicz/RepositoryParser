@@ -117,6 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ActivityAnalyseButton" xml:space="preserve">
+    <value>Analiza aktywności</value>
+    <comment>AnalysisPage</comment>
+  </data>
   <data name="AddRepositoryButton" xml:space="preserve">
     <value>Dodaj repozytorium</value>
     <comment>MainPage</comment>
@@ -124,6 +128,10 @@
   <data name="AnalysisButton" xml:space="preserve">
     <value>Analiza</value>
     <comment>MainPage</comment>
+  </data>
+  <data name="AnalysisWindowTitle" xml:space="preserve">
+    <value>Analiza</value>
+    <comment>AnalisysPage</comment>
   </data>
   <data name="ClearDBButton" xml:space="preserve">
     <value>Wyczyść Bazę</value>
@@ -149,9 +157,41 @@
     <value>Wiadomość</value>
     <comment>MainPage</comment>
   </data>
+  <data name="DifferencesButton" xml:space="preserve">
+    <value>Porównaj</value>
+    <comment>AnalysisPage</comment>
+  </data>
   <data name="ExportToFileButton" xml:space="preserve">
     <value>Eksportuj do pliku</value>
     <comment>MainPage</comment>
+  </data>
+  <data name="Filtering" xml:space="preserve">
+    <value>Filtrowanie:</value>
+    <comment>AnalysisPage</comment>
+  </data>
+  <data name="FilteringAuthor" xml:space="preserve">
+    <value>Autor:</value>
+    <comment>AnalysisPage</comment>
+  </data>
+  <data name="FilteringDate" xml:space="preserve">
+    <value>Data:</value>
+    <comment>AnalysisPage</comment>
+  </data>
+  <data name="FilteringMessage" xml:space="preserve">
+    <value>Treść wiadomości:</value>
+    <comment>AnalysisPage</comment>
+  </data>
+  <data name="FilteringPickBranch" xml:space="preserve">
+    <value>Wybierz gałąź:</value>
+    <comment>AnalysisPage</comment>
+  </data>
+  <data name="FilteringPickRepository" xml:space="preserve">
+    <value>Wybierz repozytorium:</value>
+    <comment>AnalysisPage</comment>
+  </data>
+  <data name="HourActivityAnalyseButton" xml:space="preserve">
+    <value>Analiza wg godzin</value>
+    <comment>AnalysisPage</comment>
   </data>
   <data name="LocalAdress" xml:space="preserve">
     <value>Lub wybierz lokalnie</value>
@@ -161,6 +201,14 @@
     <value>Witaj w "Repository Analyser"</value>
     <comment>MainPage</comment>
   </data>
+  <data name="MonthActivityAnalyseButton" xml:space="preserve">
+    <value>Analiza miesięczna</value>
+    <comment>AnalysisPage</comment>
+  </data>
+  <data name="MonthDayActivityAnalyseButton" xml:space="preserve">
+    <value>Analiza wg dni</value>
+    <comment>AnalysisPage</comment>
+  </data>
   <data name="PickFileButton" xml:space="preserve">
     <value>Wybierz plik</value>
     <comment>MainPage</comment>
@@ -169,8 +217,16 @@
     <value>Odśwież</value>
     <comment>MainPage</comment>
   </data>
+  <data name="SendDataButton" xml:space="preserve">
+    <value>Wyslij dane</value>
+    <comment>AnalysisPage</comment>
+  </data>
   <data name="UrlAdress" xml:space="preserve">
     <value>Wpisz adres URL repozytorium</value>
     <comment>MainPage</comment>
+  </data>
+  <data name="WeekdayActivityAnalyseButton" xml:space="preserve">
+    <value>Analiza wg dni tygodnia</value>
+    <comment>AnalysisPage</comment>
   </data>
 </root>
