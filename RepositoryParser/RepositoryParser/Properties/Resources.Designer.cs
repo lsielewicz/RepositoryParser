@@ -70,6 +70,24 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Activity Chart.
+        /// </summary>
+        public static string ActivityChart {
+            get {
+                return ResourceManager.GetString("ActivityChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Activity List.
+        /// </summary>
+        public static string ActivityList {
+            get {
+                return ResourceManager.GetString("ActivityList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add a repository.
         /// </summary>
         public static string AddRepositoryButton {
@@ -93,6 +111,15 @@ namespace RepositoryParser.Properties {
         public static string AnalysisWindowTitle {
             get {
                 return ResourceManager.GetString("AnalysisWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Analyse of activity of the repository users.
+        /// </summary>
+        public static string ChartWindowTitle {
+            get {
+                return ResourceManager.GetString("ChartWindowTitle", resourceCulture);
             }
         }
         
@@ -147,6 +174,15 @@ namespace RepositoryParser.Properties {
         public static string CommitsList_Message {
             get {
                 return ResourceManager.GetString("CommitsList_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Count of commits.
+        /// </summary>
+        public static string CountOfCommits {
+            get {
+                return ResourceManager.GetString("CountOfCommits", resourceCulture);
             }
         }
         
@@ -228,6 +264,15 @@ namespace RepositoryParser.Properties {
         public static string HourActivityAnalyseButton {
             get {
                 return ResourceManager.GetString("HourActivityAnalyseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Legend.
+        /// </summary>
+        public static string Legend {
+            get {
+                return ResourceManager.GetString("Legend", resourceCulture);
             }
         }
         

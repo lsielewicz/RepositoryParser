@@ -121,6 +121,14 @@
     <value>Activity Analyse</value>
     <comment>AnalysisPage</comment>
   </data>
+  <data name="ActivityChart" xml:space="preserve">
+    <value>Activity Chart</value>
+    <comment>ChartPage</comment>
+  </data>
+  <data name="ActivityList" xml:space="preserve">
+    <value>Activity List</value>
+    <comment>ChartPage</comment>
+  </data>
   <data name="AddRepositoryButton" xml:space="preserve">
     <value>Add a repository</value>
     <comment>MainPage</comment>
@@ -132,6 +140,10 @@
   <data name="AnalysisWindowTitle" xml:space="preserve">
     <value>Analyse</value>
     <comment>AnalisysPage</comment>
+  </data>
+  <data name="ChartWindowTitle" xml:space="preserve">
+    <value>Analyse of activity of the repository users</value>
+    <comment>ChartPage</comment>
   </data>
   <data name="ClearDBButton" xml:space="preserve">
     <value>Clear the Data Base</value>
@@ -156,6 +168,10 @@
   <data name="CommitsList_Message" xml:space="preserve">
     <value>Message</value>
     <comment>MainPage</comment>
+  </data>
+  <data name="CountOfCommits" xml:space="preserve">
+    <value>Count of commits</value>
+    <comment>ChartPage</comment>
   </data>
   <data name="DifferencesButton" xml:space="preserve">
     <value>Compare</value>
@@ -192,6 +208,10 @@
   <data name="HourActivityAnalyseButton" xml:space="preserve">
     <value>Hours Activity Analyse</value>
     <comment>AnalysisPage</comment>
+  </data>
+  <data name="Legend" xml:space="preserve">
+    <value>Legend</value>
+    <comment>ChartPage</comment>
   </data>
   <data name="LocalAdress" xml:space="preserve">
     <value>Or pick from hard disc</value>
