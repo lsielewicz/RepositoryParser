@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoryParser", "RepositoryParser\RepositoryParser.csproj", "{91392362-3F2C-4A8A-AE57-E129A8F9896D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoryParser.Core", "RepositoryParser.Core\RepositoryParser.Core.csproj", "{12FDF0B9-ED4C-46C1-926E-5915DAE58ECD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{91392362-3F2C-4A8A-AE57-E129A8F9896D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91392362-3F2C-4A8A-AE57-E129A8F9896D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91392362-3F2C-4A8A-AE57-E129A8F9896D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12FDF0B9-ED4C-46C1-926E-5915DAE58ECD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12FDF0B9-ED4C-46C1-926E-5915DAE58ECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12FDF0B9-ED4C-46C1-926E-5915DAE58ECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12FDF0B9-ED4C-46C1-926E-5915DAE58ECD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
