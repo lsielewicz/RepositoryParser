@@ -123,6 +123,7 @@
     <Compile Include="ViewModel\DifferenceWindowViewModel.cs" />
     <Compile Include="ViewModel\HourActivityViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\MonthActivityChartViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="View\AnalysisWindowView.xaml">
       <SubType>Designer</SubType>
