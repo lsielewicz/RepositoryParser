@@ -173,6 +173,22 @@
     <value>Liczba commitów</value>
     <comment>ChartPage</comment>
   </data>
+  <data name="Day" xml:space="preserve">
+    <value>Dzień</value>
+    <comment>DayAcitvityChartPage</comment>
+  </data>
+  <data name="DayActivityChartChart" xml:space="preserve">
+    <value>Wykres aktywności według dni</value>
+    <comment>DayAcitvityChartPage</comment>
+  </data>
+  <data name="DayActivityChartList" xml:space="preserve">
+    <value>Lista aktywności według dni</value>
+    <comment>DayAcitvityChartPage</comment>
+  </data>
+  <data name="DayActivityWindowTitle" xml:space="preserve">
+    <value>Analiza aktywności wedlug dni:</value>
+    <comment>DayAcitvityChartPage</comment>
+  </data>
   <data name="DifferencesButton" xml:space="preserve">
     <value>Porównaj</value>
     <comment>AnalysisPage</comment>

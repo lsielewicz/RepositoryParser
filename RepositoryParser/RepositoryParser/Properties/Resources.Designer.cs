@@ -61,7 +61,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Activity Analyse.
+        ///   Looks up a localized string similar to Analysis of activity.
         /// </summary>
         public static string ActivityAnalyseButton {
             get {
@@ -97,7 +97,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Analyse.
+        ///   Looks up a localized string similar to Analysis.
         /// </summary>
         public static string AnalysisButton {
             get {
@@ -115,7 +115,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Analyse of activity of the repository users.
+        ///   Looks up a localized string similar to Analysis of activity of the repository users.
         /// </summary>
         public static string ChartWindowTitle {
             get {
@@ -183,6 +183,42 @@ namespace RepositoryParser.Properties {
         public static string CountOfCommits {
             get {
                 return ResourceManager.GetString("CountOfCommits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Day.
+        /// </summary>
+        public static string Day {
+            get {
+                return ResourceManager.GetString("Day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chart of activity during days.
+        /// </summary>
+        public static string DayActivityChartChart {
+            get {
+                return ResourceManager.GetString("DayActivityChartChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of acitvity during days.
+        /// </summary>
+        public static string DayActivityChartList {
+            get {
+                return ResourceManager.GetString("DayActivityChartList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Analysis of activity during days.
+        /// </summary>
+        public static string DayActivityWindowTitle {
+            get {
+                return ResourceManager.GetString("DayActivityWindowTitle", resourceCulture);
             }
         }
         
@@ -259,7 +295,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hours Activity Analyse.
+        ///   Looks up a localized string similar to Hours Analysis of activity.
         /// </summary>
         public static string HourActivityAnalyseButton {
             get {
@@ -295,7 +331,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Month Activity Analyse.
+        ///   Looks up a localized string similar to Analysis of month activity.
         /// </summary>
         public static string MonthActivityAnalyseButton {
             get {
@@ -304,7 +340,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Daily Activity Analyse.
+        ///   Looks up a localized string similar to Daily analisys of activity.
         /// </summary>
         public static string MonthDayActivityAnalyseButton {
             get {
@@ -358,7 +394,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Weekdays Acitvity Analyse.
+        ///   Looks up a localized string similar to Weekdays Analysis of activity.
         /// </summary>
         public static string WeekdayActivityAnalyseButton {
             get {

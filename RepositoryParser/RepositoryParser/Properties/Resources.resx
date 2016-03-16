@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ActivityAnalyseButton" xml:space="preserve">
-    <value>Activity Analyse</value>
+    <value>Analysis of activity</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="ActivityChart" xml:space="preserve">
@@ -134,7 +134,7 @@
     <comment>MainPage</comment>
   </data>
   <data name="AnalysisButton" xml:space="preserve">
-    <value>Analyse</value>
+    <value>Analysis</value>
     <comment>MainPage</comment>
   </data>
   <data name="AnalysisWindowTitle" xml:space="preserve">
@@ -142,7 +142,7 @@
     <comment>AnalisysPage</comment>
   </data>
   <data name="ChartWindowTitle" xml:space="preserve">
-    <value>Analyse of activity of the repository users</value>
+    <value>Analysis of activity of the repository users</value>
     <comment>ChartPage</comment>
   </data>
   <data name="ClearDBButton" xml:space="preserve">
@@ -172,6 +172,22 @@
   <data name="CountOfCommits" xml:space="preserve">
     <value>Count of commits</value>
     <comment>ChartPage</comment>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>Day</value>
+    <comment>DayAcitvityChartPage</comment>
+  </data>
+  <data name="DayActivityChartChart" xml:space="preserve">
+    <value>Chart of activity during days</value>
+    <comment>DayAcitvityChartPage</comment>
+  </data>
+  <data name="DayActivityChartList" xml:space="preserve">
+    <value>List of acitvity during days</value>
+    <comment>DayAcitvityChartPage</comment>
+  </data>
+  <data name="DayActivityWindowTitle" xml:space="preserve">
+    <value>Analysis of activity during days</value>
+    <comment>DayAcitvityChartPage</comment>
   </data>
   <data name="DifferencesButton" xml:space="preserve">
     <value>Compare</value>
@@ -206,7 +222,7 @@
     <comment>AnalysisPage</comment>
   </data>
   <data name="HourActivityAnalyseButton" xml:space="preserve">
-    <value>Hours Activity Analyse</value>
+    <value>Hours Analysis of activity</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="Legend" xml:space="preserve">
@@ -222,11 +238,11 @@
     <comment>MainPage</comment>
   </data>
   <data name="MonthActivityAnalyseButton" xml:space="preserve">
-    <value>Month Activity Analyse</value>
+    <value>Analysis of month activity</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="MonthDayActivityAnalyseButton" xml:space="preserve">
-    <value>Daily Activity Analyse</value>
+    <value>Daily analisys of activity</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="myTitle" xml:space="preserve">
@@ -249,7 +265,7 @@
     <comment>MainPage</comment>
   </data>
   <data name="WeekdayActivityAnalyseButton" xml:space="preserve">
-    <value>Weekdays Acitvity Analyse</value>
+    <value>Weekdays Analysis of activity</value>
     <comment>AnalysisPage</comment>
   </data>
 </root>
