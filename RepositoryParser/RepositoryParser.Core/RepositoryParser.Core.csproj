@@ -125,6 +125,7 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Messages\DataMessageToAnalisys.cs" />
+    <Compile Include="Messages\DataMessageToCharts.cs" />
     <Compile Include="Models\BranchForRepoTable.cs" />
     <Compile Include="Models\BranchTable.cs" />
     <Compile Include="Models\ChangesForCommitTable.cs" />
