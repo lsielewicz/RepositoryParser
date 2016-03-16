@@ -11,6 +11,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
+using RepositoryParser.View;
 using RepositoryParser.ViewModel;
 
 namespace RepositoryParser.Core.ViewModel

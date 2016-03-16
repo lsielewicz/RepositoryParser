@@ -125,7 +125,29 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MonthActivityChartViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\MonthActivityChart.xaml.cs">
+      <DependentUpon>MonthActivityChart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\WeekDayActivityView.xaml.cs">
+      <DependentUpon>WeekDayActivityView.xaml</DependentUpon>
+    </Compile>
     <Page Include="View\AnalysisWindowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ChartWindowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DayActivityChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DifferenceWindowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HourActivityView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -141,10 +163,30 @@
     <Compile Include="View\AnalysisWindowView.xaml.cs">
       <DependentUpon>AnalysisWindowView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ChartWindowView.xaml.cs">
+      <DependentUpon>ChartWindowView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DayActivityChartView.xaml.cs">
+      <DependentUpon>DayActivityChartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DifferenceWindowView.xaml.cs">
+      <DependentUpon>DifferenceWindowView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HourActivityView.xaml.cs">
+      <DependentUpon>HourActivityView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\MonthActivityChart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WeekDayActivityView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
