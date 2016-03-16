@@ -91,7 +91,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Conventers\BoolToVisibilityConventer.cs" />
+    <Compile Include="Conventers\DateFormat.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Page Include="View\AnalysisWindowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -99,6 +105,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="View\AnalysisWindowView.xaml.cs">
+      <DependentUpon>AnalysisWindowView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -140,11 +149,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\" />
-    <Folder Include="Conventers\" />
     <Folder Include="Resources\" />
     <Folder Include="Strings\en\" />
     <Folder Include="Strings\pl\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Ratings Filled-50.png" />
+    <Resource Include="Assets\Statistics_Filled-50.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
