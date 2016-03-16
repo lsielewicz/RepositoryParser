@@ -118,6 +118,20 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RepositoryParser.Core\RepositoryParser.Core.csproj">
+      <Project>{dcce33ce-2322-4412-940c-5ab8e1d560d6}</Project>
+      <Name>RepositoryParser.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\" />
+    <Folder Include="Conventers\" />
+    <Folder Include="Resources\" />
+    <Folder Include="Strings\en\" />
+    <Folder Include="Strings\pl\" />
+    <Folder Include="View\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
