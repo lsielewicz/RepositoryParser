@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:RepositoryParser"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
+        xmlns:resw="clr-namespace:RepositoryParser.Properties"
         mc:Ignorable="d"
         Title="RepositoryParser" Height="600" Width="1200"
         Icon="../Assets/Ratings Filled-50.png"
@@ -20,8 +21,6 @@
             <i:InvokeCommandAction Command="{Binding OnLoadCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-
-
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -46,12 +45,19 @@
             </Rectangle.Fill>
         </Rectangle>
 
-        <Label x:Uid="FirstPageTitle" Grid.Row="0" Grid.Column="1" FontSize="23" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Wybierz Repozytorium, na którym chcesz pracować:" Width="auto"  />
+        <Label x:Uid="MainTitle" 
+               Grid.Row="0" Grid.Column="1" 
+               FontSize="23" 
+               VerticalAlignment="Center" 
+               HorizontalAlignment="Center"  
+               Width="auto"  
+               Content="{x:Static resw:Resources.MainWindowTitle}"
+               />
         <StackPanel Grid.Row="1" Grid.Column="1">
-            <Label x:Name="UrlLabel" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Wpisz Adres URL repozytorium"/>
+            <Label x:Name="UrlLabel" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{x:Static resw:Resources.UrlAdress}"/>
             <TextBox x:Name="UrlTextBlock" FontSize="16" Margin="5" Text="{Binding UrlTextBox}" />
-            <Label x:Name="LocalChooseLabel" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Lub wybierz lokalnie"/>
-            <Button x:Name="PicFileBtn" HorizontalAlignment="Center" Content="Wybierz plik" Command="{Binding PickFileCommand}" />
+            <Label x:Name="LocalChooseLabel" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{x:Static resw:Resources.LocalAdress}"/>
+            <Button x:Name="PicFileBtn" HorizontalAlignment="Center" Content="{x:Static resw:Resources.PickFileButton}" Command="{Binding PickFileCommand}" />
         </StackPanel>
 
         <ListView Grid.Row="2" Grid.Column="1" ItemsSource="{Binding SortDataView}">
@@ -59,23 +65,23 @@
                 <GridView>
 
                     <GridViewColumn Width="40" DisplayMemberBinding="{Binding ID}">
-                        <GridViewColumnHeader Content="ID" Command="{Binding SortCommand}" CommandParameter="ID"/>
+                        <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_ID}" Command="{Binding SortCommand}" CommandParameter="ID"/>
                     </GridViewColumn>
 
                     <GridViewColumn Width="auto"  DisplayMemberBinding="{Binding Message}">
-                        <GridViewColumnHeader Content="Message" Command="{Binding SortCommand}" CommandParameter="Message"/>
+                        <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Message}" Command="{Binding SortCommand}" CommandParameter="Message"/>
                     </GridViewColumn>
 
                     <GridViewColumn Width="auto" DisplayMemberBinding="{Binding Author}">
-                        <GridViewColumnHeader Content="Author" Command="{Binding SortCommand}" CommandParameter="Author"/>
+                        <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Author}" Command="{Binding SortCommand}" CommandParameter="Author"/>
                     </GridViewColumn>
 
                     <GridViewColumn Width="auto" DisplayMemberBinding="{Binding Date}">
-                        <GridViewColumnHeader Content="Date" Command="{Binding SortCommand}" CommandParameter="Date" />
+                        <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Date}" Command="{Binding SortCommand}" CommandParameter="Date" />
                     </GridViewColumn>
 
                     <GridViewColumn Width="auto" DisplayMemberBinding="{Binding Email}">
-                        <GridViewColumnHeader Content="Email" Command="{Binding SortCommand}" CommandParameter="Email" />
+                        <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Email}" Command="{Binding SortCommand}" CommandParameter="Email" />
                     </GridViewColumn>
 
                 </GridView>
@@ -83,18 +89,52 @@
         </ListView>
 
         <StackPanel Grid.Row="3" Grid.Column="1">
-            <Button x:Name="CloneRepositoryBtn" Command="{Binding OpenRepositoryCommand}" IsEnabled="{Binding IsCloneButtonEnabled }" HorizontalAlignment="Center" VerticalAlignment="Center" Height="50"  Content="Dodaj repozytorium" Background="#FF52802B" FontSize="20" Margin="2" Padding="4" />
+            <Button x:Name="CloneRepositoryBtn"
+                    Command="{Binding OpenRepositoryCommand}" 
+                    IsEnabled="{Binding IsCloneButtonEnabled }" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    Height="50"  
+                    Content="{x:Static resw:Resources.AddRepositoryButton}" 
+                    Background="#FF52802B" 
+                    FontSize="20" 
+                    Margin="2" 
+                    Padding="4" />
         </StackPanel>
 
         <DockPanel Grid.Row="2" Grid.Column="0">
-            <Button x:Name="GoToAnalisysBtn" Content="Analiza" Height="50" VerticalAlignment="Top" Command="{Binding GoToPageAnalisysCommand}" Background="#FF52802B" Margin="0,0,0,5"/>
+            <Button x:Name="GoToAnalisysBtn" 
+                    Content="{x:Static resw:Resources.AnalysisButton}" 
+                    Height="50" 
+                    VerticalAlignment="Top" 
+                    Command="{Binding GoToPageAnalisysCommand}" 
+                    Background="#FF52802B" 
+                    Margin="0,0,0,5"/>
 
         </DockPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="2">
-            <Button x:Name="ClearDataBase" Content ="Wyczysc Baze" Height="50" VerticalAlignment="Top" Background="#FF52802B"  Command="{Binding ClearDataBaseCommand}" Margin="0,0,0,5"/>
-            <Button x:Name="Refresh" Content ="Odśwież" Height="50" VerticalAlignment="Top" Background="#FF52802B"  Command="{Binding RefreshCommand}" Margin="0,0,0,5"/>
-            <Button x:Name="Save" Content ="Eksportuj do pliku" Height="50" VerticalAlignment="Bottom" Background="#FF52802B"  Command="{Binding ExportFileCommand}" Margin="0,0,0,5"/>
+            <Button x:Name="ClearDataBase" 
+                    Content ="{x:Static resw:Resources.ClearDBButton}" 
+                    Height="50" 
+                    VerticalAlignment="Top" 
+                    Background="#FF52802B"  
+                    Command="{Binding ClearDataBaseCommand}" 
+                    Margin="0,0,0,5"/>
+            <Button x:Name="Refresh"
+                    Content ="{x:Static resw:Resources.RefreshButton}" 
+                    Height="50" 
+                    VerticalAlignment="Top"
+                    Background="#FF52802B"  
+                    Command="{Binding RefreshCommand}" 
+                    Margin="0,0,0,5"/>
+            <Button x:Name="Save"
+                    Content ="{x:Static resw:Resources.ExportToFileButton}" 
+                    Height="50" 
+                    VerticalAlignment="Bottom" 
+                    Background="#FF52802B"  
+                    Command="{Binding ExportFileCommand}"
+                    Margin="0,0,0,5"/>
         </StackPanel>
 <!--        <StatusBar Grid.Row="2" Grid.Column="1" Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" >
             <Controls:ProgressRing HorizontalAlignment="Right"

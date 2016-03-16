@@ -141,6 +141,11 @@
     </ApplicationDefinition>
     <Compile Include="Conventers\BoolToVisibilityConventer.cs" />
     <Compile Include="Conventers\DateFormat.cs" />
+    <Compile Include="Properties\Resources.pl-PL.Designer.cs">
+      <DependentUpon>Resources.pl-PL.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="ViewModel\AnalisysWindowViewModel.cs" />
     <Compile Include="ViewModel\ChartWindowViewModel.cs" />
     <Compile Include="ViewModel\DayActivityViewModel.cs" />
@@ -227,8 +232,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.pl-PL.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.pl-PL.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -248,8 +257,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
-    <Folder Include="Strings\en\" />
-    <Folder Include="Strings\pl\" />
+    <Folder Include="Strings\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Ratings Filled-50.png" />

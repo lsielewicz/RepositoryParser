@@ -118,23 +118,23 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddRepositoryButton" xml:space="preserve">
-    <value>Add a repository</value>
+    <value>Dodaj repozytorium</value>
     <comment>MainPage</comment>
   </data>
   <data name="AnalysisButton" xml:space="preserve">
-    <value>Analyse</value>
+    <value>Analiza</value>
     <comment>MainPage</comment>
   </data>
   <data name="ClearDBButton" xml:space="preserve">
-    <value>Clear the Data Base</value>
+    <value>Wyczyść Bazę</value>
     <comment>MainPage</comment>
   </data>
   <data name="CommitsList_Author" xml:space="preserve">
-    <value>Author</value>
+    <value>Autor</value>
     <comment>MainPage</comment>
   </data>
   <data name="CommitsList_Date" xml:space="preserve">
-    <value>Date</value>
+    <value>Data</value>
     <comment>MainPage</comment>
   </data>
   <data name="CommitsList_Email" xml:space="preserve">
@@ -146,34 +146,31 @@
     <comment>MainPage</comment>
   </data>
   <data name="CommitsList_Message" xml:space="preserve">
-    <value>Message</value>
+    <value>Wiadomość</value>
     <comment>MainPage</comment>
   </data>
   <data name="ExportToFileButton" xml:space="preserve">
-    <value>Export to the File</value>
+    <value>Eksportuj do pliku</value>
     <comment>MainPage</comment>
   </data>
   <data name="LocalAdress" xml:space="preserve">
-    <value>Or pick from hard disc</value>
+    <value>Lub wybierz lokalnie</value>
     <comment>MainPage</comment>
   </data>
   <data name="MainWindowTitle" xml:space="preserve">
-    <value>Welcome in Repository Analyser</value>
+    <value>Witaj w "Repository Analyser"</value>
     <comment>MainPage</comment>
   </data>
-  <data name="myTitle" xml:space="preserve">
-    <value>Ass</value>
-  </data>
   <data name="PickFileButton" xml:space="preserve">
-    <value>Pick the file</value>
+    <value>Wybierz plik</value>
     <comment>MainPage</comment>
   </data>
   <data name="RefreshButton" xml:space="preserve">
-    <value>Refresh</value>
+    <value>Odśwież</value>
     <comment>MainPage</comment>
   </data>
   <data name="UrlAdress" xml:space="preserve">
-    <value>Write the URL adress of the repository.</value>
+    <value>Wpisz adres URL repozytorium</value>
     <comment>MainPage</comment>
   </data>
 </root>
