@@ -1,0 +1,151 @@
+﻿<Window x:Class="RepositoryParser.View.AnalysisWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RepositoryParser.View"
+        xmlns:dataVisualisation="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+        xmlns:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+        xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
+        mc:Ignorable="d"
+         Title="AnalysisView" Height="600" Width="1000"
+        DataContext="{Binding Source={StaticResource Locator}, Path=Analisys}"
+        Icon="../Assets/Ratings Filled-50.png">
+
+    <Window.Resources>
+        <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <conventers:DateFormat x:Key="DateFormat"/>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="12*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+
+
+
+        <Rectangle Grid.ColumnSpan="1000" Grid.Row="0">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF52802B" Offset="0" />
+                    <GradientStop Color="Green" Offset="1" />
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Label Grid.Row="0" Grid.Column="1" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Analiza" Width="auto"  />
+
+        <Grid Grid.Column="1" Grid.Row="1" Margin="5,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35" />
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label  Grid.Column="0" Grid.Row="0" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Left" Content="Filtrowanie:" Width="auto"  />
+            <StackPanel Grid.Column="0" Grid.Row="1">
+                <Label x:Name="AuthorLabel" Content="Autor:" Margin="5,0,0,0"/>
+                <ListView x:Name="AuthorComboBox" Width="auto" Height="190" MinHeight="150" MinWidth="160" HorizontalAlignment="Left" Margin="5,0,0,0"
+                      ItemsSource="{Binding LocalCollection}"
+                      DisplayMemberPath="{Binding Author}"  
+                      SelectedItem="{Binding ComboBoxSelectedItem}"
+                      IsSynchronizedWithCurrentItem="True"                     
+                      />
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Grid.Row="1">
+                <Label x:Name="DateLbl" Content="Data:" Margin="5,0,0,0"/>
+                <DockPanel>
+                    <wpfTool:DateTimePicker HorizontalAlignment="Left"
+		                                    Margin="10"
+		                                    VerticalAlignment="Top"
+                                            Text="{Binding FromDate}"
+                                            Format="Custom"
+                                            FormatString="yyyy-MM-dd"
+                                            MinWidth="100"
+		            />
+                    <Label x:Name="zzlbl" Content="-" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <wpfTool:DateTimePicker HorizontalAlignment="Left"
+                                Margin="0,10"
+                                VerticalAlignment="Top"
+                                Text="{Binding ToDate}"
+                                Format="Custom"
+                                FormatString="yyyy-MM-dd"
+                                MinWidth="100"
+                                />
+                </DockPanel>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="2">
+                <Label x:Name="MessageLbl" Content="Treść wiadomości:" Margin="5,0,0,0"/>
+                <TextBox x:Name="MsgTB" Text="{Binding MessageTextBox}" Margin="5"
+                         />
+
+            </StackPanel>
+            <GridSplitter Grid.Column="3" Grid.Row="1" VerticalAlignment="Stretch" Width="10" HorizontalAlignment="Left"/>
+            <StackPanel Grid.Column="3" Grid.Row="1">
+                <Label x:Name="Repositorylbl" Content="Wybór Repozytorium:" Margin="5,0,0,0"/>
+                <ListView x:Name="RepositoryList" Width="auto" MinHeight="150" MinWidth="160"  HorizontalAlignment="Left" Margin="5,0,0,0"
+                          ItemsSource="{Binding RepositoryCollection}"
+                          DisplayMemberPath="{Binding Name}"  
+                          SelectedItem="{Binding RepositorySelectedItem}"
+                          IsSynchronizedWithCurrentItem="True"                    
+                          />
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Column="3" Grid.Row="0" Grid.RowSpan="2">
+                <Label x:Name="Branchlbl" Content="Wybór Gałęzi:" Margin="5,0,0,0"/>
+                <ListView x:Name="BranchList" Width="auto" MinHeight="150" MinWidth="160"  HorizontalAlignment="Left" Margin="5,0,0,0"
+                      ItemsSource="{Binding BranchCollection}"
+                      DisplayMemberPath="{Binding Name}"  
+                      SelectedItem="{Binding BranchSelectedItem}"
+                      IsSynchronizedWithCurrentItem="True"
+                      IsEnabled="{Binding BranchEnabled, UpdateSourceTrigger=PropertyChanged}"
+                      />
+            </StackPanel>
+        </Grid>
+
+
+        <StackPanel Grid.Row="3" Grid.Column="1">
+            <Button x:Name="SendBtn" Command="{Binding SendDataCommand}" Content="Wyslij Dane" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF52802B" FontSize="20" Margin="2" Padding="4" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Margin="0,10,0,0" Grid.RowSpan="3">
+            <Button x:Name="ChartBtn" Content="Analiza aktywności" Height="50" Command="{Binding ChartCommand}" Margin="0,0,0,5" Background="#FF52802B"/>
+            <Button x:Name="DateBtn" Content="Analiza Miesięczna" Height="50" Margin="0,0,0,5" Command="{Binding MonthActivityWindowCommand}" Background="#FF52802B" />
+            <Button x:Name="GoToDayChartBtn" Content="Analiza wg dni" Height="50" Margin="0,0,0,5" Command="{Binding GoToDayChartWindowCommand}" Background="#FF52802B" />
+            <Button x:Name="GoToWeekDayChartBtn" Content="Analiza dni tygodnia" Height="50" Margin="0,0,0,5" Command="{Binding GoToWeekDayActivityWindowCommand}" Background="#FF52802B" />
+            <Button x:Name="GoToHourChartBtn" Content="Analiza wg godzin" Height="50" Margin="0,0,0,5" Command="{Binding GoToHourActivityWindowCommand}" Background="#FF52802B" />
+            <Button x:Name="GoToDifferences" Content="Porównaj" Height="50" Margin="0,0,0,5" Command="{Binding GoToDifferencesCommand}" Background="#FF52802B"/>
+
+        </StackPanel>
+
+
+
+    </Grid>
+</Window>
