@@ -84,8 +84,6 @@ namespace RepositoryParser.ViewModel
                 KeyCollection.Clear();
             for (int i = 1; i <= 12; i++)
             {
-                string dateQueryFrom = "";
-                string dateQueryTo = "";
                 string dateString = "";
                 if (i < 10)
                     dateString = "0" + i;

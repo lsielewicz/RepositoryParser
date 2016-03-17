@@ -259,6 +259,8 @@ namespace RepositoryParser.ViewModel
                 Transactions.Add(BranchTable.deleteAllQuery);
                 Transactions.Add(CommitForBranchTable.deleteAllQuery);
                 Transactions.Add(BranchForRepoTable.deleteAllQuery);
+                Transactions.Add(ChangesForCommitTable.deleteAllQuery);
+                Transactions.Add(ChangesTable.deleteAllQuery);
                 string[] TableName = new string[]
                 {
                     "GitCommits",

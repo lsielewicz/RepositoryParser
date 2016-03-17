@@ -42,6 +42,8 @@ namespace RepositoryParser.Core.Models
             return tempList;
         }
 
+       
+
         public ChangesForCommitTable(int id, int nr_commit, int nr_change)
         {
             this.ID = id;

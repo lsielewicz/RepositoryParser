@@ -25,7 +25,6 @@ namespace RepositoryParser.ViewModel
     {
         #region Variables
         private ObservableCollection<KeyValuePair<string, int>> _keyCollection;
-        private ObservableCollection<PieSeries> _columnSeriesCollection;
         private GitRepository localIGitRepository;
         private List<string> authorsList;
         private string filteringQuery;

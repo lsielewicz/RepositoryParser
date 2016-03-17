@@ -93,7 +93,6 @@ namespace RepositoryParser.Core.Models
 
         public void FillCommitList()
         {
-            int tempID = 0;
             GitCommits gitCommit = new GitCommits();
             BranchTable gitBranch = new BranchTable();
             GitRepositoryTable gitRepoTable = new GitRepositoryTable(RepositoryInstance.Directory);
