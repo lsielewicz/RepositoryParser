@@ -6,10 +6,15 @@
         xmlns:local="clr-namespace:RepositoryParser.View"
         xmlns:utils="clr-namespace:RepositoryParser.Core.Utils;assembly=RepositoryParser.Core"
         xmlns:resw="clr-namespace:RepositoryParser.Properties"
+        xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
         mc:Ignorable="d"
         Title="DifferenceWindowView" Height="600" Width="900"
         DataContext="{Binding Source={StaticResource Locator}, Path=Difference}"
         Icon="../Assets/Ratings Filled-50.png">
+
+    <Window.Resources>
+        <conventers:ChangeTypeToBackgroundColorConventer x:Key="ChangeTypeToBackgroundColorConventer"/>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
@@ -63,7 +68,16 @@
                 <ListView ItemsSource="{Binding ChangesCollection}" SelectedItem="{Binding ChangeSelectedItem, Mode=TwoWay}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Width="100" DisplayMemberBinding="{Binding Key}"/>
+                            <GridViewColumn x:Name="GridViewColumn" Width="100">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock x:Name="ChangeType"
+                                                   Text="{Binding Path=Key}"
+                                                   Background="{Binding ElementName=ChangeType, Path=Text, Converter={StaticResource ChangeTypeToBackgroundColorConventer} }"
+                                                   />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                             <GridViewColumn Width="auto" DisplayMemberBinding="{Binding Value}"/>
                         </GridView>
                     </ListView.View>
