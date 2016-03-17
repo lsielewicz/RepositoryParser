@@ -152,7 +152,7 @@ namespace RepositoryParser.ViewModel
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             fbd.SelectedPath = System.AppDomain.CurrentDomain.BaseDirectory;
-            fbd.Description = "Wybierz folder zawierajacy repozytorium";
+            fbd.Description = _resourceManager.GetString("PickFolderWithRepo");
 
             if (fbd.ShowDialog() == DialogResult.OK)
             {
@@ -205,7 +205,7 @@ namespace RepositoryParser.ViewModel
             }
             else
             {
-                MessageBox.Show("Nie podano sciezki repozytorium", "Blad");
+                MessageBox.Show(_resourceManager.GetString("NoRepositoryPathError"), _resourceManager.GetString("Error"));
             }
 
         }
@@ -296,7 +296,7 @@ namespace RepositoryParser.ViewModel
                 string filename = dlg.FileName;
                 List<GitCommits> tempList = CommitsColection.ToList();
                 DataToCsv.CreateCSVFromGitCommitsList(tempList, filename);
-                System.Windows.MessageBox.Show("Pomyslnie wyeksportowano", "Eksport");
+                MessageBox.Show(_resourceManager.GetString("ExportMessage"), _resourceManager.GetString("ExportTitle"));
             }
         }
         #endregion

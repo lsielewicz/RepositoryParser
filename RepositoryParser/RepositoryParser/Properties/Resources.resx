@@ -201,6 +201,9 @@
     <value>Comparsion</value>
     <comment>DifferencesPage</comment>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
   <data name="ExportMessage" xml:space="preserve">
     <value>Export Succesed!</value>
   </data>
@@ -271,6 +274,42 @@
     <value>Month</value>
     <comment>MonthAcitvityChartPage</comment>
   </data>
+  <data name="Month1" xml:space="preserve">
+    <value>January</value>
+  </data>
+  <data name="Month10" xml:space="preserve">
+    <value>October</value>
+  </data>
+  <data name="Month11" xml:space="preserve">
+    <value>November</value>
+  </data>
+  <data name="Month12" xml:space="preserve">
+    <value>December</value>
+  </data>
+  <data name="Month2" xml:space="preserve">
+    <value>February</value>
+  </data>
+  <data name="Month3" xml:space="preserve">
+    <value>March</value>
+  </data>
+  <data name="Month4" xml:space="preserve">
+    <value>April</value>
+  </data>
+  <data name="Month5" xml:space="preserve">
+    <value>May</value>
+  </data>
+  <data name="Month6" xml:space="preserve">
+    <value>June</value>
+  </data>
+  <data name="Month7" xml:space="preserve">
+    <value>July</value>
+  </data>
+  <data name="Month8" xml:space="preserve">
+    <value>August</value>
+  </data>
+  <data name="Month9" xml:space="preserve">
+    <value>September</value>
+  </data>
   <data name="MonthActivityAnalyseButton" xml:space="preserve">
     <value>Analysis of month activity</value>
     <comment>AnalysisPage</comment>
@@ -294,9 +333,15 @@
   <data name="myTitle" xml:space="preserve">
     <value>Ass</value>
   </data>
+  <data name="NoRepositoryPathError" xml:space="preserve">
+    <value>No Repository Path</value>
+  </data>
   <data name="PickFileButton" xml:space="preserve">
     <value>Pick the file</value>
     <comment>MainPage</comment>
+  </data>
+  <data name="PickFolderWithRepo" xml:space="preserve">
+    <value>Pick directory with repository.</value>
   </data>
   <data name="RefreshButton" xml:space="preserve">
     <value>Refresh</value>
@@ -329,5 +374,26 @@
   <data name="WeekdayActivityWindowTitle" xml:space="preserve">
     <value>Analysis of activity during weekdays:</value>
     <comment>WeekdaysAcitvityChartPage</comment>
+  </data>
+  <data name="Weekday1" xml:space="preserve">
+    <value>Monday</value>
+  </data>
+  <data name="Weekday2" xml:space="preserve">
+    <value>Tuesday</value>
+  </data>
+  <data name="Weekday3" xml:space="preserve">
+    <value>Wednesday</value>
+  </data>
+  <data name="Weekday4" xml:space="preserve">
+    <value>Thursday</value>
+  </data>
+  <data name="Weekday5" xml:space="preserve">
+    <value>Friday</value>
+  </data>
+  <data name="Weekday6" xml:space="preserve">
+    <value>Saturday</value>
+  </data>
+  <data name="Weekday7" xml:space="preserve">
+    <value>Sunday</value>
   </data>
 </root>

@@ -201,6 +201,9 @@
     <value>Porównanie:</value>
     <comment>DifferencesPage</comment>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Błąd!</value>
+  </data>
   <data name="ExportMessage" xml:space="preserve">
     <value>Eksport zakończony sukcesem!</value>
   </data>
@@ -271,6 +274,42 @@
     <value>Miesiąc</value>
     <comment>MonthAcitvityChartPage</comment>
   </data>
+  <data name="Month1" xml:space="preserve">
+    <value>Styczeń</value>
+  </data>
+  <data name="Month10" xml:space="preserve">
+    <value>Październik</value>
+  </data>
+  <data name="Month11" xml:space="preserve">
+    <value>Listopad</value>
+  </data>
+  <data name="Month12" xml:space="preserve">
+    <value>Grudzień</value>
+  </data>
+  <data name="Month2" xml:space="preserve">
+    <value>Luty</value>
+  </data>
+  <data name="Month3" xml:space="preserve">
+    <value>Marzec</value>
+  </data>
+  <data name="Month4" xml:space="preserve">
+    <value>Kwiecień</value>
+  </data>
+  <data name="Month5" xml:space="preserve">
+    <value>Maj</value>
+  </data>
+  <data name="Month6" xml:space="preserve">
+    <value>Czerwiec</value>
+  </data>
+  <data name="Month7" xml:space="preserve">
+    <value>Lipiec</value>
+  </data>
+  <data name="Month8" xml:space="preserve">
+    <value>Sierpień</value>
+  </data>
+  <data name="Month9" xml:space="preserve">
+    <value>Wrzesień</value>
+  </data>
   <data name="MonthActivityAnalyseButton" xml:space="preserve">
     <value>Analiza miesięczna</value>
     <comment>AnalysisPage</comment>
@@ -291,9 +330,15 @@
     <value>Analiza wg dni</value>
     <comment>AnalysisPage</comment>
   </data>
+  <data name="NoRepositoryPathError" xml:space="preserve">
+    <value>Brak ścieżki do repozytorium.</value>
+  </data>
   <data name="PickFileButton" xml:space="preserve">
     <value>Wybierz plik</value>
     <comment>MainPage</comment>
+  </data>
+  <data name="PickFolderWithRepo" xml:space="preserve">
+    <value>Wybierz folder z repozytorium.</value>
   </data>
   <data name="RefreshButton" xml:space="preserve">
     <value>Odśwież</value>
@@ -326,5 +371,26 @@
   <data name="WeekdayActivityWindowTitle" xml:space="preserve">
     <value>Analiza aktywności według dni tygodnia:</value>
     <comment>WeekdaysAcitvityChartPage</comment>
+  </data>
+  <data name="Weekday1" xml:space="preserve">
+    <value>Poniedziałek</value>
+  </data>
+  <data name="Weekday2" xml:space="preserve">
+    <value>Wtorek</value>
+  </data>
+  <data name="Weekday3" xml:space="preserve">
+    <value>Środa</value>
+  </data>
+  <data name="Weekday4" xml:space="preserve">
+    <value>Czwartek</value>
+  </data>
+  <data name="Weekday5" xml:space="preserve">
+    <value>Piątek</value>
+  </data>
+  <data name="Weekday6" xml:space="preserve">
+    <value>Sobota</value>
+  </data>
+  <data name="Weekday7" xml:space="preserve">
+    <value>Niedziela</value>
   </data>
 </root>
