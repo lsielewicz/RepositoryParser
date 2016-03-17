@@ -117,13 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ActivityAnalyseButton" xml:space="preserve">
+    <value>Analysis of activity</value>
+    <comment>AnalysisPage</comment>
+  </data>
+  <data name="ActivityChart" xml:space="preserve">
+    <value>Activity Chart</value>
+    <comment>ChartPage</comment>
+  </data>
+  <data name="ActivityList" xml:space="preserve">
+    <value>Activity List</value>
+    <comment>ChartPage</comment>
+  </data>
   <data name="AddRepositoryButton" xml:space="preserve">
     <value>Add a repository</value>
     <comment>MainPage</comment>
   </data>
   <data name="AnalysisButton" xml:space="preserve">
-    <value>Analyse</value>
+    <value>Analysis</value>
     <comment>MainPage</comment>
+  </data>
+  <data name="AnalysisWindowTitle" xml:space="preserve">
+    <value>Analyse</value>
+    <comment>AnalisysPage</comment>
+  </data>
+  <data name="Changes" xml:space="preserve">
+    <value>Changes</value>
+    <comment>DifferencesPage</comment>
+  </data>
+  <data name="ChartWindowTitle" xml:space="preserve">
+    <value>Analysis of activity of the repository users</value>
+    <comment>ChartPage</comment>
   </data>
   <data name="ClearDBButton" xml:space="preserve">
     <value>Clear the Data Base</value>
@@ -149,9 +173,94 @@
     <value>Message</value>
     <comment>MainPage</comment>
   </data>
+  <data name="CountOfCommits" xml:space="preserve">
+    <value>Count of commits</value>
+    <comment>ChartPage</comment>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>Day</value>
+    <comment>DayAcitvityChartPage</comment>
+  </data>
+  <data name="DayActivityChartChart" xml:space="preserve">
+    <value>Chart of activity during days</value>
+    <comment>DayAcitvityChartPage</comment>
+  </data>
+  <data name="DayActivityChartList" xml:space="preserve">
+    <value>List of acitvity during days</value>
+    <comment>DayAcitvityChartPage</comment>
+  </data>
+  <data name="DayActivityWindowTitle" xml:space="preserve">
+    <value>Analysis of activity during days</value>
+    <comment>DayAcitvityChartPage</comment>
+  </data>
+  <data name="DifferencesButton" xml:space="preserve">
+    <value>Compare</value>
+    <comment>AnalysisPage</comment>
+  </data>
+  <data name="DifferenceWindowTitle" xml:space="preserve">
+    <value>Comparsion</value>
+    <comment>DifferencesPage</comment>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ExportMessage" xml:space="preserve">
+    <value>Export Succesed!</value>
+  </data>
+  <data name="ExportTitle" xml:space="preserve">
+    <value>Export</value>
+  </data>
   <data name="ExportToFileButton" xml:space="preserve">
     <value>Export to the File</value>
     <comment>MainPage</comment>
+  </data>
+  <data name="Filtering" xml:space="preserve">
+    <value>Filtering</value>
+    <comment>AnalysisPage</comment>
+  </data>
+  <data name="FilteringAuthor" xml:space="preserve">
+    <value>Author:</value>
+    <comment>AnalysisPage</comment>
+  </data>
+  <data name="FilteringDate" xml:space="preserve">
+    <value>Date:</value>
+    <comment>AnalysisPage</comment>
+  </data>
+  <data name="FilteringMessage" xml:space="preserve">
+    <value>Message Content:</value>
+    <comment>AnalysisPage</comment>
+  </data>
+  <data name="FilteringPickBranch" xml:space="preserve">
+    <value>Pick Branch:</value>
+    <comment>AnalysisPage</comment>
+  </data>
+  <data name="FilteringPickRepository" xml:space="preserve">
+    <value>Pick Repository:</value>
+    <comment>AnalysisPage</comment>
+  </data>
+  <data name="Hour" xml:space="preserve">
+    <value>Time</value>
+    <comment>HourAcitvityChartPage</comment>
+  </data>
+  <data name="HourActivityAnalyseButton" xml:space="preserve">
+    <value>Hours Analysis of activity</value>
+    <comment>AnalysisPage</comment>
+  </data>
+  <data name="HoursActivityChartChart" xml:space="preserve">
+    <value>Chart of activity during hours</value>
+    <comment>HourAcitvityChartPage</comment>
+  </data>
+  <data name="HoursActivityChartList" xml:space="preserve">
+    <value>List of activity during hours</value>
+    <comment>HourAcitvityChartPage</comment>
+  </data>
+  <data name="HoursActivityWindowTitle" xml:space="preserve">
+    <value>Analysis of activity during hours:</value>
+    <comment>HourAcitvityChartPage</comment>
+  </data>
+  <data name="Legend" xml:space="preserve">
+    <value>Legend</value>
+    <comment>ChartPage</comment>
   </data>
   <data name="LocalAdress" xml:space="preserve">
     <value>Or pick from hard disc</value>
@@ -161,19 +270,130 @@
     <value>Welcome in Repository Analyser</value>
     <comment>MainPage</comment>
   </data>
+  <data name="Month" xml:space="preserve">
+    <value>Month</value>
+    <comment>MonthAcitvityChartPage</comment>
+  </data>
+  <data name="Month1" xml:space="preserve">
+    <value>January</value>
+  </data>
+  <data name="Month10" xml:space="preserve">
+    <value>October</value>
+  </data>
+  <data name="Month11" xml:space="preserve">
+    <value>November</value>
+  </data>
+  <data name="Month12" xml:space="preserve">
+    <value>December</value>
+  </data>
+  <data name="Month2" xml:space="preserve">
+    <value>February</value>
+  </data>
+  <data name="Month3" xml:space="preserve">
+    <value>March</value>
+  </data>
+  <data name="Month4" xml:space="preserve">
+    <value>April</value>
+  </data>
+  <data name="Month5" xml:space="preserve">
+    <value>May</value>
+  </data>
+  <data name="Month6" xml:space="preserve">
+    <value>June</value>
+  </data>
+  <data name="Month7" xml:space="preserve">
+    <value>July</value>
+  </data>
+  <data name="Month8" xml:space="preserve">
+    <value>August</value>
+  </data>
+  <data name="Month9" xml:space="preserve">
+    <value>September</value>
+  </data>
+  <data name="MonthActivityAnalyseButton" xml:space="preserve">
+    <value>Analysis of month activity</value>
+    <comment>AnalysisPage</comment>
+  </data>
+  <data name="MonthActivityChartChart" xml:space="preserve">
+    <value>Chart of activity during months</value>
+    <comment>MonthAcitvityChartPage</comment>
+  </data>
+  <data name="MonthActivityChartList" xml:space="preserve">
+    <value>List of activity during months</value>
+    <comment>MonthAcitvityChartPage</comment>
+  </data>
+  <data name="MonthActivityWindowTitle" xml:space="preserve">
+    <value>Analysis of activity during months:</value>
+    <comment>MonthAcitvityChartPage</comment>
+  </data>
+  <data name="MonthDayActivityAnalyseButton" xml:space="preserve">
+    <value>Daily analisys of activity</value>
+    <comment>AnalysisPage</comment>
+  </data>
   <data name="myTitle" xml:space="preserve">
     <value>Ass</value>
+  </data>
+  <data name="NoRepositoryPathError" xml:space="preserve">
+    <value>No Repository Path</value>
   </data>
   <data name="PickFileButton" xml:space="preserve">
     <value>Pick the file</value>
     <comment>MainPage</comment>
   </data>
+  <data name="PickFolderWithRepo" xml:space="preserve">
+    <value>Pick directory with repository.</value>
+  </data>
   <data name="RefreshButton" xml:space="preserve">
     <value>Refresh</value>
     <comment>MainPage</comment>
   </data>
+  <data name="SendDataButton" xml:space="preserve">
+    <value>Send data</value>
+    <comment>AnalysisPage</comment>
+  </data>
   <data name="UrlAdress" xml:space="preserve">
     <value>Write the URL adress of the repository.</value>
     <comment>MainPage</comment>
+  </data>
+  <data name="Weekday" xml:space="preserve">
+    <value>Weekday</value>
+    <comment>WeekdaysAcitvityChartPage</comment>
+  </data>
+  <data name="WeekdayActivityAnalyseButton" xml:space="preserve">
+    <value>Weekdays Analysis of activity</value>
+    <comment>AnalysisPage</comment>
+  </data>
+  <data name="WeekdayActivityChartChart" xml:space="preserve">
+    <value>Chart of activity during weekdays</value>
+    <comment>WeekdaysAcitvityChartPage</comment>
+  </data>
+  <data name="WeekdayActivityChartList" xml:space="preserve">
+    <value>List of activity during weekdays</value>
+    <comment>WeekdaysAcitvityChartPage</comment>
+  </data>
+  <data name="WeekdayActivityWindowTitle" xml:space="preserve">
+    <value>Analysis of activity during weekdays:</value>
+    <comment>WeekdaysAcitvityChartPage</comment>
+  </data>
+  <data name="Weekday1" xml:space="preserve">
+    <value>Monday</value>
+  </data>
+  <data name="Weekday2" xml:space="preserve">
+    <value>Tuesday</value>
+  </data>
+  <data name="Weekday3" xml:space="preserve">
+    <value>Wednesday</value>
+  </data>
+  <data name="Weekday4" xml:space="preserve">
+    <value>Thursday</value>
+  </data>
+  <data name="Weekday5" xml:space="preserve">
+    <value>Friday</value>
+  </data>
+  <data name="Weekday6" xml:space="preserve">
+    <value>Saturday</value>
+  </data>
+  <data name="Weekday7" xml:space="preserve">
+    <value>Sunday</value>
   </data>
 </root>

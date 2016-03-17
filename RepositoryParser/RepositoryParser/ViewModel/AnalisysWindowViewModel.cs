@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -34,6 +36,7 @@ namespace RepositoryParser.Core.ViewModel
         private bool branchEnabled = false;
 
         private string _comboBoxSelectedItem;
+        private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
 
         public AnalisysWindowViewModel()
         {

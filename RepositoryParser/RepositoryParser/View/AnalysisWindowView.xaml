@@ -7,6 +7,7 @@
         xmlns:dataVisualisation="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         xmlns:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
         xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
+        xmlns:resw="clr-namespace:RepositoryParser.Properties"
         mc:Ignorable="d"
          Title="AnalysisView" Height="600" Width="1000"
         DataContext="{Binding Source={StaticResource Locator}, Path=Analisys}"
@@ -41,7 +42,7 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <Label Grid.Row="0" Grid.Column="1" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Analiza" Width="auto"  />
+        <Label Grid.Row="0" Grid.Column="1" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{x:Static resw:Resources.AnalysisWindowTitle}" Width="auto"  />
 
         <Grid Grid.Column="1" Grid.Row="1" Margin="5,0,0,10">
             <Grid.ColumnDefinitions>
@@ -55,9 +56,9 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Label  Grid.Column="0" Grid.Row="0" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Left" Content="Filtrowanie:" Width="auto"  />
+            <Label  Grid.Column="0" Grid.Row="0" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Left" Content="{x:Static resw:Resources.Filtering}" Width="auto"  />
             <StackPanel Grid.Column="0" Grid.Row="1">
-                <Label x:Name="AuthorLabel" Content="Autor:" Margin="5,0,0,0"/>
+                <Label x:Name="AuthorLabel" Content="{x:Static resw:Resources.FilteringAuthor}" Margin="5,0,0,0"/>
                 <ListView x:Name="AuthorComboBox" Width="auto" Height="190" MinHeight="150" MinWidth="160" HorizontalAlignment="Left" Margin="5,0,0,0"
                       ItemsSource="{Binding LocalCollection}"
                       DisplayMemberPath="{Binding Author}"  
@@ -67,7 +68,7 @@
             </StackPanel>
 
             <StackPanel Grid.Column="1" Grid.Row="1">
-                <Label x:Name="DateLbl" Content="Data:" Margin="5,0,0,0"/>
+                <Label x:Name="DateLbl" Content="{x:Static resw:Resources.FilteringDate}" Margin="5,0,0,0"/>
                 <DockPanel>
                     <wpfTool:DateTimePicker HorizontalAlignment="Left"
 		                                    Margin="10"
@@ -90,14 +91,14 @@
             </StackPanel>
 
             <StackPanel Grid.Row="1" Grid.Column="2">
-                <Label x:Name="MessageLbl" Content="Treść wiadomości:" Margin="5,0,0,0"/>
+                <Label x:Name="MessageLbl" Content="{x:Static resw:Resources.FilteringMessage}" Margin="5,0,0,0"/>
                 <TextBox x:Name="MsgTB" Text="{Binding MessageTextBox}" Margin="5"
                          />
 
             </StackPanel>
             <GridSplitter Grid.Column="3" Grid.Row="1" VerticalAlignment="Stretch" Width="10" HorizontalAlignment="Left"/>
             <StackPanel Grid.Column="3" Grid.Row="1">
-                <Label x:Name="Repositorylbl" Content="Wybór Repozytorium:" Margin="5,0,0,0"/>
+                <Label x:Name="Repositorylbl" Content="{x:Static resw:Resources.FilteringPickRepository}" Margin="5,0,0,0"/>
                 <ListView x:Name="RepositoryList" Width="auto" MinHeight="150" MinWidth="160"  HorizontalAlignment="Left" Margin="5,0,0,0"
                           ItemsSource="{Binding RepositoryCollection}"
                           DisplayMemberPath="{Binding Name}"  
@@ -119,7 +120,7 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Column="3" Grid.Row="0" Grid.RowSpan="2">
-                <Label x:Name="Branchlbl" Content="Wybór Gałęzi:" Margin="5,0,0,0"/>
+                <Label x:Name="Branchlbl" Content="{x:Static resw:Resources.FilteringPickBranch}" Margin="5,0,0,0"/>
                 <ListView x:Name="BranchList" Width="auto" MinHeight="150" MinWidth="160"  HorizontalAlignment="Left" Margin="5,0,0,0"
                       ItemsSource="{Binding BranchCollection}"
                       DisplayMemberPath="{Binding Name}"  
@@ -132,16 +133,23 @@
 
 
         <StackPanel Grid.Row="3" Grid.Column="1">
-            <Button x:Name="SendBtn" Command="{Binding SendDataCommand}" Content="Wyslij Dane" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF52802B" FontSize="20" Margin="2" Padding="4" />
+            <Button x:Name="SendBtn"
+                    Command="{Binding SendDataCommand}"
+                    Content="{x:Static resw:Resources.SendDataButton}"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"
+                    Background="#FF52802B" 
+                    FontSize="20" 
+                    Margin="2" Padding="4" />
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Margin="0,10,0,0" Grid.RowSpan="3">
-            <Button x:Name="ChartBtn" Content="Analiza aktywności" Height="50" Command="{Binding ChartCommand}" Margin="0,0,0,5" Background="#FF52802B"/>
-            <Button x:Name="DateBtn" Content="Analiza Miesięczna" Height="50" Margin="0,0,0,5" Command="{Binding MonthActivityWindowCommand}" Background="#FF52802B" />
-            <Button x:Name="GoToDayChartBtn" Content="Analiza wg dni" Height="50" Margin="0,0,0,5" Command="{Binding GoToDayChartWindowCommand}" Background="#FF52802B" />
-            <Button x:Name="GoToWeekDayChartBtn" Content="Analiza dni tygodnia" Height="50" Margin="0,0,0,5" Command="{Binding GoToWeekDayActivityWindowCommand}" Background="#FF52802B" />
-            <Button x:Name="GoToHourChartBtn" Content="Analiza wg godzin" Height="50" Margin="0,0,0,5" Command="{Binding GoToHourActivityWindowCommand}" Background="#FF52802B" />
-            <Button x:Name="GoToDifferences" Content="Porównaj" Height="50" Margin="0,0,0,5" Command="{Binding GoToDifferencesCommand}" Background="#FF52802B"/>
+            <Button x:Name="ChartBtn" Content="{x:Static resw:Resources.ActivityAnalyseButton}" Height="50" Command="{Binding ChartCommand}" Margin="0,0,0,5" Background="#FF52802B"/>
+            <Button x:Name="DateBtn" Content="{x:Static resw:Resources.MonthActivityAnalyseButton}" Height="50" Margin="0,0,0,5" Command="{Binding MonthActivityWindowCommand}" Background="#FF52802B" />
+            <Button x:Name="GoToDayChartBtn" Content="{x:Static resw:Resources.MonthDayActivityAnalyseButton}" Height="50" Margin="0,0,0,5" Command="{Binding GoToDayChartWindowCommand}" Background="#FF52802B" />
+            <Button x:Name="GoToWeekDayChartBtn" Content="{x:Static resw:Resources.WeekdayActivityAnalyseButton}" Height="50" Margin="0,0,0,5" Command="{Binding GoToWeekDayActivityWindowCommand}" Background="#FF52802B" />
+            <Button x:Name="GoToHourChartBtn" Content="{x:Static resw:Resources.HourActivityAnalyseButton}" Height="50" Margin="0,0,0,5" Command="{Binding GoToHourActivityWindowCommand}" Background="#FF52802B" />
+            <Button x:Name="GoToDifferences" Content="{x:Static resw:Resources.DifferencesButton}" Height="50" Margin="0,0,0,5" Command="{Binding GoToDifferencesCommand}" Background="#FF52802B"/>
 
         </StackPanel>
 

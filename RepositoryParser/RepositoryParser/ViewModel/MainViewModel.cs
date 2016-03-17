@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -30,6 +32,7 @@ namespace RepositoryParser.ViewModel
         private bool _isCloneButtonEnabled = true;
         private bool _progressBarVisibility = false;
         private bool isLocal = false; // komentarz testowy
+        private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
 
         private static string selectedBranch;
         public static string SelectedBranch
@@ -149,7 +152,7 @@ namespace RepositoryParser.ViewModel
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             fbd.SelectedPath = System.AppDomain.CurrentDomain.BaseDirectory;
-            fbd.Description = "Wybierz folder zawierajacy repozytorium";
+            fbd.Description = _resourceManager.GetString("PickFolderWithRepo");
 
             if (fbd.ShowDialog() == DialogResult.OK)
             {
@@ -202,7 +205,7 @@ namespace RepositoryParser.ViewModel
             }
             else
             {
-                MessageBox.Show("Nie podano sciezki repozytorium", "Blad");
+                MessageBox.Show(_resourceManager.GetString("NoRepositoryPathError"), _resourceManager.GetString("Error"));
             }
 
         }
@@ -293,7 +296,7 @@ namespace RepositoryParser.ViewModel
                 string filename = dlg.FileName;
                 List<GitCommits> tempList = CommitsColection.ToList();
                 DataToCsv.CreateCSVFromGitCommitsList(tempList, filename);
-                System.Windows.MessageBox.Show("Pomyslnie wyeksportowano", "Eksport");
+                MessageBox.Show(_resourceManager.GetString("ExportMessage"), _resourceManager.GetString("ExportTitle"));
             }
         }
         #endregion

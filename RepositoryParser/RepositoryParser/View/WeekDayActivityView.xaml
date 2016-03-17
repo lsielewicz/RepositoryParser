@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RepositoryParser.View"
         xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+        xmlns:resw="clr-namespace:RepositoryParser.Properties"
         mc:Ignorable="d"
         Title="WeekDayActivityView" Height="600" Width="800"
         DataContext="{Binding Source={StaticResource Locator}, Path=WeekdayActivity}"
@@ -30,11 +31,11 @@
 
 
 
-        <Label Grid.Row="0" x:Name="WelcomeLabel" Content="Analiza aktywności według dni tygodnia:" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Label Grid.Row="0" x:Name="WelcomeLabel" Content="{x:Static resw:Resources.WeekdayActivityWindowTitle}" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <TabControl Grid.Column="0" Grid.Row="1">
-            <TabItem Header="Wykres aktywności według dni">
+            <TabItem Header="{x:Static resw:Resources.WeekdayActivityChartChart}">
                 <StackPanel>
-                    <chartingToolkit:Chart MinHeight="400" x:Name="Chart" Title="Wykres ilości commitów przypadających na dzień tygodnia:" Background="Beige" Margin="0,0,0,50">
+                    <chartingToolkit:Chart MinHeight="400" x:Name="Chart" Title="{x:Static resw:Resources.WeekdayActivityChartChart}" Background="Beige" Margin="0,0,0,50">
                         <chartingToolkit:Chart.Series>
                             <chartingToolkit:AreaSeries x:Name="Series" 
                                     Title=""
@@ -48,15 +49,15 @@
 
                 </StackPanel>
             </TabItem>
-            <TabItem Header="Lista aktywności według dni">
+            <TabItem Header="{x:Static resw:Resources.WeekdayActivityChartList}">
                 <ListView ItemsSource="{Binding KeyCollection}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Width="120" DisplayMemberBinding="{Binding Key}">
-                                <GridViewColumnHeader Content="Dzień tygodnia" />
+                                <GridViewColumnHeader Content="{x:Static resw:Resources.Weekday}" />
                             </GridViewColumn>
                             <GridViewColumn Width="auto"  DisplayMemberBinding="{Binding Value}">
-                                <GridViewColumnHeader Content="Liczba Commitow" />
+                                <GridViewColumnHeader Content="{x:Static resw:Resources.CountOfCommits}" />
                             </GridViewColumn>
                         </GridView>
                     </ListView.View>
@@ -64,7 +65,13 @@
             </TabItem>
         </TabControl>
         <DockPanel Grid.Column="0" Grid.Row="2">
-            <Button x:Name="SaveFileBtn" Command="{Binding ExportFileCommand}" Background="#FF52802B" Width="150" Margin="15,5" Content="Eksportuj do pliku" HorizontalAlignment="Left"/>
+            <Button x:Name="SaveFileBtn" 
+                    Command="{Binding ExportFileCommand}"
+                    Background="#FF52802B" 
+                    Width="150" 
+                    Margin="15,5"
+                    Content="{x:Static resw:Resources.ExportToFileButton}" 
+                    HorizontalAlignment="Left"/>
         </DockPanel>
 
     </Grid>

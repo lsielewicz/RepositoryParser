@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -26,7 +28,7 @@ namespace RepositoryParser.ViewModel
         private GitRepository gitRepoInstance;
         private ObservableCollection<KeyValuePair<string, int>> _keyCollection;
         private string filteringQuery;
-
+        private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
         #endregion
 
 
@@ -118,29 +120,29 @@ namespace RepositoryParser.ViewModel
         {
             string Month = "";
             if (number == 1)
-                Month = "Styczeń";
+                Month = _resourceManager.GetString("Month1");
             else if (number == 2)
-                Month = "Luty";
+                Month = _resourceManager.GetString("Month2");
             else if (number == 3)
-                Month = "Marzec";
+                Month = _resourceManager.GetString("Month3");
             else if (number == 4)
-                Month = "Kwiecień";
+                Month = _resourceManager.GetString("Month4");
             else if (number == 5)
-                Month = "Maj";
+                Month = _resourceManager.GetString("Month5");
             else if (number == 6)
-                Month = "Czerwiec";
+                Month = _resourceManager.GetString("Month6");
             else if (number == 7)
-                Month = "Lipiec";
+                Month = _resourceManager.GetString("Month7");
             else if (number == 8)
-                Month = "Sierpień";
+                Month = _resourceManager.GetString("Month8");
             else if (number == 9)
-                Month = "Wrzesień";
+                Month = _resourceManager.GetString("Month9");
             else if (number == 10)
-                Month = "Październik";
+                Month = _resourceManager.GetString("Month10");
             else if (number == 11)
-                Month = "Listopad";
+                Month = _resourceManager.GetString("Month11");
             else if (number == 12)
-                Month = "Grudzień";
+                Month = _resourceManager.GetString("Month12");
             return Month;
         }
 
@@ -175,7 +177,7 @@ namespace RepositoryParser.ViewModel
                 string filename = dlg.FileName;
                 Dictionary<string, int> tempDictionary = KeyCollection.ToDictionary(a => a.Key, a => a.Value);
                 DataToCsv.CreateCSVFromDictionary(tempDictionary, filename);
-                MessageBox.Show("Pomyslnie wyeksportowano", "Eksport");
+                MessageBox.Show(_resourceManager.GetString("ExportMessage"), _resourceManager.GetString("ExportTitle"));
             }
         }
 

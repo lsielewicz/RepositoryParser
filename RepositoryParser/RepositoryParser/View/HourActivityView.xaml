@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RepositoryParser.View"
         xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+        xmlns:resw="clr-namespace:RepositoryParser.Properties"
         mc:Ignorable="d"
         Title="HourActivityView" Height="600" Width="800"
         DataContext="{Binding Source={StaticResource Locator}, Path=HourActivity}"
@@ -30,11 +31,11 @@
 
 
 
-        <Label Grid.Row="0" x:Name="WelcomeLabel" Content="Analiza aktywności według godzin:" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Label Grid.Row="0" x:Name="WelcomeLabel" Content="{x:Static resw:Resources.HoursActivityWindowTitle}" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <TabControl Grid.Column="0" Grid.Row="1">
-            <TabItem Header="Wykres aktywności według godzin">
+            <TabItem Header="{x:Static resw:Resources.HoursActivityChartChart}">
                 <StackPanel>
-                    <chartingToolkit:Chart MinHeight="400" x:Name="Chart" Title="Wykres ilości commitów przypadających na godzine:" Background="Beige" Margin="0,0,0,50">
+                    <chartingToolkit:Chart MinHeight="400" x:Name="Chart" Title="{x:Static resw:Resources.HoursActivityChartChart}" Background="Beige" Margin="0,0,0,50">
                         <chartingToolkit:Chart.Series>
                             <chartingToolkit:ColumnSeries x:Name="Series" 
                                     Title=""
@@ -48,15 +49,15 @@
 
                 </StackPanel>
             </TabItem>
-            <TabItem Header="Lista aktywności według godzin">
+            <TabItem Header="{x:Static resw:Resources.HoursActivityChartList}">
                 <ListView ItemsSource="{Binding KeyCollection}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Width="120" DisplayMemberBinding="{Binding Key}">
-                                <GridViewColumnHeader Content="Godzina" />
+                                <GridViewColumnHeader Content="{x:Static resw:Resources.Hour}" />
                             </GridViewColumn>
                             <GridViewColumn Width="auto"  DisplayMemberBinding="{Binding Value}">
-                                <GridViewColumnHeader Content="Liczba Commitow" />
+                                <GridViewColumnHeader Content="{x:Static resw:Resources.CountOfCommits}" />
                             </GridViewColumn>
                         </GridView>
                     </ListView.View>
@@ -64,7 +65,13 @@
             </TabItem>
         </TabControl>
         <DockPanel Grid.Column="0" Grid.Row="2">
-            <Button x:Name="SaveFileBtn" Command="{Binding ExportFileCommand}" Background="#FF52802B" Width="150" Margin="15,5" Content="Eksportuj do pliku" HorizontalAlignment="Left"/>
+            <Button x:Name="SaveFileBtn"
+                    Command="{Binding ExportFileCommand}"
+                    Background="#FF52802B"
+                    Width="150"
+                    Margin="15,5"
+                    Content="{x:Static resw:Resources.ExportToFileButton}"
+                    HorizontalAlignment="Left"/>
         </DockPanel>
     </Grid>
 </Window>

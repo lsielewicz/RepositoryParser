@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RepositoryParser.View"
         xmlns:utils="clr-namespace:RepositoryParser.Core.Utils;assembly=RepositoryParser.Core"
+        xmlns:resw="clr-namespace:RepositoryParser.Properties"
         mc:Ignorable="d"
         Title="DifferenceWindowView" Height="600" Width="900"
         DataContext="{Binding Source={StaticResource Locator}, Path=Difference}"
@@ -38,17 +39,17 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Porównanie" Width="auto"  />
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{x:Static resw:Resources.DifferenceWindowTitle}" Width="auto"  />
 
         <ScrollViewer Grid.Column="0" Grid.Row="1" HorizontalScrollBarVisibility="Auto" Grid.RowSpan="2" VerticalScrollBarVisibility="Auto">
             <StackPanel x:Name="CommitListPanel" Grid.Column="0" Grid.Row="1" Margin="5,10,5,10">
                 <ListView ItemsSource="{Binding CommitsCollection}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Width="40" DisplayMemberBinding="{Binding Key}" Header="ID">
+                            <GridViewColumn Width="40" DisplayMemberBinding="{Binding Key}" Header="{x:Static resw:Resources.CommitsList_ID}">
                             </GridViewColumn>
 
-                            <GridViewColumn Width="auto"  DisplayMemberBinding="{Binding Value}" Header="Message">
+                            <GridViewColumn Width="auto"  DisplayMemberBinding="{Binding Value}" Header="{x:Static resw:Resources.CommitsList_Message}">
                             </GridViewColumn>
                         </GridView>
                     </ListView.View>
@@ -58,7 +59,7 @@
 
         <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
             <StackPanel x:Name="ChangesPanel">
-                <TextBlock Text="Zmiany:" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <TextBlock Text="{x:Static resw:Resources.Changes}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                 <ListView ItemsSource="{Binding ChangesCollection}" SelectedItem="{Binding ChangeSelectedItem, Mode=TwoWay}">
                     <ListView.View>
                         <GridView>

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -24,6 +26,7 @@ namespace RepositoryParser.ViewModel
         private GitRepository gitRepoInstance;
         private ObservableCollection<KeyValuePair<string, int>> _keyCollection;
         private string filteringQuery;
+        private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
         #endregion
 
 
@@ -95,19 +98,19 @@ namespace RepositoryParser.ViewModel
         {
             string Weekday = "";
             if (number == 1)
-                Weekday = "Monday";
+                Weekday = _resourceManager.GetString("Weekday1");
             else if (number == 2)
-                Weekday = "Tuesday";
+                Weekday = _resourceManager.GetString("Weekday2");
             else if (number == 3)
-                Weekday = "Wednesday";
+                Weekday = _resourceManager.GetString("Weekday3");
             else if (number == 4)
-                Weekday = "Thursday";
+                Weekday = _resourceManager.GetString("Weekday4");
             else if (number == 5)
-                Weekday = "Friday";
+                Weekday = _resourceManager.GetString("Weekday5");
             else if (number == 6)
-                Weekday = "Saturday";
+                Weekday = _resourceManager.GetString("Weekday6");
             else if (number == 0)
-                Weekday = "Sunday";
+                Weekday = _resourceManager.GetString("Weekday7");
             return Weekday;
         }
 
@@ -139,7 +142,7 @@ namespace RepositoryParser.ViewModel
                 string filename = dlg.FileName;
                 Dictionary<string, int> tempDictionary = KeyCollection.ToDictionary(a => a.Key, a => a.Value);
                 DataToCsv.CreateCSVFromDictionary(tempDictionary, filename);
-                MessageBox.Show("Pomyslnie wyeksportowano", "Eksport");
+                MessageBox.Show(_resourceManager.GetString("ExportMessage"), _resourceManager.GetString("ExportTitle"));
             }
         }
     }
