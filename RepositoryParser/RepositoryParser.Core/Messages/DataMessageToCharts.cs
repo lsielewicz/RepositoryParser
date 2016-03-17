@@ -10,22 +10,22 @@ namespace RepositoryParser.Core.Messages
 {
     public class DataMessageToCharts : MessageBase
     {
-        public GitRepository RepoInstance { get; set; }
+        public GitRepositoryService RepoInstance { get; set; }
         public List<string> AuthorsList { get; set; }
         public string FilteringQuery { get; set; }
 
-        public DataMessageToCharts(GitRepository temp, List<string> list)
+        public DataMessageToCharts(GitRepositoryService temp, List<string> list)
         {
             RepoInstance = temp;
             AuthorsList = list;
         }
 
-        public DataMessageToCharts(GitRepository repo, string generatedQuery)
+        public DataMessageToCharts(GitRepositoryService repo, string generatedQuery)
         {
             RepoInstance = repo;
             FilteringQuery = generatedQuery;
         }
-        public DataMessageToCharts(GitRepository repo, List<string> authorsList, string generatedQuery)
+        public DataMessageToCharts(GitRepositoryService repo, List<string> authorsList, string generatedQuery)
         {
             RepoInstance = repo;
             FilteringQuery = generatedQuery;

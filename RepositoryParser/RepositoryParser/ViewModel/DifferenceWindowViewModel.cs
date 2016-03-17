@@ -17,7 +17,7 @@ namespace RepositoryParser.ViewModel
     public class DifferenceWindowViewModel : ViewModelBase
     {
         #region Variables
-        private GitRepository gitRepository;
+        private GitRepositoryService _gitRepositoryService;
         private string filteringQuery;
         private ObservableCollection<KeyValuePair<int, string>> commitsCollection;
         private KeyValuePair<int, string> selectedItem;
@@ -39,9 +39,9 @@ namespace RepositoryParser.ViewModel
         #endregion
         #region Methods
 
-        private void HandleChartMessage(GitRepository repo, string query)
+        private void HandleChartMessage(GitRepositoryService repo, string query)
         {
-            this.gitRepository = repo;
+            this._gitRepositoryService = repo;
             this.filteringQuery = query;
             FillContent();
         }
@@ -59,7 +59,7 @@ namespace RepositoryParser.ViewModel
             else
             {
                 query = filteringQuery;
-                SQLiteCommand command = new SQLiteCommand(query, gitRepository.SqLiteInstance.Connection);
+                SQLiteCommand command = new SQLiteCommand(query, _gitRepositoryService.SqLiteInstance.Connection);
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -176,7 +176,7 @@ namespace RepositoryParser.ViewModel
                 TextA = "";
                 TextB = "";
                 string query = changeQuery + " and Changes.Type ='" + dic.Key + "' and Changes.Path='" + dic.Value + "'";
-                SQLiteCommand command = new SQLiteCommand(query, gitRepository.SqLiteInstance.Connection);
+                SQLiteCommand command = new SQLiteCommand(query, _gitRepositoryService.SqLiteInstance.Connection);
                 SQLiteDataReader reader = command.ExecuteReader();
                 string texta = "";
                 string textb = "";
@@ -197,7 +197,7 @@ namespace RepositoryParser.ViewModel
                 "Select * from Changes inner join ChangesForCommit on Changes.ID=ChangesForCommit.NR_Change where " +
                 "ChangesForCommit.NR_Commit=" + dictionary.Key;
             changeQuery = query;
-            SQLiteCommand command = new SQLiteCommand(query, gitRepository.SqLiteInstance.Connection);
+            SQLiteCommand command = new SQLiteCommand(query, _gitRepositoryService.SqLiteInstance.Connection);
             SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {

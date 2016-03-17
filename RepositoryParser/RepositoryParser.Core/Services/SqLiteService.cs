@@ -7,10 +7,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using RepositoryParser.Core.Interfaces;
 
 namespace RepositoryParser.Core.Models
 {
-    public class SqLiteHandler
+    public class SqLiteService : ISqLiteService
     {
         public SQLiteConnection Connection { get; set; }
 
@@ -22,14 +23,14 @@ namespace RepositoryParser.Core.Models
 
         private bool isOpened = false;
 
-        public SqLiteHandler()
+        public SqLiteService()
         {
             Connection = null;
             DBName = "";
             isOpened = false;
         }
 
-        public SqLiteHandler(string path)
+        public SqLiteService(string path)
         {
             Connection = null;
             DBName = path;

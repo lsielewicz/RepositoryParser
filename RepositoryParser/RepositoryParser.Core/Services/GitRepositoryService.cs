@@ -8,27 +8,28 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using GitSharp;
+using RepositoryParser.Core.Interfaces;
 
 namespace RepositoryParser.Core.Models
 {
-    public class GitRepository
+    public class GitRepositoryService : IGitRepositoryService
     {
         #region Variables
         public string RepoPath { get; set; }
         public string UrlRepoPath { get; set; }
         public Repository RepositoryInstance { get; set; }
-        public SqLiteHandler SqLiteInstance { get; set; }
+        public SqLiteService SqLiteInstance { get; set; }
         public bool isCloned { get; set; }
         #endregion
         #region Constructors
 
-        public GitRepository()
+        public GitRepositoryService()
         {
             RepoPath = "";
             RepositoryInstance = null;
             isCloned = false;
         }
-        public GitRepository(string path)
+        public GitRepositoryService(string path)
         {
             RepoPath = path;
             RepositoryInstance = null;
@@ -89,7 +90,7 @@ namespace RepositoryParser.Core.Models
             }
         }
 
-        public void FillCommitList()
+        public void FillDataBase()
         {
             GitCommits gitCommit = new GitCommits();
             BranchTable gitBranch = new BranchTable();
@@ -133,7 +134,7 @@ namespace RepositoryParser.Core.Models
                     gitCommit.Author = commitz.Author.Name;
                     gitCommit.Date = Convert.ToString(commitz.AuthorDate);
                     gitCommit.Date = gitCommit.Date.Remove(19);
-                    gitCommit.Date = SqLiteHandler.getDateTimeFormat(gitCommit.Date);
+                    gitCommit.Date = SqLiteService.getDateTimeFormat(gitCommit.Date);
                     gitCommit.Email = commitz.Author.EmailAddress;
                     //SQLITE CORNER
                     CommitsQueryLists.Add(GitCommits.InsertSqliteQuery(gitCommit));
@@ -209,7 +210,7 @@ namespace RepositoryParser.Core.Models
                 repoNumber++;
             }
 
-            SqLiteInstance = new SqLiteHandler(RepositoryName);
+            SqLiteInstance = new SqLiteService(RepositoryName);
             List<string> CreateTableQuerys = new List<string>
             {
                 {GitRepositoryTable.createTable },
@@ -227,7 +228,7 @@ namespace RepositoryParser.Core.Models
         public void ConnectRepositoryToDataBase()
         {
             string RepositoryName = "CommonRepositoryDataBase";
-            SqLiteInstance = new SqLiteHandler(RepositoryName);
+            SqLiteInstance = new SqLiteService(RepositoryName);
             SqLiteInstance.OpenConnection();
         }
 
@@ -248,7 +249,7 @@ namespace RepositoryParser.Core.Models
                 string message = Convert.ToString(reader["Message"]);
                 string author = Convert.ToString(reader["Author"]);
                 string date = Convert.ToString(reader["Date"]);
-                date = SqLiteHandler.getDateTimeFormat(date);
+                date = SqLiteService.getDateTimeFormat(date);
                 // date = date.Remove(19);
                 string email = Convert.ToString(reader["Email"]);
                 GitCommits tempInstance = new GitCommits(id, message, author, date, email);

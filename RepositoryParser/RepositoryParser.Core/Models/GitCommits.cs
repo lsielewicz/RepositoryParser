@@ -65,9 +65,9 @@ namespace RepositoryParser.Core.Models
         public static string InsertSqliteQuery(int id, string message, string author, string date, string email)
         {
             if (message.Contains("'"))
-                message = SqLiteHandler.StripSlashes(message);
+                message = SqLiteService.StripSlashes(message);
             if (author.Contains("'"))
-                author = SqLiteHandler.StripSlashes(author);
+                author = SqLiteService.StripSlashes(author);
 
             string query = "Insert into GitCommits (Message,Author,Date,Email) values (" +
                            "'" + message + "'" +
@@ -93,9 +93,9 @@ namespace RepositoryParser.Core.Models
         public static string InsertSqliteQuery(GitCommits obj)
         {
             if (obj.Message.Contains("'"))
-                obj.Message = SqLiteHandler.StripSlashes(obj.Message);
+                obj.Message = SqLiteService.StripSlashes(obj.Message);
             if (obj.Author.Contains("'"))
-                obj.Author = SqLiteHandler.StripSlashes(obj.Author);
+                obj.Author = SqLiteService.StripSlashes(obj.Author);
 
             string query = "Insert into GitCommits (Message,Author,Date,Email) values (" +
                            "'" + obj.Message + "'" +
@@ -117,7 +117,7 @@ namespace RepositoryParser.Core.Models
                 string message = Convert.ToString(reader["Message"]);
                 string author = Convert.ToString(reader["Author"]);
                 string date = Convert.ToString(reader["Date"]);
-                date = SqLiteHandler.getDateTimeFormat(date);
+                date = SqLiteService.getDateTimeFormat(date);
                 // date = date.Remove(19);
                 string email = Convert.ToString(reader["Email"]);
                 GitCommits tempInstance = new GitCommits(id, message, author, date, email);

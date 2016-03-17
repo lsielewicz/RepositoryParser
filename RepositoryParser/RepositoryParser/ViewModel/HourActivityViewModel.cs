@@ -23,7 +23,7 @@ namespace RepositoryParser.ViewModel
     public class HourActivityViewModel : ViewModelBase
     {
         #region Variables
-        private GitRepository gitRepoInstance;
+        private GitRepositoryService gitRepoInstance;
         private ObservableCollection<KeyValuePair<string, int>> _keyCollection;
         private string filteringQuery;
         private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
@@ -54,7 +54,7 @@ namespace RepositoryParser.ViewModel
 
         #endregion
 
-        private void HandleDataMessage(GitRepository gitRepo, string filteringQuery)
+        private void HandleDataMessage(GitRepositoryService gitRepo, string filteringQuery)
         {
             this.gitRepoInstance = gitRepo;
             this.filteringQuery = filteringQuery;

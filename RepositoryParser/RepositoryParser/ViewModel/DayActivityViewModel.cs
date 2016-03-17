@@ -24,7 +24,7 @@ namespace RepositoryParser.ViewModel
     {
         #region Variables
 
-        private GitRepository gitRepository;
+        private GitRepositoryService _gitRepositoryService;
         private string filteringQuery;
         private ObservableCollection<KeyValuePair<int, int>> keyCollection;
         private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
@@ -60,9 +60,9 @@ namespace RepositoryParser.ViewModel
         #endregion
         #region Methods
 
-        private void HandleDataMessage(GitRepository repo, string query)
+        private void HandleDataMessage(GitRepositoryService repo, string query)
         {
-            this.gitRepository = repo;
+            this._gitRepositoryService = repo;
             this.filteringQuery = query;
             FillDataCollection();
         }
@@ -92,7 +92,7 @@ namespace RepositoryParser.ViewModel
                              "and strftime('%d', Date) =" +
                              "'" + dateString + "'";
                 }
-                SQLiteCommand command = new SQLiteCommand(query, gitRepository.SqLiteInstance.Connection);
+                SQLiteCommand command = new SQLiteCommand(query, _gitRepositoryService.SqLiteInstance.Connection);
                 SQLiteDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {

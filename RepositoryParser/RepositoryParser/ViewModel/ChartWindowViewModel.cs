@@ -25,7 +25,7 @@ namespace RepositoryParser.ViewModel
     {
         #region Variables
         private ObservableCollection<KeyValuePair<string, int>> _keyCollection;
-        private GitRepository localIGitRepository;
+        private GitRepositoryService _localIGitRepositoryService;
         private List<string> authorsList;
         private string filteringQuery;
         private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources",Assembly.GetExecutingAssembly());
@@ -108,7 +108,7 @@ namespace RepositoryParser.ViewModel
 
 
 
-                SQLiteCommand command = new SQLiteCommand(query, localIGitRepository.SqLiteInstance.Connection);
+                SQLiteCommand command = new SQLiteCommand(query, _localIGitRepositoryService.SqLiteInstance.Connection);
                 SQLiteDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
@@ -140,7 +140,7 @@ namespace RepositoryParser.ViewModel
             List<string> newAuthorsList = new List<string>();
             query = "SELECT Author FROM GitCommits " + MatchQuery(query) + "Group by Author";
 
-            SQLiteCommand command = new SQLiteCommand(query, localIGitRepository.SqLiteInstance.Connection);
+            SQLiteCommand command = new SQLiteCommand(query, _localIGitRepositoryService.SqLiteInstance.Connection);
             SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
@@ -152,9 +152,9 @@ namespace RepositoryParser.ViewModel
         #endregion
 
         #region Messsages
-        private void HandleDataMessage(GitRepository repo, List<string> authorsList, string filteringQuery)
+        private void HandleDataMessage(GitRepositoryService repo, List<string> authorsList, string filteringQuery)
         {
-            this.localIGitRepository = repo;
+            this._localIGitRepositoryService = repo;
             this.filteringQuery = filteringQuery;
             if (this.authorsList != null && authorsList.Count > 0)
                 this.authorsList.Clear();

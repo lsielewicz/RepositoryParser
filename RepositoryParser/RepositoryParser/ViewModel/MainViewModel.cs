@@ -27,7 +27,7 @@ namespace RepositoryParser.ViewModel
 
         private ObservableCollection<GitCommits> _commitsCollection;
         private string _urlTextBox = "";
-        private GitRepository GitRepoInstance;
+        private GitRepositoryService GitRepoInstance;
         private bool _isCloneButtonEnabled = true;
         private bool _progressBarVisibility = false;
         private bool isLocal = false; // komentarz testowy
@@ -173,21 +173,21 @@ namespace RepositoryParser.ViewModel
 
                     if (!isLocal)
                     {
-                        GitRepoInstance = new GitRepository();
+                        GitRepoInstance = new GitRepositoryService();
                         GitRepoInstance.UrlRepoPath = UrlTextBox;
                         GitRepoInstance.isCloned = false;
                         GitRepoInstance.InitializeConnection();
-                        GitRepoInstance.FillCommitList();
+                        GitRepoInstance.FillDataBase();
                         CommitsColection.Clear();
 
                     }
                     else
                     {
-                        GitRepoInstance = new GitRepository();
+                        GitRepoInstance = new GitRepositoryService();
                         GitRepoInstance.isCloned = true;
                         GitRepoInstance.RepoPath = UrlTextBox;
                         GitRepoInstance.InitializeConnection();
-                        GitRepoInstance.FillCommitList();
+                        GitRepoInstance.FillDataBase();
                         CommitsColection.Clear();
                     }
                     GitRepoInstance.GetDataFromBase().ForEach(x => CommitsColection.Add(x));
@@ -219,7 +219,7 @@ namespace RepositoryParser.ViewModel
         {
             try
             {
-                GitRepoInstance = new GitRepository();
+                GitRepoInstance = new GitRepositoryService();
 
                 string repoPath = "./DataBases/CommonRepositoryDataBase.sqlite";
                 if (!File.Exists(repoPath))

@@ -52,9 +52,9 @@ namespace RepositoryParser.Core.Models
         public static string InsertSqliteQuery(string type, string path, string texta, string textb)
         {
             if (texta.Contains("'"))
-                texta = SqLiteHandler.StripSlashes(texta);
+                texta = SqLiteService.StripSlashes(texta);
             if (textb.Contains("'"))
-                textb = SqLiteHandler.StripSlashes(texta);
+                textb = SqLiteService.StripSlashes(texta);
 
             string query = "Insert into Changes (Type, Path, TextA, TextB) values (" +
                            "'" + type + "'" +
@@ -66,9 +66,9 @@ namespace RepositoryParser.Core.Models
         public static string InsertSqliteQuery(ChangesTable obj)
         {
             if (obj.TextA.Contains("'"))
-                obj.TextA = SqLiteHandler.StripSlashes(obj.TextA);
+                obj.TextA = SqLiteService.StripSlashes(obj.TextA);
             if (obj.TextB.Contains("'"))
-                obj.TextB = SqLiteHandler.StripSlashes(obj.TextB);
+                obj.TextB = SqLiteService.StripSlashes(obj.TextB);
 
             string query = "Insert into Changes (Type, Path, TextA, TextB) values (" +
                            "'" + obj.Type + "'" +
