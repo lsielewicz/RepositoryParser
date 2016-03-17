@@ -41,7 +41,7 @@ namespace RepositoryParser.Core.Models
             Type = type;
         }
 
-
+        #region querys
         public static string createTable = "CREATE TABLE Repository(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name varchar(40), Type varchar(40))";
         public static string deleteAllQuery = "DELETE FROM Repository";
 
@@ -98,5 +98,6 @@ namespace RepositoryParser.Core.Models
             }
             return output;
         }
+        #endregion
     }
 }

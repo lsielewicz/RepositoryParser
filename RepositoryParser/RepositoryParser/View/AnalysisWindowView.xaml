@@ -138,18 +138,18 @@
                     Content="{x:Static resw:Resources.SendDataButton}"
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center"
-                    Background="#FF52802B" 
+                    Background="{StaticResource MyGreen}" 
                     FontSize="20" 
                     Margin="2" Padding="4" />
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Margin="0,10,0,0" Grid.RowSpan="3">
-            <Button x:Name="ChartBtn" Content="{x:Static resw:Resources.ActivityAnalyseButton}" Height="50" Command="{Binding ChartCommand}" Margin="0,0,0,5" Background="#FF52802B"/>
-            <Button x:Name="DateBtn" Content="{x:Static resw:Resources.MonthActivityAnalyseButton}" Height="50" Margin="0,0,0,5" Command="{Binding MonthActivityWindowCommand}" Background="#FF52802B" />
-            <Button x:Name="GoToDayChartBtn" Content="{x:Static resw:Resources.MonthDayActivityAnalyseButton}" Height="50" Margin="0,0,0,5" Command="{Binding GoToDayChartWindowCommand}" Background="#FF52802B" />
-            <Button x:Name="GoToWeekDayChartBtn" Content="{x:Static resw:Resources.WeekdayActivityAnalyseButton}" Height="50" Margin="0,0,0,5" Command="{Binding GoToWeekDayActivityWindowCommand}" Background="#FF52802B" />
-            <Button x:Name="GoToHourChartBtn" Content="{x:Static resw:Resources.HourActivityAnalyseButton}" Height="50" Margin="0,0,0,5" Command="{Binding GoToHourActivityWindowCommand}" Background="#FF52802B" />
-            <Button x:Name="GoToDifferences" Content="{x:Static resw:Resources.DifferencesButton}" Height="50" Margin="0,0,0,5" Command="{Binding GoToDifferencesCommand}" Background="#FF52802B"/>
+            <Button x:Name="ChartBtn" Content="{x:Static resw:Resources.ActivityAnalyseButton}" Height="50" Command="{Binding ChartCommand}" Margin="0,0,0,5" Background="{StaticResource MyGreen}"/>
+            <Button x:Name="DateBtn" Content="{x:Static resw:Resources.MonthActivityAnalyseButton}" Height="50" Margin="0,0,0,5" Command="{Binding MonthActivityWindowCommand}" Background="{StaticResource MyGreen}" />
+            <Button x:Name="GoToDayChartBtn" Content="{x:Static resw:Resources.MonthDayActivityAnalyseButton}" Height="50" Margin="0,0,0,5" Command="{Binding GoToDayChartWindowCommand}" Background="{StaticResource MyGreen}" />
+            <Button x:Name="GoToWeekDayChartBtn" Content="{x:Static resw:Resources.WeekdayActivityAnalyseButton}" Height="50" Margin="0,0,0,5" Command="{Binding GoToWeekDayActivityWindowCommand}" Background="{StaticResource MyGreen}" />
+            <Button x:Name="GoToHourChartBtn" Content="{x:Static resw:Resources.HourActivityAnalyseButton}" Height="50" Margin="0,0,0,5" Command="{Binding GoToHourActivityWindowCommand}" Background="{StaticResource MyGreen}" />
+            <Button x:Name="GoToDifferences" Content="{x:Static resw:Resources.DifferencesButton}" Height="50" Margin="0,0,0,5" Command="{Binding GoToDifferencesCommand}" Background="{StaticResource MyGreen}"/>
 
         </StackPanel>
 

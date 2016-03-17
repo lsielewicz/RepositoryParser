@@ -160,6 +160,10 @@
     <Compile Include="View\WeekDayActivityView.xaml.cs">
       <DependentUpon>WeekDayActivityView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Resources\Themes\Brushes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AnalysisWindowView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -256,7 +260,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\" />
     <Folder Include="Strings\" />
   </ItemGroup>
   <ItemGroup>

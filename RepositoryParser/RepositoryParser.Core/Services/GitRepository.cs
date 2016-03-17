@@ -72,7 +72,6 @@ namespace RepositoryParser.Core.Models
 
 
                         Git.Clone(UrlRepoPath, directoryPath);
-                        // Git.Clone(new CloneCommand { Source = UrlRepoPath, GitDirectory = directoryPath, Quiet = false, Bare = true });
                         isCloned = true;
                         RepositoryInstance = new Repository(directoryPath);
                     }
@@ -83,7 +82,6 @@ namespace RepositoryParser.Core.Models
                     ConnectRepositoryToDataBase(true);
                 else
                     ConnectRepositoryToDataBase();
-                //InsertDataIntoBase();
             }
             catch (Exception ex)
             {
@@ -110,7 +108,6 @@ namespace RepositoryParser.Core.Models
                 BranchTable tempBranch = new BranchTable(branch.Key, branch.Value);
                 if (tempBranch.Name.Contains("/"))
                     continue;
-                //tempBranch.Name = BranchTable.FixRemoteRepositoryName(tempBranch.Name);
                 QuerysList.Add(BranchTable.InsertSqliteQuery(tempBranch));
                 gitBranchList.Add(tempBranch);
             }
@@ -260,10 +257,6 @@ namespace RepositoryParser.Core.Models
             return tempList;
         }
         #endregion
-
-
-
-
 
     }
 }

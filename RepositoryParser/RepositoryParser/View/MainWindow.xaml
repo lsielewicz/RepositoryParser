@@ -96,7 +96,7 @@
                     VerticalAlignment="Center" 
                     Height="50"  
                     Content="{x:Static resw:Resources.AddRepositoryButton}" 
-                    Background="#FF52802B" 
+                    Background="{StaticResource MyGreen}" 
                     FontSize="20" 
                     Margin="2" 
                     Padding="4" />
@@ -108,7 +108,7 @@
                     Height="50" 
                     VerticalAlignment="Top" 
                     Command="{Binding GoToPageAnalisysCommand}" 
-                    Background="#FF52802B" 
+                    Background="{StaticResource MyGreen}" 
                     Margin="0,0,0,5"/>
 
         </DockPanel>
@@ -118,21 +118,21 @@
                     Content ="{x:Static resw:Resources.ClearDBButton}" 
                     Height="50" 
                     VerticalAlignment="Top" 
-                    Background="#FF52802B"  
+                    Background="{StaticResource MyGreen}"  
                     Command="{Binding ClearDataBaseCommand}" 
                     Margin="0,0,0,5"/>
             <Button x:Name="Refresh"
                     Content ="{x:Static resw:Resources.RefreshButton}" 
                     Height="50" 
                     VerticalAlignment="Top"
-                    Background="#FF52802B"  
+                    Background="{StaticResource MyGreen}"  
                     Command="{Binding RefreshCommand}" 
                     Margin="0,0,0,5"/>
             <Button x:Name="Save"
                     Content ="{x:Static resw:Resources.ExportToFileButton}" 
                     Height="50" 
                     VerticalAlignment="Bottom" 
-                    Background="#FF52802B"  
+                    Background="{StaticResource MyGreen}"  
                     Command="{Binding ExportFileCommand}"
                     Margin="0,0,0,5"/>
         </StackPanel>

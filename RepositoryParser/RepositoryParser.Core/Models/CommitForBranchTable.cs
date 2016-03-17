@@ -13,6 +13,28 @@ namespace RepositoryParser.Core.Models
         public int NR_Branch { get; set; }
         public int NR_Commit { get; set; }
 
+        
+        public CommitForBranchTable()
+        {
+            ID_CommitForBranch = 0;
+            NR_Branch = 0;
+            NR_Commit = 0;
+        }
+
+        public CommitForBranchTable(int id, int nrBranch, int nrCommit)
+        {
+            ID_CommitForBranch = id;
+            NR_Branch = nrBranch;
+            NR_Commit = nrCommit;
+        }
+
+        public CommitForBranchTable(int nrBranch, int nrCommit)
+        {
+            NR_Branch = nrBranch;
+            NR_Commit = nrCommit;
+        }
+
+        #region querys
         public static string CreateTable =
             "CREATE TABLE CommitForBranch(ID INTEGER PRIMARY KEY AUTOINCREMENT, NR_Branch INTEGER, NR_Commit INTEGER)";
         public static string deleteAllQuery = "DELETE FROM CommitForBranch";
@@ -40,24 +62,6 @@ namespace RepositoryParser.Core.Models
             }
             return tempList;
         }
-        public CommitForBranchTable()
-        {
-            ID_CommitForBranch = 0;
-            NR_Branch = 0;
-            NR_Commit = 0;
-        }
-
-        public CommitForBranchTable(int id, int nrBranch, int nrCommit)
-        {
-            ID_CommitForBranch = id;
-            NR_Branch = nrBranch;
-            NR_Commit = nrCommit;
-        }
-
-        public CommitForBranchTable(int nrBranch, int nrCommit)
-        {
-            NR_Branch = nrBranch;
-            NR_Commit = nrCommit;
-        }
+        #endregion
     }
 }

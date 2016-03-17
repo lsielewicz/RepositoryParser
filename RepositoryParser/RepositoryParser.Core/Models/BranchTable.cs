@@ -16,13 +16,6 @@ namespace RepositoryParser.Core.Models
 
 
 
-        public static string CreateTable = "CREATE TABLE Branch(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name varchar(40))";
-        public static string deleteAllQuery = "DELETE FROM Branch";
-        public static string InsertSqliteQuery(BranchTable obj)
-        {
-            return "Insert into Branch (Name) values (" +
-                           "'" + obj.Name + "')";
-        }
 
         public BranchTable()
         {
@@ -45,6 +38,19 @@ namespace RepositoryParser.Core.Models
             Name = name;
             Value = value;
         }
+
+
+        #region Querys
+
+        public static string CreateTable = "CREATE TABLE Branch(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name varchar(40))";
+        public static string deleteAllQuery = "DELETE FROM Branch";
+        public static string InsertSqliteQuery(BranchTable obj)
+        {
+            return "Insert into Branch (Name) values (" +
+                           "'" + obj.Name + "')";
+        }
+
+
         public List<BranchTable> GetDataFromBase(SQLiteConnection Connection, string q = "")
         {
             List<BranchTable> tempList = new List<BranchTable>();
@@ -94,5 +100,6 @@ namespace RepositoryParser.Core.Models
 
             return Result;
         }
+        #endregion
     }
 }

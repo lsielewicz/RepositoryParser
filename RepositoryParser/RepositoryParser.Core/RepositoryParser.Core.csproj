@@ -135,9 +135,9 @@
     <Compile Include="Models\ChangesTable.cs" />
     <Compile Include="Models\CommitForBranchTable.cs" />
     <Compile Include="Models\GitCommits.cs" />
-    <Compile Include="Models\GitRepository.cs" />
+    <Compile Include="Services\GitRepository.cs" />
     <Compile Include="Models\GitRepositoryTable.cs" />
-    <Compile Include="Models\SqLiteHandler.cs" />
+    <Compile Include="Services\SqLiteHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DataToCSV.cs" />
     <Compile Include="Utils\ScrollSynchronizer.cs" />

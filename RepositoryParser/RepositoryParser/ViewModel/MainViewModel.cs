@@ -27,7 +27,6 @@ namespace RepositoryParser.ViewModel
 
         private ObservableCollection<GitCommits> _commitsCollection;
         private string _urlTextBox = "";
-        // private string DirectoryPath="";
         private GitRepository GitRepoInstance;
         private bool _isCloneButtonEnabled = true;
         private bool _progressBarVisibility = false;

@@ -17,6 +17,49 @@ namespace RepositoryParser.Core.Models
         public string Email { get; set; }
         #endregion
 
+       
+        #region Constructors
+
+        public GitCommits()
+        {
+
+        }
+        public GitCommits(int id)
+        {
+            this.ID = id;
+        }
+
+        public GitCommits(int id, string message)
+        {
+            this.ID = id;
+            this.Message = message;
+        }
+
+        public GitCommits(int id, string message, string author)
+        {
+            this.ID = id;
+            this.Message = message;
+            this.Author = author;
+        }
+
+        public GitCommits(int id, string message, string author, string date)
+        {
+            this.ID = id;
+            this.Message = message;
+            this.Author = author;
+            this.Date = date;
+        }
+        public GitCommits(int id, string message, string author, string date, string email)
+        {
+            this.ID = id;
+            this.Message = message;
+            this.Author = author;
+            this.Date = date;
+            this.Email = email;
+        }
+        #endregion
+
+        #region querys
         public static string SqliteQuery = "create table GitCommits(ID INTEGER PRIMARY KEY AUTOINCREMENT, Message varchar(200), Author varchar(30), Date DATETIME, Email varchar(40))";
 
         public static string InsertSqliteQuery(int id, string message, string author, string date, string email)
@@ -84,46 +127,6 @@ namespace RepositoryParser.Core.Models
         }
 
         public static string deleteAllQuery = "DELETE FROM GitCommits";
-        #region Constructors
-
-        public GitCommits()
-        {
-
-        }
-        public GitCommits(int id)
-        {
-            this.ID = id;
-        }
-
-        public GitCommits(int id, string message)
-        {
-            this.ID = id;
-            this.Message = message;
-        }
-
-        public GitCommits(int id, string message, string author)
-        {
-            this.ID = id;
-            this.Message = message;
-            this.Author = author;
-        }
-
-        public GitCommits(int id, string message, string author, string date)
-        {
-            this.ID = id;
-            this.Message = message;
-            this.Author = author;
-            this.Date = date;
-        }
-        public GitCommits(int id, string message, string author, string date, string email)
-        {
-            this.ID = id;
-            this.Message = message;
-            this.Author = author;
-            this.Date = date;
-            this.Email = email;
-        }
         #endregion
-
     }
 }

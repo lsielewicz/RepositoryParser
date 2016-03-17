@@ -65,7 +65,7 @@
         <DockPanel Grid.Column="0" Grid.Row="2">
             <Button x:Name="SaveFileBtn" 
                     Command="{Binding ExportFileCommand}" 
-                    Background="#FF52802B"  
+                    Background="{StaticResource MyGreen}"  
                     Width="150"
                     Margin="15,5" 
                     Content="{x:Static resw:Resources.ExportToFileButton}" 

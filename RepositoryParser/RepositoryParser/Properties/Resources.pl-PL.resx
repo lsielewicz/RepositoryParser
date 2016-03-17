@@ -138,7 +138,7 @@
     <comment>MainPage</comment>
   </data>
   <data name="AnalysisWindowTitle" xml:space="preserve">
-    <value>Analiza</value>
+    <value>Analiza:</value>
     <comment>AnalisysPage</comment>
   </data>
   <data name="Changes" xml:space="preserve">
@@ -267,7 +267,7 @@
     <comment>MainPage</comment>
   </data>
   <data name="MainWindowTitle" xml:space="preserve">
-    <value>Witaj w "Repository Analyser"</value>
+    <value>Repository Analyser</value>
     <comment>MainPage</comment>
   </data>
   <data name="Month" xml:space="preserve">

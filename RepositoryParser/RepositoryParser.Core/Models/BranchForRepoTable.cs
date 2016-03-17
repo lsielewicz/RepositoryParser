@@ -13,8 +13,29 @@ namespace RepositoryParser.Core.Models
         public int NR_GitRepository { get; set; }
         public int NR_GitBranch { get; set; }
 
+        public BranchForRepoTable()
+        {
+            ID_BranchForRepo = 0;
+            NR_GitBranch = 0;
+            NR_GitRepository = 0;
+        }
+
+        public BranchForRepoTable(int id, int nrRepo, int nrBranch)
+        {
+            ID_BranchForRepo = id;
+            NR_GitRepository = nrRepo;
+            NR_GitBranch = nrBranch;
+        }
+
+        public BranchForRepoTable(int nrRepo, int nrBranch)
+        {
+            NR_GitRepository = nrRepo;
+            NR_GitBranch = nrBranch;
+        }
+
+        #region Querys
         public static string CreateTable =
-            "CREATE TABLE BranchForRepo(ID INTEGER PRIMARY KEY AUTOINCREMENT, NR_GitRepository INTEGER, NR_GitBranch INTEGER)";
+                                  "CREATE TABLE BranchForRepo(ID INTEGER PRIMARY KEY AUTOINCREMENT, NR_GitRepository INTEGER, NR_GitBranch INTEGER)";
         public static string deleteAllQuery = "DELETE FROM BranchForRepo";
         public static string InsertQuery(BranchForRepoTable obj)
         {
@@ -39,27 +60,6 @@ namespace RepositoryParser.Core.Models
             }
             return tempList;
         }
-        public BranchForRepoTable()
-        {
-            ID_BranchForRepo = 0;
-            NR_GitBranch = 0;
-            NR_GitRepository = 0;
-        }
-
-        public BranchForRepoTable(int id, int nrRepo, int nrBranch)
-        {
-            ID_BranchForRepo = id;
-            NR_GitRepository = nrRepo;
-            NR_GitBranch = nrBranch;
-        }
-
-        public BranchForRepoTable(int nrRepo, int nrBranch)
-        {
-            NR_GitRepository = nrRepo;
-            NR_GitBranch = nrBranch;
-        }
-
-
-
+        #endregion  
     }
 }

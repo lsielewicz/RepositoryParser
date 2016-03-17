@@ -13,6 +13,22 @@ namespace RepositoryParser.Core.Models
         public int NR_Commit { get; set; }
         public int NR_Change { get; set; }
 
+       
+
+        public ChangesForCommitTable(int id, int nr_commit, int nr_change)
+        {
+            this.ID = id;
+            this.NR_Commit = nr_commit;
+            this.NR_Change = nr_change;
+        }
+
+        public ChangesForCommitTable(int nr_commit, int nr_change)
+        {
+            this.NR_Commit = nr_commit;
+            this.NR_Change = nr_change;
+        }
+
+        #region querys
         public static string CreateTable =
             "CREATE TABLE ChangesForCommit(ID INTEGER PRIMARY KEY AUTOINCREMENT, NR_Commit INTEGER, NR_Change INTEGER)";
         public static string deleteAllQuery = "DELETE FROM ChangesForCommit";
@@ -41,20 +57,7 @@ namespace RepositoryParser.Core.Models
             }
             return tempList;
         }
+        #endregion
 
-       
-
-        public ChangesForCommitTable(int id, int nr_commit, int nr_change)
-        {
-            this.ID = id;
-            this.NR_Commit = nr_commit;
-            this.NR_Change = nr_change;
-        }
-
-        public ChangesForCommitTable(int nr_commit, int nr_change)
-        {
-            this.NR_Commit = nr_commit;
-            this.NR_Change = nr_change;
-        }
     }
 }

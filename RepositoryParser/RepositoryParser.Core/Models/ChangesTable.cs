@@ -18,7 +18,35 @@ namespace RepositoryParser.Core.Models
         public int NR_Commit { get; set; }
         #endregion
 
-        #region sqlite
+      
+        #region Constructors
+
+        public ChangesTable(int id, string type, string path, string texta, string textb)
+        {
+            this.ID = id;
+            this.Type = type;
+            this.Path = path;
+            this.TextA = texta;
+            this.TextB = textb;
+        }
+        public ChangesTable(string type, string path, string texta, string textb)
+        {
+            this.Type = type;
+            this.Path = path;
+            this.TextA = texta;
+            this.TextB = textb;
+        }
+        public ChangesTable(string type, string path, string texta, string textb, int nr_commit)
+        {
+            this.Type = type;
+            this.Path = path;
+            this.TextA = texta;
+            this.TextB = textb;
+            this.NR_Commit = nr_commit;
+        }
+        #endregion
+
+        #region querys
         public static string CreateTableQuery = "create table Changes(ID INTEGER PRIMARY KEY AUTOINCREMENT, Type varchar(50), Path varchar(60), TextA varchar(4000), TextB varchar(4000))";
 
         public static string InsertSqliteQuery(string type, string path, string texta, string textb)
@@ -85,32 +113,6 @@ namespace RepositoryParser.Core.Models
         }
 
         public static string deleteAllQuery = "DELETE FROM Changes";
-        #endregion
-        #region Constructors
-
-        public ChangesTable(int id, string type, string path, string texta, string textb)
-        {
-            this.ID = id;
-            this.Type = type;
-            this.Path = path;
-            this.TextA = texta;
-            this.TextB = textb;
-        }
-        public ChangesTable(string type, string path, string texta, string textb)
-        {
-            this.Type = type;
-            this.Path = path;
-            this.TextA = texta;
-            this.TextB = textb;
-        }
-        public ChangesTable(string type, string path, string texta, string textb, int nr_commit)
-        {
-            this.Type = type;
-            this.Path = path;
-            this.TextA = texta;
-            this.TextB = textb;
-            this.NR_Commit = nr_commit;
-        }
         #endregion
     }
 }

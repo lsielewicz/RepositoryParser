@@ -138,7 +138,7 @@
     <comment>MainPage</comment>
   </data>
   <data name="AnalysisWindowTitle" xml:space="preserve">
-    <value>Analyse</value>
+    <value>Analyse:</value>
     <comment>AnalisysPage</comment>
   </data>
   <data name="Changes" xml:space="preserve">
@@ -146,7 +146,7 @@
     <comment>DifferencesPage</comment>
   </data>
   <data name="ChartWindowTitle" xml:space="preserve">
-    <value>Analysis of activity of the repository users</value>
+    <value>Analysis of activity of the repository users:</value>
     <comment>ChartPage</comment>
   </data>
   <data name="ClearDBButton" xml:space="preserve">
@@ -190,7 +190,7 @@
     <comment>DayAcitvityChartPage</comment>
   </data>
   <data name="DayActivityWindowTitle" xml:space="preserve">
-    <value>Analysis of activity during days</value>
+    <value>Analysis of activity during days:</value>
     <comment>DayAcitvityChartPage</comment>
   </data>
   <data name="DifferencesButton" xml:space="preserve">
@@ -198,7 +198,7 @@
     <comment>AnalysisPage</comment>
   </data>
   <data name="DifferenceWindowTitle" xml:space="preserve">
-    <value>Comparsion</value>
+    <value>Comparsion:</value>
     <comment>DifferencesPage</comment>
   </data>
   <data name="Error" xml:space="preserve">
@@ -267,7 +267,7 @@
     <comment>MainPage</comment>
   </data>
   <data name="MainWindowTitle" xml:space="preserve">
-    <value>Welcome in Repository Analyser</value>
+    <value>Repository Analyser</value>
     <comment>MainPage</comment>
   </data>
   <data name="Month" xml:space="preserve">

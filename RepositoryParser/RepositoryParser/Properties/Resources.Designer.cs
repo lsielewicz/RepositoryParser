@@ -106,7 +106,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Analyse.
+        ///   Looks up a localized string similar to Analyse:.
         /// </summary>
         public static string AnalysisWindowTitle {
             get {
@@ -124,7 +124,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Analysis of activity of the repository users.
+        ///   Looks up a localized string similar to Analysis of activity of the repository users:.
         /// </summary>
         public static string ChartWindowTitle {
             get {
@@ -223,7 +223,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Analysis of activity during days.
+        ///   Looks up a localized string similar to Analysis of activity during days:.
         /// </summary>
         public static string DayActivityWindowTitle {
             get {
@@ -241,7 +241,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Comparsion.
+        ///   Looks up a localized string similar to Comparsion:.
         /// </summary>
         public static string DifferenceWindowTitle {
             get {
@@ -403,7 +403,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome in Repository Analyser.
+        ///   Looks up a localized string similar to Repository Analyser.
         /// </summary>
         public static string MainWindowTitle {
             get {
