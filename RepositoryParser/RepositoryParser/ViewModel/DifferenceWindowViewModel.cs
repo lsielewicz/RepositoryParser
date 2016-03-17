@@ -11,6 +11,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
+using RepositoryParser.Core.Services;
 
 namespace RepositoryParser.ViewModel
 {
@@ -187,6 +188,8 @@ namespace RepositoryParser.ViewModel
                 }
                 TextA = texta;
                 TextB = textb;
+                DifferencesColoringService colorService = new DifferencesColoringService(TextA, TextB);
+                colorService.ColorDifferences();
             }
         }
         private void selection(KeyValuePair<int, string> dictionary)

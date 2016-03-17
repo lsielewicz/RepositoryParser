@@ -133,10 +133,12 @@
     <Compile Include="Messages\DataMessageToDisplay.cs" />
     <Compile Include="Models\BranchForRepoTable.cs" />
     <Compile Include="Models\BranchTable.cs" />
+    <Compile Include="Models\ChangesColorModel.cs" />
     <Compile Include="Models\ChangesForCommitTable.cs" />
     <Compile Include="Models\ChangesTable.cs" />
     <Compile Include="Models\CommitForBranchTable.cs" />
     <Compile Include="Models\GitCommits.cs" />
+    <Compile Include="Services\DifferencesColoringService.cs" />
     <Compile Include="Services\GitRepositoryService.cs" />
     <Compile Include="Models\GitRepositoryTable.cs" />
     <Compile Include="Services\SqLiteService.cs" />
