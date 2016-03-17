@@ -142,6 +142,7 @@
     <Compile Include="Conventers\BoolToVisibilityConventer.cs" />
     <Compile Include="Conventers\ChangeTypeToBackgroundColorConventer.cs" />
     <Compile Include="Conventers\DateFormat.cs" />
+    <Compile Include="Conventers\EnumToColorConventer.cs" />
     <Compile Include="Properties\Resources.pl-PL.Designer.cs">
       <DependentUpon>Resources.pl-PL.resx</DependentUpon>
       <AutoGen>True</AutoGen>

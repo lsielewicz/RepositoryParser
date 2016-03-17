@@ -4,11 +4,12 @@ using System.Linq;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using RepositoryParser.Core.Interfaces;
 using RepositoryParser.Core.Models;
 
 namespace RepositoryParser.Core.Services
 {
-    public class DifferencesColoringService
+    public class DifferencesColoringService : IDifferencesColoringService
     {
         public string ColorlessTextA { get; private set; }
         public string ColorlessTextB { get; private set; }
@@ -35,8 +36,6 @@ namespace RepositoryParser.Core.Services
                 temp.Color = ChangesColorModel.ChangeType.Added;
             else if (!String.IsNullOrWhiteSpace(line1_output) && String.IsNullOrWhiteSpace(line2))
                 temp.Color = ChangesColorModel.ChangeType.Deleted;
-            else if (String.Equals(line1_output, line2))
-                temp.Color = ChangesColorModel.ChangeType.Unchanged;
             else if (
                 !(String.IsNullOrWhiteSpace(line1_output) && String.IsNullOrWhiteSpace(line2) &&
                   String.Equals(line1_output, line2)))
@@ -58,7 +57,7 @@ namespace RepositoryParser.Core.Services
             return textList;
         }
 
-        public void ColorDifferences()
+        public void FillColorDifferences()
         {
             if (!(String.IsNullOrEmpty(ColorlessTextA) && String.IsNullOrEmpty(ColorlessTextB)))
             {

@@ -189,7 +189,7 @@ namespace RepositoryParser.ViewModel
                 TextA = texta;
                 TextB = textb;
                 DifferencesColoringService colorService = new DifferencesColoringService(TextA, TextB);
-                colorService.ColorDifferences();
+                colorService.FillColorDifferences();
             }
         }
         private void selection(KeyValuePair<int, string> dictionary)
