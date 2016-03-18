@@ -393,4 +393,12 @@
   <data name="Weekday7" xml:space="preserve">
     <value>Niedziela</value>
   </data>
+  <data name="ChildCommit" xml:space="preserve">
+    <value>Commit A (Dziecko)</value>
+    <comment>DifferencesViewPage</comment>
+  </data>
+  <data name="ParentCommit" xml:space="preserve">
+    <value>Commit B (Rodzic)</value>
+    <comment>DifferencesViewPage</comment>
+  </data>
 </root>

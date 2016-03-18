@@ -166,7 +166,9 @@ namespace RepositoryParser.Core.Models
                                 int insertedRowsA = Math.Abs(item.EndA - item.BeginA);
                                 int insertedRowsB = Math.Abs(item.EndB - item.BeginB);
                                 int difference = Math.Abs(insertedRowsA-insertedRowsB);
-                                bool isAGreaterThanB = false;
+                               
+                                TextA += item.TextA;
+                                TextB += item.TextB;
                                 if (difference > 0)
                                 {
                                     for (int i = 0; i < difference; i++)
@@ -178,8 +180,6 @@ namespace RepositoryParser.Core.Models
                                     }
 
                                 }
-                                TextA += item.TextA;
-                                TextB += item.TextB;
                             }
                             //add changes to database
                             ChangesTable tempchanges = new ChangesTable(Convert.ToString(change.ChangeType), change.Path, TextA, TextB);

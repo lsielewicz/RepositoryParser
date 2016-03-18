@@ -133,6 +133,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Commit A (CHILD).
+        /// </summary>
+        public static string ChildCommit {
+            get {
+                return ResourceManager.GetString("ChildCommit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear the Data Base.
         /// </summary>
         public static string ClearDBButton {
@@ -588,6 +597,15 @@ namespace RepositoryParser.Properties {
         public static string NoRepositoryPathError {
             get {
                 return ResourceManager.GetString("NoRepositoryPathError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commit B (PARENT).
+        /// </summary>
+        public static string ParentCommit {
+            get {
+                return ResourceManager.GetString("ParentCommit", resourceCulture);
             }
         }
         

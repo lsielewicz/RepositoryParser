@@ -69,58 +69,6 @@ namespace RepositoryParser.Core.Services
             return textList;
         }
 
-        private List<string> SynchronizeOnLines(List<string> pattern, List<string> target)
-        {
-            List<string> result = new List<string>();
-
-            for (int i = 0; i < target.Count; i++)
-            {
-                int index = pattern.FindIndex(p => p == target[i]);
-                if (index >= i)
-                {
-                    if (pattern[i] == target[i])
-                        continue;
-                    else
-                    {
-                        int j = i;
-                            while (target[i] != pattern[j])
-                            {
-                                if (i == target.Count - 1 || j==pattern.Count - 1)
-                                    break;
-                                target.Insert(i,"\n");
-                                i++;
-                                j++;
-                            }  
-                    }
-                }
-               /* else if (index == 0)
-                {
-                    //TODO rompompom
-                } 
-                else if (index < i)
-                {
-                    int j = i;
-                    while (target[i] != pattern[j])
-                    {
-                        if (i == 0 || j == 0)
-                            break;
-                        if (target[i - 1] == Environment.NewLine)
-                        {
-                            target.RemoveAt(i - 1);
-                            i--;
-                        }
-                        else
-                        {
-                            
-                        }
-                        
-                    }
-                }*/
-            }
-            result = target;
-
-            return result;
-        } 
 
         public void FillColorDifferences()
         {
@@ -155,8 +103,8 @@ namespace RepositoryParser.Core.Services
                 {
                     for (int i = 0; i < splitedText1.Count; i++)
                     {
-                        TextAList.Add(LineColoring(splitedText1[i], splitedText2[i],true));
-                        TextBList.Add(LineColoring(splitedText2[i], splitedText1[i]));
+                        TextAList.Add(LineColoring(splitedText1[i], splitedText2[i]));
+                        TextBList.Add(LineColoring(splitedText2[i], splitedText1[i],true));
                     }
                 }
             }

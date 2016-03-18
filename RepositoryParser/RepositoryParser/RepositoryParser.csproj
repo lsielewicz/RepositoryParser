@@ -139,6 +139,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Conventers\AddedToDeletedStringConventer.cs" />
     <Compile Include="Conventers\BoolToVisibilityConventer.cs" />
     <Compile Include="Conventers\ChangeTypeToBackgroundColorConventer.cs" />
     <Compile Include="Conventers\DateFormat.cs" />
