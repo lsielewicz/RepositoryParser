@@ -163,8 +163,23 @@ namespace RepositoryParser.Core.Models
                             aList.Source = diff.Sections;
                             foreach (Diff.Section item in aList.View.SourceCollection)
                             {
+                                int insertedRowsA = Math.Abs(item.EndA - item.BeginA);
+                                int insertedRowsB = Math.Abs(item.EndB - item.BeginB);
+                                int difference = Math.Abs(insertedRowsA-insertedRowsB);
+                               
                                 TextA += item.TextA;
                                 TextB += item.TextB;
+                                if (difference > 0)
+                                {
+                                    for (int i = 0; i < difference; i++)
+                                    {
+                                        if (insertedRowsA > insertedRowsB)
+                                            TextB += "\n";
+                                        else
+                                            TextA += "\n";
+                                    }
+
+                                }
                             }
                             //add changes to database
                             ChangesTable tempchanges = new ChangesTable(Convert.ToString(change.ChangeType), change.Path, TextA, TextB);
