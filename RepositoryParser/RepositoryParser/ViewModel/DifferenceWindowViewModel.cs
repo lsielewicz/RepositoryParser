@@ -28,11 +28,18 @@ namespace RepositoryParser.ViewModel
         private string textB;
         private string changeQuery;
         private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
+        private DifferencesColoringService colorService;
+        private ObservableCollection<ChangesColorModel> listTextA;
+        private ObservableCollection<ChangesColorModel> listTextB;
         #endregion
         #region Constructors
 
         public DifferenceWindowViewModel()
         {
+       
+           
+
+
             Messenger.Default.Register<DataMessageToCharts>(this, x => HandleChartMessage(x.RepoInstance, x.FilteringQuery));
             CommitsCollection = new ObservableCollection<KeyValuePair<int, string>>();
             ChangesCollection = new ObservableCollection<KeyValuePair<string, string>>();
@@ -73,6 +80,32 @@ namespace RepositoryParser.ViewModel
         }
         #endregion
         #region Getters/Setters
+
+        public ObservableCollection<ChangesColorModel> ListTextA
+        {
+            get { return listTextA;}
+            set
+            {
+                if (listTextA != value)
+                {
+                    listTextA = value;
+                    RaisePropertyChanged("ListTextA");
+                }
+            }
+        }
+        public ObservableCollection<ChangesColorModel> ListTextB
+        {
+            get { return listTextB; }
+            set
+            {
+                if (listTextB != value)
+                {
+                    listTextB = value;
+                    RaisePropertyChanged("ListTextB");
+                }
+            }
+        }
+
 
         public string TextA
         {
@@ -188,8 +221,13 @@ namespace RepositoryParser.ViewModel
                 }
                 TextA = texta;
                 TextB = textb;
-                DifferencesColoringService colorService = new DifferencesColoringService(TextA, TextB);
+
+                colorService = new DifferencesColoringService(TextA, TextB);
                 colorService.FillColorDifferences();
+                ListTextA=new ObservableCollection<ChangesColorModel>();
+                ListTextB=new ObservableCollection<ChangesColorModel>();
+                colorService.TextAList.ForEach(x=> ListTextA.Add(x));
+                colorService.TextBList.ForEach(x => ListTextB.Add(x));
             }
         }
         private void selection(KeyValuePair<int, string> dictionary)

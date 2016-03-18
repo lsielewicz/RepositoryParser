@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using RepositoryParser.Core.Interfaces;
 using RepositoryParser.Core.Models;
 
@@ -29,33 +30,97 @@ namespace RepositoryParser.Core.Services
             TextBList = new List<ChangesColorModel>();
         }
 
-        private ChangesColorModel LineColoring(string line1_output, string line2)
+        private ChangesColorModel LineColoring(string line1_output, string line2, bool isParent=false)
         {
-            ChangesColorModel temp = new ChangesColorModel();
-            if (String.IsNullOrWhiteSpace(line1_output) && !String.IsNullOrWhiteSpace(line2))
-                temp.Color = ChangesColorModel.ChangeType.Added;
-            else if (!String.IsNullOrWhiteSpace(line1_output) && String.IsNullOrWhiteSpace(line2))
-                temp.Color = ChangesColorModel.ChangeType.Deleted;
+            if ((!String.IsNullOrWhiteSpace(line1_output)) && (String.IsNullOrWhiteSpace(line2)))
+            {
+                if(isParent)
+                    return new ChangesColorModel(line1_output,ChangesColorModel.ChangeType.Deleted);
+                else
+                    return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Added);
+            }
+            else if ((String.IsNullOrWhiteSpace(line1_output)) && (!String.IsNullOrWhiteSpace(line2)))
+            {
+                if (isParent)
+                    return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Added);
+                else
+                    return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Deleted);
+            }
+            else if(line1_output==line2)
+                return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Unchanged);
             else if (
                 !(String.IsNullOrWhiteSpace(line1_output) && String.IsNullOrWhiteSpace(line2) &&
-                  String.Equals(line1_output, line2)))
-                temp.Color = ChangesColorModel.ChangeType.Modified;
+                  line1_output==line2))
+                return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Modified);
             else
-                temp.Color = ChangesColorModel.ChangeType.Unchanged;
-            temp.Line = line1_output;
-            return temp;
+                return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Unchanged);
+            
         }
 
         private List<string> SplitChanges(string text)
         {
             List<string> textList = new List<string>();
-            string[] array = text.Split('\n');
+            string[] array = text.Split(new[] {"\r\n", "\r", "\n"}, StringSplitOptions.None);
+            /*string[] array = text.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);*/
             foreach (string element in array)
             {
                 textList.Add(element);
             }
             return textList;
         }
+
+        private List<string> SynchronizeOnLines(List<string> pattern, List<string> target)
+        {
+            List<string> result = new List<string>();
+
+            for (int i = 0; i < target.Count; i++)
+            {
+                int index = pattern.FindIndex(p => p == target[i]);
+                if (index >= i)
+                {
+                    if (pattern[i] == target[i])
+                        continue;
+                    else
+                    {
+                        int j = i;
+                            while (target[i] != pattern[j])
+                            {
+                                if (i == target.Count - 1 || j==pattern.Count - 1)
+                                    break;
+                                target.Insert(i,"\n");
+                                i++;
+                                j++;
+                            }  
+                    }
+                }
+               /* else if (index == 0)
+                {
+                    //TODO rompompom
+                } 
+                else if (index < i)
+                {
+                    int j = i;
+                    while (target[i] != pattern[j])
+                    {
+                        if (i == 0 || j == 0)
+                            break;
+                        if (target[i - 1] == Environment.NewLine)
+                        {
+                            target.RemoveAt(i - 1);
+                            i--;
+                        }
+                        else
+                        {
+                            
+                        }
+                        
+                    }
+                }*/
+            }
+            result = target;
+
+            return result;
+        } 
 
         public void FillColorDifferences()
         {
@@ -67,21 +132,30 @@ namespace RepositoryParser.Core.Services
                 iterations = splitedText1.Count >= splitedText2.Count ? splitedText1.Count : splitedText2.Count;
                 int text1count=splitedText1.Count;
                 int text2count = splitedText2.Count;
+
+                //SynchronizeOnLines(splitedText1, splitedText2);
+
+
                 if (iterations == splitedText1.Count)
                 {
                     for (int i = 0; i < (iterations - text2count); i++)
                         splitedText2.Add("");
+                    
+                    //splitedText2= SynchronizeOnLines(splitedText1, splitedText2);
+                    
                 }
                 else
                 {
                     for (int i = 0; i < (iterations - text1count); i++)
                         splitedText1.Add("");
+                   // splitedText1=SynchronizeOnLines(splitedText2, splitedText1);
+                    
                 }
                 if (splitedText1.Count == splitedText2.Count)
                 {
                     for (int i = 0; i < splitedText1.Count; i++)
                     {
-                        TextAList.Add(LineColoring(splitedText1[i], splitedText2[i]));
+                        TextAList.Add(LineColoring(splitedText1[i], splitedText2[i],true));
                         TextBList.Add(LineColoring(splitedText2[i], splitedText1[i]));
                     }
                 }
