@@ -401,8 +401,28 @@
     <value>Commit B (Rodzic)</value>
     <comment>DifferencesViewPage</comment>
   </data>
+  <data name="Added" xml:space="preserve">
+    <value>Dodano</value>
+    <comment>ChartOfChangesChart</comment>
+  </data>
+  <data name="ChartOfChangesTitle" xml:space="preserve">
+    <value>Wykres zmian:</value>
+    <comment>ChartOfChangesCharts</comment>
+  </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>Usunięto</value>
+    <comment>ChartOfChangesChart</comment>
+  </data>
   <data name="GoToDifferencesChartButton" xml:space="preserve">
     <value>Pokaż wykres zmian.</value>
     <comment>DifferencesViewPage</comment>
+  </data>
+  <data name="Modified" xml:space="preserve">
+    <value>Zmodyfikowano</value>
+    <comment>ChartOfChangesChart</comment>
+  </data>
+  <data name="Unchanged" xml:space="preserve">
+    <value>Nie zmieniono</value>
+    <comment>ChartOfChangesChart</comment>
   </data>
 </root>

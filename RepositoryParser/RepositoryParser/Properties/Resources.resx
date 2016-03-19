@@ -404,8 +404,28 @@
     <value>Commit B (PARENT)</value>
     <comment>DifferencesViewPage</comment>
   </data>
+  <data name="Added" xml:space="preserve">
+    <value>Added</value>
+    <comment>ChartOfChangesChart</comment>
+  </data>
+  <data name="ChartOfChangesTitle" xml:space="preserve">
+    <value>Chart of changes:</value>
+    <comment>ChartOfChangesCharts</comment>
+  </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>Deleted</value>
+    <comment>ChartOfChangesChart</comment>
+  </data>
   <data name="GoToDifferencesChartButton" xml:space="preserve">
     <value>View chart of changes.</value>
     <comment>DifferencesViewPage</comment>
+  </data>
+  <data name="Modified" xml:space="preserve">
+    <value>Modified</value>
+    <comment>ChartOfChangesChart</comment>
+  </data>
+  <data name="Unchanged" xml:space="preserve">
+    <value>Unchanged</value>
+    <comment>ChartOfChangesChart</comment>
   </data>
 </root>

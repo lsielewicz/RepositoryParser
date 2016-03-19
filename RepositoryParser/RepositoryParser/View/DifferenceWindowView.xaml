@@ -129,7 +129,9 @@
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center"
                     Content="{x:Static resw:Resources.GoToDifferencesChartButton}" 
-                    Background="{StaticResource MyGreen}"/>
+                    Background="{StaticResource MyGreen}"
+                    Command="{Binding GoToChartOfChangesCommand}"
+                    />
         </StackPanel>
         
     </Grid>

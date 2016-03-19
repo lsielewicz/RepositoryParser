@@ -150,6 +150,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="ViewModel\AnalisysWindowViewModel.cs" />
+    <Compile Include="ViewModel\ChartOfChangesViewModel.cs" />
     <Compile Include="ViewModel\ChartWindowViewModel.cs" />
     <Compile Include="ViewModel\DayActivityViewModel.cs" />
     <Compile Include="ViewModel\DifferenceWindowViewModel.cs" />

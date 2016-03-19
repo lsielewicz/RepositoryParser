@@ -88,6 +88,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Added.
+        /// </summary>
+        public static string Added {
+            get {
+                return ResourceManager.GetString("Added", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add a repository.
         /// </summary>
         public static string AddRepositoryButton {
@@ -120,6 +129,15 @@ namespace RepositoryParser.Properties {
         public static string Changes {
             get {
                 return ResourceManager.GetString("Changes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chart of changes:.
+        /// </summary>
+        public static string ChartOfChangesTitle {
+            get {
+                return ResourceManager.GetString("ChartOfChangesTitle", resourceCulture);
             }
         }
         
@@ -237,6 +255,15 @@ namespace RepositoryParser.Properties {
         public static string DayActivityWindowTitle {
             get {
                 return ResourceManager.GetString("DayActivityWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deleted.
+        /// </summary>
+        public static string Deleted {
+            get {
+                return ResourceManager.GetString("Deleted", resourceCulture);
             }
         }
         
@@ -426,6 +453,15 @@ namespace RepositoryParser.Properties {
         public static string MainWindowTitle {
             get {
                 return ResourceManager.GetString("MainWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modified.
+        /// </summary>
+        public static string Modified {
+            get {
+                return ResourceManager.GetString("Modified", resourceCulture);
             }
         }
         
@@ -651,6 +687,15 @@ namespace RepositoryParser.Properties {
         public static string SendDataButton {
             get {
                 return ResourceManager.GetString("SendDataButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unchanged.
+        /// </summary>
+        public static string Unchanged {
+            get {
+                return ResourceManager.GetString("Unchanged", resourceCulture);
             }
         }
         
