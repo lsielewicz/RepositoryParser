@@ -8,7 +8,7 @@
         xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
         xmlns:resw="clr-namespace:RepositoryParser.Properties"
         mc:Ignorable="d"
-        Title="RepositoryParser" Height="600" Width="1200"
+        Title="RepositoryAnalyser" Height="600" Width="1200"
         Icon="../Assets/Ratings Filled-50.png"
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         DataContext="{Binding Source={StaticResource Locator}, Path=Main}"

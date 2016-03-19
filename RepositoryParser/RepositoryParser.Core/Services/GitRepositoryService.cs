@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
@@ -21,8 +22,8 @@ namespace RepositoryParser.Core.Models
         public SqLiteService SqLiteInstance { get; set; }
         public bool isCloned { get; set; }
         #endregion
-        #region Constructors
 
+        #region Constructors
         public GitRepositoryService()
         {
             RepoPath = "";
@@ -92,6 +93,7 @@ namespace RepositoryParser.Core.Models
 
         public void FillDataBase()
         {
+            
             GitCommits gitCommit = new GitCommits();
             BranchTable gitBranch = new BranchTable();
             GitRepositoryTable gitRepoTable = new GitRepositoryTable(RepositoryInstance.Directory);
@@ -115,101 +117,115 @@ namespace RepositoryParser.Core.Models
             int lastBranchIndex = gitBranch.GetLastIndex(SqLiteInstance.Connection);
             int StartBranch = lastBranchIndex + 1;
 
-            foreach (BranchTable x in gitBranchList)
+            try
             {
-                BranchForRepoTable temp = new BranchForRepoTable(lastRepoIndex + 1, StartBranch);
-                QuerysList.Add(BranchForRepoTable.InsertQuery(temp));
-                gitCommitsList.Clear();
 
-                //add all commits to db
-                int lastCommitIndex = gitCommit.GetLastIndex(SqLiteInstance.Connection);
-                int startCommitIndex = lastCommitIndex + 1;
-
-                int lastChangeIndex = ChangesTable.GetLastIndex(SqLiteInstance.Connection);
-                int startChangeIndex = lastChangeIndex + 1;
-
-                foreach (Commit commitz in RepositoryInstance.Get<Branch>(x.Name).CurrentCommit.Ancestors)
+                foreach (BranchTable x in gitBranchList)
                 {
-                    gitCommit.Message = commitz.Message;
-                    gitCommit.Author = commitz.Author.Name;
-                    gitCommit.Date = Convert.ToString(commitz.AuthorDate);
-                    gitCommit.Date = gitCommit.Date.Remove(19);
-                    gitCommit.Date = SqLiteService.getDateTimeFormat(gitCommit.Date);
-                    gitCommit.Email = commitz.Author.EmailAddress;
-                    //SQLITE CORNER
-                    CommitsQueryLists.Add(GitCommits.InsertSqliteQuery(gitCommit));
-                    gitCommitsList.Add(gitCommit);
-                    string tempChange = "";
-                    // jezeli komit ma rodzica, to porownaj
-                    if (commitz.HasParents)
+                    BranchForRepoTable temp = new BranchForRepoTable(lastRepoIndex + 1, StartBranch);
+                    QuerysList.Add(BranchForRepoTable.InsertQuery(temp));
+                    gitCommitsList.Clear();
+
+                    //add all commits to db
+                    int lastCommitIndex = gitCommit.GetLastIndex(SqLiteInstance.Connection);
+                    int startCommitIndex = lastCommitIndex + 1;
+
+                    int lastChangeIndex = ChangesTable.GetLastIndex(SqLiteInstance.Connection);
+                    int startChangeIndex = lastChangeIndex + 1;
+
+                    foreach (Commit commitz in RepositoryInstance.Get<Branch>(x.Name).CurrentCommit.Ancestors)
                     {
-                        Commit commitz2 = commitz.Parent;
-                        CollectionViewSource aList = new CollectionViewSource();
-                        foreach (Change change in commitz.CompareAgainst(commitz2))
+                        gitCommit.Message = commitz.Message;
+                        gitCommit.Author = commitz.Author.Name;
+                        gitCommit.Date = Convert.ToString(commitz.AuthorDate);
+                        gitCommit.Date = gitCommit.Date.Remove(19);
+                        gitCommit.Date = SqLiteService.getDateTimeFormat(gitCommit.Date);
+                        gitCommit.Email = commitz.Author.EmailAddress;
+                        //SQLITE CORNER
+                        CommitsQueryLists.Add(GitCommits.InsertSqliteQuery(gitCommit));
+                        gitCommitsList.Add(gitCommit);
+                        string tempChange = "";
+                        // jezeli komit ma rodzica, to porownaj
+                        if (commitz.HasParents)
                         {
-                            tempChange += change.ChangeType + ": " + change.Path + "\n";
-
-                            string TextA = "";
-                            string TextB = "";
-                            var a = (change.ReferenceObject != null
-                                ? (change.ReferenceObject as Blob).RawData
-                                : new byte[0]);
-                            var b = (change.ComparedObject != null
-                                ? (change.ComparedObject as Blob).RawData
-                                : new byte[0]);
-                            a = (Diff.IsBinary(a) == true ? Encoding.ASCII.GetBytes("Binary content\nFile size: " + a.Length) : a);
-                            b = (Diff.IsBinary(b) == true ? Encoding.ASCII.GetBytes("Binary content\nFile size: " + b.Length) : b);
-                            Diff diff = new Diff(a, b);
-                            aList.Source = diff.Sections;
-                            foreach (Diff.Section item in aList.View.SourceCollection)
+                            Commit commitz2 = commitz.Parent;
+                            CollectionViewSource aList = new CollectionViewSource();
+                            foreach (Change change in commitz.CompareAgainst(commitz2))
                             {
-                                int insertedRowsA = Math.Abs(item.EndA - item.BeginA);
-                                int insertedRowsB = Math.Abs(item.EndB - item.BeginB);
-                                int difference = Math.Abs(insertedRowsA-insertedRowsB);
-                               
-                                TextA += item.TextA;
-                                TextB += item.TextB;
-                                if (difference > 0)
+                                tempChange += change.ChangeType + ": " + change.Path + "\n";
+
+                                string TextA = "";
+                                string TextB = "";
+                                var a = (change.ReferenceObject != null
+                                    ? (change.ReferenceObject as Blob).RawData
+                                    : new byte[0]);
+                                var b = (change.ComparedObject != null
+                                    ? (change.ComparedObject as Blob).RawData
+                                    : new byte[0]);
+                                a = (Diff.IsBinary(a) == true
+                                    ? Encoding.ASCII.GetBytes("Binary content\nFile size: " + a.Length)
+                                    : a);
+                                b = (Diff.IsBinary(b) == true
+                                    ? Encoding.ASCII.GetBytes("Binary content\nFile size: " + b.Length)
+                                    : b);
+                                Diff diff = new Diff(a, b);
+                                aList.Source = diff.Sections;
+                                foreach (Diff.Section item in aList.View.SourceCollection)
                                 {
-                                    for (int i = 0; i < difference; i++)
+                                    int insertedRowsA = Math.Abs(item.EndA - item.BeginA);
+                                    int insertedRowsB = Math.Abs(item.EndB - item.BeginB);
+                                    int difference = Math.Abs(insertedRowsA - insertedRowsB);
+
+                                    TextA += item.TextA;
+                                    TextB += item.TextB;
+                                    if (difference > 0)
                                     {
-                                        if (insertedRowsA > insertedRowsB)
-                                            TextB += "\n";
-                                        else
-                                            TextA += "\n";
+                                        for (int i = 0; i < difference; i++)
+                                        {
+                                            if (insertedRowsA > insertedRowsB)
+                                                TextB += "\n";
+                                            else
+                                                TextA += "\n";
+                                        }
+
                                     }
-
                                 }
+                                //add changes to database
+                                ChangesTable tempchanges = new ChangesTable(Convert.ToString(change.ChangeType),
+                                    change.Path, TextA, TextB);
+                                changesList.Add(tempchanges);
+                                ChangesQuerys.Add(ChangesTable.InsertSqliteQuery(tempchanges));
+                                ChangesQuerys.Add(
+                                    ChangesForCommitTable.InsertQuery(new ChangesForCommitTable(startCommitIndex,
+                                        startChangeIndex)));
+                                startChangeIndex++;
                             }
-                            //add changes to database
-                            ChangesTable tempchanges = new ChangesTable(Convert.ToString(change.ChangeType), change.Path, TextA, TextB);
-                            changesList.Add(tempchanges);
-                            ChangesQuerys.Add(ChangesTable.InsertSqliteQuery(tempchanges));
-                            ChangesQuerys.Add(ChangesForCommitTable.InsertQuery(new ChangesForCommitTable(startCommitIndex, startChangeIndex)));
-                            startChangeIndex++;
                         }
+                        startCommitIndex++;
                     }
-                    startCommitIndex++;
+
+                    lastCommitIndex = gitCommit.GetLastIndex(SqLiteInstance.Connection);
+                    startCommitIndex = lastCommitIndex + 1;
+
+                    gitCommitsList.ForEach(y =>
+                    {
+                        CommitForBranchTable temp1 = new CommitForBranchTable(StartBranch, startCommitIndex);
+                        CommitsQueryLists.Add(CommitForBranchTable.InsertQuery(temp1));
+                        startCommitIndex++;
+                    });
+                    SqLiteInstance.ExecuteTransaction(CommitsQueryLists);
+                    SqLiteInstance.ExecuteTransaction(ChangesQuerys);
+
+                    CommitsQueryLists.Clear();
+                    ChangesQuerys.Clear();
+                    StartBranch++;
                 }
-
-                lastCommitIndex = gitCommit.GetLastIndex(SqLiteInstance.Connection);
-                startCommitIndex = lastCommitIndex + 1;
-
-                gitCommitsList.ForEach(y =>
-                {
-                    CommitForBranchTable temp1 = new CommitForBranchTable(StartBranch, startCommitIndex);
-                    CommitsQueryLists.Add(CommitForBranchTable.InsertQuery(temp1));
-                    startCommitIndex++;
-                });
-                SqLiteInstance.ExecuteTransaction(CommitsQueryLists);
-                SqLiteInstance.ExecuteTransaction(ChangesQuerys);
-
-                CommitsQueryLists.Clear();
-                ChangesQuerys.Clear();
-                StartBranch++;
+                SqLiteInstance.ExecuteTransaction(QuerysList);
             }
-            SqLiteInstance.ExecuteTransaction(QuerysList);
-
+            catch (System.OutOfMemoryException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         #endregion
 

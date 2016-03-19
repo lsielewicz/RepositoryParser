@@ -47,7 +47,8 @@ namespace RepositoryParser.Core.Models
                 string path = "./Databases/" + DBName + ".sqlite";
                 if (!File.Exists(path))
                     SQLiteConnection.CreateFile(path);
-                Connection = new SQLiteConnection("Data Source=" + path + ";Version=3;PRAGMA cache_size=20000; PRAGMA page_size=32768; PRAGMA synchronous=off");
+                Connection = new SQLiteConnection("Data Source=" + path + ";Version=3;PRAGMA cache_size=160000; PRAGMA page_size=32768; PRAGMA synchronous=off;PRAGMA temp_store=FILE");
+                //Connection = new SQLiteConnection("Data Source=" + path);
                 Connection.Open();
                 isOpened = true;
                 if (!string.IsNullOrEmpty(query))
@@ -121,7 +122,7 @@ namespace RepositoryParser.Core.Models
 
         public void CloseConnection()
         {
-            if (!isOpened)
+            if (isOpened)
             {
                 Connection.Close();
                 isOpened = false;
