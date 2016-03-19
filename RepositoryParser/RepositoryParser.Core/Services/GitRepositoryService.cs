@@ -241,7 +241,8 @@ namespace RepositoryParser.Core.Models
                 repoNumber++;
             }
 
-            SqLiteInstance = new SqLiteService(RepositoryName);
+            SqLiteInstance = SqLiteService.GetInstance();
+            SqLiteInstance.DBName = RepositoryName;
             List<string> CreateTableQuerys = new List<string>
             {
                 {GitRepositoryTable.createTable },
@@ -259,7 +260,8 @@ namespace RepositoryParser.Core.Models
         public void ConnectRepositoryToDataBase()
         {
             string RepositoryName = "CommonRepositoryDataBase";
-            SqLiteInstance = new SqLiteService(RepositoryName);
+            SqLiteInstance = SqLiteService.GetInstance();
+            SqLiteInstance.DBName = RepositoryName;
             SqLiteInstance.OpenConnection();
         }
 

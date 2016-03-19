@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
@@ -11,30 +12,21 @@ using RepositoryParser.Core.Interfaces;
 
 namespace RepositoryParser.Core.Models
 {
-    public class SqLiteService : ISqLiteService
+    public sealed class SqLiteService : ISqLiteService
     {
         public SQLiteConnection Connection { get; set; }
 
-        private string DBName
-        {
-            get; set;
-
-        }
+        public string DBName { get; set; }
 
         private bool isOpened = false;
 
-        public SqLiteService()
-        {
-            Connection = null;
-            DBName = "";
-            isOpened = false;
-        }
+        private static SqLiteService _singletonInstance=null;
 
-        public SqLiteService(string path)
+        public static SqLiteService GetInstance()
         {
-            Connection = null;
-            DBName = path;
-            isOpened = false;
+            if(_singletonInstance==null)
+                _singletonInstance=new SqLiteService();
+            return _singletonInstance;
         }
 
         public void OpenConnection(string query = "")
@@ -55,6 +47,7 @@ namespace RepositoryParser.Core.Models
                 {
                     SQLiteCommand command = new SQLiteCommand(query, Connection);
                     command.ExecuteNonQuery();
+                    CloseConnection();
                 }
             }
             catch (Exception ex)
@@ -80,6 +73,7 @@ namespace RepositoryParser.Core.Models
                 if (transactions != null && transactions.Count > 0)
                 {
                     ExecuteTransaction(transactions);
+                    CloseConnection();
                 }
             }
             catch (Exception ex)
@@ -94,35 +88,53 @@ namespace RepositoryParser.Core.Models
 
         public void ExecuteQuery(string query)
         {
-            if (!isOpened) return;
             try
             {
+                if (Connection.State == ConnectionState.Closed)
+                    OpenConnection();
                 SQLiteCommand command = new SQLiteCommand(query, Connection);
                 command.ExecuteNonQuery();
-
             }
             catch
             {
                 MessageBox.Show(query);
             }
+            finally
+            {
+                CloseConnection();
+            }
         }
 
         public void ExecuteTransaction(List<string> transactions)
         {
-            SQLiteTransaction dbTransaction = Connection.BeginTransaction();
-            SQLiteCommand cmd = Connection.CreateCommand();
-            cmd.Transaction = dbTransaction;
-            transactions.ForEach(x =>
+            try
             {
-                cmd.CommandText = x;
-                cmd.ExecuteNonQuery();
-            });
-            dbTransaction.Commit();
+                if(Connection.State == ConnectionState.Closed)
+                    OpenConnection();
+
+                SQLiteTransaction dbTransaction = Connection.BeginTransaction();
+                SQLiteCommand cmd = Connection.CreateCommand();
+                cmd.Transaction = dbTransaction;
+                transactions.ForEach(x =>
+                {
+                    cmd.CommandText = x;
+                    cmd.ExecuteNonQuery();
+                });
+                dbTransaction.Commit();
+            }
+            catch (SQLiteException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                CloseConnection();
+            }
         }
 
         public void CloseConnection()
         {
-            if (isOpened)
+            if (Connection.State == ConnectionState.Open)
             {
                 Connection.Close();
                 isOpened = false;
