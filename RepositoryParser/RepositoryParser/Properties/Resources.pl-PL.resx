@@ -401,4 +401,8 @@
     <value>Commit B (Rodzic)</value>
     <comment>DifferencesViewPage</comment>
   </data>
+  <data name="GoToDifferencesChartButton" xml:space="preserve">
+    <value>Pokaż wykres zmian.</value>
+    <comment>DifferencesViewPage</comment>
+  </data>
 </root>

@@ -349,6 +349,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to View chart of changes..
+        /// </summary>
+        public static string GoToDifferencesChartButton {
+            get {
+                return ResourceManager.GetString("GoToDifferencesChartButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Time.
         /// </summary>
         public static string Hour {

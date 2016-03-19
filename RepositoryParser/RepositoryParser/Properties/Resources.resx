@@ -404,4 +404,8 @@
     <value>Commit B (PARENT)</value>
     <comment>DifferencesViewPage</comment>
   </data>
+  <data name="GoToDifferencesChartButton" xml:space="preserve">
+    <value>View chart of changes.</value>
+    <comment>DifferencesViewPage</comment>
+  </data>
 </root>

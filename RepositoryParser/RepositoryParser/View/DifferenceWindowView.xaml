@@ -27,7 +27,8 @@
             <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="4*"/>
-            <RowDefinition Height="4"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
 
         <Rectangle Grid.ColumnSpan="1000" Grid.Row="0">
@@ -48,7 +49,7 @@
         </Rectangle>
         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{x:Static resw:Resources.DifferenceWindowTitle}" Width="auto"  />
 
-        <ScrollViewer Grid.Column="0" Grid.Row="1" HorizontalScrollBarVisibility="Auto" Grid.RowSpan="2" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Column="0" Grid.Row="1" HorizontalScrollBarVisibility="Auto" Grid.RowSpan="3" VerticalScrollBarVisibility="Auto">
             <StackPanel x:Name="CommitListPanel" Grid.Column="0" Grid.Row="1" Margin="5,10,5,10">
                 <ListView ItemsSource="{Binding CommitsCollection}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                     <ListView.View>
@@ -63,7 +64,8 @@
                 </ListView>
             </StackPanel>
         </ScrollViewer>
-
+        
+        
         <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
             <StackPanel x:Name="ChangesPanel">
                 <TextBlock Text="{x:Static resw:Resources.Changes}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
@@ -88,7 +90,7 @@
                 </ListView>
             </StackPanel>
         </ScrollViewer>
-
+        
         <TextBlock Text="{x:Static resw:Resources.ChildCommit}" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" Margin="0,10,0,10"/>
         <ScrollViewer x:Name="CommitScrollViewer" Grid.Row="2" Grid.Column="1" Margin="0,30,0,10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" utils:ScrollSynchronizer.ScrollGroup="Group1">
             <StackPanel x:Name="TextAPanel" Grid.Column="1" Grid.Row="2" Margin="5,10,5,10">
@@ -106,19 +108,29 @@
         </ScrollViewer>
 
         <TextBlock Text="{x:Static resw:Resources.ParentCommit}" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="2" Margin="0,10,0,10"/>
-        <ScrollViewer Grid.Column="2" Grid.Row="2" Margin="0,30,0,10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" utils:ScrollSynchronizer.ScrollGroup="Group1">
-            <StackPanel x:Name="TextBPanel" Grid.Column="2" Grid.Row="2" Margin="5,10,5,10">
-                <ListBox Margin="0,10,0,10" ItemsSource="{Binding ListTextB}" IsEnabled="False">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Line}"
-                                       Background="{Binding Path=Color,Converter={StaticResource EnumToColorConventer}}"
-                                       Foreground="Black"
-                                />
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </StackPanel>
+        <ScrollViewer Grid.Column="2" Grid.Row="2"  Margin="0,30,0,10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" utils:ScrollSynchronizer.ScrollGroup="Group1">
+                <StackPanel x:Name="TextBPanel" Grid.Column="2" Grid.Row="2" Margin="5,10,5,10">
+                    <ListBox Margin="0,10,0,10" ItemsSource="{Binding ListTextB}" IsEnabled="False">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Line}"
+                                           Background="{Binding Path=Color,Converter={StaticResource EnumToColorConventer}}"
+                                           Foreground="Black"
+                                    />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
         </ScrollViewer>
+
+        <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Button x:Name="GoToChrtButton" 
+                    Height="25" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"
+                    Content="{x:Static resw:Resources.GoToDifferencesChartButton}" 
+                    Background="{StaticResource MyGreen}"/>
+        </StackPanel>
+        
     </Grid>
 </Window>
