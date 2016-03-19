@@ -270,9 +270,7 @@
       <Name>RepositoryParser.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Strings\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Assets\Ratings Filled-50.png" />
     <Resource Include="Assets\Statistics_Filled-50.png" />
