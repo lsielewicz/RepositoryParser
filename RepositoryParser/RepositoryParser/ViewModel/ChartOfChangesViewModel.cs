@@ -53,7 +53,7 @@ namespace RepositoryParser.ViewModel
                     deletedCounter++;
                 else if (x.Color == ChangesColorModel.ChangeType.Modified)
                     modifiedCounter++;
-                else
+                else if (x.Color == ChangesColorModel.ChangeType.Unchanged && !String.IsNullOrWhiteSpace(x.Line))
                     unchangedCounter++;
             });
             ChildCollection.Add(new KeyValuePair<string, int>(_resourceManager.GetString("Added"),addedCounter));
