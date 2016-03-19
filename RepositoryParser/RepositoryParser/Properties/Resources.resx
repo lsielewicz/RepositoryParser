@@ -412,6 +412,10 @@
     <value>Chart of changes:</value>
     <comment>ChartOfChangesCharts</comment>
   </data>
+  <data name="CountOfLines" xml:space="preserve">
+    <value>Count of lines</value>
+    <comment>ChartOfChanges</comment>
+  </data>
   <data name="Deleted" xml:space="preserve">
     <value>Deleted</value>
     <comment>ChartOfChangesChart</comment>
@@ -420,9 +424,17 @@
     <value>View chart of changes.</value>
     <comment>DifferencesViewPage</comment>
   </data>
+  <data name="ListOfChangesTitle" xml:space="preserve">
+    <value>List of changes:</value>
+    <comment>ChartOfChangesChart</comment>
+  </data>
   <data name="Modified" xml:space="preserve">
     <value>Modified</value>
     <comment>ChartOfChangesChart</comment>
+  </data>
+  <data name="TypeOfChange" xml:space="preserve">
+    <value>Type of change</value>
+    <comment>CharOfChangesChart</comment>
   </data>
   <data name="Unchanged" xml:space="preserve">
     <value>Unchanged</value>

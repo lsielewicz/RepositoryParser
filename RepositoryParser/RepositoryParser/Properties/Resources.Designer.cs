@@ -223,6 +223,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Count of lines.
+        /// </summary>
+        public static string CountOfLines {
+            get {
+                return ResourceManager.GetString("CountOfLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Day.
         /// </summary>
         public static string Day {
@@ -435,6 +444,15 @@ namespace RepositoryParser.Properties {
         public static string Legend {
             get {
                 return ResourceManager.GetString("Legend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of changes:.
+        /// </summary>
+        public static string ListOfChangesTitle {
+            get {
+                return ResourceManager.GetString("ListOfChangesTitle", resourceCulture);
             }
         }
         
@@ -687,6 +705,15 @@ namespace RepositoryParser.Properties {
         public static string SendDataButton {
             get {
                 return ResourceManager.GetString("SendDataButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type of change.
+        /// </summary>
+        public static string TypeOfChange {
+            get {
+                return ResourceManager.GetString("TypeOfChange", resourceCulture);
             }
         }
         

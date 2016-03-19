@@ -22,29 +22,49 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="15"/>
         </Grid.RowDefinitions>
-        
-        <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <chartingToolkit:Chart x:Name="Child"
-                                    Title="{x:Static resw:Resources.ChartOfChangesTitle}"
-                                   MinHeight="500"
-                                   MinWidth="500"
-                                   Background="Beige" 
-                                   LegendTitle="{x:Static resw:Resources.Legend}"
-                                   >
-                <chartingToolkit:Chart.Series>
-                    <chartingToolkit:PieSeries
+        <TabControl Grid.Row="1" Grid.Column="1">
+            <TabItem Header="{x:Static resw:Resources.ChartOfChangesTitle}">
+                <StackPanel  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <chartingToolkit:Chart x:Name="Child"
+                                        Title="{x:Static resw:Resources.ChartOfChangesTitle}"
+                                       MinHeight="500"
+                                       MinWidth="500"
+                                       Background="Beige" 
+                                       LegendTitle="{x:Static resw:Resources.Legend}"
+                                   
+                                       >
+                            <chartingToolkit:Chart.Series>
+                                <chartingToolkit:PieSeries
 
-                            ItemsSource="{Binding ChildCollection, Mode=OneWay}"
-                            DependentValueBinding="{Binding Path=Value}"
-                            IndependentValueBinding="{Binding Path=Key}" 
-                            DataContext="{Binding}"
-                            />
-                </chartingToolkit:Chart.Series>
-           </chartingToolkit:Chart>
-            </StackPanel>
-        </StackPanel>
-        
+                                ItemsSource="{Binding ChildCollection, Mode=OneWay}"
+                                DependentValueBinding="{Binding Path=Value}"
+                                IndependentValueBinding="{Binding Path=Key}" 
+                                DataContext="{Binding}"
+                            
+                                />
+                            </chartingToolkit:Chart.Series>
+                        </chartingToolkit:Chart>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+            
+            <TabItem Header="{x:Static resw:Resources.ListOfChangesTitle}">
+                <ListView ItemsSource="{Binding ChildCollection}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding Key}">
+                                <GridViewColumnHeader Content="{x:Static resw:Resources.TypeOfChange}" />
+                            </GridViewColumn>
+
+                            <GridViewColumn Width="auto"  DisplayMemberBinding="{Binding Value}">
+                                <GridViewColumnHeader Content="{x:Static resw:Resources.CountOfLines}" />
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+        </TabControl>
         
     </Grid>
 </Window>

@@ -15,7 +15,6 @@ namespace RepositoryParser.Core.Messages
         public DataMessageToChartOfChanges(List<ChangesColorModel> childList)
         {
             this.ChildChangesList = childList;
-
         } 
     }
 }

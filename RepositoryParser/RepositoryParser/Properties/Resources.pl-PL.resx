@@ -409,6 +409,10 @@
     <value>Wykres zmian:</value>
     <comment>ChartOfChangesCharts</comment>
   </data>
+  <data name="CountOfLines" xml:space="preserve">
+    <value>Liczba linii</value>
+    <comment>ChartOfChanges</comment>
+  </data>
   <data name="Deleted" xml:space="preserve">
     <value>Usunięto</value>
     <comment>ChartOfChangesChart</comment>
@@ -417,9 +421,17 @@
     <value>Pokaż wykres zmian.</value>
     <comment>DifferencesViewPage</comment>
   </data>
+  <data name="ListOfChangesTitle" xml:space="preserve">
+    <value>Lista zmian:</value>
+    <comment>ChartOfChangesChart</comment>
+  </data>
   <data name="Modified" xml:space="preserve">
     <value>Zmodyfikowano</value>
     <comment>ChartOfChangesChart</comment>
+  </data>
+  <data name="TypeOfChange" xml:space="preserve">
+    <value>Typ zmiany</value>
+    <comment>CharOfChangesChart</comment>
   </data>
   <data name="Unchanged" xml:space="preserve">
     <value>Nie zmieniono</value>
