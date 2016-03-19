@@ -150,6 +150,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="ViewModel\AnalisysWindowViewModel.cs" />
+    <Compile Include="ViewModel\ChartOfChangesViewModel.cs" />
     <Compile Include="ViewModel\ChartWindowViewModel.cs" />
     <Compile Include="ViewModel\DayActivityViewModel.cs" />
     <Compile Include="ViewModel\DifferenceWindowViewModel.cs" />
@@ -157,6 +158,9 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MonthActivityChartViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\ChartOfChangesView.xaml.cs">
+      <DependentUpon>ChartOfChangesView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MonthActivityChart.xaml.cs">
       <DependentUpon>MonthActivityChart.xaml</DependentUpon>
     </Compile>
@@ -168,6 +172,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AnalysisWindowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ChartOfChangesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

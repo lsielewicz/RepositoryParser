@@ -8,10 +8,12 @@ using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
+using RepositoryParser.View;
 
 namespace RepositoryParser.ViewModel
 {
@@ -31,15 +33,12 @@ namespace RepositoryParser.ViewModel
         private DifferencesColoringService colorService;
         private ObservableCollection<ChangesColorModel> listTextA;
         private ObservableCollection<ChangesColorModel> listTextB;
+        private RelayCommand goToChartOfChangesCommand;
         #endregion
         #region Constructors
 
         public DifferenceWindowViewModel()
         {
-       
-           
-
-
             Messenger.Default.Register<DataMessageToCharts>(this, x => HandleChartMessage(x.RepoInstance, x.FilteringQuery));
             CommitsCollection = new ObservableCollection<KeyValuePair<int, string>>();
             ChangesCollection = new ObservableCollection<KeyValuePair<string, string>>();
@@ -203,6 +202,14 @@ namespace RepositoryParser.ViewModel
             }
         }
 
+        public RelayCommand GoToChartOfChangesCommand
+        {
+            get
+            {
+                return goToChartOfChangesCommand ?? (goToChartOfChangesCommand = new RelayCommand(GoToChartOfChanges));
+            }
+        }
+
         private void ChangeSelection(KeyValuePair<string, string> dic)
         {
             if (!string.IsNullOrEmpty(changeQuery))
@@ -248,6 +255,14 @@ namespace RepositoryParser.ViewModel
                 ChangesCollection.Add(values);
             }
 
+        }
+
+        private void GoToChartOfChanges()
+        {
+            ChartOfChangesView _window = new ChartOfChangesView();
+            if(colorService != null)
+                Messenger.Default.Send<DataMessageToChartOfChanges>(new DataMessageToChartOfChanges(colorService.TextAList));
+            _window.Show();
         }
         #endregion
     }

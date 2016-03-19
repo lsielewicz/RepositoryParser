@@ -1,0 +1,70 @@
+﻿<Window x:Class="RepositoryParser.View.ChartOfChangesView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RepositoryParser.View"
+        xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+        xmlns:resw="clr-namespace:RepositoryParser.Properties"
+        mc:Ignorable="d"
+        Title="ChartOfChangesView" Height="600" Width="600"
+        DataContext="{Binding Source={StaticResource Locator}, Path=ChartOfChanges}"
+        ResizeMode="NoResize"
+        >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="15"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="15"/>
+        </Grid.RowDefinitions>
+        <TabControl Grid.Row="1" Grid.Column="1">
+            <TabItem Header="{x:Static resw:Resources.ChartOfChangesTitle}">
+                <StackPanel  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <chartingToolkit:Chart x:Name="Child"
+                                        Title="{x:Static resw:Resources.ChartOfChangesTitle}"
+                                       MinHeight="500"
+                                       MinWidth="500"
+                                       Background="Beige" 
+                                       LegendTitle="{x:Static resw:Resources.Legend}"
+                                   
+                                       >
+                            <chartingToolkit:Chart.Series>
+                                <chartingToolkit:PieSeries
+
+                                ItemsSource="{Binding ChildCollection, Mode=OneWay}"
+                                DependentValueBinding="{Binding Path=Value}"
+                                IndependentValueBinding="{Binding Path=Key}" 
+                                DataContext="{Binding}"
+                            
+                                />
+                            </chartingToolkit:Chart.Series>
+                        </chartingToolkit:Chart>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+            
+            <TabItem Header="{x:Static resw:Resources.ListOfChangesTitle}">
+                <ListView ItemsSource="{Binding ChildCollection}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding Key}">
+                                <GridViewColumnHeader Content="{x:Static resw:Resources.TypeOfChange}" />
+                            </GridViewColumn>
+
+                            <GridViewColumn Width="auto"  DisplayMemberBinding="{Binding Value}">
+                                <GridViewColumnHeader Content="{x:Static resw:Resources.CountOfLines}" />
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+        </TabControl>
+        
+    </Grid>
+</Window>
