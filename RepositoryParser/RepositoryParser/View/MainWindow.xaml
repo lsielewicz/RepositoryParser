@@ -10,6 +10,7 @@
         mc:Ignorable="d"
         Title="RepositoryParser" Height="600" Width="1200"
         Icon="../Assets/Ratings Filled-50.png"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
         >
     <Window.Resources>
@@ -100,7 +101,6 @@
                     FontSize="20" 
                     Margin="2" 
                     Padding="4" />
-            <ProgressBar IsIndeterminate="{Binding ProgressBarVisibility}"></ProgressBar>
         </StackPanel>
 
         <DockPanel Grid.Row="2" Grid.Column="0">
@@ -137,15 +137,33 @@
                     Command="{Binding ExportFileCommand}"
                     Margin="0,0,0,5"/>
         </StackPanel>
-<!--        <StatusBar Grid.Row="2" Grid.Column="1" Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" >
-            <Controls:ProgressRing HorizontalAlignment="Right"
-                         IsActive="True"
-                         Width="100"
-                         Height="16"
-                         Margin="3"/>
-            <Separator />
-
-            <TextBlock Text="Trwa otwieranie repozytorium" />
-        </StatusBar>-->
+        <StatusBar Grid.Row="1" Grid.Column="0" 
+                   Grid.RowSpan="2"
+                   Grid.ColumnSpan="3"
+                   Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" 
+                   Opacity="0.9"
+                   Background="{StaticResource Grey}"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   >
+        </StatusBar>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" 
+                    Grid.Column="0" Grid.RowSpan="5"
+                    Grid.ColumnSpan="3" 
+                    VerticalAlignment="Center" HorizontalAlignment="Center"
+                    Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
+                    >
+            <Controls:ProgressRing HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       IsActive="{Binding ProgressBarVisibility}"
+                                       Width="100"
+                                       Height="18"
+                                       Margin="3"
+                                       Opacity="1"
+                                        Foreground="{StaticResource MyGreen}"
+                                       />
+            <Separator/>
+            <TextBlock Text="{x:Static resw:Resources.ProgressBarText}" Foreground="{StaticResource MyGreen}" FontSize="18" />
+        </StackPanel>
     </Grid>
 </Window>

@@ -691,6 +691,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data loading, please wait....
+        /// </summary>
+        public static string ProgressBarText {
+            get {
+                return ResourceManager.GetString("ProgressBarText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Refresh.
         /// </summary>
         public static string RefreshButton {

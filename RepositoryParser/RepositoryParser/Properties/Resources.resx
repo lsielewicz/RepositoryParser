@@ -440,4 +440,8 @@
     <value>Unchanged</value>
     <comment>ChartOfChangesChart</comment>
   </data>
+  <data name="ProgressBarText" xml:space="preserve">
+    <value>Data loading, please wait...</value>
+    <comment>MainPage</comment>
+  </data>
 </root>
