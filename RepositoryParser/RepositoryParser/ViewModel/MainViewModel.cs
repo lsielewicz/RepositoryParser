@@ -24,16 +24,38 @@ namespace RepositoryParser.ViewModel
     public class MainViewModel : ViewModelBase
     {
         #region Variables
-
         private ObservableCollection<GitCommits> _commitsCollection;
         private string _urlTextBox = "";
         private GitRepositoryService GitRepoInstance;
         private bool _isCloneButtonEnabled = true;
         private bool _progressBarVisibility = false;
-        private bool isLocal = false; // komentarz testowy
+        private bool isLocal = false; 
         private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
-
+        private BackgroundWorker worker;
+        private RelayCommand startWorkCommand;
+        private RelayCommand openRepositoryCommand;
         private static string selectedBranch;
+        #endregion
+
+        public MainViewModel()
+        {
+            Messenger.Default.Register<DataMessageToDisplay>(this, x => HandleDataMessage(x.CommitList));
+            CommitsColection = new ObservableCollection<GitCommits>();
+
+            PickFileCommand = new RelayCommand(PickFile);
+            GoToPageAnalisysCommand = new RelayCommand(GoToPageAnalisys);
+            SortCommand = new RelayCommand<object>(Sort);
+            ClearDataBaseCommand = new RelayCommand(ClearDataBase);
+            OnLoadCommand = new RelayCommand(OnLoad);
+            RefreshCommand = new RelayCommand(RefreshList);
+            ExportFileCommand = new RelayCommand(ExportFile);
+
+            this.worker = new BackgroundWorker();
+            this.worker.DoWork += this.DoWork;
+            this.worker.RunWorkerCompleted += this.RunWorkerCompleted;
+        }
+
+        #region Getters/Setters
         public static string SelectedBranch
         {
             get { return selectedBranch; }
@@ -45,6 +67,8 @@ namespace RepositoryParser.ViewModel
         }
 
         private static string selectedRepo;
+
+
 
         public static string SelectedRepo
         {
@@ -58,28 +82,6 @@ namespace RepositoryParser.ViewModel
                 }
             }
         }
-
-        #endregion
-        #region Constructors
-        public MainViewModel()
-        {
-            //message
-            Messenger.Default.Register<DataMessageToDisplay>(this, x => HandleDataMessage(x.CommitList));
-            CommitsColection = new ObservableCollection<GitCommits>();
-            //buttons
-            PickFileCommand = new RelayCommand(PickFile);
-            OpenRepositoryCommand = new RelayCommand(OpenRepository);
-            GoToPageAnalisysCommand = new RelayCommand(GoToPageAnalisys);
-            SortCommand = new RelayCommand<object>(Sort);
-            ClearDataBaseCommand = new RelayCommand(ClearDataBase);
-            OnLoadCommand = new RelayCommand(OnLoad);
-            RefreshCommand = new RelayCommand(RefreshList);
-            ExportFileCommand = new RelayCommand(ExportFile);
-        }
-
-        #endregion
-
-        #region Getters/Setters
 
         public string UrlTextBox
         {
@@ -144,6 +146,15 @@ namespace RepositoryParser.ViewModel
         #endregion
 
         #region Buttons
+        public RelayCommand StartWorkCommand
+        {
+            get
+            {
+                return startWorkCommand ??
+                       (startWorkCommand = new RelayCommand(worker.RunWorkerAsync, () => !worker.IsBusy));
+            }
+        }
+
         public ICommand RefreshCommand { get; private set; }
 
         public ICommand PickFileCommand { get; private set; }
@@ -160,8 +171,13 @@ namespace RepositoryParser.ViewModel
             }
         }
 
-        public ICommand OpenRepositoryCommand { get; private set; }
-
+        public RelayCommand OpenRepositoryCommand
+        {
+            get
+            {
+                return openRepositoryCommand ?? (openRepositoryCommand = new RelayCommand(OpenRepository));
+            }
+        }
         public void OpenRepository()
         {
 
@@ -178,7 +194,7 @@ namespace RepositoryParser.ViewModel
                         GitRepoInstance.isCloned = false;
                         GitRepoInstance.InitializeConnection();
                         GitRepoInstance.FillDataBase();
-                        CommitsColection.Clear();
+
 
                     }
                     else
@@ -188,9 +204,9 @@ namespace RepositoryParser.ViewModel
                         GitRepoInstance.RepoPath = UrlTextBox;
                         GitRepoInstance.InitializeConnection();
                         GitRepoInstance.FillDataBase();
-                        CommitsColection.Clear();
+
                     }
-                    GitRepoInstance.GetDataFromBase().ForEach(x => CommitsColection.Add(x));
+
 
                 }
                 catch (Exception ex)
@@ -354,5 +370,30 @@ namespace RepositoryParser.ViewModel
             Messenger.Default.Send<DataMessageToAnalisys>(new DataMessageToAnalisys(this.GitRepoInstance));
         }
         #endregion
+
+
+        #region BackgroundWorker
+        private void DoWork(object sender, DoWorkEventArgs e)
+        {
+            OpenRepository();
+        }
+
+
+        private void RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                MessageBox.Show(e.Error.Message);
+            }
+            else
+            {
+                CommitsColection.Clear();
+                GitRepoInstance.GetDataFromBase().ForEach(x => CommitsColection.Add(x));
+            }
+        }
+        #endregion
+
+
+
     }
 }

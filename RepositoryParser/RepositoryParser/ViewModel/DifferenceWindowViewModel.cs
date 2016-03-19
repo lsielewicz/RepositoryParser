@@ -235,6 +235,8 @@ namespace RepositoryParser.ViewModel
                 ListTextB=new ObservableCollection<ChangesColorModel>();
                 colorService.TextAList.ForEach(x=> ListTextA.Add(x));
                 colorService.TextBList.ForEach(x => ListTextB.Add(x));
+
+                Messenger.Default.Send<DataMessageToChartOfChanges>(new DataMessageToChartOfChanges(colorService.TextAList));
             }
         }
         private void selection(KeyValuePair<int, string> dictionary)

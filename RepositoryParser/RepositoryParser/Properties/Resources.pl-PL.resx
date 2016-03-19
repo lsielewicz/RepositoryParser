@@ -437,4 +437,8 @@
     <value>Nie zmieniono</value>
     <comment>ChartOfChangesChart</comment>
   </data>
+  <data name="ProgressBarText" xml:space="preserve">
+    <value>Trwa otwieranie repozytorium, proszę czekać...</value>
+    <comment>MainPage</comment>
+  </data>
 </root>

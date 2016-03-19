@@ -37,8 +37,6 @@ namespace RepositoryParser.ViewModel
             }
         }
 
-
-
         private void HandleDataMessage(List<ChangesColorModel> childList)
         {
             ChildCollection=new ObservableCollection<KeyValuePair<string, int>>();
