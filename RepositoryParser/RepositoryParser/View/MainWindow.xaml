@@ -90,7 +90,7 @@
 
         <StackPanel Grid.Row="3" Grid.Column="1">
             <Button x:Name="CloneRepositoryBtn"
-                    Command="{Binding OpenRepositoryCommand}" 
+                    Command="{Binding StartWorkCommand}" 
                     IsEnabled="{Binding IsCloneButtonEnabled }" 
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center" 
@@ -100,6 +100,7 @@
                     FontSize="20" 
                     Margin="2" 
                     Padding="4" />
+            <ProgressBar IsIndeterminate="{Binding ProgressBarVisibility}"></ProgressBar>
         </StackPanel>
 
         <DockPanel Grid.Row="2" Grid.Column="0">
