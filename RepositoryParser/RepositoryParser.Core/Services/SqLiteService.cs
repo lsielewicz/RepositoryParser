@@ -14,12 +14,23 @@ namespace RepositoryParser.Core.Models
 {
     public sealed class SqLiteService : ISqLiteService
     {
-        public SQLiteConnection Connection { get; set; }
+        private SQLiteConnection _connection;
 
+        public SQLiteConnection Connection
+        {
+            get
+            {
+                if(_connection == null || _connection.State==ConnectionState.Closed)
+                    OpenConnection();
+                return _connection;
+            }
+            set
+            {
+                if (_connection != value)
+                    _connection = value;
+            }
+        }
         public string DBName { get; set; }
-
-        private bool isOpened = false;
-
         private static SqLiteService _singletonInstance=null;
 
         public static SqLiteService GetInstance()
@@ -31,28 +42,32 @@ namespace RepositoryParser.Core.Models
 
         public void OpenConnection(string query = "")
         {
-            try
+            if (_connection == null || _connection.State == ConnectionState.Closed)
             {
-                if (!Directory.Exists("Databases"))
-                    Directory.CreateDirectory("Databases");
-
-                string path = "./Databases/" + DBName + ".sqlite";
-                if (!File.Exists(path))
-                    SQLiteConnection.CreateFile(path);
-                Connection = new SQLiteConnection("Data Source=" + path + ";Version=3;PRAGMA cache_size=160000; PRAGMA page_size=32768; PRAGMA synchronous=off;PRAGMA temp_store=FILE");
-                //Connection = new SQLiteConnection("Data Source=" + path);
-                Connection.Open();
-                isOpened = true;
-                if (!string.IsNullOrEmpty(query))
+                try
                 {
-                    SQLiteCommand command = new SQLiteCommand(query, Connection);
-                    command.ExecuteNonQuery();
-                    CloseConnection();
+                    if (!Directory.Exists("Databases"))
+                        Directory.CreateDirectory("Databases");
+
+                    string path = "./Databases/" + DBName + ".sqlite";
+                    if (!File.Exists(path))
+                        SQLiteConnection.CreateFile(path);
+                    _connection =
+                        new SQLiteConnection("Data Source=" + path +
+                                             ";Version=3;PRAGMA cache_size=160000; PRAGMA page_size=32768; PRAGMA synchronous=off;PRAGMA temp_store=FILE");
+                    //Connection = new SQLiteConnection("Data Source=" + path);
+                    _connection.Open();
+                    if (!string.IsNullOrEmpty(query))
+                    {
+                        SQLiteCommand command = new SQLiteCommand(query, Connection);
+                        command.ExecuteNonQuery();
+                        CloseConnection();
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
 
@@ -68,7 +83,6 @@ namespace RepositoryParser.Core.Models
                     SQLiteConnection.CreateFile(path);
                 Connection = new SQLiteConnection("Data Source=" + path + ";Version=3;PRAGMA cache_size=20000; PRAGMA page_size=32768; PRAGMA synchronous=off");
                 Connection.Open();
-                isOpened = true;
 
                 if (transactions != null && transactions.Count > 0)
                 {
@@ -90,7 +104,7 @@ namespace RepositoryParser.Core.Models
         {
             try
             {
-                if (Connection.State == ConnectionState.Closed)
+                if (_connection.State == ConnectionState.Closed)
                     OpenConnection();
                 SQLiteCommand command = new SQLiteCommand(query, Connection);
                 command.ExecuteNonQuery();
@@ -109,7 +123,7 @@ namespace RepositoryParser.Core.Models
         {
             try
             {
-                if(Connection.State == ConnectionState.Closed)
+                if(_connection.State == ConnectionState.Closed)
                     OpenConnection();
 
                 SQLiteTransaction dbTransaction = Connection.BeginTransaction();
@@ -134,10 +148,9 @@ namespace RepositoryParser.Core.Models
 
         public void CloseConnection()
         {
-            if (Connection.State == ConnectionState.Open)
+            if (_connection.State == ConnectionState.Open)
             {
-                Connection.Close();
-                isOpened = false;
+                _connection.Close();
             }
         }
 
