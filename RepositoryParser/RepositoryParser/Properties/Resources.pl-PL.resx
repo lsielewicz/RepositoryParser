@@ -441,4 +441,8 @@
     <value>Trwa otwieranie repozytorium, proszę czekać...</value>
     <comment>MainPage</comment>
   </data>
+  <data name="ClearingDataBase" xml:space="preserve">
+    <value>Trwa czyszczenie bazy danych, proszę czekać...</value>
+    <comment>main</comment>
+  </data>
 </root>

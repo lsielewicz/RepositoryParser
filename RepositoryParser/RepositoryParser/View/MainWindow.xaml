@@ -15,6 +15,7 @@
         >
     <Window.Resources>
         <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <conventers:NegativeBoolToVisibilityConventer x:Key="NegativeBoolToVisibilityConventer"/>
     </Window.Resources>
 
     <i:Interaction.Triggers>
@@ -108,7 +109,7 @@
                     Content="{x:Static resw:Resources.AnalysisButton}" 
                     Height="50" 
                     VerticalAlignment="Top" 
-                    Command="{Binding GoToPageAnalisysCommand}" 
+                    Command="{Binding GoToPageAnalysisCommand}" 
                     Background="{StaticResource MyGreen}" 
                     Margin="0,0,0,5"/>
 
@@ -120,7 +121,7 @@
                     Height="50" 
                     VerticalAlignment="Top" 
                     Background="{StaticResource MyGreen}"  
-                    Command="{Binding ClearDataBaseCommand}" 
+                    Command="{Binding AsyncClearDBCommand}" 
                     Margin="0,0,0,5"/>
             <Button x:Name="Refresh"
                     Content ="{x:Static resw:Resources.RefreshButton}" 
@@ -163,7 +164,8 @@
                                         Foreground="{StaticResource MyGreen}"
                                        />
             <Separator/>
-            <TextBlock Text="{x:Static resw:Resources.ProgressBarText}" Foreground="{StaticResource MyGreen}" FontSize="18" />
+            <TextBlock Text="{x:Static resw:Resources.ProgressBarText}" Foreground="{StaticResource MyGreen}" FontSize="18" Visibility="{Binding IsOpening, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            <TextBlock Text="{x:Static resw:Resources.ClearingDataBase}" Foreground="{StaticResource MyGreen}" FontSize="18" Visibility="{Binding IsOpening, Converter={StaticResource NegativeBoolToVisibilityConventer}}"/>
         </StackPanel>
     </Grid>
 </Window>

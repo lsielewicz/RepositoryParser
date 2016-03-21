@@ -25,34 +25,40 @@ namespace RepositoryParser.ViewModel
     {
         #region Variables
         private ObservableCollection<GitCommits> _commitsCollection;
+        private GitRepositoryService _gitRepoInstance;
         private string _urlTextBox = "";
-        private GitRepositoryService GitRepoInstance;
         private bool _isCloneButtonEnabled = true;
         private bool _progressBarVisibility = false;
-        private bool isLocal = false; 
+        private bool _isLocal = false;
+        private bool _isOpening;
         private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
-        private BackgroundWorker worker;
-        private RelayCommand startWorkCommand;
-        private RelayCommand openRepositoryCommand;
+        private BackgroundWorker _worker;
+        private BackgroundWorker clearDBWorker;
         private static string selectedBranch;
+        private static string selectedRepo;
+        private RelayCommand _startWorkCommand;
+        private RelayCommand _asyncClearDBCommand;
+        private RelayCommand _refreshCommand;
+        private RelayCommand _pickFileCommand;
+        private RelayCommand _onLoadCommand;
+        private RelayCommand _goToPageAnalysisCommand;
+        private RelayCommand _exportFileCommand;
         #endregion
 
         public MainViewModel()
         {
             Messenger.Default.Register<DataMessageToDisplay>(this, x => HandleDataMessage(x.CommitList));
             CommitsColection = new ObservableCollection<GitCommits>();
-
-            PickFileCommand = new RelayCommand(PickFile);
-            GoToPageAnalisysCommand = new RelayCommand(GoToPageAnalisys);
+  
             SortCommand = new RelayCommand<object>(Sort);
-            ClearDataBaseCommand = new RelayCommand(ClearDataBase);
-            OnLoadCommand = new RelayCommand(OnLoad);
-            RefreshCommand = new RelayCommand(RefreshList);
-            ExportFileCommand = new RelayCommand(ExportFile);
 
-            this.worker = new BackgroundWorker();
-            this.worker.DoWork += this.DoWork;
-            this.worker.RunWorkerCompleted += this.RunWorkerCompleted;
+            this._worker = new BackgroundWorker();
+            this._worker.DoWork += this.DoWork;
+            this._worker.RunWorkerCompleted += this.RunWorkerCompleted;
+
+            this.clearDBWorker = new BackgroundWorker();
+            this.clearDBWorker.DoWork += this.DoClearWork;
+            this.clearDBWorker.RunWorkerCompleted += this.DoClearWorkCompleted;
         }
 
         #region Getters/Setters
@@ -66,7 +72,6 @@ namespace RepositoryParser.ViewModel
             }
         }
 
-        private static string selectedRepo;
 
 
 
@@ -79,6 +84,22 @@ namespace RepositoryParser.ViewModel
                 {
                     selectedRepo = value;
                     selectedBranch = "";
+                }
+            }
+        }
+
+        public bool IsOpening
+        {
+            get
+            {
+                return _isOpening;
+            }
+            set
+            {
+                if (_isOpening != value)
+                {
+                    _isOpening = value;
+                    RaisePropertyChanged("IsOpening");
                 }
             }
         }
@@ -146,18 +167,54 @@ namespace RepositoryParser.ViewModel
         #endregion
 
         #region Buttons
+
+        public RelayCommand RefreshCommand
+        {
+            get { return _refreshCommand ?? (_refreshCommand = new RelayCommand(RefreshList)); }
+        }
+
+        public RelayCommand PickFileCommand
+        {
+            get { return _pickFileCommand ?? (_pickFileCommand = new RelayCommand(PickFile));
+            }
+        }
+
+        public RelayCommand OnLoadCommand
+        {
+            get { return _onLoadCommand ?? (_onLoadCommand = new RelayCommand(OnLoad)); }
+        }
+
+        public RelayCommand GoToPageAnalysisCommand
+        {
+            get { return _goToPageAnalysisCommand ?? (_goToPageAnalysisCommand = new RelayCommand(GoToPageAnalisys)); }
+        }
+
+        public RelayCommand ExportFileCommand
+        {
+            get { return _exportFileCommand ?? (_exportFileCommand = new RelayCommand(ExportFile)); }
+        }
         public RelayCommand StartWorkCommand
         {
             get
             {
-                return startWorkCommand ??
-                       (startWorkCommand = new RelayCommand(worker.RunWorkerAsync, () => !worker.IsBusy));
+                return _startWorkCommand ??
+                       (_startWorkCommand = new RelayCommand(_worker.RunWorkerAsync, () => !_worker.IsBusy));
             }
         }
 
-        public ICommand RefreshCommand { get; private set; }
+        
+        public RelayCommand AsyncClearDBCommand
+        {
+            get
+            {
+                return _asyncClearDBCommand ??
+                       (_asyncClearDBCommand =
+                           new RelayCommand(clearDBWorker.RunWorkerAsync, () => !clearDBWorker.IsBusy));
+            }
+        }
+        #endregion
 
-        public ICommand PickFileCommand { get; private set; }
+        #region Methods
         public void PickFile()
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
@@ -167,17 +224,10 @@ namespace RepositoryParser.ViewModel
             if (fbd.ShowDialog() == DialogResult.OK)
             {
                 UrlTextBox = fbd.SelectedPath;
-                isLocal = true;
+                _isLocal = true;
             }
         }
 
-        public RelayCommand OpenRepositoryCommand
-        {
-            get
-            {
-                return openRepositoryCommand ?? (openRepositoryCommand = new RelayCommand(OpenRepository));
-            }
-        }
         public void OpenRepository()
         {
 
@@ -187,23 +237,23 @@ namespace RepositoryParser.ViewModel
                 {
                     ProgressBarVisibility = true;
 
-                    if (!isLocal)
+                    if (!_isLocal)
                     {
-                        GitRepoInstance = new GitRepositoryService();
-                        GitRepoInstance.UrlRepoPath = UrlTextBox;
-                        GitRepoInstance.isCloned = false;
-                        GitRepoInstance.InitializeConnection();
-                        GitRepoInstance.FillDataBase();
+                        _gitRepoInstance = new GitRepositoryService();
+                        _gitRepoInstance.UrlRepoPath = UrlTextBox;
+                        _gitRepoInstance.isCloned = false;
+                        _gitRepoInstance.InitializeConnection();
+                        _gitRepoInstance.FillDataBase();
 
 
                     }
                     else
                     {
-                        GitRepoInstance = new GitRepositoryService();
-                        GitRepoInstance.isCloned = true;
-                        GitRepoInstance.RepoPath = UrlTextBox;
-                        GitRepoInstance.InitializeConnection();
-                        GitRepoInstance.FillDataBase();
+                        _gitRepoInstance = new GitRepositoryService();
+                        _gitRepoInstance.isCloned = true;
+                        _gitRepoInstance.RepoPath = UrlTextBox;
+                        _gitRepoInstance.InitializeConnection();
+                        _gitRepoInstance.FillDataBase();
 
                     }
 
@@ -228,23 +278,22 @@ namespace RepositoryParser.ViewModel
         private void RefreshList()
         {
             CommitsColection.Clear();
-            GitRepoInstance.GetDataFromBase().ForEach(x => CommitsColection.Add(x));
+            _gitRepoInstance.GetDataFromBase().ForEach(x => CommitsColection.Add(x));
         }
-        public ICommand OnLoadCommand { get; set; }
         private void OnLoad()
         {
             try
             {
-                GitRepoInstance = new GitRepositoryService();
+                _gitRepoInstance = new GitRepositoryService();
 
                 string repoPath = "./DataBases/CommonRepositoryDataBase.sqlite";
                 if (!File.Exists(repoPath))
-                    GitRepoInstance.ConnectRepositoryToDataBase(true);
+                    _gitRepoInstance.ConnectRepositoryToDataBase(true);
                 else
-                    GitRepoInstance.ConnectRepositoryToDataBase();
+                    _gitRepoInstance.ConnectRepositoryToDataBase();
 
                 CommitsColection.Clear();
-                GitRepoInstance.GetDataFromBase().ForEach(x => CommitsColection.Add(x));
+                _gitRepoInstance.GetDataFromBase().ForEach(x => CommitsColection.Add(x));
             }
             catch (Exception ex)
             {
@@ -252,21 +301,20 @@ namespace RepositoryParser.ViewModel
             }
         }
 
-        public ICommand GoToPageAnalisysCommand { get; set; }
 
         private void GoToPageAnalisys()
         {
             AnalysisWindowView _analisysWindow = new AnalysisWindowView();
             _analisysWindow.Show();
-            if (GitRepoInstance != null)
+            if (_gitRepoInstance != null)
                 SendMessageToAnalisys();
         }
 
-        public ICommand ClearDataBaseCommand { get; set; }
 
         private void ClearDataBase()
         {
-            if (GitRepoInstance != null)
+            
+            if (_gitRepoInstance != null)
             {
                 List<string> Transactions = new List<string>();
                 Transactions.Add(GitCommits.deleteAllQuery);
@@ -291,13 +339,12 @@ namespace RepositoryParser.ViewModel
                     string delete = "delete from sqlite_sequence where name = '" + name + "'";
                     Transactions.Add(delete);
                 }
-                GitRepoInstance.SqLiteInstance.ExecuteTransaction(Transactions);
+                _gitRepoInstance.SqLiteInstance.ExecuteTransaction(Transactions);
 
             }
-            RefreshList();
+           // RefreshList();
         }
 
-        public ICommand ExportFileCommand { get; set; }
         public void ExportFile()
         {
             SaveFileDialog dlg = new SaveFileDialog();
@@ -367,14 +414,14 @@ namespace RepositoryParser.ViewModel
         }
         private void SendMessageToAnalisys()
         {
-            Messenger.Default.Send<DataMessageToAnalisys>(new DataMessageToAnalisys(this.GitRepoInstance));
+            Messenger.Default.Send<DataMessageToAnalisys>(new DataMessageToAnalisys(this._gitRepoInstance));
         }
         #endregion
-
 
         #region BackgroundWorker
         private void DoWork(object sender, DoWorkEventArgs e)
         {
+            IsOpening = true;
             OpenRepository();
         }
 
@@ -388,12 +435,24 @@ namespace RepositoryParser.ViewModel
             else
             {
                 CommitsColection.Clear();
-                GitRepoInstance.GetDataFromBase().ForEach(x => CommitsColection.Add(x));
+                _gitRepoInstance.GetDataFromBase().ForEach(x => CommitsColection.Add(x));
             }
         }
+
+
+        private void DoClearWork(object sender, DoWorkEventArgs e)
+        {
+            IsOpening = false;
+            ProgressBarVisibility = true;
+            ClearDataBase();
+        }
+
+        private void DoClearWorkCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            RefreshList();
+            ProgressBarVisibility = false;
+        }
         #endregion
-
-
 
     }
 }

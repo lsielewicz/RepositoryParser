@@ -169,6 +169,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clearing data base, please wait....
+        /// </summary>
+        public static string ClearingDataBase {
+            get {
+                return ResourceManager.GetString("ClearingDataBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Author.
         /// </summary>
         public static string CommitsList_Author {
