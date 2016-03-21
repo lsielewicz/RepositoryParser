@@ -96,10 +96,6 @@ namespace RepositoryParser.Core.Models
             }
         }
 
-
-
-
-
         public void ExecuteQuery(string query)
         {
             try
