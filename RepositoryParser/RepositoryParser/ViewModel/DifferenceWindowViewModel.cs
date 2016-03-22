@@ -1,18 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data.SQLite;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Threading;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
+using RepositoryParser.Core.Utils;
 using RepositoryParser.View;
 
 namespace RepositoryParser.ViewModel
@@ -21,7 +26,6 @@ namespace RepositoryParser.ViewModel
     {
         #region Variables
         private GitRepositoryService _gitRepositoryService;
-        private string filteringQuery;
         private ObservableCollection<KeyValuePair<int, string>> commitsCollection;
         private KeyValuePair<int, string> selectedItem;
         private KeyValuePair<string, string> changeSelectedItem;
@@ -29,28 +33,47 @@ namespace RepositoryParser.ViewModel
         private string textA;
         private string textB;
         private string changeQuery;
+        private string filteringQuery;
         private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
         private DifferencesColoringService colorService;
         private ObservableCollection<ChangesColorModel> listTextA;
         private ObservableCollection<ChangesColorModel> listTextB;
         private RelayCommand goToChartOfChangesCommand;
+        private RelayCommand _closedEventCommand;
+        private bool _progressBarVisibility;
+
+        private BackgroundWorker _showDifferencesWorker;
+        private BackgroundWorker _onLoadWorker;
         #endregion
         #region Constructors
 
         public DifferenceWindowViewModel()
         {
             Messenger.Default.Register<DataMessageToCharts>(this, x => HandleChartMessage(x.RepoInstance, x.FilteringQuery));
-            CommitsCollection = new ObservableCollection<KeyValuePair<int, string>>();
             ChangesCollection = new ObservableCollection<KeyValuePair<string, string>>();
+
+            this._showDifferencesWorker = new BackgroundWorker();
+            this._showDifferencesWorker.DoWork += this.ShowDifferencesWork;
+            this._showDifferencesWorker.RunWorkerCompleted += this.ShowDifferencesCompleted;
+
+            this._onLoadWorker = new BackgroundWorker();
+            this._onLoadWorker.DoWork += this.OnLoadWork;
+            this._onLoadWorker.RunWorkerCompleted += this.OnLoadWorkCompleted;
+
         }
         #endregion
         #region Methods
+
+
+
 
         private void HandleChartMessage(GitRepositoryService repo, string query)
         {
             this._gitRepositoryService = repo;
             this.filteringQuery = query;
-            FillContent();
+            if(!_onLoadWorker.IsBusy)
+                _onLoadWorker.RunWorkerAsync();
+           // FillContent();
         }
 
         private void FillContent()
@@ -73,13 +96,27 @@ namespace RepositoryParser.ViewModel
                     int id = Convert.ToInt32(reader["ID"]);
                     string message = Convert.ToString(reader["Message"]);
                     KeyValuePair<int, string> dictionary = new KeyValuePair<int, string>(id, message);
-                    commitsCollection.Add(dictionary);
+                    commitsCollection.Add(dictionary);              
                 }
             }
+            ProgressBarVisibility = false;
         }
         #endregion
         #region Getters/Setters
 
+        public bool ProgressBarVisibility
+        {
+            get
+            {
+                return _progressBarVisibility;
+            }
+            set
+            {
+                if (_progressBarVisibility != value)
+                    _progressBarVisibility = value;
+                RaisePropertyChanged("ProgressBarVisibility");
+            }
+        }
         public ObservableCollection<ChangesColorModel> ListTextA
         {
             get { return listTextA;}
@@ -197,7 +234,9 @@ namespace RepositoryParser.ViewModel
             set
             {
                 changeSelectedItem = value;
-                ChangeSelection(changeSelectedItem);
+                //ChangeSelection(changeSelectedItem);
+                if(!_showDifferencesWorker.IsBusy)
+                    _showDifferencesWorker.RunWorkerAsync(changeSelectedItem);
                 RaisePropertyChanged("ChangeSelectedItem");
             }
         }
@@ -231,10 +270,15 @@ namespace RepositoryParser.ViewModel
 
                 colorService = new DifferencesColoringService(TextA, TextB);
                 colorService.FillColorDifferences();
-                ListTextA=new ObservableCollection<ChangesColorModel>();
-                ListTextB=new ObservableCollection<ChangesColorModel>();
-                colorService.TextAList.ForEach(x=> ListTextA.Add(x));
-                colorService.TextBList.ForEach(x => ListTextB.Add(x));
+
+                ListTextA = new ObservableCollection<ChangesColorModel>();
+                ListTextB = new ObservableCollection<ChangesColorModel>();
+                Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    colorService.TextAList.ForEach(x => ListTextA.Add(x));
+                    colorService.TextBList.ForEach(x => ListTextB.Add(x));
+                }));
+
 
                 Messenger.Default.Send<DataMessageToChartOfChanges>(new DataMessageToChartOfChanges(colorService.TextAList));
             }
@@ -267,5 +311,78 @@ namespace RepositoryParser.ViewModel
             _window.Show();
         }
         #endregion
+
+
+
+        #region backgroundworker
+        private void ShowDifferencesWork(object sender, DoWorkEventArgs e)
+        {
+            Application.Current.Dispatcher.InvokeAsync(new Action(() => { ProgressBarVisibility = true; }), DispatcherPriority.Send);
+            KeyValuePair<string, string> arg = (KeyValuePair<string, string>) e.Argument;
+            ChangeSelection(arg);
+        }
+
+        private void ShowDifferencesCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            ProgressBarVisibility = false;
+        }
+
+
+        private void OnLoadWork(object sender, DoWorkEventArgs e)
+        {
+            Application.Current.Dispatcher.InvokeAsync(new Action(() => { ProgressBarVisibility = true; }),DispatcherPriority.Send);
+            int prog = 0;
+            CommitsCollection=new ObservableCollection<KeyValuePair<int, string>>();
+            
+            string query;
+            if (string.IsNullOrEmpty(filteringQuery))
+            {
+                query = "SELECT * From GitCommits";
+            }
+            else
+            {
+                query = filteringQuery;
+            }
+            SQLiteCommand command = new SQLiteCommand(query, _gitRepositoryService.SqLiteInstance.Connection);
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    int id = Convert.ToInt32(reader["ID"]);
+                    string message = Convert.ToString(reader["Message"]);
+                    KeyValuePair<int, string> dictionary = new KeyValuePair<int, string>(id, message);
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        CommitsCollection.Add(dictionary);
+                    });
+                    
+                 }
+            ProgressBarVisibility = false;
+        }
+
+        private void OnLoadWorkCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            
+        }
+
+
+
+        #endregion
+
+        public RelayCommand ClosedEventCommand
+        {
+            get { return _closedEventCommand ?? (_closedEventCommand = new RelayCommand(ClosedEvent)); }
+        }
+
+        private void ClosedEvent()
+        {
+            if(CommitsCollection != null)
+                CommitsCollection.Clear();
+            if(ChangesCollection != null)
+                ChangesCollection.Clear();
+            if(ListTextA != null)
+                ListTextA.Clear();
+            if(ListTextB !=null)
+                ListTextB.Clear();
+        }
     }
 }
