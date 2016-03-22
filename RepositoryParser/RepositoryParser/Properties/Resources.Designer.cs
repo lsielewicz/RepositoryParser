@@ -241,6 +241,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data loading, please wait....
+        /// </summary>
+        public static string DataLoadingStatus {
+            get {
+                return ResourceManager.GetString("DataLoadingStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Day.
         /// </summary>
         public static string Day {

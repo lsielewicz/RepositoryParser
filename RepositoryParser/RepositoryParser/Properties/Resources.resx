@@ -448,4 +448,7 @@
     <value>Clearing data base, please wait...</value>
     <comment>main</comment>
   </data>
+  <data name="DataLoadingStatus" xml:space="preserve">
+    <value>Data loading, please wait...</value>
+  </data>
 </root>

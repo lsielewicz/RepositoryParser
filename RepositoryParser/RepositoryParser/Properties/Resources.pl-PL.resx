@@ -445,4 +445,7 @@
     <value>Trwa czyszczenie bazy danych, proszę czekać...</value>
     <comment>main</comment>
   </data>
+  <data name="DataLoadingStatus" xml:space="preserve">
+    <value>Trwa ładowanie danych, proszę czekać...</value>
+  </data>
 </root>
