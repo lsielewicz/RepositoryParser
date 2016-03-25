@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
+using System.Runtime.Remoting;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -65,16 +66,20 @@ namespace RepositoryParser.Core.Models
         }
         public static string InsertSqliteQuery(ChangesTable obj)
         {
-            if (obj.TextA.Contains("'"))
+            //if (obj.TextA.Contains("'"))
                 obj.TextA = SqLiteService.StripSlashes(obj.TextA);
-            if (obj.TextB.Contains("'"))
-                obj.TextB = SqLiteService.StripSlashes(obj.TextB);
 
-            string query = "Insert into Changes (Type, Path, TextA, TextB) values (" +
+            //if (obj.TextB.Contains("'"))
+                 obj.TextB = SqLiteService.StripSlashes(obj.TextB);
+
+
+            /*string query = "Insert into Changes (Type, Path, TextA, TextB) values (" +
                            "'" + obj.Type + "'" +
                            ", '" + obj.Path + "'" +
                            ", '" + obj.TextA + "'" +
-                           ", '" + obj.TextB + "')";
+                           ", '" + obj.TextB + "')";*/
+            string query = string.Format("Insert into Changes (Type, Path, TextA, TextB) values ('{0}', '{1}', '{2}', '{3}')",
+                                            @obj.Type, @obj.Path, @obj.TextA, @obj.TextB);
             return query;
         }
         public static int GetLastIndex(SQLiteConnection Connection)

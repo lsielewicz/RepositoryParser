@@ -128,7 +128,7 @@ namespace RepositoryParser.Core.Services
 
             using (SvnClient svnClient = new SvnClient())
                 svnClient.Log(
-                    new Uri(Path),
+                    new Uri(path),
                     new SvnLogArgs
                     {
                         Range = new SvnRevisionRange(revision, revision-1)
@@ -143,10 +143,11 @@ namespace RepositoryParser.Core.Services
                                     changeItem.Action,
                                     changeItem.Path));
 
+                            
                             changesList.Add(new ChangesTable(Convert.ToString(changeItem.Action),
                                                             changeItem.Path,
-                                                            GetDifferences(revision,path,false), 
-                                                            GetDifferences(revision, path, true)));
+                                                            GetDifferences(revision,changeItem.Path,false), 
+                                                            GetDifferences(revision, changeItem.Path, true)));
                         }
                     });
 
@@ -155,7 +156,9 @@ namespace RepositoryParser.Core.Services
 
         private string GetDifferences(long revision, string path, bool isParent=false)
         {
-            
+            if (revision == 1)
+                return "";
+            path = this.Path + path;
             SvnRevisionRange range;
             if (!isParent)
                 range = new SvnRevisionRange(revision-1, revision);
@@ -166,6 +169,7 @@ namespace RepositoryParser.Core.Services
             MemoryStream diffResult = new MemoryStream();
             string theFile = String.Empty;
             int counter = 0;
+            bool descFlag = false;
             using (SvnClient client = new SvnClient())
             {
                 if (client.Diff(new SvnUriTarget(path), range, diffResult))
@@ -174,10 +178,30 @@ namespace RepositoryParser.Core.Services
                     StreamReader strReader = new StreamReader(diffResult);
                     string diff = strReader.ReadToEnd();
                     diff = diff.Insert(diff.Length, "\0");
+                    /*                    foreach (char c in diff)
+                                        {
+                                            theFile += diff.Substring(counter);
+                                            break;
+                                        }*/
                     foreach (char c in diff)
                     {
-                        theFile += diff.Substring(counter);
-                        break;
+                        counter++;
+                        if (c != '@' && descFlag == false) //getting past the first description part
+                            continue;
+                        else if (c == '@' && descFlag == false) //we know we are towards the end of it
+                        {
+                            if (diff.Substring(counter, 1) == "\n" || diff.Substring(counter, 1) == "\r") //at the end of the line with the '@' symbols
+                            {
+                                descFlag = true;
+                            }
+                            else
+                                continue;
+                        }
+                        else if (descFlag == true) //now reading the actual file
+                        {
+                            theFile += diff.Substring(counter);
+                            break;
+                        }
                     }
                 }
             }
@@ -275,7 +299,7 @@ namespace RepositoryParser.Core.Services
                     transactions.Add(CommitTable.InsertSqliteQuery(commit));
                     transactions.Add(
                         CommitForBranchTable.InsertQuery(new CommitForBranchTable(startBranchIndex, startCommitIndex)));
- /*                       List<ChangesTable> changes = GetChanges(commit.Revision, branch.Path);
+                        List<ChangesTable> changes = GetChanges(commit.Revision, branch.Path);
                         foreach (ChangesTable change in changes)
                         {
                             transactions.Add(ChangesTable.InsertSqliteQuery(change));
@@ -284,7 +308,7 @@ namespace RepositoryParser.Core.Services
                                     startChangeIndex)));
 
                             startChangeIndex++;
-                        }*/
+                        }
                     startCommitIndex++;
                 }
                 startBranchIndex++;
