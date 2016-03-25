@@ -24,9 +24,10 @@ namespace RepositoryParser.Core.Models
             ID_Repository = rnumber;
         }
 
-        public RepositoryTable(string name)
+        public RepositoryTable(string name, string type)
         {
             Name = name;
+            Type = type;
         }
 
         public RepositoryTable(int ID, string name)

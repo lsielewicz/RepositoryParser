@@ -15,9 +15,10 @@ namespace RepositoryParser.Core.Interfaces
         SvnInfoEventArgs Info { get; set; }
         SqLiteService SqLiteInstance { get; set; }
 
+        void InitializeConnection();
         List<BranchTable> GetAllBranches();
         RepositoryTable GetRepository();
-        List<CommitTable> GetCommits();
+        List<CommitTable> GetCommits(string path);
         List<ChangesTable> GetChanges();
          
 
