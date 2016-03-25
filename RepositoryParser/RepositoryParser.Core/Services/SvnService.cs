@@ -142,9 +142,9 @@ namespace RepositoryParser.Core.Services
                             else if (changeItem.Action == SvnChangeAction.Modify)
                                 action = "Modified";
                             else if (changeItem.Action == SvnChangeAction.Add)
-                                action = "Added";
-                            else if (changeItem.Action == SvnChangeAction.Delete)
                                 action = "Deleted";
+                            else if (changeItem.Action == SvnChangeAction.Delete)
+                                action = "Added";
                             else
                                 action = Convert.ToString(changeItem.Action);
                                                   
