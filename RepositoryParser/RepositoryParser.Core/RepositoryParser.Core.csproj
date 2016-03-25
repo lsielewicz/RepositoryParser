@@ -172,6 +172,7 @@
     <Compile Include="Services\SqLiteService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DataToCSV.cs" />
+    <Compile Include="Services\SvnService.cs" />
     <Compile Include="Utils\ScrollSynchronizer.cs" />
   </ItemGroup>
   <ItemGroup>

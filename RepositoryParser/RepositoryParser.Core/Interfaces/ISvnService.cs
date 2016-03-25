@@ -13,12 +13,13 @@ namespace RepositoryParser.Core.Interfaces
         string Path { get; set; }
         SvnClient Client { get; set; }
         SvnInfoEventArgs Info { get; set; }
+        SqLiteService SqLiteInstance { get; set; }
 
         List<BranchTable> GetAllBranches();
         RepositoryTable GetRepository();
         List<CommitTable> GetCommits();
-
-
+        List<ChangesTable> GetChanges();
+         
 
     }
 }
