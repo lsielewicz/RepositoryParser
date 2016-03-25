@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -112,15 +113,17 @@ namespace RepositoryParser.Core.Services
                     tempTable.Date = SqLiteService.getDateTimeFormat(tempTable.Date);*/
                     tempTable.Message = arg.LogMessage;
                     tempTable.Email = "-";
+                    tempTable.Revision = arg.Revision;
                     commitsList.Add(tempTable);
                 }
             }
             return commitsList;
         }
 
-        public List<ChangesTable> GetChanges(int revision, string path)
+
+        public List<ChangesTable> GetChanges(long revision, string path)
         {
-            path = this.Path;
+            //path = this.Path;
             List<ChangesTable> changesList = new List<ChangesTable>();
 
             using (SvnClient svnClient = new SvnClient())
@@ -151,7 +154,7 @@ namespace RepositoryParser.Core.Services
         return changesList;
         }
 
-        private string GetDifferences(SvnClient client, int revision, string path, bool isParent=false)
+        private string GetDifferences(SvnClient client, long revision, string path, bool isParent=false)
         {
             SvnRevisionRange range;
             if (!isParent)
@@ -173,7 +176,6 @@ namespace RepositoryParser.Core.Services
                 {
                     theFile += diff.Substring(counter);
                     break;
-                    counter++;
                 }
             }
             return theFile;
@@ -235,6 +237,53 @@ namespace RepositoryParser.Core.Services
                 }
             }
             return output;
+        }
+
+
+        public void FillDataBase()
+        {
+            List<string> transactions=new List<string>();
+            RepositoryTable repository = GetRepository();
+            List<BranchTable> branches = GetAllBranches();
+
+            transactions.Add(RepositoryTable.InsertQuery(repository));
+            int lastRepoIndex = repository.GetLastIndex(SqLiteInstance.Connection);
+            int startRepoIndex = lastRepoIndex + 1;
+
+            foreach (BranchTable branch in branches)
+            {
+                transactions.Add(BranchTable.InsertSqliteQuery(branch));
+                int lastBranchIndex = branch.GetLastIndex(SqLiteInstance.Connection);
+                int startBranchIndex = lastBranchIndex + 1;
+
+                transactions.Add(BranchForRepoTable.InsertQuery(new BranchForRepoTable(startRepoIndex, startBranchIndex)));
+
+                List<CommitTable> commits = GetCommits(branch.Path);
+                foreach (CommitTable commit in commits)
+                {
+                    transactions.Add(CommitTable.InsertSqliteQuery(commit));
+                    
+                    int lastCommitIndex=commit.GetLastIndex(SqLiteInstance.Connection);
+                    int startCommitIndex = lastCommitIndex + 1;
+                    transactions.Add(
+                        CommitForBranchTable.InsertQuery(new CommitForBranchTable(startBranchIndex, startCommitIndex)));
+
+                    List<ChangesTable> changes = GetChanges(commit.Revision, branch.Path);
+                    foreach (ChangesTable change in changes)
+                    {
+                        transactions.Add(ChangesTable.InsertSqliteQuery(change));
+                        int lastChangeIndex = ChangesTable.GetLastIndex(SqLiteInstance.Connection);
+                        int startChangeIndex = lastChangeIndex + 1;
+                        transactions.Add(
+                            ChangesForCommitTable.InsertQuery(new ChangesForCommitTable(startCommitIndex,
+                                startChangeIndex)));
+                        startChangeIndex++;
+                    }
+                    startCommitIndex++;
+                }
+                startBranchIndex++;
+            }
+
         }
         #endregion
     }

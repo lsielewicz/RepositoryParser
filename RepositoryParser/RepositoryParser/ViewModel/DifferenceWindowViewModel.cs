@@ -323,7 +323,6 @@ namespace RepositoryParser.ViewModel
         private void OnLoadWork(object sender, DoWorkEventArgs e)
         {
             Application.Current.Dispatcher.InvokeAsync(new Action(() => { ProgressBarVisibility = true; }),DispatcherPriority.Send);
-            int prog = 0;
             CommitsCollection=new ObservableCollection<KeyValuePair<int, string>>();
             
             string query;

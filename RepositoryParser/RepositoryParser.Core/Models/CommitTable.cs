@@ -15,6 +15,7 @@ namespace RepositoryParser.Core.Models
         public string Author { get; set; }
         public string Date { get; set; }
         public string Email { get; set; }
+        public long Revision { get; set; }
         #endregion
 
        
@@ -57,9 +58,19 @@ namespace RepositoryParser.Core.Models
             this.Date = date;
             this.Email = email;
         }
+
+        public CommitTable(int id, string message, string author, string date, string email, int revision)
+        {
+            this.ID = id;
+            this.Message = message;
+            this.Author = author;
+            this.Date = date;
+            this.Revision = revision;
+        }
+
         #endregion
 
-        #region querys
+            #region querys
         public static string SqliteQuery = "create table GitCommits(ID INTEGER PRIMARY KEY AUTOINCREMENT, Message varchar(200), Author varchar(30), Date DATETIME, Email varchar(40))";
 
         public static string InsertSqliteQuery(int id, string message, string author, string date, string email)

@@ -29,6 +29,10 @@ namespace RepositoryParser.Core.Models
             Name = name;
             Type = type;
         }
+        public RepositoryTable(string name)
+        {
+            Name = name;
+        }
 
         public RepositoryTable(int ID, string name)
         {

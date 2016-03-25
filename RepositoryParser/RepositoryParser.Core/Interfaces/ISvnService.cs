@@ -19,7 +19,7 @@ namespace RepositoryParser.Core.Interfaces
         List<BranchTable> GetAllBranches();
         RepositoryTable GetRepository();
         List<CommitTable> GetCommits(string path);
-        List<ChangesTable> GetChanges();
+        List<ChangesTable> GetChanges(long revision, string path);
          
 
     }
