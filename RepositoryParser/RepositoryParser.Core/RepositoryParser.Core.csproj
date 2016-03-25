@@ -88,6 +88,14 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="SharpSvn, Version=1.9003.3845.110, Culture=neutral, PublicKeyToken=d729672594885a28, processorArchitecture=AMD64">
+      <HintPath>..\packages\SharpSvn.1.9-x64.1.9003.3845.110\lib\net40\SharpSvn.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SharpSvn.UI, Version=1.9003.3845.110, Culture=neutral, PublicKeyToken=33789aa53ca44aa9, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpSvn.1.9-x64.1.9003.3845.110\lib\net40\SharpSvn.UI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -145,6 +153,7 @@
     <Compile Include="Interfaces\IDifferencesColoringService.cs" />
     <Compile Include="Interfaces\IGitRepositoryService.cs" />
     <Compile Include="Interfaces\ISqLiteService.cs" />
+    <Compile Include="Interfaces\ISvnService.cs" />
     <Compile Include="Interfaces\IWindowService.cs" />
     <Compile Include="Messages\DataMessageToAnalisys.cs" />
     <Compile Include="Messages\DataMessageToChartOfChanges.cs" />
