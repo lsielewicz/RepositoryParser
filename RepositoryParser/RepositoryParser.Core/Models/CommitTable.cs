@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RepositoryParser.Core.Models
 {
-    public class GitCommits
+    public class CommitTable
     {
         #region Variabels
         public int ID { get; set; }
@@ -20,36 +20,36 @@ namespace RepositoryParser.Core.Models
        
         #region Constructors
 
-        public GitCommits()
+        public CommitTable()
         {
 
         }
-        public GitCommits(int id)
+        public CommitTable(int id)
         {
             this.ID = id;
         }
 
-        public GitCommits(int id, string message)
+        public CommitTable(int id, string message)
         {
             this.ID = id;
             this.Message = message;
         }
 
-        public GitCommits(int id, string message, string author)
+        public CommitTable(int id, string message, string author)
         {
             this.ID = id;
             this.Message = message;
             this.Author = author;
         }
 
-        public GitCommits(int id, string message, string author, string date)
+        public CommitTable(int id, string message, string author, string date)
         {
             this.ID = id;
             this.Message = message;
             this.Author = author;
             this.Date = date;
         }
-        public GitCommits(int id, string message, string author, string date, string email)
+        public CommitTable(int id, string message, string author, string date, string email)
         {
             this.ID = id;
             this.Message = message;
@@ -90,7 +90,7 @@ namespace RepositoryParser.Core.Models
         }
 
 
-        public static string InsertSqliteQuery(GitCommits obj)
+        public static string InsertSqliteQuery(CommitTable obj)
         {
             if (obj.Message.Contains("'"))
                 obj.Message = SqLiteService.StripSlashes(obj.Message);
@@ -104,9 +104,9 @@ namespace RepositoryParser.Core.Models
                            ", '" + @obj.Email + "')";
             return query;
         }
-        public List<GitCommits> GetDataFromBase(SQLiteConnection Connection)
+        public List<CommitTable> GetDataFromBase(SQLiteConnection Connection)
         {
-            List<GitCommits> tempList = new List<GitCommits>();
+            List<CommitTable> tempList = new List<CommitTable>();
 
             string query = "select * from GitCommits";
             SQLiteCommand command = new SQLiteCommand(query, Connection);
@@ -120,7 +120,7 @@ namespace RepositoryParser.Core.Models
                 date = SqLiteService.getDateTimeFormat(date);
                 // date = date.Remove(19);
                 string email = Convert.ToString(reader["Email"]);
-                GitCommits tempInstance = new GitCommits(id, message, author, date, email);
+                CommitTable tempInstance = new CommitTable(id, message, author, date, email);
                 tempList.Add(tempInstance);
             }
             return tempList;

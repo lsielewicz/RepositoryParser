@@ -8,33 +8,33 @@ using System.Threading.Tasks;
 
 namespace RepositoryParser.Core.Models
 {
-    public class GitRepositoryTable
+    public class RepositoryTable
     {
         public int ID_Repository { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
 
-        public GitRepositoryTable()
+        public RepositoryTable()
         {
             ID_Repository = 0;
         }
 
-        public GitRepositoryTable(int rnumber)
+        public RepositoryTable(int rnumber)
         {
             ID_Repository = rnumber;
         }
 
-        public GitRepositoryTable(string name)
+        public RepositoryTable(string name)
         {
             Name = name;
         }
 
-        public GitRepositoryTable(int ID, string name)
+        public RepositoryTable(int ID, string name)
         {
             ID_Repository = ID;
             Name = name;
         }
-        public GitRepositoryTable(int ID, string name, string type)
+        public RepositoryTable(int ID, string name, string type)
         {
             ID_Repository = ID;
             Name = name;
@@ -45,16 +45,16 @@ namespace RepositoryParser.Core.Models
         public static string createTable = "CREATE TABLE Repository(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name varchar(40), Type varchar(40))";
         public static string deleteAllQuery = "DELETE FROM Repository";
 
-        public static string InsertQuery(GitRepositoryTable obj)
+        public static string InsertQuery(RepositoryTable obj)
         {
-            obj.Name = GitRepositoryTable.FixName(obj.Name);
+            obj.Name = RepositoryTable.FixName(obj.Name);
             string query = "INSERT INTO Repository (Name,Type) Values ('" + obj.Name + "', 'Git')";
             return query;
         }
 
-        public List<GitRepositoryTable> GetDataFromBase(SQLiteConnection Connection)
+        public List<RepositoryTable> GetDataFromBase(SQLiteConnection Connection)
         {
-            List<GitRepositoryTable> tempList = new List<GitRepositoryTable>();
+            List<RepositoryTable> tempList = new List<RepositoryTable>();
 
             string query = "select * from Repository";
             SQLiteCommand command = new SQLiteCommand(query, Connection);
@@ -64,7 +64,7 @@ namespace RepositoryParser.Core.Models
                 int id = Convert.ToInt32(reader["ID"]);
                 string name = Convert.ToString(reader["Name"]);
                 string type = Convert.ToString(reader["Type"]);
-                GitRepositoryTable temp = new GitRepositoryTable(id, name, type);
+                RepositoryTable temp = new RepositoryTable(id, name, type);
                 tempList.Add(temp);
             }
             return tempList;

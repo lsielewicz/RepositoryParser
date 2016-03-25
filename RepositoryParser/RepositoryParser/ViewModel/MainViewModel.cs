@@ -24,7 +24,7 @@ namespace RepositoryParser.ViewModel
     public class MainViewModel : ViewModelBase
     {
         #region Variables
-        private ObservableCollection<GitCommits> _commitsCollection;
+        private ObservableCollection<CommitTable> _commitsCollection;
         private GitRepositoryService _gitRepoInstance;
         private string _urlTextBox = "";
         private bool _isCloneButtonEnabled = true;
@@ -48,7 +48,7 @@ namespace RepositoryParser.ViewModel
         public MainViewModel()
         {
             Messenger.Default.Register<DataMessageToDisplay>(this, x => HandleDataMessage(x.CommitList));
-            CommitsColection = new ObservableCollection<GitCommits>();
+            CommitsColection = new ObservableCollection<CommitTable>();
   
             SortCommand = new RelayCommand<object>(Sort);
 
@@ -121,7 +121,7 @@ namespace RepositoryParser.ViewModel
             }
         }
 
-        public ObservableCollection<GitCommits> CommitsColection
+        public ObservableCollection<CommitTable> CommitsColection
         {
             get
             {
@@ -317,8 +317,8 @@ namespace RepositoryParser.ViewModel
             if (_gitRepoInstance != null)
             {
                 List<string> Transactions = new List<string>();
-                Transactions.Add(GitCommits.deleteAllQuery);
-                Transactions.Add(GitRepositoryTable.deleteAllQuery);
+                Transactions.Add(CommitTable.deleteAllQuery);
+                Transactions.Add(RepositoryTable.deleteAllQuery);
                 Transactions.Add(BranchTable.deleteAllQuery);
                 Transactions.Add(CommitForBranchTable.deleteAllQuery);
                 Transactions.Add(BranchForRepoTable.deleteAllQuery);
@@ -358,7 +358,7 @@ namespace RepositoryParser.ViewModel
             {
                 // Save document
                 string filename = dlg.FileName;
-                List<GitCommits> tempList = CommitsColection.ToList();
+                List<CommitTable> tempList = CommitsColection.ToList();
                 DataToCsv.CreateCSVFromGitCommitsList(tempList, filename);
                 MessageBox.Show(_resourceManager.GetString("ExportMessage"), _resourceManager.GetString("ExportTitle"));
             }
@@ -407,7 +407,7 @@ namespace RepositoryParser.ViewModel
 
         #region Messages
 
-        private void HandleDataMessage(List<GitCommits> list)
+        private void HandleDataMessage(List<CommitTable> list)
         {
             CommitsColection.Clear();
             list.ForEach(x => CommitsColection.Add(x));
