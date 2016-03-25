@@ -123,7 +123,6 @@ namespace RepositoryParser.Core.Services
 
         public List<ChangesTable> GetChanges(long revision, string path)
         {
-            //path = this.Path;
             List<ChangesTable> changesList = new List<ChangesTable>();
 
             using (SvnClient svnClient = new SvnClient())
@@ -137,14 +136,19 @@ namespace RepositoryParser.Core.Services
                     {
                         foreach (var changeItem in e.ChangedPaths)
                         {
-                            string temp = (
-                                string.Format(
-                                    "{0} {1}",
-                                    changeItem.Action,
-                                    changeItem.Path));
-
-                            
-                            changesList.Add(new ChangesTable(Convert.ToString(changeItem.Action),
+                            string action = String.Empty;
+                            if(changeItem.Action == SvnChangeAction.None)
+                                continue;
+                            else if (changeItem.Action == SvnChangeAction.Modify)
+                                action = "Modified";
+                            else if (changeItem.Action == SvnChangeAction.Add)
+                                action = "Added";
+                            else if (changeItem.Action == SvnChangeAction.Delete)
+                                action = "Deleted";
+                            else
+                                action = Convert.ToString(changeItem.Action);
+                                                  
+                            changesList.Add(new ChangesTable(action,
                                                             changeItem.Path,
                                                             GetDifferences(revision,changeItem.Path,false), 
                                                             GetDifferences(revision, changeItem.Path, true)));
@@ -178,11 +182,11 @@ namespace RepositoryParser.Core.Services
                     StreamReader strReader = new StreamReader(diffResult);
                     string diff = strReader.ReadToEnd();
                     diff = diff.Insert(diff.Length, "\0");
-                    /*                    foreach (char c in diff)
-                                        {
-                                            theFile += diff.Substring(counter);
-                                            break;
-                                        }*/
+                    if (diff.Length >= 50000)
+                    {
+                        double size = diff.Length/500;
+                        return String.Format("File content: {0} kb", size);
+                    }
                     foreach (char c in diff)
                     {
                         counter++;

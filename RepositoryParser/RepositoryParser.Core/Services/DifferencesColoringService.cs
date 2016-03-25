@@ -32,6 +32,11 @@ namespace RepositoryParser.Core.Services
 
         private ChangesColorModel LineColoring(string line1_output, string line2, bool isParent=false)
         {
+            if(line1_output.StartsWith("+"))
+                return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Added);
+            else if(line1_output.StartsWith("-"))
+                return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Deleted);
+
             if ((!String.IsNullOrWhiteSpace(line1_output)) && (String.IsNullOrWhiteSpace(line2)))
             {
                 if(isParent)
