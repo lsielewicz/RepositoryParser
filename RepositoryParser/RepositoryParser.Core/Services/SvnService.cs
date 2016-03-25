@@ -275,7 +275,7 @@ namespace RepositoryParser.Core.Services
                     transactions.Add(CommitTable.InsertSqliteQuery(commit));
                     transactions.Add(
                         CommitForBranchTable.InsertQuery(new CommitForBranchTable(startBranchIndex, startCommitIndex)));
-                        List<ChangesTable> changes = GetChanges(commit.Revision, branch.Path);
+ /*                       List<ChangesTable> changes = GetChanges(commit.Revision, branch.Path);
                         foreach (ChangesTable change in changes)
                         {
                             transactions.Add(ChangesTable.InsertSqliteQuery(change));
@@ -284,7 +284,7 @@ namespace RepositoryParser.Core.Services
                                     startChangeIndex)));
 
                             startChangeIndex++;
-                        }
+                        }*/
                     startCommitIndex++;
                 }
                 startBranchIndex++;

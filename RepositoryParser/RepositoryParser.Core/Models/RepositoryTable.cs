@@ -32,6 +32,7 @@ namespace RepositoryParser.Core.Models
         public RepositoryTable(string name)
         {
             Name = name;
+            Type = "GIT";
         }
 
         public RepositoryTable(int ID, string name)
@@ -53,7 +54,7 @@ namespace RepositoryParser.Core.Models
         public static string InsertQuery(RepositoryTable obj)
         {
             obj.Name = RepositoryTable.FixName(obj.Name);
-            string query = "INSERT INTO Repository (Name,Type) Values ('" + obj.Name + "', 'Git')";
+            string query = "INSERT INTO Repository (Name,Type) Values ('" + obj.Name + "', '"+ obj.Type+"')";
             return query;
         }
 
