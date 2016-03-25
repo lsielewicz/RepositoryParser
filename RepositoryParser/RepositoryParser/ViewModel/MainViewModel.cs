@@ -26,6 +26,7 @@ namespace RepositoryParser.ViewModel
         #region Variables
         private ObservableCollection<CommitTable> _commitsCollection;
         private GitRepositoryService _gitRepoInstance;
+        private SvnService _svnRepoService;
         private string _urlTextBox = "";
         private bool _isCloneButtonEnabled = true;
         private bool _progressBarVisibility = false;
@@ -237,7 +238,11 @@ namespace RepositoryParser.ViewModel
                 {
                     ProgressBarVisibility = true;
 
-                    if (!_isLocal)
+                    //svn
+                    _svnRepoService= new SvnService(UrlTextBox);
+                    _svnRepoService.FillDataBase();
+
+                   /* if (!_isLocal)
                     {
                         _gitRepoInstance = new GitRepositoryService();
                         _gitRepoInstance.UrlRepoPath = UrlTextBox;
@@ -255,7 +260,7 @@ namespace RepositoryParser.ViewModel
                         _gitRepoInstance.InitializeConnection();
                         _gitRepoInstance.FillDataBase();
 
-                    }
+                    }*/
 
 
                 }

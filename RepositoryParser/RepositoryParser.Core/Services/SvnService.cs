@@ -48,7 +48,7 @@ namespace RepositoryParser.Core.Services
         {
             if (!String.IsNullOrEmpty(Path) && !Path.Contains("file:///"))
                 Path = "file:///" + Path;
-            else
+            else if(String.IsNullOrEmpty(Path))
             {
                 return;
             }
@@ -81,7 +81,7 @@ namespace RepositoryParser.Core.Services
             List<BranchTable> branches = new List<BranchTable>();
             files.ForEach(file =>
             {
-                branches.Add(new BranchTable(FixName(file), file));
+                branches.Add(new BranchTable(file, branchesPath+'/'+file));
             });
             return branches;
         }
@@ -109,8 +109,8 @@ namespace RepositoryParser.Core.Services
                     CommitTable tempTable= new CommitTable();
                     tempTable.Author = arg.Author;
                     tempTable.Date = Convert.ToString(arg.Time);
- /*                   tempTable.Date = tempTable.Date.Remove(19);
-                    tempTable.Date = SqLiteService.getDateTimeFormat(tempTable.Date);*/
+                   // tempTable.Date = tempTable.Date.Remove(19);
+                    tempTable.Date = SqLiteService.getDateTimeFormat(tempTable.Date);
                     tempTable.Message = arg.LogMessage;
                     tempTable.Email = "-";
                     tempTable.Revision = arg.Revision;
@@ -142,40 +142,43 @@ namespace RepositoryParser.Core.Services
                                     "{0} {1}",
                                     changeItem.Action,
                                     changeItem.Path));
-                                                        
 
                             changesList.Add(new ChangesTable(Convert.ToString(changeItem.Action),
                                                             changeItem.Path,
-                                                            GetDifferences(svnClient,revision,path,false), 
-                                                            GetDifferences(svnClient, revision, path, true)));
+                                                            GetDifferences(revision,path,false), 
+                                                            GetDifferences(revision, path, true)));
                         }
                     });
 
         return changesList;
         }
 
-        private string GetDifferences(SvnClient client, long revision, string path, bool isParent=false)
+        private string GetDifferences(long revision, string path, bool isParent=false)
         {
+            
             SvnRevisionRange range;
             if (!isParent)
                 range = new SvnRevisionRange(revision-1, revision);
             else
                 range = new SvnRevisionRange(revision, revision- 1);
 
+
             MemoryStream diffResult = new MemoryStream();
             string theFile = String.Empty;
             int counter = 0;
-
-            if (client.Diff(new SvnUriTarget(path), range, diffResult))
+            using (SvnClient client = new SvnClient())
             {
-                diffResult.Position = 0;
-                StreamReader strReader = new StreamReader(diffResult);
-                string diff = strReader.ReadToEnd();
-                diff = diff.Insert(diff.Length, "\0");
-                foreach (char c in diff)
+                if (client.Diff(new SvnUriTarget(path), range, diffResult))
                 {
-                    theFile += diff.Substring(counter);
-                    break;
+                    diffResult.Position = 0;
+                    StreamReader strReader = new StreamReader(diffResult);
+                    string diff = strReader.ReadToEnd();
+                    diff = diff.Insert(diff.Length, "\0");
+                    foreach (char c in diff)
+                    {
+                        theFile += diff.Substring(counter);
+                        break;
+                    }
                 }
             }
             return theFile;
@@ -245,45 +248,48 @@ namespace RepositoryParser.Core.Services
             List<string> transactions=new List<string>();
             RepositoryTable repository = GetRepository();
             List<BranchTable> branches = GetAllBranches();
+            BranchTable tempBranch = new BranchTable();
+            CommitTable tempCommit = new CommitTable();
 
             transactions.Add(RepositoryTable.InsertQuery(repository));
-            int lastRepoIndex = repository.GetLastIndex(SqLiteInstance.Connection);
-            int startRepoIndex = lastRepoIndex + 1;
+
+            int startRepoIndex = repository.GetLastIndex(SqLiteInstance.Connection) + 1;
+            int startBranchIndex = tempBranch.GetLastIndex(SqLiteInstance.Connection) + 1;
+            int startCommitIndex = tempCommit.GetLastIndex(SqLiteInstance.Connection) + 1;
+            int startChangeIndex = ChangesTable.GetLastIndex(SqLiteInstance.Connection) + 1;
 
             foreach (BranchTable branch in branches)
             {
-                transactions.Add(BranchTable.InsertSqliteQuery(branch));
-                int lastBranchIndex = branch.GetLastIndex(SqLiteInstance.Connection);
-                int startBranchIndex = lastBranchIndex + 1;
+                if (String.IsNullOrWhiteSpace(branch.Name))
+                {
+                    branch.Name = "trunk";
+                    branch.Path = Path + "/trunk/";
+                }
 
+                transactions.Add(BranchTable.InsertSqliteQuery(branch));
                 transactions.Add(BranchForRepoTable.InsertQuery(new BranchForRepoTable(startRepoIndex, startBranchIndex)));
 
                 List<CommitTable> commits = GetCommits(branch.Path);
                 foreach (CommitTable commit in commits)
                 {
                     transactions.Add(CommitTable.InsertSqliteQuery(commit));
-                    
-                    int lastCommitIndex=commit.GetLastIndex(SqLiteInstance.Connection);
-                    int startCommitIndex = lastCommitIndex + 1;
                     transactions.Add(
                         CommitForBranchTable.InsertQuery(new CommitForBranchTable(startBranchIndex, startCommitIndex)));
+                        List<ChangesTable> changes = GetChanges(commit.Revision, branch.Path);
+                        foreach (ChangesTable change in changes)
+                        {
+                            transactions.Add(ChangesTable.InsertSqliteQuery(change));
+                            transactions.Add(
+                                ChangesForCommitTable.InsertQuery(new ChangesForCommitTable(startCommitIndex,
+                                    startChangeIndex)));
 
-                    List<ChangesTable> changes = GetChanges(commit.Revision, branch.Path);
-                    foreach (ChangesTable change in changes)
-                    {
-                        transactions.Add(ChangesTable.InsertSqliteQuery(change));
-                        int lastChangeIndex = ChangesTable.GetLastIndex(SqLiteInstance.Connection);
-                        int startChangeIndex = lastChangeIndex + 1;
-                        transactions.Add(
-                            ChangesForCommitTable.InsertQuery(new ChangesForCommitTable(startCommitIndex,
-                                startChangeIndex)));
-                        startChangeIndex++;
-                    }
+                            startChangeIndex++;
+                        }
                     startCommitIndex++;
                 }
                 startBranchIndex++;
             }
-
+            SqLiteInstance.ExecuteTransaction(transactions);
         }
         #endregion
     }
