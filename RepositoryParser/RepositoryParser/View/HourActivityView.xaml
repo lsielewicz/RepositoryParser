@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="HourActivityView" Height="600" Width="800"
         DataContext="{Binding Source={StaticResource Locator}, Path=HourActivity}"
-        Icon="../Assets/Ratings Filled-50.png"
+        Icon="../Assets/Icons/Ratings Filled-50.png"
         >
     <Grid>
         <Grid.ColumnDefinitions>

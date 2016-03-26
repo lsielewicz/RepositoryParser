@@ -10,7 +10,7 @@
         Title="ChartOfChangesView" Height="600" Width="600"
         DataContext="{Binding Source={StaticResource Locator}, Path=ChartOfChanges}"
         ResizeMode="NoResize"
-        Icon="../Assets/Ratings Filled-50.png"
+        Icon="../Assets/Icons/Ratings Filled-50.png"
         >
     <Grid>
         <Grid.ColumnDefinitions>

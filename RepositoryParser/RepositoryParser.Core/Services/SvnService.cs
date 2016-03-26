@@ -63,23 +63,30 @@ namespace RepositoryParser.Core.Services
 
         public void InitializeConnection()
         {
-            if (!String.IsNullOrEmpty(Path) && !Path.Contains("file:///"))
-                Path = "file:///" + Path;
-            else if(String.IsNullOrEmpty(Path))
+            try
             {
-                return;
+                if (!String.IsNullOrEmpty(Path) && !Path.Contains("file:///"))
+                    Path = "file:///" + Path;
+                else if (String.IsNullOrEmpty(Path))
+                {
+                    return;
+                }
+
+                this.Client = new SvnClient();
+                SvnInfoEventArgs svnInfoEventArgs;
+                Client.GetInfo(new Uri(Path), out svnInfoEventArgs);
+                Info = svnInfoEventArgs;
+
+                string repoPath = "./DataBases/CommonRepositoryDataBase.sqlite";
+                if (!File.Exists(repoPath))
+                    ConnectRepositoryToDataBase(true);
+                else
+                    ConnectRepositoryToDataBase();
             }
-
-            this.Client=new SvnClient();
-            SvnInfoEventArgs svnInfoEventArgs;
-            Client.GetInfo(new Uri(Path), out svnInfoEventArgs);
-            Info = svnInfoEventArgs;
-
-            string repoPath = "./DataBases/CommonRepositoryDataBase.sqlite";
-            if (!File.Exists(repoPath))
-                ConnectRepositoryToDataBase(true);
-            else
-                ConnectRepositoryToDataBase();
+            catch (SvnRepositoryIOException ex)
+            {
+                
+            }
 
         }
 

@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="WeekDayActivityView" Height="600" Width="800"
         DataContext="{Binding Source={StaticResource Locator}, Path=WeekdayActivity}"
-        Icon="../Assets/Ratings Filled-50.png"
+        Icon="../Assets/Icons/Ratings Filled-50.png"
         >
     <Grid>
         <Grid.ColumnDefinitions>
@@ -37,7 +37,7 @@
                 <StackPanel>
                     <chartingToolkit:Chart MinHeight="400" x:Name="Chart" Title="{x:Static resw:Resources.WeekdayActivityChartChart}" Background="Beige" Margin="0,0,0,50">
                         <chartingToolkit:Chart.Series>
-                            <chartingToolkit:AreaSeries x:Name="Series" 
+                            <chartingToolkit:AreaSeries
                                     Title=""
                                     ItemsSource="{Binding KeyCollection, Mode=OneWay}"
                                     DependentValueBinding="{Binding Path=Value}"

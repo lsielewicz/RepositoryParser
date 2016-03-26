@@ -12,7 +12,7 @@
         mc:Ignorable="d"
         Title="DifferenceWindowView" Height="600" Width="900"
         DataContext="{Binding Source={StaticResource Locator}, Path=Difference}"
-        Icon="../Assets/Ratings Filled-50.png" 
+        Icon="../Assets/Icons/Ratings Filled-50.png" 
         >
 
     <Window.Resources>

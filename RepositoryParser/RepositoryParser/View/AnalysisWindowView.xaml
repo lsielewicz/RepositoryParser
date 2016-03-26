@@ -9,9 +9,10 @@
         xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
         xmlns:resw="clr-namespace:RepositoryParser.Properties"
         mc:Ignorable="d"
-         Title="AnalysisView" Height="600" Width="1000"
+        Title="AnalysisView" Height="600" Width="1000"
         DataContext="{Binding Source={StaticResource Locator}, Path=Analisys}"
-        Icon="../Assets/Ratings Filled-50.png">
+        Icon="../Assets/Icons/Ratings Filled-50.png"
+        >
 
     <Window.Resources>
         <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>

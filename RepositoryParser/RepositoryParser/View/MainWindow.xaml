@@ -9,7 +9,7 @@
         xmlns:resw="clr-namespace:RepositoryParser.Properties"
         mc:Ignorable="d"
         Title="RepositoryAnalyser" Height="600" Width="1200"
-        Icon="../Assets/Ratings Filled-50.png"
+        Icon="../Assets/Icons/Ratings Filled-50.png"
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
         MinHeight="450" MinWidth="800"
@@ -73,7 +73,7 @@
                     Content="{x:Static resw:Resources.LocalAdress}" 
                     Command="{Binding PickFileCommand}" 
                     FontSize="14" 
-                    BorderThickness="2"
+                    BorderThickness="0,2"
                     BorderBrush="{StaticResource MyGreen}"
                     Foreground="{StaticResource Grey}"
                     Background="{StaticResource Graphite}"
@@ -93,13 +93,13 @@
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="2">
                     <Button Margin="4,0" VerticalAlignment="Center" Background="Transparent" BorderThickness="0" MinWidth="90" Command="{Binding PickGitRepositoryCommand}">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="../Assets/Git-64.png" Height="32" Width="32"/>
+                            <Image Source="../Assets/Icons/Git-64.png" Height="32" Width="32"/>
                             <TextBlock Text="{x:Static resw:Resources.GitRepository}" VerticalAlignment="Center" Padding="5,0"/>
                         </StackPanel>
                     </Button>
                     <Button Margin="4,0" VerticalAlignment="Center" Background="Transparent" BorderThickness="0" MinWidth="90" Command="{Binding PickSvnRepositoryCommand}">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="../Assets/svn-64.ico" Height="32" Width="32"/>
+                            <Image Source="../Assets/Icons/svn-64.ico" Height="32" Width="32"/>
                                 <TextBlock Text="{x:Static resw:Resources.SvnRepository}" VerticalAlignment="Center" Padding="5,0"/>
                         </StackPanel>
                     </Button>
@@ -167,56 +167,81 @@
    
         </Grid>
 
-        <StackPanel Grid.Row="3" Grid.Column="1">
+        <StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch">
             <Button x:Name="CloneRepositoryBtn"
                     Command="{Binding StartWorkCommand}" 
                     IsEnabled="{Binding IsCloneButtonEnabled }" 
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center" 
                     Height="50"  
-                    Content="{x:Static resw:Resources.AddRepositoryButton}" 
                     Background="{StaticResource MyGreen}" 
                     FontSize="20" 
                     Margin="2" 
-                    Padding="4" />
+                    Padding="4" 
+                    MinWidth="250"
+                    >
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=RefreshBtn, Path=Width}" >
+                    <Image Source="../Assets/Icons/Add Database-52.png" Width="24" Margin="10,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.AddRepositoryButton}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
         </StackPanel>
 
         <DockPanel Grid.Row="2" Grid.Column="0">
             <Button x:Name="GoToAnalisysBtn" 
-                    Content="{x:Static resw:Resources.AnalysisButton}" 
                     Height="50" 
                     VerticalAlignment="Top" 
                     Command="{Binding GoToPageAnalysisCommand}" 
                     Background="{StaticResource MyGreen}" 
-                    Margin="0,0,0,5"/>
+                    Margin="0,0,0,5">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=RefreshBtn, Path=ActualWidth}" >
+                    <Image Source="../Assets/Icons/Combo Chart Filled-50.png" Width="24" Margin="10,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.AnalysisButton}" VerticalAlignment="Bottom"/>
+                </StackPanel>
+            </Button>
 
         </DockPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="2">
             <Button x:Name="ClearDataBase" 
-                    Content ="{x:Static resw:Resources.ClearDBButton}" 
                     Height="50" 
                     VerticalAlignment="Top" 
                     Background="{StaticResource MyGreen}"  
                     Command="{Binding AsyncClearDBCommand}" 
-                    Margin="0,0,0,5"/>
-            <Button x:Name="Refresh"
-                    Content ="{x:Static resw:Resources.RefreshButton}" 
+                    Margin="0,0,0,5">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=RefreshBtn, Path=ActualWidth}" >
+                    <Image Source="../Assets/Icons/Delete-64.png" Width="24" Margin="10,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.ClearDBButton}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="RefreshBtn" 
                     Height="50" 
                     VerticalAlignment="Top"
                     Background="{StaticResource MyGreen}"  
                     Command="{Binding RefreshCommand}" 
-                    Margin="0,0,0,5"/>
+                    Margin="0,0,0,5"
+                    Padding="0"
+                    >
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=RefreshBtn, Path=ActualWidth}" >
+                        <Image Source="../Assets/Icons/Refresh-64.png" Width="24" Margin="10,0,10,0"/>
+                        <TextBlock Text="{x:Static resw:Resources.RefreshButton}" VerticalAlignment="Center"/>
+                    </StackPanel>
+            </Button>
+                    
             <Button x:Name="Save"
-                    Content ="{x:Static resw:Resources.ExportToFileButton}" 
                     Height="50" 
                     VerticalAlignment="Bottom" 
                     Background="{StaticResource MyGreen}"  
                     Command="{Binding ExportFileCommand}"
-                    Margin="0,0,0,5"/>
+                    Margin="0,0,0,5">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=RefreshBtn, Path=ActualWidth}" >
+                    <Image Source="../Assets/Icons/CSV Filled-50.png" Width="24" Margin="10,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.ExportToFileButton}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
         </StackPanel>
         
-        <StatusBar Grid.Row="1" Grid.Column="0" 
+<!--        <StatusBar Grid.Row="1" Grid.Column="0" 
                    Grid.RowSpan="2"
                    Grid.ColumnSpan="3"
                    Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" 
@@ -225,7 +250,7 @@
                    HorizontalAlignment="Stretch"
                    VerticalAlignment="Stretch"
                    >
-        </StatusBar>
+        </StatusBar>-->
         <StackPanel Orientation="Horizontal" Grid.Row="0" 
                     Grid.Column="0" Grid.RowSpan="5"
                     Grid.ColumnSpan="3" 

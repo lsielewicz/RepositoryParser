@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="ChartWindowView" Height="750" Width="900"
         DataContext="{Binding Source={StaticResource Locator}, Path=Chart}"
-        Icon="../Assets/Ratings Filled-50.png"
+        Icon="../Assets/Icons/Ratings Filled-50.png"
         >
     <Grid>
         <Grid.ColumnDefinitions>
