@@ -61,7 +61,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Analysis of activity.
+        ///   Looks up a localized string similar to Activity of users.
         /// </summary>
         public static string ActivityAnalyseButton {
             get {
@@ -304,7 +304,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Compare.
+        ///   Looks up a localized string similar to Comparsion.
         /// </summary>
         public static string DifferencesButton {
             get {
@@ -439,7 +439,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hours Analysis of activity.
+        ///   Looks up a localized string similar to Hours activity.
         /// </summary>
         public static string HourActivityAnalyseButton {
             get {
@@ -637,7 +637,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Analysis of month activity.
+        ///   Looks up a localized string similar to Month activity.
         /// </summary>
         public static string MonthActivityAnalyseButton {
             get {
@@ -673,7 +673,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Daily analisys of activity.
+        ///   Looks up a localized string similar to Daily activity.
         /// </summary>
         public static string MonthDayActivityAnalyseButton {
             get {
@@ -871,7 +871,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Weekdays Analysis of activity.
+        ///   Looks up a localized string similar to Week Activity.
         /// </summary>
         public static string WeekdayActivityAnalyseButton {
             get {

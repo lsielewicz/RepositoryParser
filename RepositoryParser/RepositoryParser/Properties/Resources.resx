@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ActivityAnalyseButton" xml:space="preserve">
-    <value>Analysis of activity</value>
+    <value>Activity of users</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="ActivityChart" xml:space="preserve">
@@ -194,7 +194,7 @@
     <comment>DayAcitvityChartPage</comment>
   </data>
   <data name="DifferencesButton" xml:space="preserve">
-    <value>Compare</value>
+    <value>Comparsion</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="DifferenceWindowTitle" xml:space="preserve">
@@ -243,7 +243,7 @@
     <comment>HourAcitvityChartPage</comment>
   </data>
   <data name="HourActivityAnalyseButton" xml:space="preserve">
-    <value>Hours Analysis of activity</value>
+    <value>Hours activity</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="HoursActivityChartChart" xml:space="preserve">
@@ -311,7 +311,7 @@
     <value>September</value>
   </data>
   <data name="MonthActivityAnalyseButton" xml:space="preserve">
-    <value>Analysis of month activity</value>
+    <value>Month activity</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="MonthActivityChartChart" xml:space="preserve">
@@ -327,7 +327,7 @@
     <comment>MonthAcitvityChartPage</comment>
   </data>
   <data name="MonthDayActivityAnalyseButton" xml:space="preserve">
-    <value>Daily analisys of activity</value>
+    <value>Daily activity</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="myTitle" xml:space="preserve">
@@ -360,7 +360,7 @@
     <comment>WeekdaysAcitvityChartPage</comment>
   </data>
   <data name="WeekdayActivityAnalyseButton" xml:space="preserve">
-    <value>Weekdays Analysis of activity</value>
+    <value>Week Activity</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="WeekdayActivityChartChart" xml:space="preserve">

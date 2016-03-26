@@ -21,11 +21,11 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="ButtonsColumn" Width="2.5*" />
+            <ColumnDefinition x:Name="ButtonsColumn" Width="3*" />
             <ColumnDefinition x:Name="AuthorsColumn" Width="3*" />
             <ColumnDefinition x:Name="DateColumn" Width="5*"/>
             <ColumnDefinition x:Name="RepositoryColumn" Width="3*"/>
-            <ColumnDefinition x:Name="BranchColumn" Width="2.5*"/>
+            <ColumnDefinition x:Name="BranchColumn" Width="3*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -119,7 +119,7 @@
                     >
                 <StackPanel Orientation="Horizontal" Width="{Binding ElementName=WeekdayBtn, Path=ActualWidth}">
                     <Image Source="../Assets/Icons/Area-Chart.png" Height="24" Margin="2,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.WeekdayActivityChartChart}" VerticalAlignment="Center"/>
+                    <TextBlock Text="{x:Static resw:Resources.WeekdayActivityAnalyseButton}" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
             <Button x:Name="HourtBtn"
