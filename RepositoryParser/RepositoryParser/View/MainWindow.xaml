@@ -180,7 +180,7 @@
                     Padding="4" 
                     MinWidth="250"
                     >
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=RefreshBtn, Path=Width}" >
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=CloneRepositoryBtn, Path=Width}" >
                     <Image Source="../Assets/Icons/Add Database-52.png" Width="24" Margin="10,0,10,0"/>
                     <TextBlock Text="{x:Static resw:Resources.AddRepositoryButton}" VerticalAlignment="Center"/>
                 </StackPanel>
@@ -194,7 +194,7 @@
                     Command="{Binding GoToPageAnalysisCommand}" 
                     Background="{StaticResource MyGreen}" 
                     Margin="0,0,0,5">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=RefreshBtn, Path=ActualWidth}" >
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=GoToAnalisysBtn, Path=ActualWidth}" >
                     <Image Source="../Assets/Icons/Combo Chart Filled-50.png" Width="24" Margin="10,0,10,0"/>
                     <TextBlock Text="{x:Static resw:Resources.AnalysisButton}" VerticalAlignment="Bottom"/>
                 </StackPanel>
@@ -209,7 +209,7 @@
                     Background="{StaticResource MyGreen}"  
                     Command="{Binding AsyncClearDBCommand}" 
                     Margin="0,0,0,5">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=RefreshBtn, Path=ActualWidth}" >
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=ClearDataBase, Path=ActualWidth}" >
                     <Image Source="../Assets/Icons/Delete-64.png" Width="24" Margin="10,0,10,0"/>
                     <TextBlock Text="{x:Static resw:Resources.ClearDBButton}" VerticalAlignment="Center"/>
                 </StackPanel>
@@ -234,7 +234,7 @@
                     Background="{StaticResource MyGreen}"  
                     Command="{Binding ExportFileCommand}"
                     Margin="0,0,0,5">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=RefreshBtn, Path=ActualWidth}" >
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=Save, Path=ActualWidth}" >
                     <Image Source="../Assets/Icons/CSV Filled-50.png" Width="24" Margin="10,0,10,0"/>
                     <TextBlock Text="{x:Static resw:Resources.ExportToFileButton}" VerticalAlignment="Center"/>
                 </StackPanel>

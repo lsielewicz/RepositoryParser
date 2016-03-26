@@ -71,59 +71,83 @@
         </Border>
             
         <StackPanel x:Name="ButtonsPanel" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Margin="1,5,1,0">
-            <Button x:Name="ChartBtn" 
-                    Content="{x:Static resw:Resources.ActivityAnalyseButton}" 
+            <Button x:Name="ActivityBtn" 
                     Height="50" 
                     Command="{Binding ChartCommand}" 
                     Margin="0,0,0,5" 
                     Background="{StaticResource Graphite}"
                     Foreground="{StaticResource Grey}"
                     FontWeight="Light"
-                    />
-            <Button x:Name="DateBtn" 
-                    Content="{x:Static resw:Resources.MonthActivityAnalyseButton}"
+                    >
+                <StackPanel Orientation="Horizontal" Width="{Binding ElementName=ActivityBtn, Path=ActualWidth}">
+                    <Image Source="../Assets/Icons/Pie-Chart.png" Height="24" Margin="2,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.ActivityAnalyseButton}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="MonthBtn" 
                     Height="50" Margin="0,0,0,5" 
                     Command="{Binding MonthActivityWindowCommand}" 
                     Background="{StaticResource Graphite}"
                     Foreground="{StaticResource Grey}"
                     FontWeight="Light"
-                    />
-            <Button x:Name="GoToDayChartBtn" 
-                    Content="{x:Static resw:Resources.MonthDayActivityAnalyseButton}" 
+                    >
+                <StackPanel Orientation="Horizontal" Width="{Binding ElementName=MonthBtn, Path=ActualWidth}">
+                    <Image Source="../Assets/Icons/Column-Chart.png" Height="24" Margin="2,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.MonthActivityAnalyseButton}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="DayBtn" 
                     Height="50" 
                     Margin="0,0,0,5" 
                     Command="{Binding GoToDayChartWindowCommand}" 
                     Background="{StaticResource Graphite}"
                     Foreground="{StaticResource Grey}" 
                     FontWeight="Light"
-                    />
-            <Button x:Name="GoToWeekDayChartBtn"
-                    Content="{x:Static resw:Resources.WeekdayActivityAnalyseButton}"
+                    >
+                <StackPanel Orientation="Horizontal" Width="{Binding ElementName=DayBtn, Path=ActualWidth}">
+                    <Image Source="../Assets/Icons/Points-Chart.png" Height="24" Margin="2,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.MonthDayActivityAnalyseButton}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="WeekdayBtn"
                     Height="50"
                     Margin="0,0,0,5"
                     Command="{Binding GoToWeekDayActivityWindowCommand}"
                     Background="{StaticResource Graphite}"
                     Foreground="{StaticResource Grey}"
                     FontWeight="Light"
-                    />
-            <Button x:Name="GoToHourChartBtn"
-                    Content="{x:Static resw:Resources.HourActivityAnalyseButton}"
+                    >
+                <StackPanel Orientation="Horizontal" Width="{Binding ElementName=WeekdayBtn, Path=ActualWidth}">
+                    <Image Source="../Assets/Icons/Area-Chart.png" Height="24" Margin="2,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.WeekdayActivityChartChart}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="HourtBtn"
                     Height="50" 
                     Margin="0,0,0,5"
                     Command="{Binding GoToHourActivityWindowCommand}"
                     Background="{StaticResource Graphite}"
                     Foreground="{StaticResource Grey}"
                     FontWeight="Light"
-                    />
-            <Button x:Name="GoToDifferences"
-                    Content="{x:Static resw:Resources.DifferencesButton}"
+                    >
+                <StackPanel Orientation="Horizontal" Width="{Binding ElementName=MonthBtn, Path=ActualWidth}">
+                    <Image Source="../Assets/Icons/Column-Chart.png" Height="24" Margin="2,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.HourActivityAnalyseButton}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="DiffBtn"
                     Height="50"
                     Margin="0,0,0,5"
                     Command="{Binding GoToDifferencesCommand}"
                     Background="{StaticResource Graphite}"
                     Foreground="{StaticResource Grey}"
                     FontWeight="Light"
-                    />
+                    >
+                <StackPanel Orientation="Horizontal" Width="{Binding ElementName=DiffBtn, Path=ActualWidth}">
+                    <Image Source="../Assets/Icons/Compare-52.png" Height="24" Margin="2,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.DifferencesButton}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
         </StackPanel>
 
         <Grid x:Name="AuthorsGrid" Grid.Row="2" Grid.Column="1" Margin="2,5">
@@ -257,14 +281,18 @@
         </Grid>
 
         <StackPanel Grid.Row="1" Grid.Column="4" Grid.RowSpan="2" Margin="1,5,1,0">
-            <Button Content="{x:Static resw:Resources.ClearFiltersBtn}" 
-                    Height="50" 
+            <Button Height="50" 
                     Command="{Binding}" 
                     Margin="0,0,0,5" 
                     Background="{StaticResource Graphite}"
                     Foreground="{StaticResource Grey}"
                     FontWeight="Light"
-                    />
+                    >
+                <StackPanel Orientation="Horizontal" Width="{Binding ElementName=MonthBtn, Path=ActualWidth}">
+                    <Image Source="../Assets/Icons/Clear.png" Height="24" Margin="2,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.ClearFiltersBtn}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
         </StackPanel>
 
         <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5">
