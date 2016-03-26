@@ -169,6 +169,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear all filters.
+        /// </summary>
+        public static string ClearFiltersBtn {
+            get {
+                return ResourceManager.GetString("ClearFiltersBtn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clearing data base, please wait....
         /// </summary>
         public static string ClearingDataBase {

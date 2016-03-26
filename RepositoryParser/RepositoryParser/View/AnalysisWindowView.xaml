@@ -21,19 +21,19 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="12*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition x:Name="ButtonsColumn" Width="2.5*" />
+            <ColumnDefinition x:Name="AuthorsColumn" Width="3*" />
+            <ColumnDefinition x:Name="DateColumn" Width="5*"/>
+            <ColumnDefinition x:Name="RepositoryColumn" Width="3*"/>
+            <ColumnDefinition x:Name="BranchColumn" Width="2.5*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="11*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
-
-
 
         <Rectangle Grid.ColumnSpan="1000" Grid.Row="0">
             <Rectangle.Fill>
@@ -43,94 +43,244 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <Label Grid.Row="0" Grid.Column="1" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{x:Static resw:Resources.AnalysisWindowTitle}" Width="auto"  />
+        <Label Grid.Row="0"
+               Grid.Column="0" 
+               Grid.ColumnSpan="5" 
+               FontSize="28"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Center"
+               Content="{x:Static resw:Resources.AnalysisWindowTitle}" 
+               Width="auto"  />
 
-        <Grid Grid.Column="1" Grid.Row="1" Margin="5,0,0,10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
+        <Border Grid.Column="1"
+                    Grid.ColumnSpan="3" 
+                    Grid.Row="1"
+                    Background="{StaticResource Graphite}"
+                    Padding="0"
+                    >
+            <Label  FontSize="16" 
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Center" 
+                            Content="{x:Static resw:Resources.Filtering}" 
+                            Width="auto"
+                            Foreground="{StaticResource Grey}"
+                            Padding="0"
+                            FontWeight="Light"
+                            >
+            </Label>
+        </Border>
+            
+        <StackPanel x:Name="ButtonsPanel" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Margin="1,5,1,0">
+            <Button x:Name="ChartBtn" 
+                    Content="{x:Static resw:Resources.ActivityAnalyseButton}" 
+                    Height="50" 
+                    Command="{Binding ChartCommand}" 
+                    Margin="0,0,0,5" 
+                    Background="{StaticResource Graphite}"
+                    Foreground="{StaticResource Grey}"
+                    FontWeight="Light"
+                    />
+            <Button x:Name="DateBtn" 
+                    Content="{x:Static resw:Resources.MonthActivityAnalyseButton}"
+                    Height="50" Margin="0,0,0,5" 
+                    Command="{Binding MonthActivityWindowCommand}" 
+                    Background="{StaticResource Graphite}"
+                    Foreground="{StaticResource Grey}"
+                    FontWeight="Light"
+                    />
+            <Button x:Name="GoToDayChartBtn" 
+                    Content="{x:Static resw:Resources.MonthDayActivityAnalyseButton}" 
+                    Height="50" 
+                    Margin="0,0,0,5" 
+                    Command="{Binding GoToDayChartWindowCommand}" 
+                    Background="{StaticResource Graphite}"
+                    Foreground="{StaticResource Grey}" 
+                    FontWeight="Light"
+                    />
+            <Button x:Name="GoToWeekDayChartBtn"
+                    Content="{x:Static resw:Resources.WeekdayActivityAnalyseButton}"
+                    Height="50"
+                    Margin="0,0,0,5"
+                    Command="{Binding GoToWeekDayActivityWindowCommand}"
+                    Background="{StaticResource Graphite}"
+                    Foreground="{StaticResource Grey}"
+                    FontWeight="Light"
+                    />
+            <Button x:Name="GoToHourChartBtn"
+                    Content="{x:Static resw:Resources.HourActivityAnalyseButton}"
+                    Height="50" 
+                    Margin="0,0,0,5"
+                    Command="{Binding GoToHourActivityWindowCommand}"
+                    Background="{StaticResource Graphite}"
+                    Foreground="{StaticResource Grey}"
+                    FontWeight="Light"
+                    />
+            <Button x:Name="GoToDifferences"
+                    Content="{x:Static resw:Resources.DifferencesButton}"
+                    Height="50"
+                    Margin="0,0,0,5"
+                    Command="{Binding GoToDifferencesCommand}"
+                    Background="{StaticResource Graphite}"
+                    Foreground="{StaticResource Grey}"
+                    FontWeight="Light"
+                    />
+        </StackPanel>
+
+        <Grid x:Name="AuthorsGrid" Grid.Row="2" Grid.Column="1" Margin="2,5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="35" />
+                <RowDefinition Height="25"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
             </Grid.RowDefinitions>
 
-            <Label  Grid.Column="0" Grid.Row="0" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Left" Content="{x:Static resw:Resources.Filtering}" Width="auto"  />
-            <StackPanel Grid.Column="0" Grid.Row="1">
-                <Label x:Name="AuthorLabel" Content="{x:Static resw:Resources.FilteringAuthor}" Margin="5,0,0,0"/>
-                <ListView x:Name="AuthorComboBox" Width="auto" Height="190" MinHeight="150" MinWidth="160" HorizontalAlignment="Left" Margin="5,0,0,0"
+            <TextBlock Grid.Row="0" 
+                       Text="{x:Static resw:Resources.FilteringAuthor}" 
+                       Margin="5,0,0,0" 
+                       Background="{StaticResource MyGreen}"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Stretch"
+                       Padding="4"
+                       />
+            <ListView x:Name="AuthorComboBox" 
+                      Grid.Row="1"
+                      VerticalAlignment="Stretch"
+                      HorizontalAlignment="Stretch" 
+                      Margin="5,0,0,0"
                       ItemsSource="{Binding LocalCollection}"
                       DisplayMemberPath="{Binding Author}"  
                       SelectedItem="{Binding ComboBoxSelectedItem}"
                       IsSynchronizedWithCurrentItem="True"                     
                       />
-            </StackPanel>
-
-            <StackPanel Grid.Column="1" Grid.Row="1">
-                <Label x:Name="DateLbl" Content="{x:Static resw:Resources.FilteringDate}" Margin="5,0,0,0"/>
-                <DockPanel>
-                    <wpfTool:DateTimePicker HorizontalAlignment="Left"
-		                                    Margin="10"
-		                                    VerticalAlignment="Top"
-                                            Text="{Binding FromDate}"
-                                            Format="Custom"
-                                            FormatString="yyyy-MM-dd"
-                                            MinWidth="100"
-		            />
-                    <Label x:Name="zzlbl" Content="-" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    <wpfTool:DateTimePicker HorizontalAlignment="Left"
-                                Margin="0,10"
-                                VerticalAlignment="Top"
-                                Text="{Binding ToDate}"
-                                Format="Custom"
-                                FormatString="yyyy-MM-dd"
-                                MinWidth="100"
-                                />
-                </DockPanel>
-            </StackPanel>
-
-            <StackPanel Grid.Row="1" Grid.Column="2">
-                <Label x:Name="MessageLbl" Content="{x:Static resw:Resources.FilteringMessage}" Margin="5,0,0,0"/>
-                <TextBox x:Name="MsgTB" Text="{Binding MessageTextBox}" Margin="5"
-                         />
-
-            </StackPanel>
-            <GridSplitter Grid.Column="3" Grid.Row="1" VerticalAlignment="Stretch" Width="10" HorizontalAlignment="Left"/>
-            <StackPanel Grid.Column="3" Grid.Row="1">
-                <Label x:Name="Repositorylbl" Content="{x:Static resw:Resources.FilteringPickRepository}" Margin="5,0,0,0"/>
-                <ListView x:Name="RepositoryList" Width="auto" MinHeight="150" MinWidth="160"  HorizontalAlignment="Left" Margin="5,0,0,0"
-                          ItemsSource="{Binding RepositoryCollection}"
-                          DisplayMemberPath="{Binding Name}"  
-                          SelectedItem="{Binding RepositorySelectedItem}"
-                          IsSynchronizedWithCurrentItem="True"                    
-                          />
-            </StackPanel>
         </Grid>
-        <Grid Grid.Column="1" Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
+
+        <Grid x:Name="DateGrid" Grid.Row="2" Grid.Column="2" Margin="2,5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="35"/>
+                <RowDefinition Height="25"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" 
+                       Text="{x:Static resw:Resources.FilteringDate}" 
+                       Margin="5,0,0,0" 
+                       Background="{StaticResource MyGreen}"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Stretch"
+                       Padding="4"
+                       />
+            <DockPanel Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" LastChildFill="True">
+                <wpfTool:DateTimePicker DockPanel.Dock="Left"
+                                        HorizontalAlignment="Stretch"
+		                                Margin="10"
+		                                VerticalAlignment="Top"  
+                                        Text="{Binding FromDate}"
+                                        Format="Custom"
+                                        FormatString="yyyy-MM-dd"
+                                        Width="120"
+		            />
+                <wpfTool:DateTimePicker DockPanel.Dock="Right"
+                                        HorizontalAlignment="Stretch"
+                                        Margin="10"
+                                        VerticalAlignment="Top"
+                                        Text="{Binding ToDate}"
+                                        Format="Custom"
+                                        FormatString="yyyy-MM-dd"
+                                        Width="120"
+                                />
+                <Label x:Name="zzlbl" Content="-" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </DockPanel>
+
+            <TextBlock Grid.Row="2" 
+                       Text="{x:Static resw:Resources.FilteringMessage}" 
+                       Margin="5,0,0,0" 
+                       Background="{StaticResource MyGreen}"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Stretch"
+                       Padding="4"
+                       />
+            <TextBox  Grid.Row="3" 
+                      x:Name="MsgTB" 
+                      Text="{Binding MessageTextBox}" 
+                      Margin="5"
+                      VerticalAlignment="Top"
+                      HorizontalAlignment="Stretch"
+                      />
+        </Grid>
+
+        <Grid x:Name="RepositoryGrid" Grid.Row="2" Grid.Column="3" Margin="2,5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="10"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Column="3" Grid.Row="0" Grid.RowSpan="2">
-                <Label x:Name="Branchlbl" Content="{x:Static resw:Resources.FilteringPickBranch}" Margin="5,0,0,0"/>
-                <ListView x:Name="BranchList" Width="auto" MinHeight="150" MinWidth="160"  HorizontalAlignment="Left" Margin="5,0,0,0"
+            <TextBlock Grid.Row="0" 
+                       Text="{x:Static resw:Resources.FilteringPickRepository}" 
+                       Margin="5,0,0,0" 
+                       Background="{StaticResource MyGreen}"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Stretch"
+                       Padding="4"
+                       />
+            <ListView x:Name="RepositoryList" 
+                      Grid.Row="1"
+                      HorizontalAlignment="Stretch" 
+                      VerticalAlignment="Stretch"
+                      Margin="5,0,0,0"
+                      ItemsSource="{Binding RepositoryCollection}"
+                      DisplayMemberPath="{Binding Name}"  
+                      SelectedItem="{Binding RepositorySelectedItem}"
+                      IsSynchronizedWithCurrentItem="True"                    
+                      />
+            <TextBlock Grid.Row="2" 
+                       Text="{x:Static resw:Resources.FilteringPickBranch}" 
+                       Margin="5,0,0,0" 
+                       Background="{StaticResource MyGreen}"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Stretch"
+                       Padding="4"
+                       />
+            <ListView x:Name="BranchList"
+                      Grid.Row="3"
+                      HorizontalAlignment="Stretch" 
+                      VerticalAlignment="Stretch"
+                      Margin="5,0,0,0"
                       ItemsSource="{Binding BranchCollection}"
                       DisplayMemberPath="{Binding Name}"  
                       SelectedItem="{Binding BranchSelectedItem}"
                       IsSynchronizedWithCurrentItem="True"
                       IsEnabled="{Binding BranchEnabled, UpdateSourceTrigger=PropertyChanged}"
                       />
-            </StackPanel>
         </Grid>
+
+        <StackPanel Grid.Row="1" Grid.Column="4" Grid.RowSpan="2" Margin="1,5,1,0">
+            <Button Content="{x:Static resw:Resources.ClearFiltersBtn}" 
+                    Height="50" 
+                    Command="{Binding}" 
+                    Margin="0,0,0,5" 
+                    Background="{StaticResource Graphite}"
+                    Foreground="{StaticResource Grey}"
+                    FontWeight="Light"
+                    />
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5">
+            <Button x:Name="SendBtn"
+                    Command="{Binding SendDataCommand}"
+                    Content="{x:Static resw:Resources.SendDataButton}"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"
+                    Background="{StaticResource MyGreen}" 
+                    FontSize="20" 
+                    Margin="2" Padding="4" />
+        </StackPanel>
+
+        <!--
+
+         
 
 
         <StackPanel Grid.Row="3" Grid.Column="1">
@@ -154,7 +304,7 @@
 
         </StackPanel>
 
-
+-->
 
     </Grid>
 </Window>

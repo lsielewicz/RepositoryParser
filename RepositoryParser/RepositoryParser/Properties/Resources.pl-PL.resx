@@ -460,4 +460,8 @@
     <value>Repozytorium SVN</value>
     <comment>MainPage</comment>
   </data>
+  <data name="ClearFiltersBtn" xml:space="preserve">
+    <value>Wyczyść filtry</value>
+    <comment>MainWindow</comment>
+  </data>
 </root>

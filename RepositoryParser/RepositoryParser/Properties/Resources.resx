@@ -463,4 +463,8 @@
     <value>SVN Repository</value>
     <comment>MainPage</comment>
   </data>
+  <data name="ClearFiltersBtn" xml:space="preserve">
+    <value>Clear all filters</value>
+    <comment>MainWindow</comment>
+  </data>
 </root>
