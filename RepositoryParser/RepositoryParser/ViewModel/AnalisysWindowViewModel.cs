@@ -237,8 +237,8 @@ namespace RepositoryParser.Core.ViewModel
         private void BranchSelectedItemAction(string selecteditem)
         {
             localList.Clear();
-            string query = "SELECT * FROM GitCommits " +
-                           "INNER JOIN CommitForBranch on GitCommits.ID=CommitForBranch.NR_Commit " +
+            string query = "SELECT * FROM Commits " +
+                           "INNER JOIN CommitForBranch on Commits.ID=CommitForBranch.NR_Commit " +
                            "INNER JOIN BRANCH on CommitForBranch.NR_Branch=Branch.ID " +
                            "WHERE Branch.Name='" + selecteditem + "'";
 
@@ -248,8 +248,8 @@ namespace RepositoryParser.Core.ViewModel
         private void RepositorySelectedItemAction(string selecteditem)
         {
             localList.Clear();
-            string query = "SELECT * FROM GitCommits " +
-                           "inner join CommitForBranch on GitCommits.ID=CommitForBranch.NR_Commit " +
+            string query = "SELECT * FROM Commits " +
+                           "inner join CommitForBranch on Commits.ID=CommitForBranch.NR_Commit " +
                            "inner join BranchForRepo on CommitForBranch.NR_Branch=BranchForRepo.NR_GitBranch " +
                            "inner join Repository on BranchForRepo.NR_GitRepository=Repository.ID " +
                            "WHERE Repository.Name='" + selecteditem + "'";
@@ -262,7 +262,7 @@ namespace RepositoryParser.Core.ViewModel
         private void SearchMessage()
         {
             LocalCollection.Clear();
-            string query = "SELECT * FROM GitCommits WHERE Message LIKE '%" +
+            string query = "SELECT * FROM Commits WHERE Message LIKE '%" +
                            MessageTextBox + "%'";
             ExecuteRefresh(query);
         }
@@ -300,11 +300,11 @@ namespace RepositoryParser.Core.ViewModel
         {
             authorsList.Clear();
             LocalCollection.Clear();
-            string query = "SELECT Author FROM GitCommits GROUP BY Author";
+            string query = "SELECT Author FROM Commits GROUP BY Author";
             if (!string.IsNullOrEmpty(MainViewModel.SelectedRepo))
             {
-                query = "select Author from GitCommits " +
-                        "inner join CommitForBranch on GitCommits.ID=CommitForBranch.NR_Commit " +
+                query = "select Author from Commits " +
+                        "inner join CommitForBranch on Commits.ID=CommitForBranch.NR_Commit " +
                         "inner join BranchForRepo on CommitForBranch.NR_Branch=BranchForRepo.NR_GitBranch " +
                         "inner join Repository on BranchForRepo.NR_GitRepository=Repository.ID " +
                         "where " +
@@ -396,11 +396,11 @@ namespace RepositoryParser.Core.ViewModel
         private string GenerateQuery()
         {
             bool isCountiuned = false;
-            string query = "SELECT * FROM GitCommits WHERE ";
+            string query = "SELECT * FROM Commits WHERE ";
             if (!string.IsNullOrEmpty(MainViewModel.SelectedRepo) && !string.IsNullOrEmpty(MainViewModel.SelectedBranch))
             {
-                query = "select * from GitCommits " +
-                        "inner join CommitForBranch on GitCommits.ID=CommitForBranch.NR_Commit " +
+                query = "select * from Commits " +
+                        "inner join CommitForBranch on Commits.ID=CommitForBranch.NR_Commit " +
                         "inner join BranchForRepo on CommitForBranch.NR_Branch=BranchForRepo.NR_GitBranch " +
                         "inner join Branch on CommitForBranch.NR_Branch=Branch.ID " +
                         "inner join Repository on BranchForRepo.NR_GitRepository=Repository.ID " +
@@ -413,8 +413,8 @@ namespace RepositoryParser.Core.ViewModel
             else if (!string.IsNullOrEmpty(MainViewModel.SelectedRepo) &&
                      string.IsNullOrEmpty(MainViewModel.SelectedBranch))
             {
-                query = "select * from GitCommits " +
-                        "inner join CommitForBranch on GitCommits.ID=CommitForBranch.NR_Commit " +
+                query = "select * from Commits " +
+                        "inner join CommitForBranch on Commits.ID=CommitForBranch.NR_Commit " +
                         "inner join BranchForRepo on CommitForBranch.NR_Branch=BranchForRepo.NR_GitBranch " +
                         "inner join Branch on CommitForBranch.NR_Branch=Branch.ID " +
                         "inner join Repository on BranchForRepo.NR_GitRepository=Repository.ID " +
@@ -431,14 +431,14 @@ namespace RepositoryParser.Core.ViewModel
             bool isMessage = !string.IsNullOrEmpty(MessageTextBox);
 
             if (isAuthor == false && isFromDate == false && isToDate == false && isMessage == false && isCountiuned == false)
-                return "SELECT * FROM GitCommits";
+                return "SELECT * FROM Commits";
             else if (isAuthor == false && isFromDate == false && isToDate == false && isMessage == false && isCountiuned == true)
             {
                 string selectedBranch = MainViewModel.SelectedBranch;
                 if (string.IsNullOrEmpty(MainViewModel.SelectedBranch))
                     selectedBranch = "master";
-                query = "select * from GitCommits " +
-                        "inner join CommitForBranch on GitCommits.ID=CommitForBranch.NR_Commit " +
+                query = "select * from Commits " +
+                        "inner join CommitForBranch on Commits.ID=CommitForBranch.NR_Commit " +
                         "inner join BranchForRepo on CommitForBranch.NR_Branch=BranchForRepo.NR_GitBranch " +
                         "inner join Branch on CommitForBranch.NR_Branch=Branch.ID " +
                         "inner join Repository on BranchForRepo.NR_GitRepository=Repository.ID " +

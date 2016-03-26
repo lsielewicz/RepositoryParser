@@ -70,7 +70,7 @@ namespace RepositoryParser.ViewModel
                 string dateString = "";
                 dateString = Convert.ToString(i);
 
-                string query = "SELECT COUNT(GitCommits.ID) AS \"WeekdayCommits\" FROM GitCommits";
+                string query = "SELECT COUNT(Commits.ID) AS \"WeekdayCommits\" FROM Commits";
                 if (string.IsNullOrEmpty(MatchQuery(filteringQuery)))
                 {
                     query += " where strftime('%w', Date) = " +
@@ -116,7 +116,7 @@ namespace RepositoryParser.ViewModel
 
         private string MatchQuery(string query)
         {
-            Regex r = new Regex(@"(select \* from GitCommits)(.*)", RegexOptions.IgnoreCase);
+            Regex r = new Regex(@"(select \* from Commits)(.*)", RegexOptions.IgnoreCase);
             Match m = r.Match(query);
             if (m.Success)
             {

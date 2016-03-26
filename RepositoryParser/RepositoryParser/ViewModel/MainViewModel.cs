@@ -377,7 +377,7 @@ namespace RepositoryParser.ViewModel
                 Transactions.Add(ChangesTable.deleteAllQuery);
                 string[] TableName = new string[]
                 {
-                    "GitCommits",
+                    "Commits",
                     "Repository",
                     "Branch",
                     "CommitForBranch",
@@ -399,7 +399,7 @@ namespace RepositoryParser.ViewModel
         public void ExportFile()
         {
             SaveFileDialog dlg = new SaveFileDialog();
-            dlg.FileName = "GitCommitsFile";
+            dlg.FileName = "CommitsFile";
             dlg.DefaultExt = ".csv";
             dlg.Filter = "Csv documents (.csv)|*.csv";
             // Show save file dialog box

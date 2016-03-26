@@ -81,8 +81,8 @@ namespace RepositoryParser.Core.Models
                 string path = "./Databases/" + DBName + ".sqlite";
                 if (!File.Exists(path))
                     SQLiteConnection.CreateFile(path);
-                Connection = new SQLiteConnection("Data Source=" + path + ";Version=3;PRAGMA cache_size=20000; PRAGMA page_size=32768; PRAGMA synchronous=off");
-                Connection.Open();
+                _connection = new SQLiteConnection("Data Source=" + path + ";Version=3;PRAGMA cache_size=20000; PRAGMA page_size=32768; PRAGMA synchronous=off");
+                _connection.Open();
 
                 if (transactions != null && transactions.Count > 0)
                 {

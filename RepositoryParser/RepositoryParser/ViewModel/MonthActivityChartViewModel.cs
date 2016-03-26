@@ -90,7 +90,7 @@ namespace RepositoryParser.ViewModel
                 else
                     dateString = Convert.ToString(i);
 
-                string query = "SELECT COUNT(GitCommits.ID) AS \"MonthCommits\" FROM GitCommits";
+                string query = "SELECT COUNT(Commits.ID) AS \"MonthCommits\" FROM Commits";
                 if (string.IsNullOrEmpty(MatchQuery(filteringQuery)))
                 {
                     query += " where strftime('%m', Date) = " +
@@ -146,7 +146,7 @@ namespace RepositoryParser.ViewModel
 
         private string MatchQuery(string query)
         {
-            Regex r = new Regex(@"(select \* from GitCommits)(.*)", RegexOptions.IgnoreCase);
+            Regex r = new Regex(@"(select \* from Commits)(.*)", RegexOptions.IgnoreCase);
             Match m = r.Match(query);
             if (m.Success)
             {
