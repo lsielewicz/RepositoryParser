@@ -403,6 +403,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GIT Repository.
+        /// </summary>
+        public static string GitRepository {
+            get {
+                return ResourceManager.GetString("GitRepository", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View chart of changes..
         /// </summary>
         public static string GoToDifferencesChartButton {
@@ -741,6 +750,15 @@ namespace RepositoryParser.Properties {
         public static string SendDataButton {
             get {
                 return ResourceManager.GetString("SendDataButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SVN Repository.
+        /// </summary>
+        public static string SvnRepository {
+            get {
+                return ResourceManager.GetString("SvnRepository", resourceCulture);
             }
         }
         

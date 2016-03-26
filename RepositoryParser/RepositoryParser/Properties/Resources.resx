@@ -451,8 +451,16 @@
   <data name="DataLoadingStatus" xml:space="preserve">
     <value>Data loading, please wait...</value>
   </data>
+  <data name="GitRepository" xml:space="preserve">
+    <value>GIT Repository</value>
+    <comment>MainPage</comment>
+  </data>
   <data name="PickRepositoryType" xml:space="preserve">
     <value>Pick repostory type:</value>
+    <comment>MainPage</comment>
+  </data>
+  <data name="SvnRepository" xml:space="preserve">
+    <value>SVN Repository</value>
     <comment>MainPage</comment>
   </data>
 </root>

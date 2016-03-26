@@ -12,6 +12,7 @@
         Icon="../Assets/Ratings Filled-50.png"
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
+        MinHeight="300" MinWidth="600"
         >
     <Window.Resources>
         <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
@@ -34,7 +35,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition Height="1.5*"/>
-            <RowDefinition x:Name="thirdRow" Height="5*"/>
+            <RowDefinition Height="5*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
@@ -85,46 +86,46 @@
             
         <StackPanel Grid.Row="0" Grid.Column="0">
             <TextBlock Text="{x:Static resw:Resources.PickRepositoryType}" HorizontalAlignment="Center" FontSize="16"></TextBlock>
-            <Border BorderBrush="{StaticResource MyGreen}" BorderThickness="2">
+            <Border BorderBrush="{StaticResource MyGreen}" BorderThickness="0,2">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="2">
-                    <Button Margin="4,0" VerticalAlignment="Center" Background="Transparent" BorderThickness="0" Width="90" Command="{Binding PickGitRepositoryCommand}">
+                    <Button Margin="4,0" VerticalAlignment="Center" Background="Transparent" BorderThickness="0" MinWidth="90" Command="{Binding PickGitRepositoryCommand}">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="../Assets/Git-64.png" Height="32" Width="32"/>
-                            <TextBlock Text="GIT" VerticalAlignment="Center"/>
+                            <TextBlock Text="{x:Static resw:Resources.GitRepository}" VerticalAlignment="Center" Padding="5,0"/>
                         </StackPanel>
                     </Button>
-                    <Button Margin="4,0" VerticalAlignment="Center" Background="Transparent" BorderThickness="0" Width="90" Command="{Binding PickSvnRepositoryCommand}">
+                    <Button Margin="4,0" VerticalAlignment="Center" Background="Transparent" BorderThickness="0" MinWidth="90" Command="{Binding PickSvnRepositoryCommand}">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="../Assets/svn-64.ico" Height="32" Width="32"/>
-                            <TextBlock Text="SVN" VerticalAlignment="Center"/>
+                                <TextBlock Text="{x:Static resw:Resources.SvnRepository}" VerticalAlignment="Center" Padding="5,0"/>
                         </StackPanel>
                     </Button>
                 </StackPanel>
             </Border>
         </StackPanel>
         
-            <ListView ItemsSource="{Binding SortDataView}" Grid.Row="1">
+            <ListView ItemsSource="{Binding SortDataView}" Grid.Row="1" Foreground="Black">
                 <ListView.View>
                     <GridView>
 
                         <GridViewColumn Width="40" DisplayMemberBinding="{Binding ID}">
-                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_ID}" Command="{Binding SortCommand}" CommandParameter="ID"/>
+                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_ID}" Command="{Binding SortCommand}" CommandParameter="ID" FontWeight="Bold" />
                         </GridViewColumn>
 
                         <GridViewColumn Width="auto"  DisplayMemberBinding="{Binding Message}">
-                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Message}" Command="{Binding SortCommand}" CommandParameter="Message"/>
+                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Message}" Command="{Binding SortCommand}" CommandParameter="Message" FontWeight="Bold" />
                         </GridViewColumn>
 
                         <GridViewColumn Width="auto" DisplayMemberBinding="{Binding Author}">
-                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Author}" Command="{Binding SortCommand}" CommandParameter="Author"/>
+                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Author}" Command="{Binding SortCommand}" CommandParameter="Author" FontWeight="Bold" />
                         </GridViewColumn>
 
                         <GridViewColumn Width="auto" DisplayMemberBinding="{Binding Date}">
-                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Date}" Command="{Binding SortCommand}" CommandParameter="Date" />
+                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Date}" Command="{Binding SortCommand}" CommandParameter="Date" FontWeight="Bold" />
                         </GridViewColumn>
 
                         <GridViewColumn Width="auto" DisplayMemberBinding="{Binding Email}">
-                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Email}" Command="{Binding SortCommand}" CommandParameter="Email" />
+                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Email}" Command="{Binding SortCommand}" CommandParameter="Email" FontWeight="Bold" />
                         </GridViewColumn>
 
                     </GridView>
@@ -181,7 +182,8 @@
                     Command="{Binding ExportFileCommand}"
                     Margin="0,0,0,5"/>
         </StackPanel>
-        <!--<StatusBar Grid.Row="1" Grid.Column="0" 
+        
+        <StatusBar Grid.Row="1" Grid.Column="0" 
                    Grid.RowSpan="2"
                    Grid.ColumnSpan="3"
                    Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" 
@@ -190,7 +192,7 @@
                    HorizontalAlignment="Stretch"
                    VerticalAlignment="Stretch"
                    >
-        </StatusBar>-->
+        </StatusBar>
         <StackPanel Orientation="Horizontal" Grid.Row="0" 
                     Grid.Column="0" Grid.RowSpan="5"
                     Grid.ColumnSpan="3" 
