@@ -192,7 +192,7 @@ namespace RepositoryParser.Core.Models
 
             try
             {
-                Result = System.Text.RegularExpressions.Regex.Replace(InputTxt, @"([\000\010\011\015\032\042\047\134\140])", " ");
+                Result = System.Text.RegularExpressions.Regex.Replace(InputTxt, @"([\000\010\011\015\032\042\047\134\140\@])", " ");
             }
             catch (Exception Ex)
             {

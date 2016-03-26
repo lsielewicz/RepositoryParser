@@ -13,7 +13,7 @@ namespace RepositoryParser.Core.Models
         public int ID_Branch { get; set; }
         public string Name { get; set; }
         public Branch Value { get; set; }
-
+        public string Path { get; set; }
 
 
 
@@ -38,8 +38,12 @@ namespace RepositoryParser.Core.Models
             Name = name;
             Value = value;
         }
-
-
+        //svn
+        public BranchTable(string name, string path)
+        {
+            this.Name = name;
+            this.Path = path;
+        }
         #region Querys
 
         public static string CreateTable = "CREATE TABLE Branch(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name varchar(40))";

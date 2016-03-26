@@ -26,7 +26,7 @@ namespace RepositoryParser.Core.Services
                  );
             File.WriteAllText(csvPath, csv, Encoding.UTF8);
         }
-        public static void CreateCSVFromGitCommitsList(List<GitCommits> data, string csvPath)
+        public static void CreateCSVFromGitCommitsList(List<CommitTable> data, string csvPath)
         {
             String csv = String.Join(
             Environment.NewLine,

@@ -21,7 +21,7 @@ namespace RepositoryParser.Core.ViewModel
     public class AnalisysWindowViewModel : ViewModelBase
     {
         private GitRepositoryService _localGitRepositoryService;
-        private List<GitCommits> localList;
+        private List<CommitTable> localList;
         private SqLiteService _localSqliteService;
         public ObservableCollection<string> _localCollection;
         private List<string> authorsList;
@@ -46,7 +46,7 @@ namespace RepositoryParser.Core.ViewModel
             LocalCollection = new ObservableCollection<string>();
             BranchCollection = new ObservableCollection<string>();
             RepositoryCollection = new ObservableCollection<string>();
-            localList = new List<GitCommits>();
+            localList = new List<CommitTable>();
 
             //buttons
             ChartCommand = new RelayCommand(Chart);
@@ -292,8 +292,8 @@ namespace RepositoryParser.Core.ViewModel
         private void getRepositories()
         {
             RepositoryCollection.Clear();
-            GitRepositoryTable temp = new GitRepositoryTable();
-            List<GitRepositoryTable> tempList = temp.GetDataFromBase(_localGitRepositoryService.SqLiteInstance.Connection);
+            RepositoryTable temp = new RepositoryTable();
+            List<RepositoryTable> tempList = temp.GetDataFromBase(_localGitRepositoryService.SqLiteInstance.Connection);
             tempList.ForEach(x => RepositoryCollection.Add(x.Name));
         }
         private void getAuthors()
@@ -518,7 +518,7 @@ namespace RepositoryParser.Core.ViewModel
                 string author = Convert.ToString(reader["Author"]);
                 string date = Convert.ToString(reader["Date"]);
                 string email = Convert.ToString(reader["Email"]);
-                GitCommits tempInstance = new GitCommits(id, message, author, date, email);
+                CommitTable tempInstance = new CommitTable(id, message, author, date, email);
                 localList.Add(tempInstance);
                 id++;
             }

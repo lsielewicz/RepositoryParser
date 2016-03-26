@@ -10,9 +10,9 @@ namespace RepositoryParser.Core.Messages
 {
     public class DataMessageToDisplay : MessageBase
     {
-        public List<GitCommits> CommitList { get; set; }
+        public List<CommitTable> CommitList { get; set; }
 
-        public DataMessageToDisplay(List<GitCommits> list)
+        public DataMessageToDisplay(List<CommitTable> list)
         {
             CommitList = list;
         }

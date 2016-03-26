@@ -94,17 +94,17 @@ namespace RepositoryParser.Core.Models
         public void FillDataBase()
         {
             
-            GitCommits gitCommit = new GitCommits();
+            CommitTable gitCommit = new CommitTable();
             BranchTable gitBranch = new BranchTable();
-            GitRepositoryTable gitRepoTable = new GitRepositoryTable(RepositoryInstance.Directory);
+            RepositoryTable gitRepoTable = new RepositoryTable(RepositoryInstance.Directory);
             List<string> QuerysList = new List<string>();
             List<string> ChangesQuerys = new List<string>();
             List<BranchTable> gitBranchList = new List<BranchTable>();
-            List<GitCommits> gitCommitsList = new List<GitCommits>();
+            List<CommitTable> gitCommitsList = new List<CommitTable>();
             List<string> CommitsQueryLists = new List<string>();
             List<ChangesTable> changesList = new List<ChangesTable>();
 
-            QuerysList.Add(GitRepositoryTable.InsertQuery(gitRepoTable));
+            QuerysList.Add(RepositoryTable.InsertQuery(gitRepoTable));
             int lastRepoIndex = gitRepoTable.GetLastIndex(SqLiteInstance.Connection);
             foreach (KeyValuePair<string, Branch> branch in RepositoryInstance.Branches)
             {
@@ -142,7 +142,7 @@ namespace RepositoryParser.Core.Models
                         gitCommit.Date = SqLiteService.getDateTimeFormat(gitCommit.Date);
                         gitCommit.Email = commitz.Author.EmailAddress;
                         //SQLITE CORNER
-                        CommitsQueryLists.Add(GitCommits.InsertSqliteQuery(gitCommit));
+                        CommitsQueryLists.Add(CommitTable.InsertSqliteQuery(gitCommit));
                         gitCommitsList.Add(gitCommit);
                         string tempChange = "";
                         // jezeli komit ma rodzica, to porownaj
@@ -245,11 +245,11 @@ namespace RepositoryParser.Core.Models
             SqLiteInstance.DBName = RepositoryName;
             List<string> CreateTableQuerys = new List<string>
             {
-                {GitRepositoryTable.createTable },
+                {RepositoryTable.createTable },
                 {BranchForRepoTable.CreateTable},
                 {BranchTable.CreateTable },
                 {CommitForBranchTable.CreateTable },
-                {GitCommits.SqliteQuery },
+                {CommitTable.SqliteQuery },
                 {ChangesForCommitTable.CreateTable },
                 {ChangesTable.CreateTableQuery }
             };
@@ -265,14 +265,14 @@ namespace RepositoryParser.Core.Models
             SqLiteInstance.OpenConnection();
         }
 
-        public List<GitCommits> GetDataFromBase()
+        public List<CommitTable> GetDataFromBase()
         {
-            List<GitCommits> tempList = new List<GitCommits>();
+            List<CommitTable> tempList = new List<CommitTable>();
             int idzz = 1;
             string query = "SELECT * FROM GitCommits " +
                            "INNER JOIN CommitForBranch on GitCommits.ID=CommitForBranch.NR_Commit " +
                            "INNER JOIN BRANCH on CommitForBranch.NR_Branch=Branch.ID " +
-                           "WHERE Branch.Name='master'";
+                           "WHERE Branch.Name='master' OR Branch.Name='trunk'";
             SQLiteCommand command = new SQLiteCommand(query, SqLiteInstance.Connection);
             SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
@@ -285,7 +285,7 @@ namespace RepositoryParser.Core.Models
                 date = SqLiteService.getDateTimeFormat(date);
                 // date = date.Remove(19);
                 string email = Convert.ToString(reader["Email"]);
-                GitCommits tempInstance = new GitCommits(id, message, author, date, email);
+                CommitTable tempInstance = new CommitTable(id, message, author, date, email);
                 tempList.Add(tempInstance);
             }
             return tempList;

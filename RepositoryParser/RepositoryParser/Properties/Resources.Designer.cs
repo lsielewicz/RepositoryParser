@@ -403,6 +403,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GIT Repository.
+        /// </summary>
+        public static string GitRepository {
+            get {
+                return ResourceManager.GetString("GitRepository", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View chart of changes..
         /// </summary>
         public static string GoToDifferencesChartButton {
@@ -475,7 +484,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Or pick from hard disc.
+        ///   Looks up a localized string similar to Pick adress from hard disc.
         /// </summary>
         public static string LocalAdress {
             get {
@@ -709,6 +718,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pick repostory type:.
+        /// </summary>
+        public static string PickRepositoryType {
+            get {
+                return ResourceManager.GetString("PickRepositoryType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data loading, please wait....
         /// </summary>
         public static string ProgressBarText {
@@ -732,6 +750,15 @@ namespace RepositoryParser.Properties {
         public static string SendDataButton {
             get {
                 return ResourceManager.GetString("SendDataButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SVN Repository.
+        /// </summary>
+        public static string SvnRepository {
+            get {
+                return ResourceManager.GetString("SvnRepository", resourceCulture);
             }
         }
         

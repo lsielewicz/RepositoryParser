@@ -24,13 +24,15 @@ namespace RepositoryParser.ViewModel
     public class MainViewModel : ViewModelBase
     {
         #region Variables
-        private ObservableCollection<GitCommits> _commitsCollection;
+        private ObservableCollection<CommitTable> _commitsCollection;
         private GitRepositoryService _gitRepoInstance;
+        private SvnService _svnRepoService;
         private string _urlTextBox = "";
         private bool _isCloneButtonEnabled = true;
         private bool _progressBarVisibility = false;
         private bool _isLocal = false;
         private bool _isOpening;
+        private bool _isGitRepositoryPicked;
         private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
         private BackgroundWorker _worker;
         private BackgroundWorker clearDBWorker;
@@ -43,12 +45,14 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _onLoadCommand;
         private RelayCommand _goToPageAnalysisCommand;
         private RelayCommand _exportFileCommand;
+        private RelayCommand _pickGitRepositoryCommand;
+        private RelayCommand _pickSvnRepositoryCommand;
         #endregion
 
         public MainViewModel()
         {
             Messenger.Default.Register<DataMessageToDisplay>(this, x => HandleDataMessage(x.CommitList));
-            CommitsColection = new ObservableCollection<GitCommits>();
+            CommitsColection = new ObservableCollection<CommitTable>();
   
             SortCommand = new RelayCommand<object>(Sort);
 
@@ -62,6 +66,20 @@ namespace RepositoryParser.ViewModel
         }
 
         #region Getters/Setters
+
+        public bool IsGitRepositoryPicked
+        {
+            get { return _isGitRepositoryPicked; }
+            set
+            {
+                if (_isGitRepositoryPicked != value)
+                {
+                    _isGitRepositoryPicked = value;
+                    RaisePropertyChanged("IsGitRepositoryPicked");
+                }
+            }
+        }
+
         public static string SelectedBranch
         {
             get { return selectedBranch; }
@@ -121,7 +139,7 @@ namespace RepositoryParser.ViewModel
             }
         }
 
-        public ObservableCollection<GitCommits> CommitsColection
+        public ObservableCollection<CommitTable> CommitsColection
         {
             get
             {
@@ -167,6 +185,21 @@ namespace RepositoryParser.ViewModel
         #endregion
 
         #region Buttons
+
+        public RelayCommand PickGitRepositoryCommand
+        {
+            get
+            {
+                return _pickGitRepositoryCommand ?? (_pickGitRepositoryCommand = new RelayCommand(PickGitRepository));
+            }
+        }
+        public RelayCommand PickSvnRepositoryCommand
+        {
+            get
+            {
+                return _pickSvnRepositoryCommand ?? (_pickSvnRepositoryCommand = new RelayCommand(PickSvnRepository));
+            }
+        }
 
         public RelayCommand RefreshCommand
         {
@@ -215,6 +248,18 @@ namespace RepositoryParser.ViewModel
         #endregion
 
         #region Methods
+
+        private void PickGitRepository()
+        {
+            IsGitRepositoryPicked = true;
+        }
+
+        private void PickSvnRepository()
+        {
+            IsGitRepositoryPicked = false;
+        }
+
+
         public void PickFile()
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
@@ -237,27 +282,33 @@ namespace RepositoryParser.ViewModel
                 {
                     ProgressBarVisibility = true;
 
-                    if (!_isLocal)
+                    if (IsGitRepositoryPicked == false)
                     {
-                        _gitRepoInstance = new GitRepositoryService();
-                        _gitRepoInstance.UrlRepoPath = UrlTextBox;
-                        _gitRepoInstance.isCloned = false;
-                        _gitRepoInstance.InitializeConnection();
-                        _gitRepoInstance.FillDataBase();
-
-
+                        _svnRepoService = new SvnService(UrlTextBox);
+                        _svnRepoService.FillDataBase();
                     }
                     else
                     {
-                        _gitRepoInstance = new GitRepositoryService();
-                        _gitRepoInstance.isCloned = true;
-                        _gitRepoInstance.RepoPath = UrlTextBox;
-                        _gitRepoInstance.InitializeConnection();
-                        _gitRepoInstance.FillDataBase();
+                        if (!_isLocal)
+                        {
+                            _gitRepoInstance = new GitRepositoryService();
+                            _gitRepoInstance.UrlRepoPath = UrlTextBox;
+                            _gitRepoInstance.isCloned = false;
+                            _gitRepoInstance.InitializeConnection();
+                            _gitRepoInstance.FillDataBase();
 
+
+                        }
+                        else
+                        {
+                            _gitRepoInstance = new GitRepositoryService();
+                            _gitRepoInstance.isCloned = true;
+                            _gitRepoInstance.RepoPath = UrlTextBox;
+                            _gitRepoInstance.InitializeConnection();
+                            _gitRepoInstance.FillDataBase();
+
+                        }
                     }
-
-
                 }
                 catch (Exception ex)
                 {
@@ -317,8 +368,8 @@ namespace RepositoryParser.ViewModel
             if (_gitRepoInstance != null)
             {
                 List<string> Transactions = new List<string>();
-                Transactions.Add(GitCommits.deleteAllQuery);
-                Transactions.Add(GitRepositoryTable.deleteAllQuery);
+                Transactions.Add(CommitTable.deleteAllQuery);
+                Transactions.Add(RepositoryTable.deleteAllQuery);
                 Transactions.Add(BranchTable.deleteAllQuery);
                 Transactions.Add(CommitForBranchTable.deleteAllQuery);
                 Transactions.Add(BranchForRepoTable.deleteAllQuery);
@@ -358,7 +409,7 @@ namespace RepositoryParser.ViewModel
             {
                 // Save document
                 string filename = dlg.FileName;
-                List<GitCommits> tempList = CommitsColection.ToList();
+                List<CommitTable> tempList = CommitsColection.ToList();
                 DataToCsv.CreateCSVFromGitCommitsList(tempList, filename);
                 MessageBox.Show(_resourceManager.GetString("ExportMessage"), _resourceManager.GetString("ExportTitle"));
             }
@@ -407,7 +458,7 @@ namespace RepositoryParser.ViewModel
 
         #region Messages
 
-        private void HandleDataMessage(List<GitCommits> list)
+        private void HandleDataMessage(List<CommitTable> list)
         {
             CommitsColection.Clear();
             list.ForEach(x => CommitsColection.Add(x));

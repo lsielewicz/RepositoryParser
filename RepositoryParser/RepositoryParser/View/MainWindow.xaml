@@ -12,10 +12,12 @@
         Icon="../Assets/Ratings Filled-50.png"
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
+        MinHeight="450" MinWidth="800"
         >
     <Window.Resources>
         <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <conventers:NegativeBoolToVisibilityConventer x:Key="NegativeBoolToVisibilityConventer"/>
+        <conventers:BoolToBackgroundColorConventer x:Key="BoolToBackgroundColorConventer"/>
     </Window.Resources>
 
     <i:Interaction.Triggers>
@@ -32,7 +34,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1.5*"/>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="5"/>
@@ -57,38 +59,113 @@
                />
         <StackPanel Grid.Row="1" Grid.Column="1">
             <Label x:Name="UrlLabel" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{x:Static resw:Resources.UrlAdress}"/>
-            <TextBox x:Name="UrlTextBlock" FontSize="16" Margin="5" Text="{Binding UrlTextBox}" />
-            <Label x:Name="LocalChooseLabel" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{x:Static resw:Resources.LocalAdress}"/>
-            <Button x:Name="PicFileBtn" HorizontalAlignment="Center" Content="{x:Static resw:Resources.PickFileButton}" Command="{Binding PickFileCommand}" />
+            <TextBox x:Name="UrlTextBlock"
+                     FontSize="16" 
+                     Margin="5" 
+                     Text="{Binding UrlTextBox}" 
+                     Background="{Binding IsGitRepositoryPicked, Converter={StaticResource BoolToBackgroundColorConventer}}" 
+                     Opacity="0.95"
+                     BorderBrush="Black"
+                     BorderThickness="1"
+                     />
+            <Button x:Name="PicFileBtn" 
+                    HorizontalAlignment="Center" 
+                    Content="{x:Static resw:Resources.LocalAdress}" 
+                    Command="{Binding PickFileCommand}" 
+                    FontSize="14" 
+                    BorderThickness="2"
+                    BorderBrush="{StaticResource MyGreen}"
+                    Foreground="{StaticResource Grey}"
+                    Background="{StaticResource Graphite}"
+                    Padding="4"
+                    />
         </StackPanel>
 
-        <ListView Grid.Row="2" Grid.Column="1" ItemsSource="{Binding SortDataView}">
-            <ListView.View>
-                <GridView>
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            
+        <StackPanel Grid.Row="0" Grid.Column="0">
+            <TextBlock Text="{x:Static resw:Resources.PickRepositoryType}" HorizontalAlignment="Center" FontSize="16"></TextBlock>
+            <Border BorderBrush="{StaticResource MyGreen}" BorderThickness="0,2">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="2">
+                    <Button Margin="4,0" VerticalAlignment="Center" Background="Transparent" BorderThickness="0" MinWidth="90" Command="{Binding PickGitRepositoryCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="../Assets/Git-64.png" Height="32" Width="32"/>
+                            <TextBlock Text="{x:Static resw:Resources.GitRepository}" VerticalAlignment="Center" Padding="5,0"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Margin="4,0" VerticalAlignment="Center" Background="Transparent" BorderThickness="0" MinWidth="90" Command="{Binding PickSvnRepositoryCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="../Assets/svn-64.ico" Height="32" Width="32"/>
+                                <TextBlock Text="{x:Static resw:Resources.SvnRepository}" VerticalAlignment="Center" Padding="5,0"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+        
+            <ListView ItemsSource="{Binding SortDataView}" Grid.Row="1" Foreground="Black">
+                <ListView.View>
+                    <GridView>
 
-                    <GridViewColumn Width="40" DisplayMemberBinding="{Binding ID}">
-                        <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_ID}" Command="{Binding SortCommand}" CommandParameter="ID"/>
-                    </GridViewColumn>
+                        <GridViewColumn Width="40" DisplayMemberBinding="{Binding ID}">
+                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_ID}" 
+                                                  Command="{Binding SortCommand}" 
+                                                  CommandParameter="ID" 
+                                                  FontWeight="DemiBold" 
+                                                  MinWidth="35"
+                                                  Background="{StaticResource MyGreen}"
+                                                  />
+                        </GridViewColumn>
 
-                    <GridViewColumn Width="auto"  DisplayMemberBinding="{Binding Message}">
-                        <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Message}" Command="{Binding SortCommand}" CommandParameter="Message"/>
-                    </GridViewColumn>
+                        <GridViewColumn Width="auto"  DisplayMemberBinding="{Binding Message}">
+                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Message}" 
+                                                  Command="{Binding SortCommand}" 
+                                                  CommandParameter="Message" 
+                                                  FontWeight="DemiBold" 
+                                                  MinWidth="420" 
+                                                  Background="{StaticResource MyGreen}"
+                                                  />
+                        </GridViewColumn>
 
-                    <GridViewColumn Width="auto" DisplayMemberBinding="{Binding Author}">
-                        <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Author}" Command="{Binding SortCommand}" CommandParameter="Author"/>
-                    </GridViewColumn>
+                        <GridViewColumn Width="auto" DisplayMemberBinding="{Binding Author}">
+                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Author}" 
+                                                  Command="{Binding SortCommand}" 
+                                                  CommandParameter="Author" 
+                                                  FontWeight="DemiBold" 
+                                                  MinWidth="130"
+                                                  Background="{StaticResource MyGreen}"
+                                                  />
+                        </GridViewColumn>
 
-                    <GridViewColumn Width="auto" DisplayMemberBinding="{Binding Date}">
-                        <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Date}" Command="{Binding SortCommand}" CommandParameter="Date" />
-                    </GridViewColumn>
+                        <GridViewColumn Width="auto" DisplayMemberBinding="{Binding Date}">
+                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Date}" 
+                                                  Command="{Binding SortCommand}" 
+                                                  CommandParameter="Date" 
+                                                  FontWeight="DemiBold"
+                                                  MinWidth="120"
+                                                  Background="{StaticResource MyGreen}"
+                                                  />
+                        </GridViewColumn>
 
-                    <GridViewColumn Width="auto" DisplayMemberBinding="{Binding Email}">
-                        <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Email}" Command="{Binding SortCommand}" CommandParameter="Email" />
-                    </GridViewColumn>
+                        <GridViewColumn Width="auto" DisplayMemberBinding="{Binding Email}">
+                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Email}"
+                                                  Command="{Binding SortCommand}"
+                                                  CommandParameter="Email" 
+                                                  FontWeight="DemiBold"
+                                                  MinWidth="150"
+                                                  Background="{StaticResource MyGreen}"
+                                                  />
+                        </GridViewColumn>
 
-                </GridView>
-            </ListView.View>
-        </ListView>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+   
+        </Grid>
 
         <StackPanel Grid.Row="3" Grid.Column="1">
             <Button x:Name="CloneRepositoryBtn"
@@ -138,6 +215,7 @@
                     Command="{Binding ExportFileCommand}"
                     Margin="0,0,0,5"/>
         </StackPanel>
+        
         <StatusBar Grid.Row="1" Grid.Column="0" 
                    Grid.RowSpan="2"
                    Grid.ColumnSpan="3"
