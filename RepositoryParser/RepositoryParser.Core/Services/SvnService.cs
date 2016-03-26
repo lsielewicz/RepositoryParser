@@ -213,10 +213,6 @@ namespace RepositoryParser.Core.Services
         }
 
 
-
-
-
-
         public void ConnectRepositoryToDataBase(bool isNewFile=false)
         {
             if (isNewFile == true)

@@ -263,7 +263,7 @@
     <comment>ChartPage</comment>
   </data>
   <data name="LocalAdress" xml:space="preserve">
-    <value>Lub wybierz lokalnie</value>
+    <value>Wybierz adres z dysku</value>
     <comment>MainPage</comment>
   </data>
   <data name="MainWindowTitle" xml:space="preserve">
@@ -447,5 +447,9 @@
   </data>
   <data name="DataLoadingStatus" xml:space="preserve">
     <value>Trwa ładowanie danych, proszę czekać...</value>
+  </data>
+  <data name="PickRepositoryType" xml:space="preserve">
+    <value>Wybierz typ repozytorium:</value>
+    <comment>MainPage</comment>
   </data>
 </root>

@@ -32,6 +32,7 @@ namespace RepositoryParser.ViewModel
         private bool _progressBarVisibility = false;
         private bool _isLocal = false;
         private bool _isOpening;
+        private bool _isGitRepositoryPicked;
         private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
         private BackgroundWorker _worker;
         private BackgroundWorker clearDBWorker;
@@ -44,6 +45,8 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _onLoadCommand;
         private RelayCommand _goToPageAnalysisCommand;
         private RelayCommand _exportFileCommand;
+        private RelayCommand _pickGitRepositoryCommand;
+        private RelayCommand _pickSvnRepositoryCommand;
         #endregion
 
         public MainViewModel()
@@ -63,6 +66,20 @@ namespace RepositoryParser.ViewModel
         }
 
         #region Getters/Setters
+
+        public bool IsGitRepositoryPicked
+        {
+            get { return _isGitRepositoryPicked; }
+            set
+            {
+                if (_isGitRepositoryPicked != value)
+                {
+                    _isGitRepositoryPicked = value;
+                    RaisePropertyChanged("IsGitRepositoryPicked");
+                }
+            }
+        }
+
         public static string SelectedBranch
         {
             get { return selectedBranch; }
@@ -169,6 +186,21 @@ namespace RepositoryParser.ViewModel
 
         #region Buttons
 
+        public RelayCommand PickGitRepositoryCommand
+        {
+            get
+            {
+                return _pickGitRepositoryCommand ?? (_pickGitRepositoryCommand = new RelayCommand(PickGitRepository));
+            }
+        }
+        public RelayCommand PickSvnRepositoryCommand
+        {
+            get
+            {
+                return _pickSvnRepositoryCommand ?? (_pickSvnRepositoryCommand = new RelayCommand(PickSvnRepository));
+            }
+        }
+
         public RelayCommand RefreshCommand
         {
             get { return _refreshCommand ?? (_refreshCommand = new RelayCommand(RefreshList)); }
@@ -216,6 +248,18 @@ namespace RepositoryParser.ViewModel
         #endregion
 
         #region Methods
+
+        private void PickGitRepository()
+        {
+            IsGitRepositoryPicked = true;
+        }
+
+        private void PickSvnRepository()
+        {
+            IsGitRepositoryPicked = false;
+        }
+
+
         public void PickFile()
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
@@ -238,31 +282,33 @@ namespace RepositoryParser.ViewModel
                 {
                     ProgressBarVisibility = true;
 
-                    //svn
-                    _svnRepoService= new SvnService(UrlTextBox);
-                    _svnRepoService.FillDataBase();
-
-                   /* if (!_isLocal)
+                    if (IsGitRepositoryPicked == false)
                     {
-                        _gitRepoInstance = new GitRepositoryService();
-                        _gitRepoInstance.UrlRepoPath = UrlTextBox;
-                        _gitRepoInstance.isCloned = false;
-                        _gitRepoInstance.InitializeConnection();
-                        _gitRepoInstance.FillDataBase();
-
-
+                        _svnRepoService = new SvnService(UrlTextBox);
+                        _svnRepoService.FillDataBase();
                     }
                     else
                     {
-                        _gitRepoInstance = new GitRepositoryService();
-                        _gitRepoInstance.isCloned = true;
-                        _gitRepoInstance.RepoPath = UrlTextBox;
-                        _gitRepoInstance.InitializeConnection();
-                        _gitRepoInstance.FillDataBase();
+                        if (!_isLocal)
+                        {
+                            _gitRepoInstance = new GitRepositoryService();
+                            _gitRepoInstance.UrlRepoPath = UrlTextBox;
+                            _gitRepoInstance.isCloned = false;
+                            _gitRepoInstance.InitializeConnection();
+                            _gitRepoInstance.FillDataBase();
 
-                    }*/
 
+                        }
+                        else
+                        {
+                            _gitRepoInstance = new GitRepositoryService();
+                            _gitRepoInstance.isCloned = true;
+                            _gitRepoInstance.RepoPath = UrlTextBox;
+                            _gitRepoInstance.InitializeConnection();
+                            _gitRepoInstance.FillDataBase();
 
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {

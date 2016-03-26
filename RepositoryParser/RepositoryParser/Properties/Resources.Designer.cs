@@ -475,7 +475,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Or pick from hard disc.
+        ///   Looks up a localized string similar to Pick adress from hard disc.
         /// </summary>
         public static string LocalAdress {
             get {
@@ -705,6 +705,15 @@ namespace RepositoryParser.Properties {
         public static string PickFolderWithRepo {
             get {
                 return ResourceManager.GetString("PickFolderWithRepo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick repostory type:.
+        /// </summary>
+        public static string PickRepositoryType {
+            get {
+                return ResourceManager.GetString("PickRepositoryType", resourceCulture);
             }
         }
         
