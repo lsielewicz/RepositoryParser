@@ -272,7 +272,7 @@ namespace RepositoryParser.Core.Models
             string query = "SELECT * FROM GitCommits " +
                            "INNER JOIN CommitForBranch on GitCommits.ID=CommitForBranch.NR_Commit " +
                            "INNER JOIN BRANCH on CommitForBranch.NR_Branch=Branch.ID " +
-                           "WHERE Branch.Name='master'";
+                           "WHERE Branch.Name='master' OR Branch.Name='trunk'";
             SQLiteCommand command = new SQLiteCommand(query, SqLiteInstance.Connection);
             SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())

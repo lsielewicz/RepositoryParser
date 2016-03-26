@@ -12,7 +12,7 @@
         Icon="../Assets/Ratings Filled-50.png"
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
-        MinHeight="300" MinWidth="600"
+        MinHeight="450" MinWidth="800"
         >
     <Window.Resources>
         <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
@@ -64,7 +64,10 @@
                      Margin="5" 
                      Text="{Binding UrlTextBox}" 
                      Background="{Binding IsGitRepositoryPicked, Converter={StaticResource BoolToBackgroundColorConventer}}" 
-                     Opacity="0.95"/>
+                     Opacity="0.95"
+                     BorderBrush="Black"
+                     BorderThickness="1"
+                     />
             <Button x:Name="PicFileBtn" 
                     HorizontalAlignment="Center" 
                     Content="{x:Static resw:Resources.LocalAdress}" 
@@ -109,23 +112,53 @@
                     <GridView>
 
                         <GridViewColumn Width="40" DisplayMemberBinding="{Binding ID}">
-                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_ID}" Command="{Binding SortCommand}" CommandParameter="ID" FontWeight="Bold" />
+                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_ID}" 
+                                                  Command="{Binding SortCommand}" 
+                                                  CommandParameter="ID" 
+                                                  FontWeight="DemiBold" 
+                                                  MinWidth="35"
+                                                  Background="{StaticResource MyGreen}"
+                                                  />
                         </GridViewColumn>
 
                         <GridViewColumn Width="auto"  DisplayMemberBinding="{Binding Message}">
-                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Message}" Command="{Binding SortCommand}" CommandParameter="Message" FontWeight="Bold" />
+                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Message}" 
+                                                  Command="{Binding SortCommand}" 
+                                                  CommandParameter="Message" 
+                                                  FontWeight="DemiBold" 
+                                                  MinWidth="420" 
+                                                  Background="{StaticResource MyGreen}"
+                                                  />
                         </GridViewColumn>
 
                         <GridViewColumn Width="auto" DisplayMemberBinding="{Binding Author}">
-                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Author}" Command="{Binding SortCommand}" CommandParameter="Author" FontWeight="Bold" />
+                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Author}" 
+                                                  Command="{Binding SortCommand}" 
+                                                  CommandParameter="Author" 
+                                                  FontWeight="DemiBold" 
+                                                  MinWidth="130"
+                                                  Background="{StaticResource MyGreen}"
+                                                  />
                         </GridViewColumn>
 
                         <GridViewColumn Width="auto" DisplayMemberBinding="{Binding Date}">
-                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Date}" Command="{Binding SortCommand}" CommandParameter="Date" FontWeight="Bold" />
+                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Date}" 
+                                                  Command="{Binding SortCommand}" 
+                                                  CommandParameter="Date" 
+                                                  FontWeight="DemiBold"
+                                                  MinWidth="120"
+                                                  Background="{StaticResource MyGreen}"
+                                                  />
                         </GridViewColumn>
 
                         <GridViewColumn Width="auto" DisplayMemberBinding="{Binding Email}">
-                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Email}" Command="{Binding SortCommand}" CommandParameter="Email" FontWeight="Bold" />
+                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Email}"
+                                                  Command="{Binding SortCommand}"
+                                                  CommandParameter="Email" 
+                                                  FontWeight="DemiBold"
+                                                  MinWidth="150"
+                                                  Background="{StaticResource MyGreen}"
+                                                  />
                         </GridViewColumn>
 
                     </GridView>
