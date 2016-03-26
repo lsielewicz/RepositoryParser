@@ -93,17 +93,17 @@ namespace RepositoryParser.ViewModel
             {
                 if (authorsList[i] == "")
                     continue;
-                string query = "select count(GitCommits.ID) AS \"AuthorCommits\" from GitCommits ";
+                string query = "select count(Commits.ID) AS \"AuthorCommits\" from Commits ";
                 if (string.IsNullOrEmpty(MatchQuery(filteringQuery)))
                 {
-                    query += "where Gitcommits.Author='" + authorsList[i] + "' ";
+                    query += "where Commits.Author='" + authorsList[i] + "' ";
                 }
                 else
                 {
                     if (authorsList.Count == 1)
                         query += MatchQuery(filteringQuery);
                     else
-                        query += MatchQuery(filteringQuery) + "and Gitcommits.Author='" + authorsList[i] + "' ";
+                        query += MatchQuery(filteringQuery) + "and Commits.Author='" + authorsList[i] + "' ";
                 }
 
 
@@ -122,7 +122,7 @@ namespace RepositoryParser.ViewModel
 
         private string MatchQuery(string query)
         {
-            Regex r = new Regex(@"(select \* from GitCommits)(.*)", RegexOptions.IgnoreCase);
+            Regex r = new Regex(@"(select \* from Commits)(.*)", RegexOptions.IgnoreCase);
 
             Match m = r.Match(query);
             if (m.Success)
@@ -138,7 +138,7 @@ namespace RepositoryParser.ViewModel
         private List<string> GetAuthors(string query)
         {
             List<string> newAuthorsList = new List<string>();
-            query = "SELECT Author FROM GitCommits " + MatchQuery(query) + "Group by Author";
+            query = "SELECT Author FROM Commits " + MatchQuery(query) + "Group by Author";
 
             SQLiteCommand command = new SQLiteCommand(query, _localIGitRepositoryService.SqLiteInstance.Connection);
             SQLiteDataReader reader = command.ExecuteReader();

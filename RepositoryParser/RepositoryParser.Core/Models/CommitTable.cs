@@ -71,7 +71,7 @@ namespace RepositoryParser.Core.Models
         #endregion
 
             #region querys
-        public static string SqliteQuery = "create table GitCommits(ID INTEGER PRIMARY KEY AUTOINCREMENT, Message varchar(200), Author varchar(30), Date DATETIME, Email varchar(40))";
+        public static string SqliteQuery = "create table Commits(ID INTEGER PRIMARY KEY AUTOINCREMENT, Message varchar(200), Author varchar(30), Date DATETIME, Email varchar(40))";
 
         public static string InsertSqliteQuery(int id, string message, string author, string date, string email)
         {
@@ -80,7 +80,7 @@ namespace RepositoryParser.Core.Models
             if (author.Contains("'"))
                 author = SqLiteService.StripSlashes(author);
 
-            string query = "Insert into GitCommits (Message,Author,Date,Email) values (" +
+            string query = "Insert into Commits (Message,Author,Date,Email) values (" +
                            "'" + message + "'" +
                            ", '" + author + "'" +
                            ", '" + date + "'" +
@@ -90,7 +90,7 @@ namespace RepositoryParser.Core.Models
         public int GetLastIndex(SQLiteConnection Connection)
         {
             int id = 0;
-            string query = "select ID from GitCommits";
+            string query = "select ID from Commits";
             SQLiteCommand command = new SQLiteCommand(query, Connection);
             SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
@@ -108,7 +108,7 @@ namespace RepositoryParser.Core.Models
             if (obj.Author.Contains("'"))
                 obj.Author = SqLiteService.StripSlashes(obj.Author);
 
-            string query = "Insert into GitCommits (Message,Author,Date,Email) values (" +
+            string query = "Insert into Commits (Message,Author,Date,Email) values (" +
                            "'" + obj.Message + "'" +
                            ", '" + @obj.Author + "'" +
                            ", '" + @obj.Date + "'" +
@@ -119,7 +119,7 @@ namespace RepositoryParser.Core.Models
         {
             List<CommitTable> tempList = new List<CommitTable>();
 
-            string query = "select * from GitCommits";
+            string query = "select * from Commits";
             SQLiteCommand command = new SQLiteCommand(query, Connection);
             SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
@@ -137,7 +137,7 @@ namespace RepositoryParser.Core.Models
             return tempList;
         }
 
-        public static string deleteAllQuery = "DELETE FROM GitCommits";
+        public static string deleteAllQuery = "DELETE FROM Commits";
         #endregion
     }
 }

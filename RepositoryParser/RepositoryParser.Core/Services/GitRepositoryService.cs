@@ -269,8 +269,8 @@ namespace RepositoryParser.Core.Models
         {
             List<CommitTable> tempList = new List<CommitTable>();
             int idzz = 1;
-            string query = "SELECT * FROM GitCommits " +
-                           "INNER JOIN CommitForBranch on GitCommits.ID=CommitForBranch.NR_Commit " +
+            string query = "SELECT * FROM Commits " +
+                           "INNER JOIN CommitForBranch on Commits.ID=CommitForBranch.NR_Commit " +
                            "INNER JOIN BRANCH on CommitForBranch.NR_Branch=Branch.ID " +
                            "WHERE Branch.Name='master' OR Branch.Name='trunk'";
             SQLiteCommand command = new SQLiteCommand(query, SqLiteInstance.Connection);

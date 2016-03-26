@@ -328,7 +328,7 @@ namespace RepositoryParser.ViewModel
             string query;
             if (string.IsNullOrEmpty(_filteringQuery))
             {
-                query = "SELECT * From GitCommits";
+                query = "SELECT * From Commits";
             }
             else
             {
