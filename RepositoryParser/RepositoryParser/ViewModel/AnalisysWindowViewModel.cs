@@ -38,6 +38,10 @@ namespace RepositoryParser.Core.ViewModel
         private string _comboBoxSelectedItem;
         private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
 
+        private enum ActualRepositoryType { None,Git,Svn}
+
+        private ActualRepositoryType _type;
+
         public AnalisysWindowViewModel()
         {
             emailList = new List<string>();

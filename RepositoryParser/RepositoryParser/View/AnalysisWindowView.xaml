@@ -184,6 +184,8 @@
                 <RowDefinition Height="25"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" 
                        Text="{x:Static resw:Resources.FilteringDate}" 
@@ -230,6 +232,8 @@
                       VerticalAlignment="Top"
                       HorizontalAlignment="Stretch"
                       />
+            <Image Grid.Row="5"/>
+            <Image Grid.Row="5"/>
         </Grid>
 
         <Grid x:Name="RepositoryGrid" Grid.Row="2" Grid.Column="3" Margin="2,5">
@@ -278,6 +282,7 @@
                       IsSynchronizedWithCurrentItem="True"
                       IsEnabled="{Binding BranchEnabled, UpdateSourceTrigger=PropertyChanged}"
                       />
+
         </Grid>
 
         <StackPanel Grid.Row="1" Grid.Column="4" Grid.RowSpan="2" Margin="1,5,1,0">
