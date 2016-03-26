@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Documents;
 using RepositoryParser.Core.Interfaces;
 using RepositoryParser.Core.Models;
@@ -35,7 +36,8 @@ namespace RepositoryParser.Core.Services
 
         public SvnService(string path)
         {
-            Path = path;
+            path = checkPath(path);
+            this.Path = path;
             InitializeConnection();
         }
         #endregion
@@ -43,6 +45,21 @@ namespace RepositoryParser.Core.Services
 
 
         #region Methods
+
+        private string checkPath(string path)
+        {
+            using (SvnClient client = new SvnClient())
+            {
+                var checker = client.GetUriFromWorkingCopy(path);
+                if (checker != null)
+                {
+                    return checker.ToString();
+                }
+            }
+            return path;
+
+        }
+
 
         public void InitializeConnection()
         {
@@ -68,7 +85,12 @@ namespace RepositoryParser.Core.Services
 
         public List<BranchTable> GetAllBranches()
         {
-            string branchesPath = Path+"/branches";
+            string branchesPath;
+            if (Path.EndsWith("/"))
+                branchesPath = Path+"branches";
+            else
+                branchesPath = Path + "/branches";
+
             List<string> files = new List<string>();
             using (SvnClient svnClient = new SvnClient())
             {
@@ -287,7 +309,11 @@ namespace RepositoryParser.Core.Services
                 if (String.IsNullOrWhiteSpace(branch.Name))
                 {
                     branch.Name = "trunk";
-                    branch.Path = Path + "/trunk/";
+                    if (branch.Path.EndsWith("/") && Path.EndsWith("/"))
+                            branch.Path = Path + "trunk/";     
+                    else
+                        branch.Path = Path + "/trunk/";
+
                 }
 
                 transactions.Add(BranchTable.InsertSqliteQuery(branch));
