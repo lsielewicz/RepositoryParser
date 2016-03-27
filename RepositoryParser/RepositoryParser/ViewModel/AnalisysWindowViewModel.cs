@@ -40,7 +40,15 @@ namespace RepositoryParser.Core.ViewModel
   
         private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
         private RelayCommand _clearFiltersCommand;
-    
+
+        private RelayCommand _chartCommand;
+        private RelayCommand _sendDataCommand;
+        private RelayCommand _messageFilterCommand;
+        private RelayCommand _monthActivityWindowCommand;
+        private RelayCommand _goToDifferencesCommand;
+        private RelayCommand _goToDayChartWindowCommand;
+        private RelayCommand _goToHourActivityCommand;
+        private RelayCommand _goToWeekDayActivityWindowCommand;
 
         public AnalisysWindowViewModel()
         {
@@ -51,17 +59,64 @@ namespace RepositoryParser.Core.ViewModel
             RepositoryCollection = new ObservableCollection<string>();
             localList = new List<CommitTable>();
 
-            //buttons
-            ChartCommand = new RelayCommand(Chart);
-            SendDataCommand = new RelayCommand(SelectedData);
-            MessageFilterCommnad = new RelayCommand(SearchMessage);
-            MonthActivityWindowCommand = new RelayCommand(MonthActivityWindow);
-            GoToDifferencesCommand = new RelayCommand(GoToDifferences);
-            GoToDayChartWindowCommand = new RelayCommand(GoToDayChartWindow);
-            GoToHourActivityWindowCommand = new RelayCommand(GoToHourActivityWindow);
-            GoToWeekDayActivityWindowCommand = new RelayCommand(GoToWeekDayActivityWindow);
+
 
         }
+        #region Buttons getters
+
+        public RelayCommand ChartCommand
+        {
+            get { return _chartCommand ?? (_chartCommand = new RelayCommand(Chart)); }
+        }
+
+        public RelayCommand SendDataCommand
+        {
+            get { return _sendDataCommand ?? (_sendDataCommand = new RelayCommand(SelectedData)); }
+        }
+
+        public RelayCommand MessageFilterCommnad
+        {
+            get { return _messageFilterCommand ?? (_messageFilterCommand = new RelayCommand(SearchMessage)); }
+        }
+
+        public RelayCommand MonthActivityWindowCommand
+        {
+            get { return _monthActivityWindowCommand ??
+                (_monthActivityWindowCommand = new RelayCommand(MonthActivityWindow));
+            }
+        }
+
+        public RelayCommand GoToDifferencesCommand
+        {
+            get { return _goToDifferencesCommand ?? (_goToDifferencesCommand = new RelayCommand(GoToDifferences)); }
+        }
+
+        public RelayCommand GoToDayChartWindowCommand
+        {
+            get
+            {
+                return _goToDayChartWindowCommand ?? (_goToDayChartWindowCommand = new RelayCommand(GoToDayChartWindow));
+            }
+        }
+
+        public RelayCommand GoToHourActivityWindowCommand
+        {
+            get
+            {
+                return _goToHourActivityCommand ?? (_goToHourActivityCommand = new RelayCommand(GoToHourActivityWindow));
+            }
+        }
+
+        public RelayCommand GoToWeekDayActivityWindowCommand
+        {
+            get
+            {
+                return _goToWeekDayActivityWindowCommand ??
+                       (_goToWeekDayActivityWindowCommand = new RelayCommand(GoToWeekDayActivityWindow));
+            }
+        }
+        #endregion
+
 
         #region Messages
 
@@ -277,15 +332,8 @@ namespace RepositoryParser.Core.ViewModel
 
         }
 
-        public ICommand MessageFilterCommnad { get; set; }
 
-        private void SearchMessage()
-        {
-            LocalCollection.Clear();
-            string query = "SELECT * FROM Commits WHERE Message LIKE '%" +
-                           MessageTextBox + "%'";
-            ExecuteRefresh(query);
-        }
+
 
         private void getBranches()
         {
@@ -346,8 +394,14 @@ namespace RepositoryParser.Core.ViewModel
         }
         #endregion
 
-        #region Buttons
-        public ICommand ChartCommand { get; set; }
+        #region Buttons actions
+        private void SearchMessage()
+        {
+            LocalCollection.Clear();
+            string query = "SELECT * FROM Commits WHERE Message LIKE '%" +
+                           MessageTextBox + "%'";
+            ExecuteRefresh(query);
+        }
 
         private void Chart()
         {
@@ -357,7 +411,6 @@ namespace RepositoryParser.Core.ViewModel
 
             SendMessageToDrawChart();
         }
-        public ICommand GoToWeekDayActivityWindowCommand { get; set; }
 
         private void GoToWeekDayActivityWindow()
         {
@@ -365,7 +418,6 @@ namespace RepositoryParser.Core.ViewModel
             _window.Show();
             SendMessageToDrawChart();
         }
-        public ICommand GoToHourActivityWindowCommand { get; set; }
 
         private void GoToHourActivityWindow()
         {
@@ -373,14 +425,13 @@ namespace RepositoryParser.Core.ViewModel
             _window.Show();
             SendMessageToDrawChart();
         }
-        public ICommand GoToDifferencesCommand { get; set; }
+
         private void GoToDifferences()
         {
             DifferenceWindowView _diff = new DifferenceWindowView();
             _diff.Show();
             SendMessageToDrawChart();
         }
-        public ICommand GoToDayChartWindowCommand { get; set; }
 
         private void GoToDayChartWindow()
         {
@@ -388,7 +439,6 @@ namespace RepositoryParser.Core.ViewModel
             _window.Show();
             SendMessageToDrawChart();
         }
-        public ICommand MonthActivityWindowCommand { get; set; }
 
         private void MonthActivityWindow()
         {
@@ -404,7 +454,7 @@ namespace RepositoryParser.Core.ViewModel
             ExecuteRefresh(authorVariable);
 
         }
-        public ICommand SendDataCommand { get; set; }
+
         private void SelectedData()
         {
             localList.Clear();
