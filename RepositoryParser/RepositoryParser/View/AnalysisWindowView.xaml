@@ -165,6 +165,7 @@
                        VerticalAlignment="Center"
                        HorizontalAlignment="Stretch"
                        Padding="4"
+                       FontWeight="Light"
                        />
             <ListView x:Name="AuthorComboBox" 
                       Grid.Row="1"
@@ -195,6 +196,7 @@
                        VerticalAlignment="Top"
                        HorizontalAlignment="Stretch"
                        Padding="4"
+                       FontWeight="Light"
                        />
             <DockPanel Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" LastChildFill="True">
                 <wpfTool:DateTimePicker DockPanel.Dock="Left"
@@ -225,6 +227,7 @@
                        VerticalAlignment="Top"
                        HorizontalAlignment="Stretch"
                        Padding="4"
+                       FontWeight="Light"
                        />
             <TextBox  Grid.Row="3" 
                       x:Name="MsgTB" 
@@ -256,6 +259,7 @@
                        VerticalAlignment="Top"
                        HorizontalAlignment="Stretch"
                        Padding="4"
+                       FontWeight="Light"
                        />
             <ListView x:Name="RepositoryList" 
                       Grid.Row="1"
@@ -274,6 +278,7 @@
                        VerticalAlignment="Top"
                        HorizontalAlignment="Stretch"
                        Padding="4"
+                       FontWeight="Light"
                        />
             <ListView x:Name="BranchList"
                       Grid.Row="3"
