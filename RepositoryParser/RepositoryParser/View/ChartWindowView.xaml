@@ -7,7 +7,7 @@
         xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         xmlns:resw="clr-namespace:RepositoryParser.Properties"
         mc:Ignorable="d"
-        Title="ChartWindowView" Height="750" Width="900"
+        Title="ChartWindowView" Height="600" Width="800"
         DataContext="{Binding Source={StaticResource Locator}, Path=Chart}"
         Icon="../Assets/Icons/Ratings Filled-50.png"
         >
@@ -19,6 +19,7 @@
             <RowDefinition Height="*" MinHeight="60"/>
             <RowDefinition Height="9*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
 
         <Rectangle Grid.ColumnSpan="1000" Grid.Row="0">
@@ -30,31 +31,34 @@
             </Rectangle.Fill>
         </Rectangle>
         <Label Grid.Row="0" Content="{x:Static resw:Resources.ChartWindowTitle}" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        
+        
         <TabControl Grid.Row="1">
             <TabItem Header="{x:Static resw:Resources.ActivityChart}">
-                <StackPanel>
-                    <chartingToolkit:Chart x:Name="Chart" MinHeight="600" Title="{x:Static resw:Resources.ActivityChart}" Background="Beige" LegendTitle="{x:Static resw:Resources.Legend}">
-                        <chartingToolkit:Chart.Series>
-                            <chartingToolkit:PieSeries x:Name="PieSeries"
+                <chartingToolkit:Chart x:Name="Chart" 
+                                       Title="{x:Static resw:Resources.ActivityChart}" 
+                                       Background="{StaticResource Grey}" 
+                                       LegendTitle="{x:Static resw:Resources.Legend}">
+                    <chartingToolkit:Chart.Series>
+                        <chartingToolkit:PieSeries
                             ItemsSource="{Binding KeyCollection, Mode=OneWay}"
                             DependentValueBinding="{Binding Path=Value}"
                             IndependentValueBinding="{Binding Path=Key}" 
-                            DataContext="{Binding}"
+                            Background="{StaticResource Graphite}"
                             />
-                        </chartingToolkit:Chart.Series>
-                    </chartingToolkit:Chart>
-                </StackPanel>
+                    </chartingToolkit:Chart.Series>
+                </chartingToolkit:Chart>
             </TabItem>
             <TabItem Header="{x:Static resw:Resources.ActivityList}">
-                <ListView ItemsSource="{Binding KeyCollection}">
+                <ListView ItemsSource="{Binding KeyCollection}" Foreground="Black">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Width="120" DisplayMemberBinding="{Binding Key}">
-                                <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Author}" />
+                                <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Author}" HorizontalAlignment="Stretch" Background="{StaticResource MyGreen}" Foreground="Black" />
                             </GridViewColumn>
 
                             <GridViewColumn Width="auto"  DisplayMemberBinding="{Binding Value}">
-                                <GridViewColumnHeader Content="{x:Static resw:Resources.CountOfCommits}" />
+                                <GridViewColumnHeader Content="{x:Static resw:Resources.CountOfCommits}" HorizontalAlignment="Stretch" Background="{StaticResource MyGreen}" Foreground="Black"/>
                             </GridViewColumn>
                         </GridView>
                     </ListView.View>
@@ -64,12 +68,17 @@
 
         <DockPanel Grid.Column="0" Grid.Row="2">
             <Button x:Name="SaveFileBtn" 
-                    Command="{Binding ExportFileCommand}" 
                     Background="{StaticResource MyGreen}"  
-                    Width="150"
                     Margin="15,5" 
-                    Content="{x:Static resw:Resources.ExportToFileButton}" 
-                    HorizontalAlignment="Left"/>
+                    HorizontalAlignment="Left"
+                    Padding="5,0"
+                    MaxHeight="50"
+                    >
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=SaveFileBtn, Path=Width}" >
+                    <Image Source="../Assets/Icons/CSV Filled-50.png" Width="24" Margin="10,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.ExportToFileButton}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
         </DockPanel>
 
     </Grid>

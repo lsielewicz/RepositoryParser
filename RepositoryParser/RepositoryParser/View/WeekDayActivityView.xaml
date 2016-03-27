@@ -64,12 +64,17 @@
         </TabControl>
         <DockPanel Grid.Column="0" Grid.Row="2">
             <Button x:Name="SaveFileBtn" 
-                    Command="{Binding ExportFileCommand}"
-                    Background="{StaticResource MyGreen}" 
-                    Width="150" 
-                    Margin="15,5"
-                    Content="{x:Static resw:Resources.ExportToFileButton}" 
-                    HorizontalAlignment="Left"/>
+                    Background="{StaticResource MyGreen}"  
+                    Margin="15,5" 
+                    HorizontalAlignment="Left"
+                    Padding="5,0"
+                    MaxHeight="50"
+                    >
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=SaveFileBtn, Path=Width}" >
+                    <Image Source="../Assets/Icons/CSV Filled-50.png" Width="24" Margin="10,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.ExportToFileButton}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
         </DockPanel>
 
     </Grid>

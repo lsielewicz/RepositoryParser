@@ -7,7 +7,7 @@
         xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         xmlns:resw="clr-namespace:RepositoryParser.Properties"
         mc:Ignorable="d"
-        Title="MonthActivityChart" Height="700" Width="900"
+        Title="MonthActivityChart" Height="600" Width="800"
         DataContext="{Binding Source={StaticResource Locator}, Path=MonthActivity}"
         Icon="../Assets/Icons/Ratings Filled-50.png"
         >
@@ -67,13 +67,18 @@
         </TabControl>
 
         <DockPanel Grid.Column="0" Grid.Row="2">
-            <Button x:Name="SaveFileBtn"
-                    Command="{Binding ExportFileCommand}" 
-                    Background="{StaticResource MyGreen}" 
-                    Width="150" 
+            <Button x:Name="SaveFileBtn" 
+                    Background="{StaticResource MyGreen}"  
                     Margin="15,5" 
-                    Content="{x:Static resw:Resources.ExportToFileButton}"
-                    HorizontalAlignment="Left"/>
+                    HorizontalAlignment="Left"
+                    Padding="5,0"
+                    MaxHeight="50"
+                    >
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=SaveFileBtn, Path=Width}" >
+                    <Image Source="../Assets/Icons/CSV Filled-50.png" Width="24" Margin="10,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.ExportToFileButton}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
         </DockPanel>
 
     </Grid>
