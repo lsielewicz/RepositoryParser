@@ -23,20 +23,18 @@ namespace RepositoryParser.ViewModel
 {
     public class ChartWindowViewModel : ViewModelBase
     {
-        #region Variables
+        #region Fields
         private ObservableCollection<KeyValuePair<string, int>> _keyCollection;
         private GitRepositoryService _localIGitRepositoryService;
-        private List<string> authorsList;
-        private string filteringQuery;
+        private List<string> _authorsList;
+        private string _filteringQuery;
         private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources",Assembly.GetExecutingAssembly());
-
+        private RelayCommand _exportFileCommand;
         #endregion
 
         #region Constructors
         public ChartWindowViewModel()
         {
-            //authorsList=new List<string>();
-            ExportFileCommand = new RelayCommand(ExportFile);
             KeyCollection = new ObservableCollection<KeyValuePair<string, int>>();
             Messenger.Default.Register<DataMessageToCharts>(this, x => HandleDataMessage(x.RepoInstance, x.AuthorsList, x.FilteringQuery));
         }
@@ -58,12 +56,16 @@ namespace RepositoryParser.ViewModel
                 }
             }
         }
-
-
         #endregion
 
-        #region Buttons
-        public ICommand ExportFileCommand { get; set; }
+        #region Buttons getters
+        public RelayCommand ExportFileCommand
+        {
+            get { return _exportFileCommand ?? (_exportFileCommand = new RelayCommand(ExportFile)); }
+        }
+        #endregion
+
+        #region Buttons actions
         public void ExportFile()
         {
             SaveFileDialog dlg = new SaveFileDialog();
@@ -89,21 +91,21 @@ namespace RepositoryParser.ViewModel
         {
             if (KeyCollection.Count > 0)
                 KeyCollection.Clear();
-            for (int i = 0; i < authorsList.Count; i++)
+            for (int i = 0; i < _authorsList.Count; i++)
             {
-                if (authorsList[i] == "")
+                if (_authorsList[i] == "")
                     continue;
                 string query = "select count(Commits.ID) AS \"AuthorCommits\" from Commits ";
-                if (string.IsNullOrEmpty(MatchQuery(filteringQuery)))
+                if (string.IsNullOrEmpty(MatchQuery(_filteringQuery)))
                 {
-                    query += "where Commits.Author='" + authorsList[i] + "' ";
+                    query += "where Commits.Author='" + _authorsList[i] + "' ";
                 }
                 else
                 {
-                    if (authorsList.Count == 1)
-                        query += MatchQuery(filteringQuery);
+                    if (_authorsList.Count == 1)
+                        query += MatchQuery(_filteringQuery);
                     else
-                        query += MatchQuery(filteringQuery) + "and Commits.Author='" + authorsList[i] + "' ";
+                        query += MatchQuery(_filteringQuery) + "and Commits.Author='" + _authorsList[i] + "' ";
                 }
 
 
@@ -113,7 +115,7 @@ namespace RepositoryParser.ViewModel
                 if (reader.Read())
                 {
                     int count = Convert.ToInt32(reader["AuthorCommits"]);
-                    KeyValuePair<string, int> temp = new KeyValuePair<string, int>(authorsList[i], count);
+                    KeyValuePair<string, int> temp = new KeyValuePair<string, int>(_authorsList[i], count);
                     KeyCollection.Add(temp);
                 }
             }
@@ -155,16 +157,14 @@ namespace RepositoryParser.ViewModel
         private void HandleDataMessage(GitRepositoryService repo, List<string> authorsList, string filteringQuery)
         {
             this._localIGitRepositoryService = repo;
-            this.filteringQuery = filteringQuery;
-            if (this.authorsList != null && authorsList.Count > 0)
-                this.authorsList.Clear();
-            this.authorsList = GetAuthors(filteringQuery);
+            this._filteringQuery = filteringQuery;
+            if (this._authorsList != null && authorsList.Count > 0)
+                this._authorsList.Clear();
+            this._authorsList = GetAuthors(filteringQuery);
 
             FillCollection();
         }
         #endregion
-
-
 
     }
 }
