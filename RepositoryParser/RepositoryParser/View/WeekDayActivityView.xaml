@@ -34,28 +34,31 @@
         <Label Grid.Row="0" x:Name="WelcomeLabel" Content="{x:Static resw:Resources.WeekdayActivityWindowTitle}" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <TabControl Grid.Column="0" Grid.Row="1">
             <TabItem Header="{x:Static resw:Resources.WeekdayActivityChartChart}">
-                <StackPanel>
-                    <chartingToolkit:Chart MinHeight="400" x:Name="Chart" Title="{x:Static resw:Resources.WeekdayActivityChartChart}" Background="Beige" Margin="0,0,0,50">
-                        <chartingToolkit:Chart.Series>
-                            <chartingToolkit:AreaSeries
+                <chartingToolkit:Chart Title="{x:Static resw:Resources.WeekdayActivityChartChart}" Background="{StaticResource Grey}" >
+                    <chartingToolkit:Chart.LegendStyle>
+                        <Style TargetType="Control">
+                            <Setter Property="Width" Value="0" />
+                            <Setter Property="Height" Value="0" />
+                        </Style>
+                    </chartingToolkit:Chart.LegendStyle>
+                    <chartingToolkit:Chart.Series>
+                        <chartingToolkit:AreaSeries
                                     ItemsSource="{Binding KeyCollection, Mode=OneWay}"
                                     DependentValueBinding="{Binding Path=Value}"
                                     IndependentValueBinding="{Binding Path=Key}">
-                            </chartingToolkit:AreaSeries>
-                        </chartingToolkit:Chart.Series>
-                    </chartingToolkit:Chart>
-
-                </StackPanel>
+                        </chartingToolkit:AreaSeries>
+                    </chartingToolkit:Chart.Series>
+                </chartingToolkit:Chart>
             </TabItem>
             <TabItem Header="{x:Static resw:Resources.WeekdayActivityChartList}">
-                <ListView ItemsSource="{Binding KeyCollection}">
+                <ListView ItemsSource="{Binding KeyCollection}" Foreground="Black">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Width="120" DisplayMemberBinding="{Binding Key}">
-                                <GridViewColumnHeader Content="{x:Static resw:Resources.Weekday}" />
+                                <GridViewColumnHeader Content="{x:Static resw:Resources.Weekday}"  HorizontalAlignment="Stretch" Background="{StaticResource MyGreen}" Foreground="Black"/>
                             </GridViewColumn>
                             <GridViewColumn Width="auto"  DisplayMemberBinding="{Binding Value}">
-                                <GridViewColumnHeader Content="{x:Static resw:Resources.CountOfCommits}" />
+                                <GridViewColumnHeader Content="{x:Static resw:Resources.CountOfCommits}"  HorizontalAlignment="Stretch" Background="{StaticResource MyGreen}" Foreground="Black"/>
                             </GridViewColumn>
                         </GridView>
                     </ListView.View>
