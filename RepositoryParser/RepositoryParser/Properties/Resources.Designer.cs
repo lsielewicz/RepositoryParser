@@ -124,6 +124,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Analysis.
+        /// </summary>
+        public static string AnalysisWindowVie {
+            get {
+                return ResourceManager.GetString("AnalysisWindowVie", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Changes.
         /// </summary>
         public static string Changes {
@@ -138,6 +147,15 @@ namespace RepositoryParser.Properties {
         public static string ChartOfChangesTitle {
             get {
                 return ResourceManager.GetString("ChartOfChangesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chart of changes.
+        /// </summary>
+        public static string ChartOfChangesView {
+            get {
+                return ResourceManager.GetString("ChartOfChangesView", resourceCulture);
             }
         }
         
@@ -286,6 +304,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Day Activity.
+        /// </summary>
+        public static string DayActivityView {
+            get {
+                return ResourceManager.GetString("DayActivityView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Analysis of activity during days:.
         /// </summary>
         public static string DayActivityWindowTitle {
@@ -318,6 +345,15 @@ namespace RepositoryParser.Properties {
         public static string DifferenceWindowTitle {
             get {
                 return ResourceManager.GetString("DifferenceWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Differences.
+        /// </summary>
+        public static string DiffView {
+            get {
+                return ResourceManager.GetString("DiffView", resourceCulture);
             }
         }
         
@@ -457,6 +493,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hour Activity.
+        /// </summary>
+        public static string HourActivityView {
+            get {
+                return ResourceManager.GetString("HourActivityView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chart of activity during hours.
         /// </summary>
         public static string HoursActivityChartChart {
@@ -516,6 +561,15 @@ namespace RepositoryParser.Properties {
         public static string MainWindowTitle {
             get {
                 return ResourceManager.GetString("MainWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Repository Analyser.
+        /// </summary>
+        public static string MainWindowView {
+            get {
+                return ResourceManager.GetString("MainWindowView", resourceCulture);
             }
         }
         
@@ -642,6 +696,15 @@ namespace RepositoryParser.Properties {
         public static string Month9 {
             get {
                 return ResourceManager.GetString("Month9", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Month Activity.
+        /// </summary>
+        public static string MonthActivity {
+            get {
+                return ResourceManager.GetString("MonthActivity", resourceCulture);
             }
         }
         
@@ -808,6 +871,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Users Activity.
+        /// </summary>
+        public static string UserActivityView {
+            get {
+                return ResourceManager.GetString("UserActivityView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Weekday.
         /// </summary>
         public static string Weekday {
@@ -876,6 +948,15 @@ namespace RepositoryParser.Properties {
         public static string Weekday7 {
             get {
                 return ResourceManager.GetString("Weekday7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weekday Activity.
+        /// </summary>
+        public static string WeekdayActivity {
+            get {
+                return ResourceManager.GetString("WeekdayActivity", resourceCulture);
             }
         }
         

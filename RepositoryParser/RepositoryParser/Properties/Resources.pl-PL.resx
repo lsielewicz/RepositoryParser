@@ -467,4 +467,31 @@
   <data name="FileName" xml:space="preserve">
     <value>Nazwa pliku</value>
   </data>
+  <data name="AnalysisWindowVie" xml:space="preserve">
+    <value>Analiza</value>
+  </data>
+  <data name="ChartOfChangesView" xml:space="preserve">
+    <value>Wykres zmian</value>
+  </data>
+  <data name="DayActivityView" xml:space="preserve">
+    <value>Aktywność dzienna</value>
+  </data>
+  <data name="DiffView" xml:space="preserve">
+    <value>Różnice</value>
+  </data>
+  <data name="HourActivityView" xml:space="preserve">
+    <value>Aktywność godzinna</value>
+  </data>
+  <data name="MainWindowView" xml:space="preserve">
+    <value>Repository Analyser</value>
+  </data>
+  <data name="MonthActivity" xml:space="preserve">
+    <value>Akywność miesięczna</value>
+  </data>
+  <data name="UserActivityView" xml:space="preserve">
+    <value>Aktywność użytkowników</value>
+  </data>
+  <data name="WeekdayActivity" xml:space="preserve">
+    <value>Aktywność dni tygodnia</value>
+  </data>
 </root>

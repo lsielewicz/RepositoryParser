@@ -7,7 +7,7 @@
         xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         xmlns:resw="clr-namespace:RepositoryParser.Properties"
         mc:Ignorable="d"
-        Title="DayActivityChartView" Height="600" Width="800"
+        Title="{x:Static resw:Resources.DayActivityView}" Height="600" Width="800"
         DataContext="{Binding Source={StaticResource Locator}, Path=DayActivity }"
         Icon="../Assets/Icons/Ratings Filled-50.png"
         >

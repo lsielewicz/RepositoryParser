@@ -9,7 +9,7 @@
         xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
         xmlns:resw="clr-namespace:RepositoryParser.Properties"
         mc:Ignorable="d"
-        Title="AnalysisView" Height="640" Width="1000"
+        Title="{x:Static resw:Resources.AnalysisWindowVie}" Height="640" Width="1000"
         DataContext="{Binding Source={StaticResource Locator}, Path=Analisys}"
         Icon="../Assets/Icons/Ratings Filled-50.png"
         >

@@ -10,7 +10,7 @@
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="DifferenceWindowView" Height="600" Width="900"
+         Title="{x:Static resw:Resources.DiffView}" Height="600" Width="900"
         DataContext="{Binding Source={StaticResource Locator}, Path=Difference}"
         Icon="../Assets/Icons/Ratings Filled-50.png" 
         >

@@ -7,7 +7,7 @@
         xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         xmlns:resw="clr-namespace:RepositoryParser.Properties"
         mc:Ignorable="d"
-        Title="ChartOfChangesView" Height="600" Width="600"
+         Title="{x:Static resw:Resources.ChartOfChangesView}" Height="600" Width="600"
         DataContext="{Binding Source={StaticResource Locator}, Path=ChartOfChanges}"
         ResizeMode="NoResize"
         Icon="../Assets/Icons/Ratings Filled-50.png"
