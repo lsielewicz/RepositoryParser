@@ -20,6 +20,7 @@ namespace RepositoryParser.Core.ViewModel
 {
     public class AnalisysWindowViewModel : ViewModelBase
     {
+        #region Fields
         private GitRepositoryService _localGitRepositoryService;
         private SqLiteService _localSqliteService;
         private ObservableCollection<string> _localCollection;
@@ -49,7 +50,7 @@ namespace RepositoryParser.Core.ViewModel
         private RelayCommand _goToDayChartWindowCommand;
         private RelayCommand _goToHourActivityCommand;
         private RelayCommand _goToWeekDayActivityWindowCommand;
-
+        #endregion
         public AnalisysWindowViewModel()
         {
             _authorsList = new List<string>();
@@ -58,9 +59,6 @@ namespace RepositoryParser.Core.ViewModel
             BranchCollection = new ObservableCollection<string>();
             RepositoryCollection = new ObservableCollection<string>();
             localList = new List<CommitTable>();
-
-
-
         }
         #region Buttons getters
 
@@ -116,7 +114,6 @@ namespace RepositoryParser.Core.ViewModel
             }
         }
         #endregion
-
 
         #region Messages
 
