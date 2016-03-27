@@ -34,5 +34,14 @@ namespace RepositoryParser.Core.Services
                  );
             File.WriteAllText(csvPath, csv, Encoding.UTF8);
         }
+        public static void CreateSummaryChartCSV(List<UserCodeFrequency> data, string data2, string csvPath)
+        {
+            String csv = String.Join(Environment.NewLine, data2);
+            csv = String.Join(
+            Environment.NewLine,
+            data.Select(d => d.User + ";" + d.AddedLines + ";" + d.DeletedLines + ";" + d.ModifiedLines)
+                 );
+            File.WriteAllText(csvPath, csv, Encoding.UTF8);
+        }
     }
 }

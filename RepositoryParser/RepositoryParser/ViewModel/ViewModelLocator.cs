@@ -54,6 +54,7 @@ namespace RepositoryParser.ViewModel
             SimpleIoc.Default.Register<WeekDayActivityViewModel>();
             SimpleIoc.Default.Register<HourActivityViewModel>();
             SimpleIoc.Default.Register<ChartOfChangesViewModel>();
+            SimpleIoc.Default.Register<UsersCodeFrequencyViewModel>();
 
         }
 
@@ -130,6 +131,15 @@ namespace RepositoryParser.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<ChartOfChangesViewModel>();
+                
+            }
+        }
+
+        public UsersCodeFrequencyViewModel UsersCodeFrequency
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<UsersCodeFrequencyViewModel>();
                 
             }
         }

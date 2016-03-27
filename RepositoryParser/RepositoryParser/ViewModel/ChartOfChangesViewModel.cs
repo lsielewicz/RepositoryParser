@@ -55,7 +55,7 @@ namespace RepositoryParser.ViewModel
                     addedCounter++;
                 else if (x.Color == ChangesColorModel.ChangeType.Deleted)
                     deletedCounter++;
-                else if (x.Color == ChangesColorModel.ChangeType.Modified)
+                else if (x.Color == ChangesColorModel.ChangeType.Modified && !String.IsNullOrWhiteSpace(x.Line))
                     modifiedCounter++;
                 else if (x.Color == ChangesColorModel.ChangeType.Unchanged && !String.IsNullOrWhiteSpace(x.Line))
                     unchangedCounter++;

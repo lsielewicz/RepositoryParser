@@ -467,6 +467,10 @@
   <data name="FileName" xml:space="preserve">
     <value>Nazwa pliku</value>
   </data>
+  <data name="AddedChart" xml:space="preserve">
+    <value>Dodane linie</value>
+    <comment>freq</comment>
+  </data>
   <data name="AnalysisWindowVie" xml:space="preserve">
     <value>Analiza</value>
   </data>
@@ -476,17 +480,40 @@
   <data name="DayActivityView" xml:space="preserve">
     <value>Aktywność dzienna</value>
   </data>
+  <data name="DeletedChart" xml:space="preserve">
+    <value>Usunięte linie</value>
+    <comment>freq</comment>
+  </data>
   <data name="DiffView" xml:space="preserve">
     <value>Różnice</value>
+  </data>
+  <data name="GoToUsersFreq" xml:space="preserve">
+    <value>Bilans zmian użytkowników</value>
+    <comment>Analysis</comment>
   </data>
   <data name="HourActivityView" xml:space="preserve">
     <value>Aktywność godzinna</value>
   </data>
+  <data name="Lines" xml:space="preserve">
+    <value>Linii</value>
+  </data>
   <data name="MainWindowView" xml:space="preserve">
     <value>Repository Analyser</value>
   </data>
+  <data name="ModifiedChart" xml:space="preserve">
+    <value>Zmodyfikowane linie</value>
+    <comment>freq</comment>
+  </data>
   <data name="MonthActivity" xml:space="preserve">
     <value>Akywność miesięczna</value>
+  </data>
+  <data name="OverallChart" xml:space="preserve">
+    <value>Wykres całościowy</value>
+    <comment>freq</comment>
+  </data>
+  <data name="Summary" xml:space="preserve">
+    <value>Podsumowanie</value>
+    <comment>freq</comment>
   </data>
   <data name="UserActivityView" xml:space="preserve">
     <value>Aktywność użytkowników</value>

@@ -97,6 +97,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Added lines.
+        /// </summary>
+        public static string AddedChart {
+            get {
+                return ResourceManager.GetString("AddedChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add a repository.
         /// </summary>
         public static string AddRepositoryButton {
@@ -331,6 +340,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deleted lines.
+        /// </summary>
+        public static string DeletedChart {
+            get {
+                return ResourceManager.GetString("DeletedChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Comparsion.
         /// </summary>
         public static string DifferencesButton {
@@ -475,6 +493,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Users Frequency Code.
+        /// </summary>
+        public static string GoToUsersFreq {
+            get {
+                return ResourceManager.GetString("GoToUsersFreq", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Time.
         /// </summary>
         public static string Hour {
@@ -538,6 +565,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lines.
+        /// </summary>
+        public static string Lines {
+            get {
+                return ResourceManager.GetString("Lines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to List of changes:.
         /// </summary>
         public static string ListOfChangesTitle {
@@ -579,6 +615,15 @@ namespace RepositoryParser.Properties {
         public static string Modified {
             get {
                 return ResourceManager.GetString("Modified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modified lines.
+        /// </summary>
+        public static string ModifiedChart {
+            get {
+                return ResourceManager.GetString("ModifiedChart", resourceCulture);
             }
         }
         
@@ -772,6 +817,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Overall chart.
+        /// </summary>
+        public static string OverallChart {
+            get {
+                return ResourceManager.GetString("OverallChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Commit B (PARENT).
         /// </summary>
         public static string ParentCommit {
@@ -831,6 +885,15 @@ namespace RepositoryParser.Properties {
         public static string SendDataButton {
             get {
                 return ResourceManager.GetString("SendDataButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Summary.
+        /// </summary>
+        public static string Summary {
+            get {
+                return ResourceManager.GetString("Summary", resourceCulture);
             }
         }
         

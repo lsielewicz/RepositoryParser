@@ -72,6 +72,7 @@
                     HorizontalAlignment="Left"
                     Padding="5,0"
                     MaxHeight="50"
+                    Command="{Binding ExportFileCommand}"
                     >
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=SaveFileBtn, Path=Width}" >
                     <Image Source="../Assets/Icons/CSV Filled-50.png" Width="24" Margin="10,0,10,0"/>
