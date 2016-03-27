@@ -34,31 +34,32 @@
         <Label Grid.Row="0" x:Name="WelcomeLabel" Content="{x:Static resw:Resources.MonthActivityWindowTitle}" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <TabControl Grid.Column="0" Grid.Row="1">
             <TabItem Header="{x:Static resw:Resources.MonthActivityChartChart}">
-                <StackPanel>
-                    <Label x:Name="WhoLabel" FontSize="22" Content="{Binding AuthorTextBox}" Margin="5"/>
-                    <chartingToolkit:Chart MinHeight="500" x:Name="Chart" Title="{x:Static resw:Resources.MonthActivityChartChart}" Background="Beige" >
-                        <chartingToolkit:Chart.Series>
-                            <chartingToolkit:ColumnSeries x:Name="Series" 
-                                    Title=""
+                <chartingToolkit:Chart Title="{x:Static resw:Resources.MonthActivityChartChart}" Background="{StaticResource Grey}">
+                    <chartingToolkit:Chart.LegendStyle>
+                        <Style TargetType="Control">
+                            <Setter Property="Width" Value="0" />
+                            <Setter Property="Height" Value="0" />
+                        </Style>
+                    </chartingToolkit:Chart.LegendStyle>
+                    <chartingToolkit:Chart.Series>
+                        <chartingToolkit:ColumnSeries
                                     ItemsSource="{Binding KeyCollection, Mode=OneWay}"
                                     DependentValueBinding="{Binding Path=Value}"
-                                    IndependentValueBinding="{Binding Path=Key}" 
-                                    DataContext="{Binding}"
+                                    IndependentValueBinding="{Binding Path=Key}"                               
                             />
-                        </chartingToolkit:Chart.Series>
-                    </chartingToolkit:Chart>
-
-                </StackPanel>
+                    </chartingToolkit:Chart.Series>
+                    
+                </chartingToolkit:Chart>
             </TabItem>
             <TabItem Header="{x:Static resw:Resources.MonthActivityChartList}">
-                <ListView ItemsSource="{Binding KeyCollection}">
+                <ListView ItemsSource="{Binding KeyCollection}" Foreground="Black">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding Key}">
-                                <GridViewColumnHeader Content="{x:Static resw:Resources.Month}" />
+                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding Key}" >
+                                <GridViewColumnHeader Content="{x:Static resw:Resources.Month}" HorizontalAlignment="Stretch" Background="{StaticResource MyGreen}" Foreground="Black"/>
                             </GridViewColumn>
                             <GridViewColumn Width="auto"  DisplayMemberBinding="{Binding Value}">
-                                <GridViewColumnHeader Content="{x:Static resw:Resources.CountOfCommits}" />
+                                <GridViewColumnHeader Content="{x:Static resw:Resources.CountOfCommits}" HorizontalAlignment="Stretch" Background="{StaticResource MyGreen}" Foreground="Black" />
                             </GridViewColumn>
                         </GridView>
                     </ListView.View>
