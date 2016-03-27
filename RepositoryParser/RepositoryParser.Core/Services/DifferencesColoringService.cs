@@ -86,23 +86,15 @@ namespace RepositoryParser.Core.Services
                 int text1count=splitedText1.Count;
                 int text2count = splitedText2.Count;
 
-                //SynchronizeOnLines(splitedText1, splitedText2);
-
-
                 if (iterations == splitedText1.Count)
                 {
                     for (int i = 0; i < (iterations - text2count); i++)
-                        splitedText2.Add("");
-                    
-                    //splitedText2= SynchronizeOnLines(splitedText1, splitedText2);
-                    
+                        splitedText2.Add("");                  
                 }
                 else
                 {
                     for (int i = 0; i < (iterations - text1count); i++)
-                        splitedText1.Add("");
-                   // splitedText1=SynchronizeOnLines(splitedText2, splitedText1);
-                    
+                        splitedText1.Add("");                   
                 }
                 if (splitedText1.Count == splitedText2.Count)
                 {
