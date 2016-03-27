@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 using RepositoryParser.Core.Messages;
@@ -21,28 +24,95 @@ namespace RepositoryParser.ViewModel
         private SqLiteService _sqLiteService;
         private DifferencesColoringService _colorService;
         private List<UserCodeFrequency> _userCodeFreqList;
-
-        private GitRepositoryService _gitService;
+        private BackgroundWorker _dataCalcWorker;
+        private bool _progressBar;
+        private ObservableCollection<KeyValuePair<string, int>> _addedLinesCollection;
+        private ObservableCollection<KeyValuePair<string, int>> _deletedLinesCollection;
+        private ObservableCollection<KeyValuePair<string, int>> _modifiedLinesCollection;
         #endregion
 
         public UsersCodeFrequencyViewModel()
         {
-            Messenger.Default.Register<DataMessageToCharts>(this,x=>HandleDataMessage(x.FilteringQuery, x.RepoInstance));
+            Messenger.Default.Register<DataMessageToCharts>(this,x=>HandleDataMessage(x.FilteringQuery));
             _sqLiteService=SqLiteService.GetInstance();
+
+            _dataCalcWorker =new BackgroundWorker();
+            _dataCalcWorker.DoWork += DoDataCalcWork;
+            _dataCalcWorker.RunWorkerCompleted += DoDataCalcCompleted;
         }
 
+        #region Getters/Setters
 
-
-
-        #region Messages
-        private void HandleDataMessage(string filteringQuery, GitRepositoryService service)
+        public bool ProgressBar
         {
-            this._filteringQuery = filteringQuery;
-            this._gitService = service;
-            FillCollections();
+            get { return _progressBar; }
+            set
+            {
+                if (_progressBar != value)
+                {
+                    _progressBar = value;
+                    RaisePropertyChanged("ProgressBar");
+                }
+            }
+        }
+
+        public ObservableCollection<KeyValuePair<string, int>> AddedLinesCollection
+        {
+            get
+            {
+                return _addedLinesCollection; 
+            }
+            set
+            {
+                if (_addedLinesCollection != value)
+                {
+                    _addedLinesCollection = value;
+                    RaisePropertyChanged("AddedLinesCollection");
+                }
+            }
+        }
+
+        public ObservableCollection<KeyValuePair<string, int>> DeletedLinesCollection
+        {
+            get
+            {
+                return _deletedLinesCollection;
+            }
+            set
+            {
+                if (_deletedLinesCollection != value)
+                {
+                    _deletedLinesCollection = value;
+                    RaisePropertyChanged("DeletedLinesCollection");
+                }
+            }
+        }
+
+        public ObservableCollection<KeyValuePair<string, int>> ModifiedLinesCollection
+        {
+            get
+            {
+                return _modifiedLinesCollection;
+            }
+            set
+            {
+                if (_modifiedLinesCollection != value)
+                {
+                    _modifiedLinesCollection = value;
+                    RaisePropertyChanged("ModifiedLinesCollection");
+                }
+            }
         }
         #endregion
 
+        #region Messages
+        private void HandleDataMessage(string filteringQuery)
+        {
+            this._filteringQuery = filteringQuery;       
+            if(!_dataCalcWorker.IsBusy)
+                _dataCalcWorker.RunWorkerAsync();
+        }
+        #endregion
 
         #region Methods
         private void FillCollections()
@@ -154,6 +224,19 @@ namespace RepositoryParser.ViewModel
                 newAuthorsList.Add(Convert.ToString(reader["Author"]));
             }
             return newAuthorsList;
+        }
+        #endregion
+
+        #region BackgroundWorker
+
+        private void DoDataCalcWork(object sender, DoWorkEventArgs e)
+        {
+            FillCollections();
+        }
+
+        private void DoDataCalcCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            
         }
         #endregion
     }
