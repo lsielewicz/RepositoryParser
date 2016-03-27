@@ -86,8 +86,11 @@
                                                       >
                         </GridViewColumnHeader>
                     </GridViewColumn>
-                    <GridViewColumn HeaderContainerStyle="{DynamicResource GridViewExtraStyle}">
+                    <GridViewColumn HeaderContainerStyle="{DynamicResource GridViewExtraStyle}" >
                         <GridViewColumnHeader HorizontalAlignment="Left" Background="{StaticResource Graphite}"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate />
+                        </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
@@ -117,7 +120,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Value}" Width="auto">
+                    <GridViewColumn DisplayMemberBinding="{Binding Value}" Width="Auto">
                         <GridViewColumnHeader Content="{x:Static resw:Resources.FileName}" 
                                               Background="{StaticResource Graphite}"
                                               Foreground="{StaticResource Grey}" 
@@ -127,6 +130,9 @@
                     </GridViewColumn>
                     <GridViewColumn HeaderContainerStyle="{DynamicResource GridViewExtraStyle}">
                         <GridViewColumnHeader HorizontalAlignment="Left" Background="{StaticResource Graphite}"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate />
+                        </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
