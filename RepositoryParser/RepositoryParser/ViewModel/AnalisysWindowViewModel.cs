@@ -38,6 +38,7 @@ namespace RepositoryParser.Core.ViewModel
         private List<RepositoryTable> _repoList;
         private string _comboBoxSelectedItem;
         private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
+        private RelayCommand _clearFiltersCommand;
 
         private string _repoType;
 
@@ -543,6 +544,26 @@ namespace RepositoryParser.Core.ViewModel
                 id++;
             }
             SendMessageToDisplay();
+        }
+
+        public RelayCommand ClearFiltersCommand
+        {
+            get { return _clearFiltersCommand ?? (_clearFiltersCommand = new RelayCommand(ClearFilters)); }
+        }
+        private void ClearFilters()
+        {
+            MainViewModel.SelectedBranch=String.Empty;
+            MainViewModel.SelectedRepo = String.Empty;
+            BranchSelectedItem = String.Empty;
+            RepositorySelectedItem = String.Empty;
+            ComboBoxSelectedItem = String.Empty;
+            BranchEnabled = false;
+            RepoType = String.Empty;
+            MessageTextBox=String.Empty;
+            FromDate = String.Empty;
+            ToDate = String.Empty;
+
+            SendMessageToDrawChart();
         }
         #endregion
     }
