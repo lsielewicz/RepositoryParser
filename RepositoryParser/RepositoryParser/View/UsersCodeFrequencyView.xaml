@@ -5,6 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RepositoryParser.View"
         xmlns:resw="clr-namespace:RepositoryParser.Properties"
+        xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
         mc:Ignorable="d"
         Title="{x:Static resw:Resources.GoToUsersFreq}" 
         Height="600" 
@@ -12,6 +15,11 @@
         DataContext="{Binding Source={StaticResource Locator}, Path=UsersCodeFrequency}"
         Icon="../Assets/Icons/Statistics_Filled-50.png"
         >
+    <Window.Resources>
+        <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </Window.Resources>
+    
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -34,26 +42,130 @@
         <Label Grid.Row="0" Content="{x:Static resw:Resources.GoToUsersFreq}" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         
         <TabControl Grid.Row="1">
-            <TabItem Header="{x:Static resw:Resources.OverallChart}">
-                
+            <TabItem Header="{x:Static resw:Resources.OverallChart}" >
+                <chartingToolkit:Chart Background="{StaticResource Grey}" LegendTitle="{x:Static resw:Resources.Legend}" Title="{x:Static resw:Resources.OverallChart}">
+                    <chartingToolkit:Chart.Series>
+                        <chartingToolkit:PieSeries ItemsSource="{Binding SummaryLinesCollection, Mode=OneWay}"
+                                                   IndependentValueBinding="{Binding Path=Key}"
+                                                   DependentValueBinding="{Binding Path=Value}"
+                            
+                            />
+                    </chartingToolkit:Chart.Series>
+                </chartingToolkit:Chart>
             </TabItem>
-            
+
             <TabItem Header="{x:Static resw:Resources.AddedChart}">
-                
+                <chartingToolkit:Chart Background="{StaticResource Grey}" LegendTitle="{x:Static resw:Resources.Legend}" Title="{x:Static resw:Resources.AddedChart}">
+                    <chartingToolkit:Chart.Series>
+                        <chartingToolkit:PieSeries ItemsSource="{Binding AddedLinesCollection, Mode=OneWay}"
+                                                   IndependentValueBinding="{Binding Path=Key}"
+                                                   DependentValueBinding="{Binding Path=Value}"
+                            
+                            />
+                    </chartingToolkit:Chart.Series>
+                </chartingToolkit:Chart>
             </TabItem>
 
             <TabItem Header="{x:Static resw:Resources.DeletedChart}">
-
+                <chartingToolkit:Chart Background="{StaticResource Grey}" LegendTitle="{x:Static resw:Resources.Legend}" Title="{x:Static resw:Resources.DeletedChart}">
+                    <chartingToolkit:Chart.Series>
+                        <chartingToolkit:PieSeries ItemsSource="{Binding DeletedLinesCollection, Mode=OneWay}"
+                                                   IndependentValueBinding="{Binding Path=Key}"
+                                                   DependentValueBinding="{Binding Path=Value}"
+                            
+                            />
+                    </chartingToolkit:Chart.Series>
+                </chartingToolkit:Chart>
             </TabItem>
 
             <TabItem Header="{x:Static resw:Resources.ModifiedChart}">
-
+                <chartingToolkit:Chart Background="{StaticResource Grey}" LegendTitle="{x:Static resw:Resources.Legend}" Title="{x:Static resw:Resources.ModifiedChart}">
+                    <chartingToolkit:Chart.Series>
+                        <chartingToolkit:PieSeries ItemsSource="{Binding ModifiedLinesCollection, Mode=OneWay}"
+                                                   IndependentValueBinding="{Binding Path=Key}"
+                                                   DependentValueBinding="{Binding Path=Value}"
+                            
+                            />
+                    </chartingToolkit:Chart.Series>
+                </chartingToolkit:Chart>
             </TabItem>
 
             <TabItem Header="{x:Static resw:Resources.Summary}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
 
+                    <Border Grid.Row="0" 
+                            Background="{StaticResource Graphite}"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            >
+                        <TextBlock Foreground="{StaticResource Grey}"
+                                       Text="{Binding SummaryString}"
+                                       FontWeight="Light"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       FontSize="14"
+                                       />
+                    </Border>
+
+                    <ListView Grid.Row="1" Foreground="Black" ItemsSource="{Binding CodeFreqCollection}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding User}">
+                                    <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Author}" Margin="0" Padding="30,0" HorizontalAlignment="Stretch" Background="{StaticResource MyGreen}" Foreground="Black"/>
+                                </GridViewColumn >
+
+                                <GridViewColumn DisplayMemberBinding="{Binding AddedLines}">
+                                    <GridViewColumnHeader Content="{x:Static resw:Resources.Added}" Margin="0" Padding="30,0" HorizontalAlignment="Stretch" Background="{StaticResource MyGreen}" Foreground="Black"/>
+                                </GridViewColumn>
+
+                                <GridViewColumn DisplayMemberBinding="{Binding DeletedLines}">
+                                    <GridViewColumnHeader Content="{x:Static resw:Resources.Deleted}" Margin="0" Padding="30,0" HorizontalAlignment="Stretch" Background="{StaticResource MyGreen}" Foreground="Black"/>
+                                </GridViewColumn>
+
+                                <GridViewColumn DisplayMemberBinding="{Binding ModifiedLines}">
+                                    <GridViewColumnHeader Content="{x:Static resw:Resources.Modified}" Margin="0" Padding="30,0" HorizontalAlignment="Stretch" Background="{StaticResource MyGreen}" Foreground="Black"/>
+                                </GridViewColumn>
+
+                                <GridViewColumn Width="1000">
+                                    <GridViewColumnHeader HorizontalAlignment="Stretch" Background="{StaticResource MyGreen}" Foreground="Black"/>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate />
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
             </TabItem>
-
         </TabControl>
+
+        <StatusBar Grid.Row="1"
+                   Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" 
+                   Opacity="0.9"
+                   Background="{StaticResource Grey}"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   >
+        </StatusBar>
+        <StackPanel Orientation="Horizontal" Grid.Row="1"
+                    VerticalAlignment="Center" HorizontalAlignment="Center"
+                    Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
+                    >
+            <controls:ProgressRing HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       IsActive="{Binding ProgressBarVisibility}"
+                                       Width="100"
+                                       Height="18"
+                                       Margin="3"
+                                       Opacity="1"
+                                       Foreground="{StaticResource MyGreen}"
+                                       />
+            <Separator/>
+            <TextBlock Text="{x:Static resw:Resources.DataLoadingStatus}" Foreground="{StaticResource MyGreen}" FontSize="18" Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}}"/>
+        </StackPanel>
     </Grid>
 </Window>

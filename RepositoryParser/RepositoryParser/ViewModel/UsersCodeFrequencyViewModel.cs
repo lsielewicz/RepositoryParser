@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.Entity;
 using System.Data.SQLite;
+using System.Reflection;
+using System.Resources;
 using System.Text.RegularExpressions;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
@@ -25,20 +28,49 @@ namespace RepositoryParser.ViewModel
         private ObservableCollection<KeyValuePair<string, int>> _deletedLinesCollection;
         private ObservableCollection<KeyValuePair<string, int>> _modifiedLinesCollection;
         private ObservableCollection<KeyValuePair<string, int>> _summaryLinesCollection;
-        private List<KeyValuePair<string, int>> _summaryList; 
+        private ObservableCollection<UserCodeFrequency> _codeFreqCollection; 
+        private List<KeyValuePair<string, int>> _summaryList;
+        private ResourceManager _resourceManager;
+        private string _summaryString;
         #endregion
 
         public UsersCodeFrequencyViewModel()
         {
             Messenger.Default.Register<DataMessageToCharts>(this,x=>HandleDataMessage(x.FilteringQuery));
             _sqLiteService=SqLiteService.GetInstance();
-
+            _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
             _dataCalcWorker =new BackgroundWorker();
             _dataCalcWorker.DoWork += DoDataCalcWork;
             _dataCalcWorker.RunWorkerCompleted += DoDataCalcCompleted;
         }
 
         #region Getters/Setters
+
+        public string SummaryString
+        {
+            get { return _summaryString; }
+            set
+            {
+                _summaryString = value;
+                RaisePropertyChanged("SummaryString");
+            }
+        }
+
+        public ObservableCollection<UserCodeFrequency> CodeFreqCollection
+        {
+            get
+            {
+                return _codeFreqCollection; 
+            }
+            set
+            {
+                if (_codeFreqCollection != value)
+                {
+                    _codeFreqCollection = value;
+                    RaisePropertyChanged("CodeFreqCollection");
+                }
+            }
+        }
 
         public bool ProgressBarVisibility
         {
@@ -48,7 +80,7 @@ namespace RepositoryParser.ViewModel
                 if (_progressBarVisibility != value)
                 {
                     _progressBarVisibility = value;
-                    RaisePropertyChanged("ProgressBar");
+                    RaisePropertyChanged("ProgressBarVisibility");
                 }
             }
         }
@@ -68,7 +100,6 @@ namespace RepositoryParser.ViewModel
                 }
             }
         }
-
         public ObservableCollection<KeyValuePair<string, int>> DeletedLinesCollection
         {
             get
@@ -84,7 +115,6 @@ namespace RepositoryParser.ViewModel
                 }
             }
         }
-
         public ObservableCollection<KeyValuePair<string, int>> ModifiedLinesCollection
         {
             get
@@ -115,6 +145,7 @@ namespace RepositoryParser.ViewModel
                 }
             }
         }
+
         #endregion
 
         #region Messages
@@ -136,9 +167,6 @@ namespace RepositoryParser.ViewModel
             sumAdded = sumDeleted = sumModified = added = deleted = modified = 0; ;
             for (int i = 0; i < authorsList.Count; i++)
             {
-                sumAdded += added;
-                sumDeleted += deleted;
-                sumModified += modified;
                 added = deleted = modified = 0;
 
                 if (authorsList[i] == String.Empty)
@@ -211,15 +239,20 @@ namespace RepositoryParser.ViewModel
                         
                     }
                 }
+                sumAdded += added;
+                sumDeleted += deleted;
+                sumModified += modified;
                 _userCodeFreqList.Add(new UserCodeFrequency(authorsList[i],added,deleted,modified));
             }
             _summaryList = new List<KeyValuePair<string, int>>()
             {
-                new KeyValuePair<string, int>("Added", sumAdded),
-                new KeyValuePair<string, int>("Deleted", sumDeleted),
-                new KeyValuePair<string, int>("Modified", sumModified)
+                new KeyValuePair<string, int>(_resourceManager.GetString("Added"), sumAdded),
+                new KeyValuePair<string, int>(_resourceManager.GetString("Deleted"), sumDeleted),
+                new KeyValuePair<string, int>(_resourceManager.GetString("Modified"), sumModified)
             };
-
+            SummaryString = _resourceManager.GetString("Added") + ": " + sumAdded + " " + _resourceManager.GetString("Lines") + "\n"+
+                            _resourceManager.GetString("Deleted") + ": " + sumDeleted + " " + _resourceManager.GetString("Lines") + "\n" +
+                            _resourceManager.GetString("Modified") + ": " + sumModified +" " + _resourceManager.GetString("Lines");
         }
 
         private void FillCollections()
@@ -228,11 +261,13 @@ namespace RepositoryParser.ViewModel
             DeletedLinesCollection = new ObservableCollection<KeyValuePair<string, int>>();
             ModifiedLinesCollection = new ObservableCollection<KeyValuePair<string, int>>();
             SummaryLinesCollection = new ObservableCollection<KeyValuePair<string, int>>();
+            CodeFreqCollection = new ObservableCollection<UserCodeFrequency>();
             _userCodeFreqList.ForEach(x =>
             {
                 AddedLinesCollection.Add(new KeyValuePair<string, int>(x.User,x.AddedLines));
                 DeletedLinesCollection.Add(new KeyValuePair<string, int>(x.User,x.DeletedLines));
                 ModifiedLinesCollection.Add(new KeyValuePair<string, int>(x.User,x.ModifiedLines));
+                CodeFreqCollection.Add(x);
             });
             _summaryList.ForEach(x=> SummaryLinesCollection.Add(x));
         }

@@ -494,6 +494,9 @@
   <data name="HourActivityView" xml:space="preserve">
     <value>Aktywność godzinna</value>
   </data>
+  <data name="Lines" xml:space="preserve">
+    <value>Linii</value>
+  </data>
   <data name="MainWindowView" xml:space="preserve">
     <value>Repository Analyser</value>
   </data>

@@ -521,4 +521,7 @@
   <data name="WeekdayActivity" xml:space="preserve">
     <value>Weekday Activity</value>
   </data>
+  <data name="Lines" xml:space="preserve">
+    <value>Lines</value>
+  </data>
 </root>
