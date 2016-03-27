@@ -521,4 +521,7 @@
   <data name="WeekdayActivity" xml:space="preserve">
     <value>Aktywność dni tygodnia</value>
   </data>
+  <data name="ExportFailed" xml:space="preserve">
+    <value>Nie udało się wyeksportować.</value>
+  </data>
 </root>

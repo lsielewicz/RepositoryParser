@@ -331,7 +331,7 @@ namespace RepositoryParser.ViewModel
         public void ExportFile()
         {
             SaveFileDialog dlg = new SaveFileDialog();
-            dlg.FileName = "DayActivityData";
+            dlg.FileName = "CodeFrequencyData";
             dlg.DefaultExt = ".csv";
             dlg.Filter = "Csv documents (.csv)|*.csv";
             // Show save file dialog box
@@ -349,7 +349,7 @@ namespace RepositoryParser.ViewModel
                 }
                 else
                 {
-                    MessageBox.Show("Export Failed", _resourceManager.GetString("ExportTitle"));
+                    MessageBox.Show(_resourceManager.GetString("ExportFailed"), _resourceManager.GetString("ExportTitle"));
                 }
             }
         }

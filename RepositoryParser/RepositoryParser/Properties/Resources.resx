@@ -524,4 +524,7 @@
   <data name="Lines" xml:space="preserve">
     <value>Lines</value>
   </data>
+  <data name="ExportFailed" xml:space="preserve">
+    <value>Export Failed</value>
+  </data>
 </root>
