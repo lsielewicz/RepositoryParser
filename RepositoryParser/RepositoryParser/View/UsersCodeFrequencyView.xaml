@@ -143,14 +143,6 @@
             </TabItem>
         </TabControl>
 
-        <StatusBar Grid.Row="1"
-                   Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" 
-                   Opacity="0.9"
-                   Background="{StaticResource Grey}"
-                   HorizontalAlignment="Stretch"
-                   VerticalAlignment="Stretch"
-                   >
-        </StatusBar>
         <StackPanel Orientation="Horizontal" Grid.Row="1"
                     VerticalAlignment="Center" HorizontalAlignment="Center"
                     Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
@@ -167,5 +159,21 @@
             <Separator/>
             <TextBlock Text="{x:Static resw:Resources.DataLoadingStatus}" Foreground="{StaticResource MyGreen}" FontSize="18" Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}}"/>
         </StackPanel>
+
+        <DockPanel Grid.Column="0" Grid.Row="2">
+            <Button x:Name="SaveFileBtn" 
+                    Background="{StaticResource MyGreen}"  
+                    Margin="15,5" 
+                    HorizontalAlignment="Left"
+                    Padding="5,0"
+                    MaxHeight="50"
+                    Command="{Binding ExportFileCommand}"
+                    >
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=SaveFileBtn, Path=Width}" >
+                    <Image Source="../Assets/Icons/CSV Filled-50.png" Width="24" Margin="10,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.ExportToFileButton}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+        </DockPanel>
     </Grid>
 </Window>
