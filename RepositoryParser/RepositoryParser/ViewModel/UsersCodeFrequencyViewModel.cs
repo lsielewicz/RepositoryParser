@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 using RepositoryParser.Core.Messages;
@@ -20,11 +21,13 @@ namespace RepositoryParser.ViewModel
         private SqLiteService _sqLiteService;
         private DifferencesColoringService _colorService;
         private List<UserCodeFrequency> _userCodeFreqList;
+
+        private GitRepositoryService _gitService;
         #endregion
 
         public UsersCodeFrequencyViewModel()
         {
-            Messenger.Default.Register<DataMessageToCharts>(this,x=>HandleDataMessage(x.FilteringQuery));
+            Messenger.Default.Register<DataMessageToCharts>(this,x=>HandleDataMessage(x.FilteringQuery, x.RepoInstance));
             _sqLiteService=SqLiteService.GetInstance();
         }
 
@@ -32,9 +35,10 @@ namespace RepositoryParser.ViewModel
 
 
         #region Messages
-        private void HandleDataMessage(string filteringQuery)
+        private void HandleDataMessage(string filteringQuery, GitRepositoryService service)
         {
             this._filteringQuery = filteringQuery;
+            this._gitService = service;
             FillCollections();
         }
         #endregion
@@ -53,7 +57,7 @@ namespace RepositoryParser.ViewModel
                 if (authorsList[i] == "")
                     continue;
                 string query = "select * from Commits ";
-                if (string.IsNullOrEmpty(MatchQuery(_filteringQuery)))
+                 if (string.IsNullOrEmpty(MatchQuery(_filteringQuery)))
                 {
                     query += "where Commits.Author='" + authorsList[i] + "' ";
                 }
@@ -69,7 +73,7 @@ namespace RepositoryParser.ViewModel
                 SQLiteDataReader reader = command.ExecuteReader();
 
                 List<int> idCommitList = new List<int>();
-                if (reader.Read())
+                while (reader.Read())
                 {
                     idCommitList.Add(Convert.ToInt32(reader["ID"]));      
                 }
@@ -80,24 +84,24 @@ namespace RepositoryParser.ViewModel
                         String.Format(
                             "select * from Changes " +
                             "inner join ChangesForCommit on Changes.ID = ChangesForCommit.NR_Change " +
-                            "inner join Commits on ChangesForCommit.NR_Commit " +
+                            "inner join Commits on ChangesForCommit.NR_Commit=Commits.ID " +
                             "where Commits.ID = {0}",
                             idCommit);
-    
+                    //MessageBox.Show(query2);
 
                     SQLiteCommand command2 = new SQLiteCommand(query2, _sqLiteService.Connection);
                     SQLiteDataReader reader2 = command2.ExecuteReader();
 
                     List<ChangesTable> changesList = new List<ChangesTable>();
-                    if (reader2.Read())
+                    while (reader2.Read())
                     {
-                        int id = Convert.ToInt32(reader["ID"]);
-                        string type = Convert.ToString(reader["Type"]);
-                        string path = Convert.ToString(reader["Path"]);
-                        string textA = Convert.ToString(reader["TextA"]);
-                        string textB = Convert.ToString(reader["TextB"]);
+                        int id = Convert.ToInt32(reader2["ID"]);
+                        string type = Convert.ToString(reader2["Type"]);
+                        string path = Convert.ToString(reader2["Path"]);
+                        string textA = Convert.ToString(reader2["TextA"]);
+                        string textB = Convert.ToString(reader2["TextB"]);
                         
-                        changesList.Add(new ChangesTable(id,type,path,textA,textB));
+                        changesList.Add(new ChangesTable(id,type,path, textA,textB));
                     }
                     if (changesList.Count > 0)
                     {
