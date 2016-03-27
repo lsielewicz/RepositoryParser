@@ -21,31 +21,30 @@ namespace RepositoryParser.Core.ViewModel
     public class AnalisysWindowViewModel : ViewModelBase
     {
         private GitRepositoryService _localGitRepositoryService;
-        private List<CommitTable> localList;
         private SqLiteService _localSqliteService;
-        public ObservableCollection<string> _localCollection;
-        private List<string> authorsList;
-        private List<string> emailList;
+        private ObservableCollection<string> _localCollection;
+        private ObservableCollection<string> _branchCollection;
+        private ObservableCollection<string> _repositoryCcollection;
+        private List<CommitTable> localList;
+        private List<string> _authorsList;
         private List<BranchTable> _branchList;
-        private string fromDate;
-        private string toDate;
-        private string messageTextBox;
-        private ObservableCollection<string> branchCollection;
-        private ObservableCollection<string> repositoryCcollection;
-        private string branchSelectedItem;
-        private string repositorySelectedItem;
-        private bool branchEnabled = false;
         private List<RepositoryTable> _repoList;
+        private string _fromDate;
+        private string _toDate;
+        private string _messageTextBox;
+        private string _branchSelectedItem;
+        private string _repositorySelectedItem;
         private string _comboBoxSelectedItem;
+        private string _repoType;
+        private bool _branchEnabled = false;
+  
         private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
         private RelayCommand _clearFiltersCommand;
-
-        private string _repoType;
+    
 
         public AnalisysWindowViewModel()
         {
-            emailList = new List<string>();
-            authorsList = new List<string>();
+            _authorsList = new List<string>();
             Messenger.Default.Register<DataMessageToAnalisys>(this, x => HandleDataMessage(x.GitRepoInstance));
             LocalCollection = new ObservableCollection<string>();
             BranchCollection = new ObservableCollection<string>();
@@ -82,7 +81,7 @@ namespace RepositoryParser.Core.ViewModel
 
         private void SendMessageToDrawChart()
         {
-            Messenger.Default.Send<DataMessageToCharts>(new DataMessageToCharts(this._localGitRepositoryService, authorsList,
+            Messenger.Default.Send<DataMessageToCharts>(new DataMessageToCharts(this._localGitRepositoryService, _authorsList,
                 GenerateQuery()));
         }
 
@@ -104,12 +103,12 @@ namespace RepositoryParser.Core.ViewModel
         }
         public bool BranchEnabled
         {
-            get { return branchEnabled; }
+            get { return _branchEnabled; }
             set
             {
-                if (branchEnabled != value)
+                if (_branchEnabled != value)
                 {
-                    branchEnabled = value;
+                    _branchEnabled = value;
                     RaisePropertyChanged("BranchEnabled");
                 }
             }
@@ -117,12 +116,12 @@ namespace RepositoryParser.Core.ViewModel
 
         public ObservableCollection<string> BranchCollection
         {
-            get { return branchCollection; }
+            get { return _branchCollection; }
             set
             {
-                if (branchCollection != value)
+                if (_branchCollection != value)
                 {
-                    branchCollection = value;
+                    _branchCollection = value;
                     RaisePropertyChanged("BranchCollection");
                 }
             }
@@ -130,12 +129,12 @@ namespace RepositoryParser.Core.ViewModel
 
         public ObservableCollection<string> RepositoryCollection
         {
-            get { return repositoryCcollection; }
+            get { return _repositoryCcollection; }
             set
             {
-                if (repositoryCcollection != value)
+                if (_repositoryCcollection != value)
                 {
-                    repositoryCcollection = value;
+                    _repositoryCcollection = value;
                     RaisePropertyChanged("RepositoryCollection");
                 }
             }
@@ -143,12 +142,12 @@ namespace RepositoryParser.Core.ViewModel
 
         public string MessageTextBox
         {
-            get { return messageTextBox; }
+            get { return _messageTextBox; }
             set
             {
-                if (messageTextBox != value)
+                if (_messageTextBox != value)
                 {
-                    messageTextBox = value;
+                    _messageTextBox = value;
                     RaisePropertyChanged("MessageTextBox");
                 }
             }
@@ -156,12 +155,12 @@ namespace RepositoryParser.Core.ViewModel
 
         public string FromDate
         {
-            get { return fromDate; }
+            get { return _fromDate; }
             set
             {
-                if (fromDate != value)
+                if (_fromDate != value)
                 {
-                    fromDate = value;
+                    _fromDate = value;
                     RaisePropertyChanged("FromDate");
                 }
             }
@@ -169,12 +168,12 @@ namespace RepositoryParser.Core.ViewModel
 
         public string ToDate
         {
-            get { return toDate; }
+            get { return _toDate; }
             set
             {
-                if (toDate != value)
+                if (_toDate != value)
                 {
-                    toDate = value;
+                    _toDate = value;
                     RaisePropertyChanged("ToDate");
                 }
             }
@@ -210,16 +209,16 @@ namespace RepositoryParser.Core.ViewModel
 
         public string BranchSelectedItem
         {
-            get { return branchSelectedItem; }
+            get { return _branchSelectedItem; }
             set
             {
-                if (branchSelectedItem != value)
+                if (_branchSelectedItem != value)
                 {
-                    branchSelectedItem = value;
-                    if (branchSelectedItem != null)
+                    _branchSelectedItem = value;
+                    if (_branchSelectedItem != null)
                     {
-                        BranchSelectedItemAction(branchSelectedItem);
-                        MainViewModel.SelectedBranch = branchSelectedItem;
+                        BranchSelectedItemAction(_branchSelectedItem);
+                        MainViewModel.SelectedBranch = _branchSelectedItem;
                         SendMessageToDrawChart();
                     }
                     RaisePropertyChanged("BranchSelectedItem");
@@ -229,17 +228,17 @@ namespace RepositoryParser.Core.ViewModel
 
         public string RepositorySelectedItem
         {
-            get { return repositorySelectedItem; }
+            get { return _repositorySelectedItem; }
             set
             {
-                repositorySelectedItem = value;
-                if (repositorySelectedItem != null)
+                _repositorySelectedItem = value;
+                if (_repositorySelectedItem != null)
                 {
-                    RepositorySelectedItemAction(repositorySelectedItem);
-                    MainViewModel.SelectedRepo = repositorySelectedItem;
+                    RepositorySelectedItemAction(_repositorySelectedItem);
+                    MainViewModel.SelectedRepo = _repositorySelectedItem;
                     BranchEnabled = true;
 
-                    var firstOrDefault = _repoList.FirstOrDefault(x => x.Name == repositorySelectedItem);
+                    var firstOrDefault = _repoList.FirstOrDefault(x => x.Name == _repositorySelectedItem);
                     if (firstOrDefault != null)
                         RepoType=firstOrDefault.Type;
 
@@ -319,7 +318,7 @@ namespace RepositoryParser.Core.ViewModel
         }
         private void getAuthors()
         {
-            authorsList.Clear();
+            _authorsList.Clear();
             LocalCollection.Clear();
             string query = "SELECT Author FROM Commits GROUP BY Author";
             if (!string.IsNullOrEmpty(MainViewModel.SelectedRepo))
@@ -338,11 +337,11 @@ namespace RepositoryParser.Core.ViewModel
             while (reader.Read())
             {
                 string author = Convert.ToString(reader["Author"]);
-                authorsList.Add(author);
+                _authorsList.Add(author);
             }
             //fill collection
-            authorsList.Add("");
-            authorsList.ForEach(x => LocalCollection.Add(x));
+            _authorsList.Add("");
+            _authorsList.ForEach(x => LocalCollection.Add(x));
 
         }
         #endregion
@@ -447,8 +446,8 @@ namespace RepositoryParser.Core.ViewModel
             }
 
             bool isAuthor = !string.IsNullOrEmpty(ComboBoxSelectedItem);
-            bool isFromDate = !string.IsNullOrEmpty(fromDate);
-            bool isToDate = !string.IsNullOrEmpty(toDate);
+            bool isFromDate = !string.IsNullOrEmpty(_fromDate);
+            bool isToDate = !string.IsNullOrEmpty(_toDate);
             bool isMessage = !string.IsNullOrEmpty(MessageTextBox);
 
             if (isAuthor == false && isFromDate == false && isToDate == false && isMessage == false && isCountiuned == false)
@@ -481,15 +480,15 @@ namespace RepositoryParser.Core.ViewModel
             {
                 query += "Author='" + ComboBoxSelectedItem + "'" +
                 " AND " +
-                "Date >= " + "'" + fromDate + "'" +
+                "Date >= " + "'" + _fromDate + "'" +
                 " AND " +
-                "Date <= " + "'" + toDate + "'";
+                "Date <= " + "'" + _toDate + "'";
             }
             else if (isAuthor == true && isFromDate == true && isToDate == false)
             {
                 query += "Author='" + ComboBoxSelectedItem + "'" +
                 " AND " +
-                "Date >= " + "'" + fromDate + "'" +
+                "Date >= " + "'" + _fromDate + "'" +
                 " AND " +
                 "Date <= " + "'" + "2150-01-01" + "'";
             }
@@ -499,17 +498,17 @@ namespace RepositoryParser.Core.ViewModel
                 " AND " +
                 "Date >= " + "'" + "1950-01-01" + "'" +
                 " AND " +
-                "Date <= " + "'" + toDate + "'"; ;
+                "Date <= " + "'" + _toDate + "'"; ;
             }
             else if (isAuthor == false && isFromDate == true && isToDate == true)
             {
-                query += "Date >= " + "'" + fromDate + "'" +
+                query += "Date >= " + "'" + _fromDate + "'" +
                         " AND " +
-                        "Date <= " + "'" + toDate + "'";
+                        "Date <= " + "'" + _toDate + "'";
             }
             else if (isAuthor == false && isFromDate == true && isToDate == false)
             {
-                query += "Date >= " + "'" + fromDate + "'" +
+                query += "Date >= " + "'" + _fromDate + "'" +
                         " AND " +
                         "Date <= " + "'" + "2150-01-01" + "'";
             }
@@ -517,7 +516,7 @@ namespace RepositoryParser.Core.ViewModel
             {
                 query += "Date >= " + "'" + "1950-01-01" + "'" +
                         " AND " +
-                        "Date <= " + "'" + toDate + "'";
+                        "Date <= " + "'" + _toDate + "'";
             }
 
             if (isMessage)
