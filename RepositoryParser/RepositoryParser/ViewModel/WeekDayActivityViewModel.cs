@@ -22,24 +22,22 @@ namespace RepositoryParser.ViewModel
 {
     public class WeekDayActivityViewModel : ViewModelBase
     {
-        #region Variables
-        private GitRepositoryService gitRepoInstance;
+        #region Fields
+        private GitRepositoryService _gitRepoInstance;
         private ObservableCollection<KeyValuePair<string, int>> _keyCollection;
-        private string filteringQuery;
+        private string _filteringQuery;
         private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
+        private RelayCommand _exportFileCommand;
         #endregion
-
 
         public WeekDayActivityViewModel()
         {
             Messenger.Default.Register<DataMessageToCharts>(this,
                 x => HandleDataMessage(x.RepoInstance, x.FilteringQuery));
             KeyCollection = new ObservableCollection<KeyValuePair<string, int>>();
-            ExportFileCommand = new RelayCommand(ExportFile);
         }
 
         #region Getters/Setters
-
         public ObservableCollection<KeyValuePair<string, int>> KeyCollection
         {
             get { return _keyCollection; }
@@ -54,13 +52,16 @@ namespace RepositoryParser.ViewModel
         }
         #endregion
 
+        #region Messages
         private void HandleDataMessage(GitRepositoryService gitRepo, string query)
         {
-            this.gitRepoInstance = gitRepo;
-            this.filteringQuery = query;
+            this._gitRepoInstance = gitRepo;
+            this._filteringQuery = query;
             FillCollection();
         }
+        #endregion
 
+        #region Methods
         private void FillCollection()
         {
             if (KeyCollection.Count > 0)
@@ -71,18 +72,18 @@ namespace RepositoryParser.ViewModel
                 dateString = Convert.ToString(i);
 
                 string query = "SELECT COUNT(Commits.ID) AS \"WeekdayCommits\" FROM Commits";
-                if (string.IsNullOrEmpty(MatchQuery(filteringQuery)))
+                if (string.IsNullOrEmpty(MatchQuery(_filteringQuery)))
                 {
                     query += " where strftime('%w', Date) = " +
                              "'" + dateString + "'";
                 }
                 else
                 {
-                    query += MatchQuery(filteringQuery) +
+                    query += MatchQuery(_filteringQuery) +
                              "and strftime('%w', Date) =" +
                              "'" + dateString + "'";
                 }
-                SQLiteCommand command = new SQLiteCommand(query, gitRepoInstance.SqLiteInstance.Connection);
+                SQLiteCommand command = new SQLiteCommand(query, _gitRepoInstance.SqLiteInstance.Connection);
                 SQLiteDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
@@ -125,8 +126,16 @@ namespace RepositoryParser.ViewModel
             }
             return query;
         }
-        public ICommand ExportFileCommand { get; set; }
+        #endregion
 
+        #region Buttons getters
+        public RelayCommand ExportFileCommand
+        {
+            get { return _exportFileCommand ?? (_exportFileCommand = new RelayCommand(ExportFile)); }
+        }
+        #endregion
+
+        #region Buttons actions
         public void ExportFile()
         {
             SaveFileDialog dlg = new SaveFileDialog();
@@ -145,5 +154,6 @@ namespace RepositoryParser.ViewModel
                 MessageBox.Show(_resourceManager.GetString("ExportMessage"), _resourceManager.GetString("ExportTitle"));
             }
         }
+        #endregion
     }
 }
