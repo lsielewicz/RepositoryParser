@@ -3,12 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.SQLite;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 using RepositoryParser.Core.Messages;
@@ -25,10 +20,12 @@ namespace RepositoryParser.ViewModel
         private DifferencesColoringService _colorService;
         private List<UserCodeFrequency> _userCodeFreqList;
         private BackgroundWorker _dataCalcWorker;
-        private bool _progressBar;
+        private bool _progressBarVisibility;
         private ObservableCollection<KeyValuePair<string, int>> _addedLinesCollection;
         private ObservableCollection<KeyValuePair<string, int>> _deletedLinesCollection;
         private ObservableCollection<KeyValuePair<string, int>> _modifiedLinesCollection;
+        private ObservableCollection<KeyValuePair<string, int>> _summaryLinesCollection;
+        private List<KeyValuePair<string, int>> _summaryList; 
         #endregion
 
         public UsersCodeFrequencyViewModel()
@@ -43,14 +40,14 @@ namespace RepositoryParser.ViewModel
 
         #region Getters/Setters
 
-        public bool ProgressBar
+        public bool ProgressBarVisibility
         {
-            get { return _progressBar; }
+            get { return _progressBarVisibility; }
             set
             {
-                if (_progressBar != value)
+                if (_progressBarVisibility != value)
                 {
-                    _progressBar = value;
+                    _progressBarVisibility = value;
                     RaisePropertyChanged("ProgressBar");
                 }
             }
@@ -103,6 +100,21 @@ namespace RepositoryParser.ViewModel
                 }
             }
         }
+        public ObservableCollection<KeyValuePair<string, int>> SummaryLinesCollection
+        {
+            get
+            {
+                return _summaryLinesCollection;
+            }
+            set
+            {
+                if (_summaryLinesCollection != value)
+                {
+                    _summaryLinesCollection = value;
+                    RaisePropertyChanged("SummaryLinesCollection");
+                }
+            }
+        }
         #endregion
 
         #region Messages
@@ -115,17 +127,23 @@ namespace RepositoryParser.ViewModel
         #endregion
 
         #region Methods
-        private void FillCollections()
+        private void FillData()
         {
             _userCodeFreqList=new List<UserCodeFrequency>();
             List<string> authorsList = GetAuthors(_filteringQuery);
             int added, deleted, modified;
-
+            int sumAdded, sumDeleted, sumModified;
+            sumAdded = sumDeleted = sumModified = added = deleted = modified = 0; ;
             for (int i = 0; i < authorsList.Count; i++)
             {
+                sumAdded += added;
+                sumDeleted += deleted;
+                sumModified += modified;
                 added = deleted = modified = 0;
-                if (authorsList[i] == "")
+
+                if (authorsList[i] == String.Empty)
                     continue;
+
                 string query = "select * from Commits ";
                  if (string.IsNullOrEmpty(MatchQuery(_filteringQuery)))
                 {
@@ -145,7 +163,7 @@ namespace RepositoryParser.ViewModel
                 List<int> idCommitList = new List<int>();
                 while (reader.Read())
                 {
-                    idCommitList.Add(Convert.ToInt32(reader["ID"]));      
+                    idCommitList.Add(Convert.ToInt32(reader["ID"]));
                 }
 
                 foreach (int idCommit in idCommitList)
@@ -157,7 +175,6 @@ namespace RepositoryParser.ViewModel
                             "inner join Commits on ChangesForCommit.NR_Commit=Commits.ID " +
                             "where Commits.ID = {0}",
                             idCommit);
-                    //MessageBox.Show(query2);
 
                     SQLiteCommand command2 = new SQLiteCommand(query2, _sqLiteService.Connection);
                     SQLiteDataReader reader2 = command2.ExecuteReader();
@@ -173,6 +190,7 @@ namespace RepositoryParser.ViewModel
                         
                         changesList.Add(new ChangesTable(id,type,path, textA,textB));
                     }
+
                     if (changesList.Count > 0)
                     {
                         foreach (var change in changesList)
@@ -195,6 +213,28 @@ namespace RepositoryParser.ViewModel
                 }
                 _userCodeFreqList.Add(new UserCodeFrequency(authorsList[i],added,deleted,modified));
             }
+            _summaryList = new List<KeyValuePair<string, int>>()
+            {
+                new KeyValuePair<string, int>("Added", sumAdded),
+                new KeyValuePair<string, int>("Deleted", sumDeleted),
+                new KeyValuePair<string, int>("Modified", sumModified)
+            };
+
+        }
+
+        private void FillCollections()
+        {
+            AddedLinesCollection=new ObservableCollection<KeyValuePair<string, int>>();
+            DeletedLinesCollection = new ObservableCollection<KeyValuePair<string, int>>();
+            ModifiedLinesCollection = new ObservableCollection<KeyValuePair<string, int>>();
+            SummaryLinesCollection = new ObservableCollection<KeyValuePair<string, int>>();
+            _userCodeFreqList.ForEach(x =>
+            {
+                AddedLinesCollection.Add(new KeyValuePair<string, int>(x.User,x.AddedLines));
+                DeletedLinesCollection.Add(new KeyValuePair<string, int>(x.User,x.DeletedLines));
+                ModifiedLinesCollection.Add(new KeyValuePair<string, int>(x.User,x.ModifiedLines));
+            });
+            _summaryList.ForEach(x=> SummaryLinesCollection.Add(x));
         }
 
         private string MatchQuery(string query)
@@ -228,15 +268,16 @@ namespace RepositoryParser.ViewModel
         #endregion
 
         #region BackgroundWorker
-
         private void DoDataCalcWork(object sender, DoWorkEventArgs e)
         {
-            FillCollections();
+            ProgressBarVisibility = true;
+            FillData();
         }
 
         private void DoDataCalcCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            
+            FillCollections();
+            ProgressBarVisibility = false;
         }
         #endregion
     }

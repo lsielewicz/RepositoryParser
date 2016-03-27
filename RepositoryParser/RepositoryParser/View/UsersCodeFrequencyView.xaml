@@ -10,9 +10,50 @@
         Height="600" 
         Width="800"
         DataContext="{Binding Source={StaticResource Locator}, Path=UsersCodeFrequency}"
-        
+        Icon="../Assets/Icons/Statistics_Filled-50.png"
         >
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" MinHeight="60"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+
+        <Rectangle Grid.ColumnSpan="1000" Grid.Row="0">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF52802B" Offset="0" />
+                    <GradientStop Color="Green" Offset="1" />
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Label Grid.Row="0" Content="{x:Static resw:Resources.GoToUsersFreq}" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         
+        <TabControl Grid.Row="1">
+            <TabItem Header="{x:Static resw:Resources.OverallChart}">
+                
+            </TabItem>
+            
+            <TabItem Header="{x:Static resw:Resources.AddedChart}">
+                
+            </TabItem>
+
+            <TabItem Header="{x:Static resw:Resources.DeletedChart}">
+
+            </TabItem>
+
+            <TabItem Header="{x:Static resw:Resources.ModifiedChart}">
+
+            </TabItem>
+
+            <TabItem Header="{x:Static resw:Resources.Summary}">
+
+            </TabItem>
+
+        </TabControl>
     </Grid>
 </Window>

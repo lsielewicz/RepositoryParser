@@ -470,6 +470,10 @@
   <data name="FileName" xml:space="preserve">
     <value>File name</value>
   </data>
+  <data name="AddedChart" xml:space="preserve">
+    <value>Added lines</value>
+    <comment>freq</comment>
+  </data>
   <data name="AnalysisWindowVie" xml:space="preserve">
     <value>Analysis</value>
   </data>
@@ -478,6 +482,10 @@
   </data>
   <data name="DayActivityView" xml:space="preserve">
     <value>Day Activity</value>
+  </data>
+  <data name="DeletedChart" xml:space="preserve">
+    <value>Deleted lines</value>
+    <comment>freq</comment>
   </data>
   <data name="DiffView" xml:space="preserve">
     <value>Differences</value>
@@ -492,8 +500,20 @@
   <data name="MainWindowView" xml:space="preserve">
     <value>Repository Analyser</value>
   </data>
+  <data name="ModifiedChart" xml:space="preserve">
+    <value>Modified lines</value>
+    <comment>freq</comment>
+  </data>
   <data name="MonthActivity" xml:space="preserve">
     <value>Month Activity</value>
+  </data>
+  <data name="OverallChart" xml:space="preserve">
+    <value>Overall chart</value>
+    <comment>freq</comment>
+  </data>
+  <data name="Summary" xml:space="preserve">
+    <value>Summary</value>
+    <comment>freq</comment>
   </data>
   <data name="UserActivityView" xml:space="preserve">
     <value>Users Activity</value>

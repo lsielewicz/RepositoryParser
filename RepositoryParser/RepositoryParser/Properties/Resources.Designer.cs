@@ -97,6 +97,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Added lines.
+        /// </summary>
+        public static string AddedChart {
+            get {
+                return ResourceManager.GetString("AddedChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add a repository.
         /// </summary>
         public static string AddRepositoryButton {
@@ -327,6 +336,15 @@ namespace RepositoryParser.Properties {
         public static string Deleted {
             get {
                 return ResourceManager.GetString("Deleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deleted lines.
+        /// </summary>
+        public static string DeletedChart {
+            get {
+                return ResourceManager.GetString("DeletedChart", resourceCulture);
             }
         }
         
@@ -592,6 +610,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Modified lines.
+        /// </summary>
+        public static string ModifiedChart {
+            get {
+                return ResourceManager.GetString("ModifiedChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Month.
         /// </summary>
         public static string Month {
@@ -781,6 +808,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Overall chart.
+        /// </summary>
+        public static string OverallChart {
+            get {
+                return ResourceManager.GetString("OverallChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Commit B (PARENT).
         /// </summary>
         public static string ParentCommit {
@@ -840,6 +876,15 @@ namespace RepositoryParser.Properties {
         public static string SendDataButton {
             get {
                 return ResourceManager.GetString("SendDataButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Summary.
+        /// </summary>
+        public static string Summary {
+            get {
+                return ResourceManager.GetString("Summary", resourceCulture);
             }
         }
         
