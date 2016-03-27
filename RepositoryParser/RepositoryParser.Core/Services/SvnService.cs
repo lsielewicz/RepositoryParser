@@ -25,7 +25,6 @@ namespace RepositoryParser.Core.Services
         #endregion
 
         #region Constructors
-
         public SvnService()
         {
             Path = String.Empty;
@@ -42,10 +41,7 @@ namespace RepositoryParser.Core.Services
         }
         #endregion
 
-
-
         #region Methods
-
         private string checkPath(string path)
         {
             using (SvnClient client = new SvnClient())

@@ -7,7 +7,7 @@
         xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         xmlns:resw="clr-namespace:RepositoryParser.Properties"
         mc:Ignorable="d"
-        Title="MonthActivityChart" Height="700" Width="900"
+        Title="MonthActivityChart" Height="600" Width="800"
         DataContext="{Binding Source={StaticResource Locator}, Path=MonthActivity}"
         Icon="../Assets/Icons/Ratings Filled-50.png"
         >
@@ -34,31 +34,32 @@
         <Label Grid.Row="0" x:Name="WelcomeLabel" Content="{x:Static resw:Resources.MonthActivityWindowTitle}" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <TabControl Grid.Column="0" Grid.Row="1">
             <TabItem Header="{x:Static resw:Resources.MonthActivityChartChart}">
-                <StackPanel>
-                    <Label x:Name="WhoLabel" FontSize="22" Content="{Binding AuthorTextBox}" Margin="5"/>
-                    <chartingToolkit:Chart MinHeight="500" x:Name="Chart" Title="{x:Static resw:Resources.MonthActivityChartChart}" Background="Beige" >
-                        <chartingToolkit:Chart.Series>
-                            <chartingToolkit:ColumnSeries x:Name="Series" 
-                                    Title=""
+                <chartingToolkit:Chart Title="{x:Static resw:Resources.MonthActivityChartChart}" Background="{StaticResource Grey}">
+                    <chartingToolkit:Chart.LegendStyle>
+                        <Style TargetType="Control">
+                            <Setter Property="Width" Value="0" />
+                            <Setter Property="Height" Value="0" />
+                        </Style>
+                    </chartingToolkit:Chart.LegendStyle>
+                    <chartingToolkit:Chart.Series>
+                        <chartingToolkit:ColumnSeries
                                     ItemsSource="{Binding KeyCollection, Mode=OneWay}"
                                     DependentValueBinding="{Binding Path=Value}"
-                                    IndependentValueBinding="{Binding Path=Key}" 
-                                    DataContext="{Binding}"
+                                    IndependentValueBinding="{Binding Path=Key}"                               
                             />
-                        </chartingToolkit:Chart.Series>
-                    </chartingToolkit:Chart>
-
-                </StackPanel>
+                    </chartingToolkit:Chart.Series>
+                    
+                </chartingToolkit:Chart>
             </TabItem>
             <TabItem Header="{x:Static resw:Resources.MonthActivityChartList}">
-                <ListView ItemsSource="{Binding KeyCollection}">
+                <ListView ItemsSource="{Binding KeyCollection}" Foreground="Black">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding Key}">
-                                <GridViewColumnHeader Content="{x:Static resw:Resources.Month}" />
+                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding Key}" >
+                                <GridViewColumnHeader Content="{x:Static resw:Resources.Month}" HorizontalAlignment="Stretch" Background="{StaticResource MyGreen}" Foreground="Black"/>
                             </GridViewColumn>
                             <GridViewColumn Width="auto"  DisplayMemberBinding="{Binding Value}">
-                                <GridViewColumnHeader Content="{x:Static resw:Resources.CountOfCommits}" />
+                                <GridViewColumnHeader Content="{x:Static resw:Resources.CountOfCommits}" HorizontalAlignment="Stretch" Background="{StaticResource MyGreen}" Foreground="Black" />
                             </GridViewColumn>
                         </GridView>
                     </ListView.View>
@@ -67,13 +68,18 @@
         </TabControl>
 
         <DockPanel Grid.Column="0" Grid.Row="2">
-            <Button x:Name="SaveFileBtn"
-                    Command="{Binding ExportFileCommand}" 
-                    Background="{StaticResource MyGreen}" 
-                    Width="150" 
+            <Button x:Name="SaveFileBtn" 
+                    Background="{StaticResource MyGreen}"  
                     Margin="15,5" 
-                    Content="{x:Static resw:Resources.ExportToFileButton}"
-                    HorizontalAlignment="Left"/>
+                    HorizontalAlignment="Left"
+                    Padding="5,0"
+                    MaxHeight="50"
+                    >
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=SaveFileBtn, Path=Width}" >
+                    <Image Source="../Assets/Icons/CSV Filled-50.png" Width="24" Margin="10,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.ExportToFileButton}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
         </DockPanel>
 
     </Grid>

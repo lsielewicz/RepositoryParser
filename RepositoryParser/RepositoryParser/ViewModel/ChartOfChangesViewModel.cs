@@ -16,27 +16,33 @@ namespace RepositoryParser.ViewModel
 {
     public class ChartOfChangesViewModel : ViewModelBase
     {
-        private ObservableCollection<KeyValuePair<string, int>> childCollection;
+        #region Fields
+        private ObservableCollection<KeyValuePair<string, int>> _childCollection;
         private ResourceManager _resourceManager;
+        #endregion
+
         public ChartOfChangesViewModel()
         {
-        _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
-        Messenger.Default.Register<DataMessageToChartOfChanges>(this,x=>HandleDataMessage(x.ChildChangesList));
+            _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
+            Messenger.Default.Register<DataMessageToChartOfChanges>(this,x=>HandleDataMessage(x.ChildChangesList));
         }
 
+        #region Getters/Setters
         public ObservableCollection<KeyValuePair<string, int>> ChildCollection
         {
-            get { return childCollection; }
+            get { return _childCollection; }
             set
             {
-                if (childCollection != value)
+                if (_childCollection != value)
                 {
-                    childCollection = value;
+                    _childCollection = value;
                     RaisePropertyChanged("ChildCollection");
                 }
             }
         }
+        #endregion
 
+        #region Messages
         private void HandleDataMessage(List<ChangesColorModel> childList)
         {
             ChildCollection=new ObservableCollection<KeyValuePair<string, int>>();
@@ -58,8 +64,7 @@ namespace RepositoryParser.ViewModel
             ChildCollection.Add(new KeyValuePair<string, int>(_resourceManager.GetString("Deleted"), deletedCounter));
             ChildCollection.Add(new KeyValuePair<string, int>(_resourceManager.GetString("Modified"), modifiedCounter));
             ChildCollection.Add(new KeyValuePair<string, int>(_resourceManager.GetString("Unchanged"), unchangedCounter));
-
-            
         }
+        #endregion
     }
 }

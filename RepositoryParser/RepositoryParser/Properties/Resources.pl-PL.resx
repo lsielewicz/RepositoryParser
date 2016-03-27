@@ -464,4 +464,7 @@
     <value>Wyczyść filtry</value>
     <comment>MainWindow</comment>
   </data>
+  <data name="FileName" xml:space="preserve">
+    <value>Nazwa pliku</value>
+  </data>
 </root>

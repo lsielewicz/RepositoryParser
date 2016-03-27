@@ -33,29 +33,31 @@
         <Label Grid.Row="0" x:Name="WelcomeLabel" Content="{x:Static resw:Resources.DayActivityWindowTitle}" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <TabControl Grid.Column="0" Grid.Row="1">
             <TabItem Header="{x:Static resw:Resources.DayActivityChartChart}">
-                <StackPanel>
-                    <chartingToolkit:Chart MinHeight="400" x:Name="Chart" Title="{x:Static resw:Resources.DayActivityChartChart}" Background="Beige" Margin="0,0,0,50">
-                        <chartingToolkit:Chart.Series>
-                            <chartingToolkit:LineSeries
+                <chartingToolkit:Chart Title="{x:Static resw:Resources.DayActivityChartChart}" Background="{StaticResource Grey}">
+                    <chartingToolkit:Chart.LegendStyle>
+                        <Style TargetType="Control">
+                            <Setter Property="Width" Value="0" />
+                            <Setter Property="Height" Value="0" />
+                        </Style>
+                    </chartingToolkit:Chart.LegendStyle>
+                    <chartingToolkit:Chart.Series>
+                        <chartingToolkit:LineSeries
                                     ItemsSource="{Binding KeyCollection, Mode=OneWay}"
                                     DependentValueBinding="{Binding Path=Value}"
                                     IndependentValueBinding="{Binding Path=Key}" 
-                                    DataContext="{Binding}"
                             />
-                        </chartingToolkit:Chart.Series>
-                    </chartingToolkit:Chart>
-
-                </StackPanel>
+                    </chartingToolkit:Chart.Series>
+                </chartingToolkit:Chart>
             </TabItem>
             <TabItem Header="{x:Static resw:Resources.DayActivityChartList}">
-                <ListView ItemsSource="{Binding KeyCollection}">
+                <ListView ItemsSource="{Binding KeyCollection}" Foreground="Black">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Width="120" DisplayMemberBinding="{Binding Key}">
-                                <GridViewColumnHeader Content="{x:Static resw:Resources.Day}" />
+                                <GridViewColumnHeader Content="{x:Static resw:Resources.Day}" Background="{StaticResource MyGreen}" Foreground="Black" HorizontalAlignment="Stretch" />
                             </GridViewColumn>
                             <GridViewColumn Width="auto"  DisplayMemberBinding="{Binding Value}">
-                                <GridViewColumnHeader Content="{x:Static resw:Resources.CountOfCommits}" />
+                                <GridViewColumnHeader Content="{x:Static resw:Resources.CountOfCommits}" Background="{StaticResource MyGreen}" Foreground="Black" HorizontalAlignment="Stretch"/>
                             </GridViewColumn>
                         </GridView>
                     </ListView.View>
@@ -65,12 +67,17 @@
 
         <DockPanel Grid.Column="0" Grid.Row="2">
             <Button x:Name="SaveFileBtn" 
-                    Background="{StaticResource MyGreen}" 
-                    Width="150"
+                    Background="{StaticResource MyGreen}"  
                     Margin="15,5" 
-                    Command="{Binding ExportFileCommand}"
-                    Content="{x:Static resw:Resources.ExportToFileButton}"
-                    HorizontalAlignment="Left"/>
+                    HorizontalAlignment="Left"
+                    Padding="5,0"
+                    MaxHeight="50"
+                    >
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=SaveFileBtn, Path=Width}" >
+                    <Image Source="../Assets/Icons/CSV Filled-50.png" Width="24" Margin="10,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.ExportToFileButton}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
         </DockPanel>
     </Grid>
 </Window>

@@ -20,6 +20,9 @@
         <conventers:EnumToColorConventer x:Key="EnumToColorConventer"/>
         <conventers:AddedToDeletedStringConventer x:Key="AddedToDeletedStringConventer"/>
         <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <Style x:Key="GridViewExtraStyle" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Width" Value="1000"/>
+        </Style>
     </Window.Resources>
 
     <i:Interaction.Triggers>
@@ -38,7 +41,7 @@
             <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="4*"/>
-            <RowDefinition Height="35"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
 
@@ -60,58 +63,75 @@
         </Rectangle>
         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{x:Static resw:Resources.DifferenceWindowTitle}" Width="auto"  />
 
-        <ScrollViewer Grid.Column="0" Grid.Row="1" HorizontalScrollBarVisibility="Auto" Grid.RowSpan="3" VerticalScrollBarVisibility="Auto">
-            <StackPanel x:Name="CommitListPanel" Grid.Column="0" Grid.Row="1" Margin="5,10,5,10">
-                <ListView ItemsSource="{Binding CommitsCollection}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Width="40" DisplayMemberBinding="{Binding Key}">
-                                <GridViewColumnHeader HorizontalAlignment="Stretch"
-                                                      Content="{x:Static resw:Resources.CommitsList_ID}"
-                                                      Background="{StaticResource MyGreen}"
-                                                      >
-                                </GridViewColumnHeader>
-                            </GridViewColumn>
 
-                            <GridViewColumn Width="auto"  DisplayMemberBinding="{Binding Value}">
-                                <GridViewColumnHeader HorizontalAlignment="Stretch"
-                                                      Content="{x:Static resw:Resources.CommitsList_Message}"
-                                                      Background="{StaticResource MyGreen}"
+        <ListView ItemsSource="{Binding CommitsCollection}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" Grid.Column="0" Grid.Row="1" Grid.RowSpan="3">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="40" DisplayMemberBinding="{Binding Key}">
+                        <GridViewColumnHeader HorizontalAlignment="Stretch"
+                                                      Content="{x:Static resw:Resources.CommitsList_ID}"
+                                                      Background="{StaticResource Graphite}"
+                                                      Foreground="{StaticResource Grey}"
+                                                      FontWeight="Light"
                                                       >
-                                </GridViewColumnHeader>
-                            </GridViewColumn>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </StackPanel>
-        </ScrollViewer>
-        
-        
-        <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
-            <StackPanel x:Name="ChangesPanel">
-                <TextBlock Text="{x:Static resw:Resources.Changes}" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Light"/>
-                <ListView ItemsSource="{Binding ChangesCollection}" SelectedItem="{Binding ChangeSelectedItem, Mode=TwoWay}" Padding="0" IsEnabled="True">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn x:Name="GridViewColumn" Width="100">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock x:Name="ChangeType"
+                        </GridViewColumnHeader>
+                    </GridViewColumn>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Value}">
+                        <GridViewColumnHeader HorizontalAlignment="Stretch"
+                                                      Content="{x:Static resw:Resources.CommitsList_Message}"
+                                                      Background="{StaticResource Graphite}"
+                                                      Foreground="{StaticResource Grey}"
+                                                      FontWeight="Light"
+                                                      >
+                        </GridViewColumnHeader>
+                    </GridViewColumn>
+                    <GridViewColumn HeaderContainerStyle="{DynamicResource GridViewExtraStyle}">
+                        <GridViewColumnHeader HorizontalAlignment="Left" Background="{StaticResource Graphite}"/>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+
+        <ListView Grid.Row="1"
+                  Grid.Column="1" 
+                  Grid.ColumnSpan="2"
+                  ItemsSource="{Binding ChangesCollection}" 
+                  SelectedItem="{Binding ChangeSelectedItem, Mode=TwoWay}" 
+                  Padding="0" 
+                  IsEnabled="True"
+                  >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn x:Name="GridViewColumn" Width="100">
+                        <GridViewColumnHeader Content="{x:Static resw:Resources.TypeOfChange}" Background="{StaticResource Graphite}" Foreground="{StaticResource Grey}" HorizontalAlignment="Stretch" FontWeight="Light" />
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock x:Name="ChangeType"
                                                    Text="{Binding Path=Key, Converter={StaticResource AddedToDeletedStringConventer}}"
                                                    Background="{Binding ElementName=ChangeType, Path=Text, Converter={StaticResource ChangeTypeToBackgroundColorConventer} }"
                                                    Foreground="Black"
                                                    IsEnabled="False"
                                                    />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Width="auto" DisplayMemberBinding="{Binding Value}"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </StackPanel>
-        </ScrollViewer>
-        
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Value}" Width="auto">
+                        <GridViewColumnHeader Content="{x:Static resw:Resources.FileName}" 
+                                              Background="{StaticResource Graphite}"
+                                              Foreground="{StaticResource Grey}" 
+                                              HorizontalAlignment="Stretch" 
+                                              FontWeight="Light"
+                                              />
+                    </GridViewColumn>
+                    <GridViewColumn HeaderContainerStyle="{DynamicResource GridViewExtraStyle}">
+                        <GridViewColumnHeader HorizontalAlignment="Left" Background="{StaticResource Graphite}"/>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+       
         <TextBlock Text="{x:Static resw:Resources.ChildCommit}" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" Margin="0,10,0,10" FontWeight="Light"/>
         <ScrollViewer x:Name="CommitScrollViewer" Grid.Row="2" Grid.Column="1" Margin="0,30,0,10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" utils:ScrollSynchronizer.ScrollGroup="Group1">
             <StackPanel x:Name="TextAPanel" Grid.Column="1" Grid.Row="2" Margin="5,10,5,10">
@@ -130,18 +150,18 @@
 
         <TextBlock Text="{x:Static resw:Resources.ParentCommit}" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="2" Margin="0,10,0,10" FontWeight="Light"/>
         <ScrollViewer Grid.Column="2" Grid.Row="2"  Margin="0,30,0,10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" utils:ScrollSynchronizer.ScrollGroup="Group1">
-                <StackPanel x:Name="TextBPanel" Grid.Column="2" Grid.Row="2" Margin="5,10,5,10">
-                    <ListBox Margin="0,10,0,10" ItemsSource="{Binding ListTextB}" IsEnabled="False">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Line}"
+            <StackPanel x:Name="TextBPanel" Grid.Column="2" Grid.Row="2" Margin="5,10,5,10">
+                <ListBox Margin="0,10,0,10" ItemsSource="{Binding ListTextB}" IsEnabled="False">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Line}"
                                            Background="{Binding Path=Color,Converter={StaticResource EnumToColorConventer}}"
                                            Foreground="Black"
                                     />
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
         </ScrollViewer>
 
         <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -149,19 +169,20 @@
                     Padding="10,0"
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center"
-                    Background="{StaticResource MyGreen}"
+                    Background="{StaticResource Graphite}"
+                    Foreground="{StaticResource Grey}"
                     Command="{Binding GoToChartOfChangesCommand}"
-                    Height="35"
+                    Height="50"
                     >
                 <StackPanel Orientation="Horizontal" Width="{Binding ElementName=SendBtn, Path=Width}">
-                    <Image Source="../Assets/Icons/Pie_Chart_Black.png" Height="24" Margin="2,0,10,0"/>
+                    <Image Source="../Assets/Icons/Pie-Chart.png" Height="24" Margin="2,0,10,0"/>
                     <TextBlock Text="{x:Static resw:Resources.GoToDifferencesChartButton}" VerticalAlignment="Center" FontWeight="Light"/>
                 </StackPanel>
             </Button>
         </StackPanel>
 
 
-       <!-- <StatusBar Grid.Row="1" Grid.Column="0" 
+         <StatusBar Grid.Row="1" Grid.Column="0" 
                    Grid.RowSpan="2"
                    Grid.ColumnSpan="3"
                    Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" 
@@ -170,7 +191,7 @@
                    HorizontalAlignment="Stretch"
                    VerticalAlignment="Stretch"
                    >
-        </StatusBar>-->
+        </StatusBar>
         <StackPanel Orientation="Horizontal" Grid.Row="0" 
                     Grid.Column="0" Grid.RowSpan="5"
                     Grid.ColumnSpan="3" 

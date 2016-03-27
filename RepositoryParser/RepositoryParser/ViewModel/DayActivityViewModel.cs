@@ -22,51 +22,50 @@ namespace RepositoryParser.ViewModel
 {
     public class DayActivityViewModel : ViewModelBase
     {
-        #region Variables
-
+        #region Fields
         private GitRepositoryService _gitRepositoryService;
-        private string filteringQuery;
-        private ObservableCollection<KeyValuePair<int, int>> keyCollection;
+        private string _filteringQuery;
+        private ObservableCollection<KeyValuePair<int, int>> _keyCollection;
         private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
+        private RelayCommand _exportFileCommand;
         #endregion
 
         #region Constructor
-
         public DayActivityViewModel()
         {
             Messenger.Default.Register<DataMessageToCharts>(this, x => HandleDataMessage(x.RepoInstance, x.FilteringQuery));
             KeyCollection = new ObservableCollection<KeyValuePair<int, int>>();
-            ExportFileCommand = new RelayCommand(ExportFile);
         }
         #endregion
 
         #region Getters/Setters
-
         public ObservableCollection<KeyValuePair<int, int>> KeyCollection
         {
             get
             {
-                return keyCollection;
+                return _keyCollection;
             }
             set
             {
-                if (keyCollection != value)
+                if (_keyCollection != value)
                 {
-                    keyCollection = value;
+                    _keyCollection = value;
                     RaisePropertyChanged("KeyCollection");
                 }
             }
         }
         #endregion
-        #region Methods
 
+        #region Messages
         private void HandleDataMessage(GitRepositoryService repo, string query)
         {
             this._gitRepositoryService = repo;
-            this.filteringQuery = query;
+            this._filteringQuery = query;
             FillDataCollection();
         }
+        #endregion
 
+        #region Methodds
         private void FillDataCollection()
         {
             if (KeyCollection.Count > 0)
@@ -81,14 +80,14 @@ namespace RepositoryParser.ViewModel
                     dateString = Convert.ToString(i);
 
                 string query = "SELECT COUNT(Commits.ID) AS \"DayCommits\" FROM Commits";
-                if (string.IsNullOrEmpty(MatchQuery(filteringQuery)))
+                if (string.IsNullOrEmpty(MatchQuery(_filteringQuery)))
                 {
                     query += " where strftime('%d', Date) = " +
                              "'" + dateString + "'";
                 }
                 else
                 {
-                    query += MatchQuery(filteringQuery) +
+                    query += MatchQuery(_filteringQuery) +
                              "and strftime('%d', Date) =" +
                              "'" + dateString + "'";
                 }
@@ -115,9 +114,14 @@ namespace RepositoryParser.ViewModel
         }
         #endregion
 
-        #region Buttons
-        public ICommand ExportFileCommand { get; set; }
+        #region Buttons getters
+        public RelayCommand ExportFileCommand
+        {
+            get { return _exportFileCommand ?? (_exportFileCommand = new RelayCommand(ExportFile)); }
+        }
+        #endregion
 
+        #region Buttons action
         public void ExportFile()
         {
             SaveFileDialog dlg = new SaveFileDialog();
@@ -137,5 +141,6 @@ namespace RepositoryParser.ViewModel
             }
         }
         #endregion
+
     }
 }
