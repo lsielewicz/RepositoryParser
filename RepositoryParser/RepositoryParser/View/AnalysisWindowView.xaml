@@ -9,7 +9,7 @@
         xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
         xmlns:resw="clr-namespace:RepositoryParser.Properties"
         mc:Ignorable="d"
-        Title="AnalysisView" Height="600" Width="1000"
+        Title="AnalysisView" Height="640" Width="1000"
         DataContext="{Binding Source={StaticResource Locator}, Path=Analisys}"
         Icon="../Assets/Icons/Ratings Filled-50.png"
         >
@@ -31,7 +31,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition Height="35"/>
-            <RowDefinition Height="11*"/>
+            <RowDefinition Height="8*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
@@ -312,12 +312,20 @@
         <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5">
             <Button x:Name="SendBtn"
                     Command="{Binding SendDataCommand}"
-                    Content="{x:Static resw:Resources.SendDataButton}"
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center"
                     Background="{StaticResource MyGreen}" 
                     FontSize="20" 
-                    Margin="2" Padding="4" />
+                    Margin="2" 
+                    Padding="20,4" 
+                    FontWeight="Light"
+                    Height="50"
+                    >
+                <StackPanel Orientation="Horizontal" Width="{Binding ElementName=SendBtn, Path=Width}">
+                    <Image Source="../Assets/Icons/Message_Black.png" Height="24" Margin="2,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.SendDataButton}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
         </StackPanel>
 
         <!--

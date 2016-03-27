@@ -180,6 +180,7 @@
                     Margin="2" 
                     Padding="4" 
                     MinWidth="250"
+                    FontWeight="Light"
                     >
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=CloneRepositoryBtn, Path=Width}" >
                     <Image Source="../Assets/Icons/Add Database-52.png" Width="24" Margin="10,0,10,0"/>
