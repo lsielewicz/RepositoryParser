@@ -479,6 +479,10 @@
   <data name="DiffView" xml:space="preserve">
     <value>Różnice</value>
   </data>
+  <data name="GoToUsersFreq" xml:space="preserve">
+    <value>Bilans zmian użytkowników</value>
+    <comment>Analysis</comment>
+  </data>
   <data name="HourActivityView" xml:space="preserve">
     <value>Aktywność godzinna</value>
   </data>

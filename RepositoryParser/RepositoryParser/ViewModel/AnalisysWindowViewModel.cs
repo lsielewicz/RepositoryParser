@@ -50,6 +50,7 @@ namespace RepositoryParser.Core.ViewModel
         private RelayCommand _goToDayChartWindowCommand;
         private RelayCommand _goToHourActivityCommand;
         private RelayCommand _goToWeekDayActivityWindowCommand;
+        private RelayCommand _goToUsersCodeFrequencyCommand;
         #endregion
         public AnalisysWindowViewModel()
         {
@@ -62,6 +63,14 @@ namespace RepositoryParser.Core.ViewModel
         }
         #region Buttons getters
 
+        public RelayCommand GoToUsersCodeFrequencyCommand
+        {
+            get
+            {
+                return _goToUsersCodeFrequencyCommand ??
+                       (_goToUsersCodeFrequencyCommand = new RelayCommand(GoToUsersCodeFrequency));
+            }
+        }
         public RelayCommand ChartCommand
         {
             get { return _chartCommand ?? (_chartCommand = new RelayCommand(Chart)); }
@@ -392,6 +401,14 @@ namespace RepositoryParser.Core.ViewModel
         #endregion
 
         #region Buttons actions
+
+        private void GoToUsersCodeFrequency()
+        {
+            UsersCodeFrequencyView _window = new UsersCodeFrequencyView();
+            _window.Show();
+            SendMessageToDrawChart();
+        }
+
         private void SearchMessage()
         {
             LocalCollection.Clear();

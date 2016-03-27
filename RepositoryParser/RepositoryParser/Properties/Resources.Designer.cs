@@ -475,6 +475,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Users Frequency Code.
+        /// </summary>
+        public static string GoToUsersFreq {
+            get {
+                return ResourceManager.GetString("GoToUsersFreq", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Time.
         /// </summary>
         public static string Hour {

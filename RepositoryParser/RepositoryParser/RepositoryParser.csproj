@@ -184,12 +184,16 @@
     <Compile Include="ViewModel\HourActivityViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MonthActivityChartViewModel.cs" />
+    <Compile Include="ViewModel\UsersCodeFrequencyViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\ChartOfChangesView.xaml.cs">
       <DependentUpon>ChartOfChangesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MonthActivityChart.xaml.cs">
       <DependentUpon>MonthActivityChart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UsersCodeFrequencyView.xaml.cs">
+      <DependentUpon>UsersCodeFrequencyView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\WeekDayActivityView.xaml.cs">
       <DependentUpon>WeekDayActivityView.xaml</DependentUpon>
@@ -251,6 +255,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\MonthActivityChart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UsersCodeFrequencyView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
