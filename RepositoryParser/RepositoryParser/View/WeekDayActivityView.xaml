@@ -38,12 +38,10 @@
                     <chartingToolkit:Chart MinHeight="400" x:Name="Chart" Title="{x:Static resw:Resources.WeekdayActivityChartChart}" Background="Beige" Margin="0,0,0,50">
                         <chartingToolkit:Chart.Series>
                             <chartingToolkit:AreaSeries
-                                    Title=""
                                     ItemsSource="{Binding KeyCollection, Mode=OneWay}"
                                     DependentValueBinding="{Binding Path=Value}"
-                                    IndependentValueBinding="{Binding Path=Key}" 
-                                    DataContext="{Binding}"
-                            />
+                                    IndependentValueBinding="{Binding Path=Key}">
+                            </chartingToolkit:AreaSeries>
                         </chartingToolkit:Chart.Series>
                     </chartingToolkit:Chart>
 

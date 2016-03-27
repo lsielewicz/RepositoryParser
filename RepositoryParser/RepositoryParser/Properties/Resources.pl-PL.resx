@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ActivityAnalyseButton" xml:space="preserve">
-    <value>Analiza aktywności</value>
+    <value>Aktywność użytkowników</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="ActivityChart" xml:space="preserve">
@@ -194,7 +194,7 @@
     <comment>DayAcitvityChartPage</comment>
   </data>
   <data name="DifferencesButton" xml:space="preserve">
-    <value>Porównaj</value>
+    <value>Porównanie</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="DifferenceWindowTitle" xml:space="preserve">
@@ -243,7 +243,7 @@
     <comment>HourAcitvityChartPage</comment>
   </data>
   <data name="HourActivityAnalyseButton" xml:space="preserve">
-    <value>Analiza wg godzin</value>
+    <value>Aktywność godzinna</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="HoursActivityChartChart" xml:space="preserve">
@@ -311,7 +311,7 @@
     <value>Wrzesień</value>
   </data>
   <data name="MonthActivityAnalyseButton" xml:space="preserve">
-    <value>Analiza miesięczna</value>
+    <value>Aktywność miesięczna</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="MonthActivityChartChart" xml:space="preserve">
@@ -327,7 +327,7 @@
     <comment>MonthAcitvityChartPage</comment>
   </data>
   <data name="MonthDayActivityAnalyseButton" xml:space="preserve">
-    <value>Analiza wg dni</value>
+    <value>Aktywność dzienna</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="NoRepositoryPathError" xml:space="preserve">
@@ -357,7 +357,7 @@
     <comment>WeekdaysAcitvityChartPage</comment>
   </data>
   <data name="WeekdayActivityAnalyseButton" xml:space="preserve">
-    <value>Analiza wg dni tygodnia</value>
+    <value>Aktywność tygodniowa</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="WeekdayActivityChartChart" xml:space="preserve">
@@ -459,5 +459,9 @@
   <data name="SvnRepository" xml:space="preserve">
     <value>Repozytorium SVN</value>
     <comment>MainPage</comment>
+  </data>
+  <data name="ClearFiltersBtn" xml:space="preserve">
+    <value>Wyczyść filtry</value>
+    <comment>MainWindow</comment>
   </data>
 </root>

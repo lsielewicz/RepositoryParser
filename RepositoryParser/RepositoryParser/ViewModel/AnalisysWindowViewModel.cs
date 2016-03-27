@@ -26,6 +26,7 @@ namespace RepositoryParser.Core.ViewModel
         public ObservableCollection<string> _localCollection;
         private List<string> authorsList;
         private List<string> emailList;
+        private List<BranchTable> _branchList;
         private string fromDate;
         private string toDate;
         private string messageTextBox;
@@ -34,9 +35,12 @@ namespace RepositoryParser.Core.ViewModel
         private string branchSelectedItem;
         private string repositorySelectedItem;
         private bool branchEnabled = false;
-
+        private List<RepositoryTable> _repoList;
         private string _comboBoxSelectedItem;
         private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
+        private RelayCommand _clearFiltersCommand;
+
+        private string _repoType;
 
         public AnalisysWindowViewModel()
         {
@@ -86,6 +90,18 @@ namespace RepositoryParser.Core.ViewModel
 
         #region Getters/Setters
 
+        public string RepoType
+        {
+            get { return _repoType; }
+            set
+            {
+                if (_repoType != value)
+                {
+                    _repoType = value;
+                    RaisePropertyChanged("RepoType");
+                }
+            }
+        }
         public bool BranchEnabled
         {
             get { return branchEnabled; }
@@ -222,6 +238,11 @@ namespace RepositoryParser.Core.ViewModel
                     RepositorySelectedItemAction(repositorySelectedItem);
                     MainViewModel.SelectedRepo = repositorySelectedItem;
                     BranchEnabled = true;
+
+                    var firstOrDefault = _repoList.FirstOrDefault(x => x.Name == repositorySelectedItem);
+                    if (firstOrDefault != null)
+                        RepoType=firstOrDefault.Type;
+
                     getBranches();
                     getAuthors();
 
@@ -274,8 +295,8 @@ namespace RepositoryParser.Core.ViewModel
             {
                 BranchCollection.Clear();
                 BranchTable temp = new BranchTable();
-                List<BranchTable> tempList = temp.GetDataFromBase(_localGitRepositoryService.SqLiteInstance.Connection);
-                tempList.ForEach(x => BranchCollection.Add(x.Name));
+                _branchList = temp.GetDataFromBase(_localGitRepositoryService.SqLiteInstance.Connection);
+                _branchList.ForEach(x => BranchCollection.Add(x.Name));
             }
             else
             {
@@ -284,17 +305,17 @@ namespace RepositoryParser.Core.ViewModel
                                "inner join Repository on BranchForRepo.NR_GitRepository=Repository.ID " +
                                "where Repository.Name='" + MainViewModel.SelectedRepo + "'";
                 BranchTable temp = new BranchTable();
-                List<BranchTable> tempList = temp.GetDataFromBase(_localGitRepositoryService.SqLiteInstance.Connection, query);
-                tempList.ForEach(x => BranchCollection.Add(x.Name));
+                _branchList = temp.GetDataFromBase(_localGitRepositoryService.SqLiteInstance.Connection, query);
+                _branchList.ForEach(x => BranchCollection.Add(x.Name));
             }
         }
 
         private void getRepositories()
         {
             RepositoryCollection.Clear();
-            RepositoryTable temp = new RepositoryTable();
-            List<RepositoryTable> tempList = temp.GetDataFromBase(_localGitRepositoryService.SqLiteInstance.Connection);
-            tempList.ForEach(x => RepositoryCollection.Add(x.Name));
+            RepositoryTable temp= new RepositoryTable();
+            _repoList = temp.GetDataFromBase(_localGitRepositoryService.SqLiteInstance.Connection);
+            _repoList.ForEach(x => RepositoryCollection.Add(x.Name));
         }
         private void getAuthors()
         {
@@ -523,6 +544,26 @@ namespace RepositoryParser.Core.ViewModel
                 id++;
             }
             SendMessageToDisplay();
+        }
+
+        public RelayCommand ClearFiltersCommand
+        {
+            get { return _clearFiltersCommand ?? (_clearFiltersCommand = new RelayCommand(ClearFilters)); }
+        }
+        private void ClearFilters()
+        {
+            MainViewModel.SelectedBranch=String.Empty;
+            MainViewModel.SelectedRepo = String.Empty;
+            BranchSelectedItem = String.Empty;
+            RepositorySelectedItem = String.Empty;
+            ComboBoxSelectedItem = String.Empty;
+            BranchEnabled = false;
+            RepoType = String.Empty;
+            MessageTextBox=String.Empty;
+            FromDate = String.Empty;
+            ToDate = String.Empty;
+
+            SendMessageToDrawChart();
         }
         #endregion
     }

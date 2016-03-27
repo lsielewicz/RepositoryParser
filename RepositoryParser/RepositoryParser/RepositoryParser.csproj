@@ -170,6 +170,7 @@
     <Compile Include="Conventers\DateFormat.cs" />
     <Compile Include="Conventers\EnumToColorConventer.cs" />
     <Compile Include="Conventers\NegativeBoolToVisibilityConventer.cs" />
+    <Compile Include="Conventers\StringToImageConventer.cs" />
     <Compile Include="Properties\Resources.pl-PL.Designer.cs">
       <DependentUpon>Resources.pl-PL.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -296,7 +297,12 @@
       <Name>RepositoryParser.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Assets\Icons\Area-Chart.png" />
+    <Resource Include="Assets\Icons\Column-Chart.png" />
+    <Resource Include="Assets\Icons\Pie-Chart.png" />
+    <Resource Include="Assets\Icons\Points-Chart.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Icons\Add Database-52.png" />
   </ItemGroup>
@@ -323,6 +329,23 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Icons\svn-64.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\Clear.png" />
+    <Resource Include="Assets\Icons\Compare-52.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\git_logo_grey.png" />
+    <Resource Include="Assets\Images\svn_logo_grey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\transparent.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\Analysis_grey.png" />
+    <Resource Include="Assets\Icons\Delete_grey.png" />
+    <Resource Include="Assets\Icons\Export_grey.png" />
+    <Resource Include="Assets\Icons\Refresh_grey.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.99.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.99.0\build\net451\System.Data.SQLite.Core.targets')" />
