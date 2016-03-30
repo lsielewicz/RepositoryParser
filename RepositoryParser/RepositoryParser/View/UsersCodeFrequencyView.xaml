@@ -8,6 +8,7 @@
         xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="{x:Static resw:Resources.GoToUsersFreq}" 
         Height="600" 
@@ -18,8 +19,13 @@
     <Window.Resources>
         <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </Window.Resources>
-    
-    
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closed">
+            <i:InvokeCommandAction Command="{Binding ClosedEventCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

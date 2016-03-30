@@ -19,7 +19,7 @@ using RepositoryParser.Core.Services;
 namespace RepositoryParser.ViewModel
 {
     public class UsersCodeFrequencyViewModel : ViewModelBase
-    {
+    {   
         #region Fields
         private string _filteringQuery;
         private SqLiteService _sqLiteService;
@@ -36,6 +36,7 @@ namespace RepositoryParser.ViewModel
         private ResourceManager _resourceManager;
         private string _summaryString;
         private RelayCommand _exportFileCommand;
+        private RelayCommand _closedEventCommand;
         #endregion
 
         public UsersCodeFrequencyViewModel()
@@ -49,7 +50,6 @@ namespace RepositoryParser.ViewModel
         }
 
         #region Getters/Setters
-
         public string SummaryString
         {
             get { return _summaryString; }
@@ -59,23 +59,6 @@ namespace RepositoryParser.ViewModel
                 RaisePropertyChanged("SummaryString");
             }
         }
-
-        public ObservableCollection<UserCodeFrequency> CodeFreqCollection
-        {
-            get
-            {
-                return _codeFreqCollection; 
-            }
-            set
-            {
-                if (_codeFreqCollection != value)
-                {
-                    _codeFreqCollection = value;
-                    RaisePropertyChanged("CodeFreqCollection");
-                }
-            }
-        }
-
         public bool ProgressBarVisibility
         {
             get { return _progressBarVisibility; }
@@ -88,7 +71,21 @@ namespace RepositoryParser.ViewModel
                 }
             }
         }
-
+        public ObservableCollection<UserCodeFrequency> CodeFreqCollection
+        {
+            get
+            {
+                return _codeFreqCollection;
+            }
+            set
+            {
+                if (_codeFreqCollection != value)
+                {
+                    _codeFreqCollection = value;
+                    RaisePropertyChanged("CodeFreqCollection");
+                }
+            }
+        }
         public ObservableCollection<KeyValuePair<string, int>> AddedLinesCollection
         {
             get
@@ -149,7 +146,6 @@ namespace RepositoryParser.ViewModel
                 }
             }
         }
-
         #endregion
 
         #region Messages
@@ -325,10 +321,26 @@ namespace RepositoryParser.ViewModel
         {
             get { return _exportFileCommand ?? (_exportFileCommand = new RelayCommand(ExportFile)); }
         }
+
+        public RelayCommand ClosedEventCommand
+        {
+            get { return _closedEventCommand ?? (_closedEventCommand = new RelayCommand(ClosedEvent)); }
+        }
         #endregion
 
-        #region Buttons action
-        public void ExportFile()
+        #region Buttons actions
+
+        private void ClosedEvent()
+        {
+            this.AddedLinesCollection.Clear();
+            this.DeletedLinesCollection.Clear();
+            this.CodeFreqCollection.Clear();
+            this.SummaryLinesCollection.Clear();
+            this.ModifiedLinesCollection.Clear();
+            this.SummaryString = String.Empty;
+        }
+
+        private void ExportFile()
         {
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.FileName = "CodeFrequencyData";

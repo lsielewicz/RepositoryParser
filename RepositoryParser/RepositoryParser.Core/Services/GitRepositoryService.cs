@@ -175,7 +175,7 @@ namespace RepositoryParser.Core.Models
                                     int insertedRowsA = Math.Abs(item.EndA - item.BeginA);
                                     int insertedRowsB = Math.Abs(item.EndB - item.BeginB);
                                     int difference = Math.Abs(insertedRowsA - insertedRowsB);
-
+                                    
                                     TextA += item.TextA;
                                     TextB += item.TextB;
                                     if (difference > 0)

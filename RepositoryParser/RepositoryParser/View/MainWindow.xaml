@@ -251,7 +251,7 @@
             </Button>
         </StackPanel>
         
-<!--        <StatusBar Grid.Row="1" Grid.Column="0" 
+        <StatusBar Grid.Row="1" Grid.Column="0" 
                    Grid.RowSpan="2"
                    Grid.ColumnSpan="3"
                    Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" 
@@ -260,7 +260,7 @@
                    HorizontalAlignment="Stretch"
                    VerticalAlignment="Stretch"
                    >
-        </StatusBar>-->
+        </StatusBar>
         <StackPanel Orientation="Horizontal" Grid.Row="0" 
                     Grid.Column="0" Grid.RowSpan="5"
                     Grid.ColumnSpan="3" 

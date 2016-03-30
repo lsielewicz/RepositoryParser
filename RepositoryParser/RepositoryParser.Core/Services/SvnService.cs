@@ -81,7 +81,7 @@ namespace RepositoryParser.Core.Services
             }
             catch (SvnRepositoryIOException ex)
             {
-                
+                MessageBox.Show(ex.Message);
             }
 
         }

@@ -92,7 +92,7 @@ namespace RepositoryParser.ViewModel
                 if (reader.Read())
                 {
                     int count = Convert.ToInt32(reader["CommitsHour"]);
-                    KeyValuePair<string, int> temp = new KeyValuePair<string, int>(dateString, count);
+                    KeyValuePair<string, int> temp = new KeyValuePair<string, int>(dateString+":00", count);
                     KeyCollection.Add(temp);
                 }
             }
