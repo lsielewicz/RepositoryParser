@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using LibGit2Sharp;
@@ -12,7 +14,7 @@ namespace RepositoryParser.Core.Services
     public class GitCloneService
     {
         private List<GitCloneBranch> _branches;
-        private List<string> _remotes; 
+        private List<string> _remotes;
         public string UrlAdress { get; set; }
 
         public GitCloneService()
@@ -28,18 +30,27 @@ namespace RepositoryParser.Core.Services
         public string getRepositoryNameFromUrl(string url)
         {
             string repositoryName = url;
-            //TODO regex that will gain name from url. .*/
+            string rg = @"(.*\/)(.*)\.git";
+            Regex regex = new Regex(rg);
+            Match match = regex.Match(url);
+            if (match.Success)
+            {
+                if (match.Groups.Count >= 3)
+                {
+                    repositoryName = match.Groups[2].Value;
+                }
+            }
 
             return repositoryName;
         }
 
         public void FillBranches()
         {
-            _branches=new List<GitCloneBranch>();
+            _branches = new List<GitCloneBranch>();
             _remotes = new List<string>();
             try
-            {   
-                Repository repository = new Repository(this.UrlAdress);
+            {
+                Repository repository = new Repository("./" + getRepositoryNameFromUrl(UrlAdress));
                 List<GitCloneBranch> tempBranches = new List<GitCloneBranch>();
                 foreach (Branch branch in repository.Branches)
                 {
@@ -74,7 +85,8 @@ namespace RepositoryParser.Core.Services
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                //MessageBox.Show(ex.Message);
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -93,7 +105,7 @@ namespace RepositoryParser.Core.Services
             if (_branches == null || _branches.Count == 0)
                 return;
 
-            Repository repository = new Repository(this.UrlAdress);
+            Repository repository = new Repository("./" + getRepositoryNameFromUrl(UrlAdress));
             foreach (GitCloneBranch branch in _branches)
             {
                 Branch remoteBranch = repository.Branches[branch.OriginName];
@@ -108,6 +120,10 @@ namespace RepositoryParser.Core.Services
         public void CloneRepository()
         {
             string repositoryPath = "./" + getRepositoryNameFromUrl(UrlAdress);
+            if (!Directory.Exists(repositoryPath))
+            {
+                Directory.CreateDirectory(repositoryPath);
+            }
             Repository.Clone(UrlAdress, repositoryPath);
         }
 
