@@ -10,15 +10,19 @@ namespace RepositoryParser.Core.Models
     {
         public string BranchName { get; set; }
         public string OriginName { get; set; }
-        public string RemoteName { get; set; }
-        public bool IsAlreadyCloned { get; set; }
 
-        GitCloneBranch(string branchName, string originName, string remoteName, bool isCloned)
+
+        public GitCloneBranch()
+        {
+            this.BranchName = String.Empty;
+            this.OriginName = String.Empty;
+
+        }
+       public GitCloneBranch(string branchName, string originName)
         {
             this.BranchName = branchName;
             this.OriginName = originName;
-            this.RemoteName = remoteName;
-            this.IsAlreadyCloned = isCloned;
+
         }
     }
 }
