@@ -93,7 +93,7 @@ namespace RepositoryParser.Core.Models
 
         public void FillDataBase()
         {
-            
+
             CommitTable gitCommit = new CommitTable();
             BranchTable gitBranch = new BranchTable();
             RepositoryTable gitRepoTable = new RepositoryTable(RepositoryInstance.Directory);
@@ -175,7 +175,7 @@ namespace RepositoryParser.Core.Models
                                     int insertedRowsA = Math.Abs(item.EndA - item.BeginA);
                                     int insertedRowsB = Math.Abs(item.EndB - item.BeginB);
                                     int difference = Math.Abs(insertedRowsA - insertedRowsB);
-                                    
+
                                     TextA += item.TextA;
                                     TextB += item.TextB;
                                     if (difference > 0)
