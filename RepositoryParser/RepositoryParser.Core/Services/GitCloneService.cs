@@ -15,8 +15,15 @@ namespace RepositoryParser.Core.Services
         private List<string> _remotes; 
         public string UrlAdress { get; set; }
 
+        public GitCloneService()
+        {
+            this.UrlAdress = String.Empty;
+        }
 
-
+        public GitCloneService(string url)
+        {
+            this.UrlAdress = url;
+        }
 
         public string getRepositoryNameFromUrl(string url)
         {
@@ -29,6 +36,7 @@ namespace RepositoryParser.Core.Services
         public void FillBranches()
         {
             _branches=new List<GitCloneBranch>();
+            _remotes = new List<string>();
             try
             {   
                 Repository repository = new Repository(this.UrlAdress);
