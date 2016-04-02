@@ -67,10 +67,10 @@ namespace RepositoryParser.Core.Models
                     {
                         string urlPath = System.Text.RegularExpressions.Regex.Replace(UrlRepoPath, @"https?", "git");
                         UrlRepoPath = urlPath;
-                        GitCloneService _cloneService = new GitCloneService(urlPath);
-                        _cloneService.CloneRepository(true);
+                        GitCloneService cloneService = new GitCloneService(urlPath);
+                        cloneService.CloneRepository(true);
                         isCloned = true;
-                        RepositoryInstance = new Repository(_cloneService.DirectoryPath);
+                        RepositoryInstance = new Repository(cloneService.DirectoryPath);
                     }
                 }
                 //SQLITE
