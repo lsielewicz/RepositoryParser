@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Data;
 using GitSharp;
 using RepositoryParser.Core.Interfaces;
+using RepositoryParser.Core.Services;
 
 namespace RepositoryParser.Core.Models
 {
@@ -26,7 +27,7 @@ namespace RepositoryParser.Core.Models
         #region Constructors
         public GitRepositoryService()
         {
-            RepoPath = "";
+            RepoPath = String.Empty;
             RepositoryInstance = null;
             isCloned = false;
         }
@@ -35,6 +36,16 @@ namespace RepositoryParser.Core.Models
             RepoPath = path;
             RepositoryInstance = null;
             isCloned = false;
+        }
+        public GitRepositoryService(string path, bool clone)
+        {
+            if (clone)
+                UrlRepoPath = path;
+            else
+                RepoPath = path;
+            
+            isCloned = !clone;
+            InitializeConnection();
         }
         #endregion
 
@@ -54,28 +65,12 @@ namespace RepositoryParser.Core.Models
                 {
                     if (UrlRepoPath.Length > 0)
                     {
-                        int number = 0;
-                        string directoryPath = "./Repository";
-                        while (Directory.Exists(directoryPath))
-                        {
-                            directoryPath = "./Repository" + Convert.ToString(number);
-                            number++;
-                        }
-                        string Result = UrlRepoPath;
-                        try
-                        {
-                            Result = System.Text.RegularExpressions.Regex.Replace(UrlRepoPath, @"https?", "git");
-                        }
-                        catch (Exception Ex)
-                        {
-                            MessageBox.Show(Ex.Message);
-                        }
-                        UrlRepoPath = Result;
-
-
-                        Git.Clone(UrlRepoPath, directoryPath);
+                        string urlPath = System.Text.RegularExpressions.Regex.Replace(UrlRepoPath, @"https?", "git");
+                        UrlRepoPath = urlPath;
+                        GitCloneService cloneService = new GitCloneService(urlPath);
+                        cloneService.CloneRepository(true);
                         isCloned = true;
-                        RepositoryInstance = new Repository(directoryPath);
+                        RepositoryInstance = new Repository(cloneService.DirectoryPath);
                     }
                 }
                 //SQLITE
@@ -93,7 +88,7 @@ namespace RepositoryParser.Core.Models
 
         public void FillDataBase()
         {
-            
+
             CommitTable gitCommit = new CommitTable();
             BranchTable gitBranch = new BranchTable();
             RepositoryTable gitRepoTable = new RepositoryTable(RepositoryInstance.Directory);
@@ -175,7 +170,7 @@ namespace RepositoryParser.Core.Models
                                     int insertedRowsA = Math.Abs(item.EndA - item.BeginA);
                                     int insertedRowsB = Math.Abs(item.EndB - item.BeginB);
                                     int difference = Math.Abs(insertedRowsA - insertedRowsB);
-                                    
+
                                     TextA += item.TextA;
                                     TextB += item.TextB;
                                     if (difference > 0)

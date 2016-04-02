@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
+using System.Text.RegularExpressions;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -249,6 +250,18 @@ namespace RepositoryParser.ViewModel
 
         #region Methods
 
+        private bool SetIsLocal()
+        {
+            string pattern = @"https?.*";
+            Regex rgx = new Regex(pattern);
+            Match m = rgx.Match(this.UrlTextBox);
+            if (m.Success)
+                return false;
+            
+            return true;    
+        }
+
+
         private void PickGitRepository()
         {
             IsGitRepositoryPicked = true;
@@ -269,15 +282,15 @@ namespace RepositoryParser.ViewModel
             if (fbd.ShowDialog() == DialogResult.OK)
             {
                 UrlTextBox = fbd.SelectedPath;
-                _isLocal = true;
+                //_isLocal = true;
             }
         }
 
         public void OpenRepository()
         {
-
             if (!string.IsNullOrEmpty(UrlTextBox))
             {
+                _isLocal = SetIsLocal();
                 try
                 {
                     ProgressBarVisibility = true;
@@ -291,22 +304,13 @@ namespace RepositoryParser.ViewModel
                     {
                         if (!_isLocal)
                         {
-                            _gitRepoInstance = new GitRepositoryService();
-                            _gitRepoInstance.UrlRepoPath = UrlTextBox;
-                            _gitRepoInstance.isCloned = false;
-                            _gitRepoInstance.InitializeConnection();
+                            _gitRepoInstance = new GitRepositoryService(UrlTextBox,true);
                             _gitRepoInstance.FillDataBase();
-
-
                         }
                         else
                         {
-                            _gitRepoInstance = new GitRepositoryService();
-                            _gitRepoInstance.isCloned = true;
-                            _gitRepoInstance.RepoPath = UrlTextBox;
-                            _gitRepoInstance.InitializeConnection();
+                            _gitRepoInstance = new GitRepositoryService(UrlTextBox,false);
                             _gitRepoInstance.FillDataBase();
-
                         }
                     }
                 }
