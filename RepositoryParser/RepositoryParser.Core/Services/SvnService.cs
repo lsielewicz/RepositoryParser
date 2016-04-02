@@ -278,9 +278,13 @@ namespace RepositoryParser.Core.Services
         private string FixName(string Repository)
         {
             string output = Repository;
-            string pattern = @"((.*)\\(.*)\\)";
+            //string pattern = @"((.*)\\(.*)\\)";
+           // string pattern = @"(.*)\\(.*)";
+           if(output.EndsWith(@"/") || output.EndsWith(@"\"))
+                output = output.Remove(output.Length - 1, 1);
+            string pattern = @".*(\/|\\).*(\/|\\)([a-zA-Z0-9]*)";
             Regex r = new Regex(pattern);
-            Match m = r.Match(Repository);
+            Match m = r.Match(output);
             if (m.Success)
             {
                 if (m.Groups.Count >= 3)

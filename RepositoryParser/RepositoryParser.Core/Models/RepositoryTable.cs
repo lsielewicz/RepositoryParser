@@ -92,14 +92,15 @@ namespace RepositoryParser.Core.Models
         public static string FixName(string Repository)
         {
             string output = Repository;
-            string pattern = @"((.*)\\(.*)\\)";
+           // string pattern = @"((.*)\\(.*)\\)";
+            string pattern = @"(.*)\\(.*)\\.git";
             Regex r = new Regex(pattern);
             Match m = r.Match(Repository);
             if (m.Success)
             {
-                if (m.Groups.Count >= 3)
+                if (m.Groups.Count >= 2)
                 {
-                    output = m.Groups[3].Value;
+                    output = m.Groups[2].Value;
                 }
             }
             return output;

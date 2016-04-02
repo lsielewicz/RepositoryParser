@@ -63,7 +63,7 @@ namespace RepositoryParser.Core.Services
                         continue;
                     }
                     // Display the branch name
-                    string tempName = branch.Name;
+                    string tempName = branch.FriendlyName;
 
                     if (tempName.Contains("origin"))
                     {
@@ -117,7 +117,7 @@ namespace RepositoryParser.Core.Services
 
         }
 
-        public void CloneRepository()
+        public void CloneRepository(bool cloneWithAllBranches = false)
         {
             string repositoryPath = "./" + getRepositoryNameFromUrl(UrlAdress);
             if (!Directory.Exists(repositoryPath))
@@ -125,6 +125,11 @@ namespace RepositoryParser.Core.Services
                 Directory.CreateDirectory(repositoryPath);
             }
             Repository.Clone(UrlAdress, repositoryPath);
+            if (cloneWithAllBranches)
+            {
+                FillBranches();
+                CloneAllBranches();
+            }
         }
 
         private bool IsAddressCorrect()
