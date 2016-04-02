@@ -16,6 +16,7 @@ namespace RepositoryParser.Core.Services
         private List<GitCloneBranch> _branches;
         private List<string> _remotes;
         public string UrlAdress { get; set; }
+        public string DirectoryPath { get; set; }
 
         public GitCloneService()
         {
@@ -125,6 +126,7 @@ namespace RepositoryParser.Core.Services
                 Directory.CreateDirectory(repositoryPath);
             }
             Repository.Clone(UrlAdress, repositoryPath);
+            this.DirectoryPath = repositoryPath;
             if (cloneWithAllBranches)
             {
                 FillBranches();
