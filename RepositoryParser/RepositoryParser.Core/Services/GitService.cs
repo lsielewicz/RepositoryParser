@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System.Windows;
 using LibGit2Sharp;
 using RepositoryParser.Core.Interfaces;
 using RepositoryParser.Core.Models;
@@ -12,18 +12,35 @@ namespace RepositoryParser.Core.Services
 {
     public class GitService : IGitService
     {
-        public string RepositoryPath { get; set; }
+        #region Fields
+        public string DirectoryPath { get; set; }
+        public string UrlPath { get; set; }
+        public bool IsCloned { get; set; }
+        public SqLiteService SqLiteInstance { get; set; }
+        #endregion
 
+        #region Constructors
         public GitService()
         {
-            this.RepositoryPath = String.Empty;
+            DirectoryPath = String.Empty;
         }
         public GitService(string path)
         {
-            this.RepositoryPath = path;
+            DirectoryPath = path;
         }
+        public GitService(string path, bool clone)
+        {
+            if (clone)
+                UrlPath = path;
+            else
+                DirectoryPath = path;
 
+            IsCloned = !clone;
+            InitializeConnection();
+        }
+        #endregion
 
+        #region Methods
         public RepositoryTable GetRepository(string path)
         {
             RepositoryTable repositoryTable = new RepositoryTable();
@@ -66,12 +83,13 @@ namespace RepositoryParser.Core.Services
         public List<ChangesTable> GetAllChanges(Commit commit)
         {
             List<ChangesTable> changesList = new List<ChangesTable>();
-            var firstOrDefault = commit.Parents.FirstOrDefault();
-            if (firstOrDefault == null)
-                return changesList;
 
-            using (Repository repository = new Repository(this.RepositoryPath))
+
+            using (Repository repository = new Repository(DirectoryPath))
             {
+                var firstOrDefault = commit.Parents.FirstOrDefault();
+                if (firstOrDefault == null)
+                    return changesList;
                 Tree rootCommitTree = repository.Lookup<Commit>(commit.Id.ToString()).Tree;
                 Tree commitTreeWithUpdatedFile = repository.Lookup<Commit>(commit.Parents.FirstOrDefault().Id.ToString()).Tree;
 
@@ -120,5 +138,91 @@ namespace RepositoryParser.Core.Services
             }
             return output;
         }
+
+        public void ConnectRepositoryToDataBase(bool isNewFile = false)
+        {
+            if (isNewFile)
+            {
+                string repositoryName = "CommonRepositoryDataBase";
+                int repoNumber = 0;
+                while (File.Exists("./Databases/" + repositoryName + ".sqlite"))
+                {
+                    repositoryName = "CommonRepositoryDataBase" + Convert.ToString(repoNumber);
+                    repoNumber++;
+                }
+
+                SqLiteInstance = SqLiteService.GetInstance();
+                SqLiteInstance.DBName = repositoryName;
+                List<string> createTableQuerys = new List<string>
+                {
+                    {RepositoryTable.createTable},
+                    {BranchForRepoTable.CreateTable},
+                    {BranchTable.CreateTable},
+                    {CommitForBranchTable.CreateTable},
+                    {CommitTable.SqliteQuery},
+                    {ChangesForCommitTable.CreateTable},
+                    {ChangesTable.CreateTableQuery}
+                };
+
+                SqLiteInstance.OpenConnection(createTableQuerys);
+            }
+            else
+            {
+                string RepositoryName = "CommonRepositoryDataBase";
+                SqLiteInstance = SqLiteService.GetInstance();
+                SqLiteInstance.DBName = RepositoryName;
+                SqLiteInstance.OpenConnection();
+            }
+        }
+
+        public void InitializeConnection()
+        {
+            try
+            {
+                if(!IsCloned)
+                {
+                    if (UrlPath.Length > 0)
+                    {
+                        string urlPath = Regex.Replace(UrlPath, @"https?", "git");
+                        UrlPath = urlPath;
+                        GitCloneService cloneService = new GitCloneService(urlPath);
+                        cloneService.CloneRepository(true);
+                        IsCloned = true;
+                        DirectoryPath = cloneService.DirectoryPath;
+                    }
+                }
+                //SQLITE
+                string repoPath = "./DataBases/CommonRepositoryDataBase.sqlite";
+                if (!File.Exists(repoPath))
+                    ConnectRepositoryToDataBase(true);
+                else
+                    ConnectRepositoryToDataBase();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public void FillDataBase()
+        {
+            try
+            {
+                using (Repository repository = new Repository(DirectoryPath))
+                {
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                SqLiteInstance.CloseConnection();
+            }
+            
+        }
+        #endregion
     }
 }
