@@ -12,7 +12,7 @@ namespace RepositoryParser.Core.Models
     {
         public int ID_Branch { get; set; }
         public string Name { get; set; }
-        public Branch Value { get; set; }
+        public LibGit2Sharp.Branch Value { get; set; }
         public string Path { get; set; }
 
 
@@ -33,7 +33,7 @@ namespace RepositoryParser.Core.Models
             Name = name;
         }
 
-        public BranchTable(string name, Branch value)
+        public BranchTable(string name, LibGit2Sharp.Branch value)
         {
             Name = name;
             Value = value;

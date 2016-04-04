@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Documents;
 using LibGit2Sharp;
 using RepositoryParser.Core.Interfaces;
 using RepositoryParser.Core.Models;
@@ -61,7 +62,8 @@ namespace RepositoryParser.Core.Services
                 {
                     if (!branch.IsRemote)
                     {
-                        branchList.Add(new BranchTable(0,branch.FriendlyName));
+                        branchList.Add(new BranchTable(branch.FriendlyName,branch));
+                        
                     }
                 }
             }
@@ -75,7 +77,7 @@ namespace RepositoryParser.Core.Services
             {
                 string date = commit.Author.When.ToString();
                 date = SqLiteService.getDateTimeFormat(date);
-                commitList.Add(new CommitTable(0,commit.MessageShort,commit.Author.Name,date,commit.Author.Email));
+                commitList.Add(new CommitTable(commit.MessageShort,commit.Author.Name,date,commit.Author.Email,commit));
             }
             return commitList;
         }
@@ -208,10 +210,46 @@ namespace RepositoryParser.Core.Services
         {
             try
             {
-                using (Repository repository = new Repository(DirectoryPath))
+                List<string> transactions = new List<string>();
+                List<string> changesTransactions = new List<string>();
+                RepositoryTable repositoryTable = GetRepository(DirectoryPath);
+                List<BranchTable> branches = GetAllBranches(DirectoryPath);
+                BranchTable tempBranch = new BranchTable();
+                CommitTable tempCommit = new CommitTable();
+                transactions.Add(RepositoryTable.InsertQuery(repositoryTable));
+
+                int startRepoIndex = repositoryTable.GetLastIndex(SqLiteInstance.Connection) + 1;
+                int startBranchIndex = tempBranch.GetLastIndex(SqLiteInstance.Connection) + 1;
+                int startCommitIndex = tempCommit.GetLastIndex(SqLiteInstance.Connection) + 1;
+                int startChangeIndex = ChangesTable.GetLastIndex(SqLiteInstance.Connection) + 1;
+
+                foreach (BranchTable branch in branches)
                 {
-                    
+                    transactions.Add(BranchTable.InsertSqliteQuery(branch));
+                    transactions.Add(BranchForRepoTable.InsertQuery(new BranchForRepoTable(startRepoIndex, startBranchIndex)));
+
+                    List<CommitTable> commits = GetAllCommits(branch.Value);
+                    foreach (CommitTable commit in commits)
+                    {
+                        transactions.Add(CommitTable.InsertSqliteQuery(commit));
+                        transactions.Add(
+                            CommitForBranchTable.InsertQuery(new CommitForBranchTable(startBranchIndex, startCommitIndex)));
+
+                        List<ChangesTable> changes = GetAllChanges(commit.Value);
+                        foreach (ChangesTable change in changes)
+                        {
+                            changesTransactions.Add(ChangesTable.InsertSqliteQuery(change));
+                            changesTransactions.Add(
+                                ChangesForCommitTable.InsertQuery(new ChangesForCommitTable(startCommitIndex,
+                                    startChangeIndex)));
+                            startChangeIndex++;
+                        }
+                        startCommitIndex++;
+                    }
+                    startBranchIndex++;
                 }
+                SqLiteInstance.ExecuteTransaction(transactions);
+                SqLiteInstance.ExecuteTransaction(changesTransactions);    
             }
             catch (Exception ex)
             {
@@ -224,5 +262,6 @@ namespace RepositoryParser.Core.Services
             
         }
         #endregion
+
     }
 }
