@@ -21,7 +21,7 @@ namespace RepositoryParser.Core.Models
 
       
         #region Constructors
-
+        public ChangesTable() { }
         public ChangesTable(int id, string type, string path, string texta, string textb)
         {
             this.ID = id;

@@ -140,7 +140,6 @@ namespace RepositoryParser.Core.Models
                         CommitsQueryLists.Add(CommitTable.InsertSqliteQuery(gitCommit));
                         gitCommitsList.Add(gitCommit);
                         string tempChange = "";
-                        // jezeli komit ma rodzica, to porownaj
                         if (commitz.HasParents)
                         {
                             Commit commitz2 = commitz.Parent;
@@ -148,7 +147,7 @@ namespace RepositoryParser.Core.Models
                             foreach (Change change in commitz.CompareAgainst(commitz2))
                             {
                                 tempChange += change.ChangeType + ": " + change.Path + "\n";
-
+                               
                                 string TextA = "";
                                 string TextB = "";
                                 var a = (change.ReferenceObject != null
@@ -164,6 +163,7 @@ namespace RepositoryParser.Core.Models
                                     ? Encoding.ASCII.GetBytes("Binary content\nFile size: " + b.Length)
                                     : b);
                                 Diff diff = new Diff(a, b);
+                                
                                 aList.Source = diff.Sections;
                                 foreach (Diff.Section item in aList.View.SourceCollection)
                                 {
@@ -173,6 +173,8 @@ namespace RepositoryParser.Core.Models
 
                                     TextA += item.TextA;
                                     TextB += item.TextB;
+
+
                                     if (difference > 0)
                                     {
                                         for (int i = 0; i < difference; i++)
@@ -182,8 +184,8 @@ namespace RepositoryParser.Core.Models
                                             else
                                                 TextA += "\n";
                                         }
-
                                     }
+
                                 }
                                 //add changes to database
                                 ChangesTable tempchanges = new ChangesTable(Convert.ToString(change.ChangeType),
