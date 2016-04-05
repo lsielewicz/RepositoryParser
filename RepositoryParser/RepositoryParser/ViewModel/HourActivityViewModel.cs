@@ -23,7 +23,6 @@ namespace RepositoryParser.ViewModel
     public class HourActivityViewModel : ViewModelBase
     {
         #region Variables
-        private GitRepositoryService _gitRepoInstance;
         private ObservableCollection<KeyValuePair<string, int>> _keyCollection;
         private string _filteringQuery;
         private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
@@ -33,7 +32,7 @@ namespace RepositoryParser.ViewModel
         public HourActivityViewModel()
         {
             Messenger.Default.Register<DataMessageToCharts>(this,
-                x => HandleDataMessage(x.RepoInstance, x.FilteringQuery));
+                x => HandleDataMessage(x.FilteringQuery));
             KeyCollection = new ObservableCollection<KeyValuePair<string, int>>();
         }
 
@@ -54,9 +53,8 @@ namespace RepositoryParser.ViewModel
         #endregion
 
         #region Messages
-        private void HandleDataMessage(GitRepositoryService gitRepo, string filteringQuery)
+        private void HandleDataMessage(string filteringQuery)
         {
-            this._gitRepoInstance = gitRepo;
             this._filteringQuery = filteringQuery;
             FillCollection();
         }
@@ -87,7 +85,7 @@ namespace RepositoryParser.ViewModel
                              "and strftime('%H', Date) =" +
                              "'" + dateString + "'";
                 }
-                SQLiteCommand command = new SQLiteCommand(query, _gitRepoInstance.SqLiteInstance.Connection);
+                SQLiteCommand command = new SQLiteCommand(query, SqLiteService.GetInstance().Connection);
                 SQLiteDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {

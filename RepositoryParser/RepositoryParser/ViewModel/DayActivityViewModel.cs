@@ -23,7 +23,6 @@ namespace RepositoryParser.ViewModel
     public class DayActivityViewModel : ViewModelBase
     {
         #region Fields
-        private GitRepositoryService _gitRepositoryService;
         private string _filteringQuery;
         private ObservableCollection<KeyValuePair<int, int>> _keyCollection;
         private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
@@ -33,7 +32,7 @@ namespace RepositoryParser.ViewModel
         #region Constructor
         public DayActivityViewModel()
         {
-            Messenger.Default.Register<DataMessageToCharts>(this, x => HandleDataMessage(x.RepoInstance, x.FilteringQuery));
+            Messenger.Default.Register<DataMessageToCharts>(this, x => HandleDataMessage(x.FilteringQuery));
             KeyCollection = new ObservableCollection<KeyValuePair<int, int>>();
         }
         #endregion
@@ -57,9 +56,8 @@ namespace RepositoryParser.ViewModel
         #endregion
 
         #region Messages
-        private void HandleDataMessage(GitRepositoryService repo, string query)
+        private void HandleDataMessage(string query)
         {
-            this._gitRepositoryService = repo;
             this._filteringQuery = query;
             FillDataCollection();
         }
@@ -91,7 +89,7 @@ namespace RepositoryParser.ViewModel
                              "and strftime('%d', Date) =" +
                              "'" + dateString + "'";
                 }
-                SQLiteCommand command = new SQLiteCommand(query, _gitRepositoryService.SqLiteInstance.Connection);
+                SQLiteCommand command = new SQLiteCommand(query, SqLiteService.GetInstance().Connection);
                 SQLiteDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {

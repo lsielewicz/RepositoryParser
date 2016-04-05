@@ -15,9 +15,9 @@ namespace RepositoryParser.Conventers
             var stringValue = value as string;
             if (stringValue != null)
             {
-                if (stringValue == "Added")
+                if (stringValue == "Deleted")
                     return "Deleted";
-                else if (stringValue == "Deleted")
+                else if (stringValue == "Added")
                     return "Added";
                 else
                 {

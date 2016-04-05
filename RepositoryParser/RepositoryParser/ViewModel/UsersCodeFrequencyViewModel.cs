@@ -332,11 +332,16 @@ namespace RepositoryParser.ViewModel
 
         private void ClosedEvent()
         {
-            this.AddedLinesCollection.Clear();
-            this.DeletedLinesCollection.Clear();
-            this.CodeFreqCollection.Clear();
-            this.SummaryLinesCollection.Clear();
-            this.ModifiedLinesCollection.Clear();
+            if(AddedLinesCollection!=null)
+                this.AddedLinesCollection.Clear();
+            if(DeletedLinesCollection!=null)
+                this.DeletedLinesCollection.Clear();
+            if(CodeFreqCollection!=null)
+                this.CodeFreqCollection.Clear();
+            if(SummaryLinesCollection!=null)
+                this.SummaryLinesCollection.Clear();
+            if(ModifiedLinesCollection!=null)
+                this.ModifiedLinesCollection.Clear();
             this.SummaryString = String.Empty;
         }
 

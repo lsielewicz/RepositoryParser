@@ -10,11 +10,11 @@ namespace RepositoryParser.Core.Messages
 {
     public class DataMessageToAnalisys : MessageBase
     {
-        public GitRepositoryService GitRepoInstance { get; set; }
+       /* public GitRepositoryService GitRepoInstance { get; set; }
 
         public DataMessageToAnalisys(GitRepositoryService gitRepo)
         {
             GitRepoInstance = gitRepo;
-        }
+        }*/
     }
 }

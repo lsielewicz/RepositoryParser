@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Documents;
+using GitSharp.Commands;
 using LibGit2Sharp;
 using RepositoryParser.Core.Interfaces;
 using RepositoryParser.Core.Models;
@@ -62,7 +64,7 @@ namespace RepositoryParser.Core.Services
                 {
                     if (!branch.IsRemote)
                     {
-                        branchList.Add(new BranchTable(branch.FriendlyName,branch));
+                        branchList.Add(new BranchTable(branch.FriendlyName));
                         
                     }
                 }
@@ -77,7 +79,8 @@ namespace RepositoryParser.Core.Services
             {
                 string date = commit.Author.When.ToString();
                 date = SqLiteService.getDateTimeFormat(date);
-                commitList.Add(new CommitTable(commit.MessageShort,commit.Author.Name,date,commit.Author.Email,commit));
+                date = date.Remove(19);
+                commitList.Add(new CommitTable(commit.MessageShort,commit.Author.Name,date,commit.Author.Email,commit.Sha));
             }
             return commitList;
         }
@@ -85,36 +88,39 @@ namespace RepositoryParser.Core.Services
         public List<ChangesTable> GetAllChanges(Commit commit)
         {
             List<ChangesTable> changesList = new List<ChangesTable>();
-
-
             using (Repository repository = new Repository(DirectoryPath))
             {
+                bool isInitial = false;
                 var firstOrDefault = commit.Parents.FirstOrDefault();
                 if (firstOrDefault == null)
-                    return changesList;
-                Tree rootCommitTree = repository.Lookup<Commit>(commit.Id.ToString()).Tree;
-                Tree commitTreeWithUpdatedFile = repository.Lookup<Commit>(commit.Parents.FirstOrDefault().Id.ToString()).Tree;
-
-                var changes = repository.Diff.Compare<Patch>(rootCommitTree, commitTreeWithUpdatedFile);
-                var changes2 = repository.Diff.Compare<Patch>(commitTreeWithUpdatedFile, rootCommitTree);
-                List<string> pathes = changes.Select(change => change.Path).ToList();
-
-                if (changes.Count() == changes2.Count())
                 {
-                    foreach (string p in pathes)
-                    {
-                        ChangesTable temp = new ChangesTable();
-                        temp.Path = changes[p].Path;
-                        if (changes[p].Status == ChangeKind.Deleted)
-                            temp.Type = "Deleted";
-                        else if (changes[p].Status == ChangeKind.Added)
-                            temp.Type = "Added";
-                        else if (changes[p].Status == ChangeKind.Modified)
-                            temp.Type = "Modified";
-                        temp.TextA = changes[p].Patch;
-                        temp.TextB = changes2[p].Patch;
-                        changesList.Add(temp);
-                    }
+                    isInitial = true;
+                }
+                Tree rootCommitTree = repository.Lookup<Commit>(commit.Id.ToString()).Tree;
+                Patch changes;
+                if (!isInitial)
+                {
+                    Tree commitTreeWithUpdatedFile = repository.Lookup<Commit>(commit.Parents.FirstOrDefault().Sha).Tree;
+                    changes = repository.Diff.Compare<Patch>(commitTreeWithUpdatedFile, rootCommitTree);
+                }
+                else
+                {
+                     changes = repository.Diff.Compare<Patch>(null, rootCommitTree);
+                }
+                foreach (var change in changes)
+                {
+                    ChangesTable temp = new ChangesTable();
+                    temp.Path = change.Path;
+                    if (change.Status == ChangeKind.Deleted)
+                        temp.Type = "Deleted";
+                    else if (change.Status == ChangeKind.Added)
+                        temp.Type = "Added";
+                    else
+                        temp.Type = "Modified";
+
+                    temp.TextA = change.Patch;
+                    temp.TextB = String.Empty;
+                    changesList.Add(temp);
                 }   
             }     
             return changesList;
@@ -210,46 +216,51 @@ namespace RepositoryParser.Core.Services
         {
             try
             {
-                List<string> transactions = new List<string>();
-                List<string> changesTransactions = new List<string>();
-                RepositoryTable repositoryTable = GetRepository(DirectoryPath);
-                List<BranchTable> branches = GetAllBranches(DirectoryPath);
-                BranchTable tempBranch = new BranchTable();
-                CommitTable tempCommit = new CommitTable();
-                transactions.Add(RepositoryTable.InsertQuery(repositoryTable));
-
-                int startRepoIndex = repositoryTable.GetLastIndex(SqLiteInstance.Connection) + 1;
-                int startBranchIndex = tempBranch.GetLastIndex(SqLiteInstance.Connection) + 1;
-                int startCommitIndex = tempCommit.GetLastIndex(SqLiteInstance.Connection) + 1;
-                int startChangeIndex = ChangesTable.GetLastIndex(SqLiteInstance.Connection) + 1;
-
-                foreach (BranchTable branch in branches)
+                using (Repository repository = new Repository(DirectoryPath))
                 {
-                    transactions.Add(BranchTable.InsertSqliteQuery(branch));
-                    transactions.Add(BranchForRepoTable.InsertQuery(new BranchForRepoTable(startRepoIndex, startBranchIndex)));
+                    List<string> transactions = new List<string>();
+                    List<string> changesTransactions = new List<string>();
+                    RepositoryTable repositoryTable = GetRepository(DirectoryPath);
+                    List<BranchTable> branches = GetAllBranches(DirectoryPath);
+                    BranchTable tempBranch = new BranchTable();
+                    CommitTable tempCommit = new CommitTable();
+                    transactions.Add(RepositoryTable.InsertQuery(repositoryTable));
 
-                    List<CommitTable> commits = GetAllCommits(branch.Value);
-                    foreach (CommitTable commit in commits)
+                    int startRepoIndex = repositoryTable.GetLastIndex(SqLiteInstance.Connection) + 1;
+                    int startBranchIndex = tempBranch.GetLastIndex(SqLiteInstance.Connection) + 1;
+                    int startCommitIndex = tempCommit.GetLastIndex(SqLiteInstance.Connection) + 1;
+                    int startChangeIndex = ChangesTable.GetLastIndex(SqLiteInstance.Connection) + 1;
+
+                    foreach (BranchTable branch in branches)
                     {
-                        transactions.Add(CommitTable.InsertSqliteQuery(commit));
+                        transactions.Add(BranchTable.InsertSqliteQuery(branch));
                         transactions.Add(
-                            CommitForBranchTable.InsertQuery(new CommitForBranchTable(startBranchIndex, startCommitIndex)));
+                            BranchForRepoTable.InsertQuery(new BranchForRepoTable(startRepoIndex, startBranchIndex)));
 
-                        List<ChangesTable> changes = GetAllChanges(commit.Value);
-                        foreach (ChangesTable change in changes)
+                        List<CommitTable> commits = GetAllCommits(repository.Branches[branch.Name]);
+                        foreach (CommitTable commit in commits)
                         {
-                            changesTransactions.Add(ChangesTable.InsertSqliteQuery(change));
-                            changesTransactions.Add(
-                                ChangesForCommitTable.InsertQuery(new ChangesForCommitTable(startCommitIndex,
-                                    startChangeIndex)));
-                            startChangeIndex++;
+                            transactions.Add(CommitTable.InsertSqliteQuery(commit));
+                            transactions.Add(
+                                CommitForBranchTable.InsertQuery(new CommitForBranchTable(startBranchIndex,
+                                    startCommitIndex)));
+
+                            List<ChangesTable> changes = GetAllChanges(repository.Lookup<Commit>(commit.Sha));
+                            foreach (ChangesTable change in changes)
+                            {
+                                changesTransactions.Add(ChangesTable.InsertSqliteQuery(change));
+                                changesTransactions.Add(
+                                    ChangesForCommitTable.InsertQuery(new ChangesForCommitTable(startCommitIndex,
+                                        startChangeIndex)));
+                                startChangeIndex++;
+                            }
+                            startCommitIndex++;
                         }
-                        startCommitIndex++;
+                        startBranchIndex++;
                     }
-                    startBranchIndex++;
+                    SqLiteInstance.ExecuteTransaction(transactions);
+                    SqLiteInstance.ExecuteTransaction(changesTransactions);
                 }
-                SqLiteInstance.ExecuteTransaction(transactions);
-                SqLiteInstance.ExecuteTransaction(changesTransactions);    
             }
             catch (Exception ex)
             {
@@ -258,8 +269,35 @@ namespace RepositoryParser.Core.Services
             finally
             {
                 SqLiteInstance.CloseConnection();
+            }   
+        }
+
+        public List<CommitTable> GetDataFromBase()
+        {
+            List<CommitTable> tempList = new List<CommitTable>();
+            int idzz = 1;
+            string query = "SELECT * FROM Commits " +
+                           "INNER JOIN CommitForBranch on Commits.ID=CommitForBranch.NR_Commit " +
+                           "INNER JOIN BRANCH on CommitForBranch.NR_Branch=Branch.ID " +
+                           "WHERE Branch.Name='master' OR Branch.Name='trunk'";
+            SQLiteCommand command = new SQLiteCommand(query, SqLiteInstance.Connection);
+            SQLiteDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int id = idzz;
+                idzz++;
+                string message = Convert.ToString(reader["Message"]);
+                string author = Convert.ToString(reader["Author"]);
+                string date=String.Empty;
+                if (reader["Date"] != null)
+                date = Convert.ToString(reader["Date"]);
+                date = SqLiteService.getDateTimeFormat(date);
+                // date = date.Remove(19);
+                string email = Convert.ToString(reader["Email"]);
+                CommitTable tempInstance = new CommitTable(id, message, author, date, email);
+                tempList.Add(tempInstance);
             }
-            
+            return tempList;
         }
         #endregion
 

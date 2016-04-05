@@ -17,7 +17,8 @@ namespace RepositoryParser.Core.Models
         public string Date { get; set; }
         public string Email { get; set; }
         public long Revision { get; set; }
-        public Commit Value { get; set; }
+        public string Sha { get; set; }
+       // public Commit Value { get; set; }
         #endregion
      
         #region Constructors
@@ -66,15 +67,24 @@ namespace RepositoryParser.Core.Models
             this.Message = message;
             this.Author = author;
             this.Date = date;
+            this.Email = email;
             this.Revision = revision;
         }
-        public CommitTable(string message, string author, string date, string email, Commit value)
+        /*        public CommitTable(string message, string author, string date, string email, Commit value)
+                {
+                    this.Message = message;
+                    this.Author = author;
+                    this.Date = date;
+                    this.Email = email;
+                    this.Value = value;
+                }*/
+                public CommitTable(string message, string author, string date, string email, string sha)
         {
             this.Message = message;
             this.Author = author;
             this.Date = date;
             this.Email = email;
-            this.Value = value;
+            this.Sha = sha;
         }
 
         #endregion

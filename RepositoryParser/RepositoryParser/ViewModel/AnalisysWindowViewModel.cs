@@ -20,7 +20,7 @@ namespace RepositoryParser.ViewModel
     public class AnalisysWindowViewModel : ViewModelBase
     {
         #region Fields
-        private GitRepositoryService _localGitRepositoryService;
+       // private GitRepositoryService _localGitRepositoryService;
         private SqLiteService _localSqliteService;
         private ObservableCollection<string> _localCollection;
         private ObservableCollection<string> _branchCollection;
@@ -54,7 +54,7 @@ namespace RepositoryParser.ViewModel
         public AnalisysWindowViewModel()
         {
             _authorsList = new List<string>();
-            Messenger.Default.Register<DataMessageToAnalisys>(this, x => HandleDataMessage(x.GitRepoInstance));
+            Messenger.Default.Register<DataMessageToAnalisys>(this, x => HandleDataMessage());
             LocalCollection = new ObservableCollection<string>();
             BranchCollection = new ObservableCollection<string>();
             RepositoryCollection = new ObservableCollection<string>();
@@ -125,10 +125,10 @@ namespace RepositoryParser.ViewModel
 
         #region Messages
 
-        private void HandleDataMessage(GitRepositoryService gitRepo)
+        private void HandleDataMessage()
         {
-            _localGitRepositoryService = gitRepo;
-            _localSqliteService = gitRepo.SqLiteInstance;
+           // _localGitRepositoryService = gitRepo;
+            _localSqliteService = SqLiteService.GetInstance();
             getAuthors();
             getBranches();
             getRepositories();
@@ -141,7 +141,7 @@ namespace RepositoryParser.ViewModel
 
         private void SendMessageToDrawChart()
         {
-            Messenger.Default.Send<DataMessageToCharts>(new DataMessageToCharts(this._localGitRepositoryService, _authorsList,
+            Messenger.Default.Send<DataMessageToCharts>(new DataMessageToCharts(_authorsList,
                 GenerateQuery()));
         }
 
@@ -347,7 +347,7 @@ namespace RepositoryParser.ViewModel
             {
                 BranchCollection.Clear();
                 BranchTable temp = new BranchTable();
-                _branchList = temp.GetDataFromBase(_localGitRepositoryService.SqLiteInstance.Connection);
+                _branchList = temp.GetDataFromBase(SqLiteService.GetInstance().Connection);
                 _branchList.ForEach(x => BranchCollection.Add(x.Name));
             }
             else
@@ -357,7 +357,7 @@ namespace RepositoryParser.ViewModel
                                "inner join Repository on BranchForRepo.NR_GitRepository=Repository.ID " +
                                "where Repository.Name='" + MainViewModel.SelectedRepo + "'";
                 BranchTable temp = new BranchTable();
-                _branchList = temp.GetDataFromBase(_localGitRepositoryService.SqLiteInstance.Connection, query);
+                _branchList = temp.GetDataFromBase(SqLiteService.GetInstance().Connection, query);
                 _branchList.ForEach(x => BranchCollection.Add(x.Name));
             }
         }
@@ -366,7 +366,7 @@ namespace RepositoryParser.ViewModel
         {
             RepositoryCollection.Clear();
             RepositoryTable temp= new RepositoryTable();
-            _repoList = temp.GetDataFromBase(_localGitRepositoryService.SqLiteInstance.Connection);
+            _repoList = temp.GetDataFromBase(SqLiteService.GetInstance().Connection);
             _repoList.ForEach(x => RepositoryCollection.Add(x.Name));
         }
         private void getAuthors()
@@ -601,8 +601,8 @@ namespace RepositoryParser.ViewModel
                 string author = Convert.ToString(reader["Author"]);
                 string date = Convert.ToString(reader["Date"]);
                 string email = Convert.ToString(reader["Email"]);
-                CommitTable tempInstance = new CommitTable(id, message, author, date, email);
-                localList.Add(tempInstance);
+               // CommitTable tempInstance = new CommitTable(id, message, author, date, email);
+                localList.Add(new CommitTable(0,message,author,date,email));
                 id++;
             }
             SendMessageToDisplay();
