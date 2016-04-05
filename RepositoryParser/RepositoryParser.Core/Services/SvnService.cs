@@ -167,16 +167,16 @@ namespace RepositoryParser.Core.Services
                             else if (changeItem.Action == SvnChangeAction.Modify)
                                 action = "Modified";
                             else if (changeItem.Action == SvnChangeAction.Add)
-                                action = "Deleted";
-                            else if (changeItem.Action == SvnChangeAction.Delete)
                                 action = "Added";
+                            else if (changeItem.Action == SvnChangeAction.Delete)
+                                action = "Deleted";
                             else
                                 action = Convert.ToString(changeItem.Action);
                                                   
                             changesList.Add(new ChangesTable(action,
                                                             changeItem.Path,
                                                             GetDifferences(revision,changeItem.Path,false), 
-                                                            GetDifferences(revision, changeItem.Path, true)));
+                                                            String.Empty));
                         }
                     });
 
