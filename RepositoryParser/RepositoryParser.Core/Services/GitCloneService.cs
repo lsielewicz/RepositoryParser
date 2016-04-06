@@ -47,38 +47,39 @@ namespace RepositoryParser.Core.Services
             _remotes = new List<string>();
             try
             {
-                Repository repository = new Repository("./" + GetRepositoryNameFromUrl(UrlAdress));
-                List<GitCloneBranch> tempBranches = new List<GitCloneBranch>();
-                foreach (Branch branch in repository.Branches)
+                using (Repository repository = new Repository("./" + GetRepositoryNameFromUrl(UrlAdress)))
                 {
-                    GitCloneBranch temp = new GitCloneBranch();
-                    if (!branch.IsRemote || branch.IsCurrentRepositoryHead || branch.FriendlyName == "origin/master" ||
-                    branch.FriendlyName == "origin/HEAD")
+                    List<GitCloneBranch> tempBranches = new List<GitCloneBranch>();
+                    foreach (Branch branch in repository.Branches)
                     {
-                        if (!branch.IsRemote)
-                            _remotes.Add(branch.FriendlyName);
-                        continue;
-                    }
-                    // Display the branch name
-                    string tempName = branch.FriendlyName;
+                        GitCloneBranch temp = new GitCloneBranch();
+                        if (!branch.IsRemote || branch.IsCurrentRepositoryHead || branch.FriendlyName == "origin/master" ||
+                            branch.FriendlyName == "origin/HEAD")
+                        {
+                            if (!branch.IsRemote)
+                                _remotes.Add(branch.FriendlyName);
+                            continue;
+                        }
+                        // Display the branch name
+                        string tempName = branch.FriendlyName;
 
-                    if (tempName.Contains("origin"))
-                    {
-                        tempName = tempName.Remove(0, 7);
+                        if (tempName.Contains("origin"))
+                        {
+                            tempName = tempName.Remove(0, 7);
+                        }
+                        temp.BranchName = tempName;
+                        temp.OriginName = branch.FriendlyName;
+                        tempBranches.Add(temp);
                     }
-                    temp.BranchName = tempName;
-                    temp.OriginName = branch.FriendlyName;
-                    tempBranches.Add(temp);
+
+                    tempBranches.ForEach(branch =>
+                    {
+                        if (!isBranchCloned(_remotes, branch.BranchName))
+                        {
+                            _branches.Add(branch);
+                        }
+                    });
                 }
-
-                tempBranches.ForEach(branch =>
-                {
-                    if (!isBranchCloned(_remotes, branch.BranchName))
-                    {
-                        _branches.Add(branch);
-                    }
-                });
-
             }
             catch (Exception ex)
             {
@@ -102,15 +103,15 @@ namespace RepositoryParser.Core.Services
             if (_branches == null || _branches.Count == 0)
                 return;
 
-
-            Repository repository = new Repository("./" + GetRepositoryNameFromUrl(UrlAdress));
-            foreach (GitCloneBranch branch in _branches)
+            using (Repository repository = new Repository("./" + GetRepositoryNameFromUrl(UrlAdress)))
             {
-                Branch remoteBranch = repository.Branches[branch.OriginName];
-                Branch newLoaclBranch = repository.CreateBranch(branch.BranchName, remoteBranch.Tip);
+                foreach (GitCloneBranch branch in _branches)
+                {
+                    Branch remoteBranch = repository.Branches[branch.OriginName];
+                    Branch newLoaclBranch = repository.CreateBranch(branch.BranchName, remoteBranch.Tip);
 
-                repository.Branches.Update(newLoaclBranch, b => b.TrackedBranch = remoteBranch.CanonicalName);
-
+                    repository.Branches.Update(newLoaclBranch, b => b.TrackedBranch = remoteBranch.CanonicalName);
+                }
             }
 
         }
@@ -140,15 +141,14 @@ namespace RepositoryParser.Core.Services
         public void CloneRepository(bool cloneWithAllBranches = false)
         {
             string repositoryPath = "./" + GetRepositoryNameFromUrl(UrlAdress);
+
             if (!Directory.Exists(repositoryPath))
-            {
                 Directory.CreateDirectory(repositoryPath);
-            }
             else
-            {
                 DeleteDirectory(repositoryPath,true);
-            }
+
             Repository.Clone(UrlAdress, repositoryPath);
+
             DirectoryPath = repositoryPath;
             if (cloneWithAllBranches)
             {
