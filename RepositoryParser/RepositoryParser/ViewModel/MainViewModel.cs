@@ -360,7 +360,6 @@ namespace RepositoryParser.ViewModel
         {
             AnalysisWindowView _analisysWindow = new AnalysisWindowView();
             _analisysWindow.Show();
-           SendMessageToAnalisys();
         }
 
 
@@ -461,10 +460,6 @@ namespace RepositoryParser.ViewModel
         {
             CommitsColection.Clear();
             list.ForEach(x => CommitsColection.Add(x));
-        }
-        private void SendMessageToAnalisys()
-        {
-            Messenger.Default.Send<DataMessageToAnalisys>(new DataMessageToAnalisys());
         }
         #endregion
 

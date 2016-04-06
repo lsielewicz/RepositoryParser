@@ -22,7 +22,6 @@ namespace RepositoryParser.Core.Models
         {
             this.BranchName = branchName;
             this.OriginName = originName;
-
         }
     }
 }

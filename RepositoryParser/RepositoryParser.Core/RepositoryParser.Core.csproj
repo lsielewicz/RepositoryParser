@@ -161,7 +161,6 @@
     <Compile Include="Interfaces\ISqLiteService.cs" />
     <Compile Include="Interfaces\ISvnService.cs" />
     <Compile Include="Interfaces\IWindowService.cs" />
-    <Compile Include="Messages\DataMessageToAnalisys.cs" />
     <Compile Include="Messages\DataMessageToChartOfChanges.cs" />
     <Compile Include="Messages\DataMessageToCharts.cs" />
     <Compile Include="Messages\DataMessageToDisplay.cs" />

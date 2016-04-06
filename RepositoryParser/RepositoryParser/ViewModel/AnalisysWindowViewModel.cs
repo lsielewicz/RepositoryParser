@@ -50,17 +50,25 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _goToHourActivityCommand;
         private RelayCommand _goToWeekDayActivityWindowCommand;
         private RelayCommand _goToUsersCodeFrequencyCommand;
+        private RelayCommand _onLoadCommand;
         #endregion
         public AnalisysWindowViewModel()
         {
             _authorsList = new List<string>();
-            Messenger.Default.Register<DataMessageToAnalisys>(this, x => HandleDataMessage());
             LocalCollection = new ObservableCollection<string>();
             BranchCollection = new ObservableCollection<string>();
             RepositoryCollection = new ObservableCollection<string>();
             localList = new List<CommitTable>();
         }
         #region Buttons getters
+
+        public RelayCommand OnLoadCommand
+        {
+            get
+            {
+                return _onLoadCommand ?? (_onLoadCommand = new RelayCommand(OnLoad));   
+            }
+        }
 
         public RelayCommand GoToUsersCodeFrequencyCommand
         {
@@ -124,16 +132,6 @@ namespace RepositoryParser.ViewModel
         #endregion
 
         #region Messages
-
-        private void HandleDataMessage()
-        {
-           // _localGitRepositoryService = gitRepo;
-            _localSqliteService = SqLiteService.GetInstance();
-            getAuthors();
-            getBranches();
-            getRepositories();
-        }
-
         private void SendMessageToDisplay()
         {
             Messenger.Default.Send<DataMessageToDisplay>(new DataMessageToDisplay(this.localList));
@@ -400,6 +398,14 @@ namespace RepositoryParser.ViewModel
         #endregion
 
         #region Buttons actions
+
+        private void OnLoad()
+        {
+            _localSqliteService = SqLiteService.GetInstance();
+            getAuthors();
+            getBranches();
+            getRepositories();
+        }
 
         private void GoToUsersCodeFrequency()
         {
