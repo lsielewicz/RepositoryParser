@@ -602,7 +602,7 @@ namespace RepositoryParser.ViewModel
                 string date = Convert.ToString(reader["Date"]);
                 string email = Convert.ToString(reader["Email"]);
                // CommitTable tempInstance = new CommitTable(id, message, author, date, email);
-                localList.Add(new CommitTable(0,message,author,date,email));
+                localList.Add(new CommitTable(id,message,author,date,email));
                 id++;
             }
             SendMessageToDisplay();

@@ -282,7 +282,6 @@ namespace RepositoryParser.ViewModel
             if (fbd.ShowDialog() == DialogResult.OK)
             {
                 UrlTextBox = fbd.SelectedPath;
-                //_isLocal = true;
             }
         }
 
@@ -304,15 +303,11 @@ namespace RepositoryParser.ViewModel
                     {
                         if (!_isLocal)
                         {
-                           /* _gitRepoInstance = new GitRepositoryService(UrlTextBox,true);
-                            _gitRepoInstance.FillDataBase();*/
                             _gitRepoService = new GitService(UrlTextBox, true);
                             _gitRepoService.FillDataBase();
                         }
                         else
                         {
-                           /* _gitRepoInstance = new GitRepositoryService(UrlTextBox,false);
-                            _gitRepoInstance.FillDataBase();*/
                             _gitRepoService = new GitService(UrlTextBox,false);
                             _gitRepoService.FillDataBase();
                         }
