@@ -16,15 +16,15 @@ namespace RepositoryParser.Core.Services
 
         public GitCloneService()
         {
-            this.UrlAdress = String.Empty;
+            UrlAdress = String.Empty;
         }
 
         public GitCloneService(string url)
         {
-            this.UrlAdress = url;
+            UrlAdress = url;
         }
 
-        public string getRepositoryNameFromUrl(string url)
+        public string GetRepositoryNameFromUrl(string url)
         {
             string repositoryName = url;
             string rg = @"(.*\/)(.*)\.git";
@@ -47,7 +47,7 @@ namespace RepositoryParser.Core.Services
             _remotes = new List<string>();
             try
             {
-                Repository repository = new Repository("./" + getRepositoryNameFromUrl(UrlAdress));
+                Repository repository = new Repository("./" + GetRepositoryNameFromUrl(UrlAdress));
                 List<GitCloneBranch> tempBranches = new List<GitCloneBranch>();
                 foreach (Branch branch in repository.Branches)
                 {
@@ -103,7 +103,7 @@ namespace RepositoryParser.Core.Services
                 return;
 
 
-            Repository repository = new Repository("./" + getRepositoryNameFromUrl(UrlAdress));
+            Repository repository = new Repository("./" + GetRepositoryNameFromUrl(UrlAdress));
             foreach (GitCloneBranch branch in _branches)
             {
                 Branch remoteBranch = repository.Branches[branch.OriginName];
@@ -121,7 +121,7 @@ namespace RepositoryParser.Core.Services
                 var subfolders = Directory.GetDirectories(path);
                 foreach (var s in subfolders)
                 {
-                    DeleteDirectory(s, recursive);
+                    DeleteDirectory(s, true);
                 }
             }
             var files = Directory.GetFiles(path);
@@ -139,7 +139,7 @@ namespace RepositoryParser.Core.Services
 
         public void CloneRepository(bool cloneWithAllBranches = false)
         {
-            string repositoryPath = "./" + getRepositoryNameFromUrl(UrlAdress);
+            string repositoryPath = "./" + GetRepositoryNameFromUrl(UrlAdress);
             if (!Directory.Exists(repositoryPath))
             {
                 Directory.CreateDirectory(repositoryPath);
@@ -149,17 +149,12 @@ namespace RepositoryParser.Core.Services
                 DeleteDirectory(repositoryPath,true);
             }
             Repository.Clone(UrlAdress, repositoryPath);
-            this.DirectoryPath = repositoryPath;
+            DirectoryPath = repositoryPath;
             if (cloneWithAllBranches)
             {
                 FillBranches();
                 CloneAllBranches();
             }
-        }
-
-        private void deleteFolderWithContent(string path)
-        {
-            System.IO.Directory.Delete(path, true);
         }
 
         private bool IsAddressCorrect()
