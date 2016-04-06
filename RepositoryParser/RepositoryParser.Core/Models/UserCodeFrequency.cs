@@ -11,14 +11,12 @@ namespace RepositoryParser.Core.Models
         public string User { get; set; }
         public int AddedLines { get; set; }
         public int DeletedLines { get; set; }
-        public int ModifiedLines { get; set; }
 
-        public UserCodeFrequency(string u, int a, int d, int m)
+        public UserCodeFrequency(string u, int a, int d)
         {
             this.User = u;
             this.AddedLines = a;
             this.DeletedLines = d;
-            this.ModifiedLines = m;
         }
     }
 }

@@ -84,18 +84,6 @@
                 </chartingToolkit:Chart>
             </TabItem>
 
-            <TabItem Header="{x:Static resw:Resources.ModifiedChart}">
-                <chartingToolkit:Chart Background="{StaticResource Grey}" LegendTitle="{x:Static resw:Resources.Legend}" Title="{x:Static resw:Resources.ModifiedChart}">
-                    <chartingToolkit:Chart.Series>
-                        <chartingToolkit:PieSeries ItemsSource="{Binding ModifiedLinesCollection, Mode=OneWay}"
-                                                   IndependentValueBinding="{Binding Path=Key}"
-                                                   DependentValueBinding="{Binding Path=Value}"
-                            
-                            />
-                    </chartingToolkit:Chart.Series>
-                </chartingToolkit:Chart>
-            </TabItem>
-
             <TabItem Header="{x:Static resw:Resources.Summary}">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -132,11 +120,7 @@
                                     <GridViewColumnHeader Content="{x:Static resw:Resources.Deleted}" Margin="0" Padding="30,0" HorizontalAlignment="Stretch" Background="{StaticResource MyGreen}" Foreground="Black"/>
                                 </GridViewColumn>
 
-                                <GridViewColumn DisplayMemberBinding="{Binding ModifiedLines}">
-                                    <GridViewColumnHeader Content="{x:Static resw:Resources.Modified}" Margin="0" Padding="30,0" HorizontalAlignment="Stretch" Background="{StaticResource MyGreen}" Foreground="Black"/>
-                                </GridViewColumn>
-
-                                <GridViewColumn Width="1000">
+                                <GridViewColumn Width="1500">
                                     <GridViewColumnHeader HorizontalAlignment="Stretch" Background="{StaticResource MyGreen}" Foreground="Black"/>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate />

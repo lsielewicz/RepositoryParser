@@ -39,7 +39,7 @@ namespace RepositoryParser.Core.Services
             String csv = String.Join(Environment.NewLine, data2);
             csv = String.Join(
             Environment.NewLine,
-            data.Select(d => d.User + ";" + d.AddedLines + ";" + d.DeletedLines + ";" + d.ModifiedLines)
+            data.Select(d => d.User + ";" + d.AddedLines + ";" + d.DeletedLines)
                  );
             File.WriteAllText(csvPath, csv, Encoding.UTF8);
         }

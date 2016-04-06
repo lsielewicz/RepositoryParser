@@ -187,7 +187,6 @@
             </Button>
         </StackPanel>
 
-<!--
          <StatusBar Grid.Row="1" Grid.Column="0" 
                    Grid.RowSpan="2"
                    Grid.ColumnSpan="3"
@@ -197,7 +196,7 @@
                    HorizontalAlignment="Stretch"
                    VerticalAlignment="Stretch"
                    >
-        </StatusBar>-->
+        </StatusBar>
         <StackPanel Orientation="Horizontal" Grid.Row="0" 
                     Grid.Column="0" Grid.RowSpan="5"
                     Grid.ColumnSpan="3" 

@@ -46,8 +46,8 @@ namespace RepositoryParser.ViewModel
         private void HandleDataMessage(List<ChangesColorModel> childList)
         {
             ChildCollection=new ObservableCollection<KeyValuePair<string, int>>();
-            int addedCounter, deletedCounter, unchangedCounter, modifiedCounter;
-            addedCounter = deletedCounter = unchangedCounter = modifiedCounter = 0;
+            int addedCounter, deletedCounter, unchangedCounter;
+            addedCounter = deletedCounter = unchangedCounter = 0;
 
             childList.ForEach(x =>
             {
@@ -55,14 +55,11 @@ namespace RepositoryParser.ViewModel
                     addedCounter++;
                 else if (x.Color == ChangesColorModel.ChangeType.Deleted)
                     deletedCounter++;
-                else if (x.Color == ChangesColorModel.ChangeType.Modified && !String.IsNullOrWhiteSpace(x.Line))
-                    modifiedCounter++;
                 else if (x.Color == ChangesColorModel.ChangeType.Unchanged && !String.IsNullOrWhiteSpace(x.Line))
                     unchangedCounter++;
             });
             ChildCollection.Add(new KeyValuePair<string, int>(_resourceManager.GetString("Added"),addedCounter));
             ChildCollection.Add(new KeyValuePair<string, int>(_resourceManager.GetString("Deleted"), deletedCounter));
-            ChildCollection.Add(new KeyValuePair<string, int>(_resourceManager.GetString("Modified"), modifiedCounter));
             ChildCollection.Add(new KeyValuePair<string, int>(_resourceManager.GetString("Unchanged"), unchangedCounter));
         }
         #endregion
