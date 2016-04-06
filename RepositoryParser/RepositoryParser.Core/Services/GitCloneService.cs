@@ -102,6 +102,7 @@ namespace RepositoryParser.Core.Services
             if (_branches == null || _branches.Count == 0)
                 return;
 
+
             Repository repository = new Repository("./" + getRepositoryNameFromUrl(UrlAdress));
             foreach (GitCloneBranch branch in _branches)
             {
@@ -113,6 +114,28 @@ namespace RepositoryParser.Core.Services
             }
 
         }
+        private void DeleteDirectory(string path, bool recursive)
+        {
+            if (recursive)
+            {
+                var subfolders = Directory.GetDirectories(path);
+                foreach (var s in subfolders)
+                {
+                    DeleteDirectory(s, recursive);
+                }
+            }
+            var files = Directory.GetFiles(path);
+            foreach (var f in files)
+            {
+                var attr = File.GetAttributes(f);
+                if ((attr & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)      
+                    File.SetAttributes(f, attr ^ FileAttributes.ReadOnly);
+          
+                File.Delete(f);
+            }
+            Directory.Delete(path);
+        }
+
 
         public void CloneRepository(bool cloneWithAllBranches = false)
         {
@@ -121,6 +144,10 @@ namespace RepositoryParser.Core.Services
             {
                 Directory.CreateDirectory(repositoryPath);
             }
+            else
+            {
+                DeleteDirectory(repositoryPath,true);
+            }
             Repository.Clone(UrlAdress, repositoryPath);
             this.DirectoryPath = repositoryPath;
             if (cloneWithAllBranches)
@@ -128,6 +155,11 @@ namespace RepositoryParser.Core.Services
                 FillBranches();
                 CloneAllBranches();
             }
+        }
+
+        private void deleteFolderWithContent(string path)
+        {
+            System.IO.Directory.Delete(path, true);
         }
 
         private bool IsAddressCorrect()
