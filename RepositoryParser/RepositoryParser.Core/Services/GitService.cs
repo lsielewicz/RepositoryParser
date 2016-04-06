@@ -5,8 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Documents;
-using GitSharp.Commands;
 using LibGit2Sharp;
 using RepositoryParser.Core.Interfaces;
 using RepositoryParser.Core.Models;
