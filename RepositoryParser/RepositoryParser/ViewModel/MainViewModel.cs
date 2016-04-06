@@ -26,7 +26,7 @@ namespace RepositoryParser.ViewModel
     {
         #region Variables
         private ObservableCollection<CommitTable> _commitsCollection;
-        private GitRepositoryService _gitRepoInstance;
+        private GitService _gitRepoService;
         private SvnService _svnRepoService;
         private string _urlTextBox = "";
         private bool _isCloneButtonEnabled = true;
@@ -282,7 +282,6 @@ namespace RepositoryParser.ViewModel
             if (fbd.ShowDialog() == DialogResult.OK)
             {
                 UrlTextBox = fbd.SelectedPath;
-                //_isLocal = true;
             }
         }
 
@@ -304,13 +303,13 @@ namespace RepositoryParser.ViewModel
                     {
                         if (!_isLocal)
                         {
-                            _gitRepoInstance = new GitRepositoryService(UrlTextBox,true);
-                            _gitRepoInstance.FillDataBase();
+                            _gitRepoService = new GitService(UrlTextBox, true);
+                            _gitRepoService.FillDataBase();
                         }
                         else
                         {
-                            _gitRepoInstance = new GitRepositoryService(UrlTextBox,false);
-                            _gitRepoInstance.FillDataBase();
+                            _gitRepoService = new GitService(UrlTextBox,false);
+                            _gitRepoService.FillDataBase();
                         }
                     }
                 }
@@ -333,22 +332,22 @@ namespace RepositoryParser.ViewModel
         private void RefreshList()
         {
             CommitsColection.Clear();
-            _gitRepoInstance.GetDataFromBase().ForEach(x => CommitsColection.Add(x));
+           // _gitRepoInstance.GetDataFromBase().ForEach(x => CommitsColection.Add(x));
         }
         private void OnLoad()
         {
             try
             {
-                _gitRepoInstance = new GitRepositoryService();
-
+                //_gitRepoInstance = new GitRepositoryService();
+                _gitRepoService = new GitService();
                 string repoPath = "./DataBases/CommonRepositoryDataBase.sqlite";
                 if (!File.Exists(repoPath))
-                    _gitRepoInstance.ConnectRepositoryToDataBase(true);
+                    _gitRepoService.ConnectRepositoryToDataBase(true);
                 else
-                    _gitRepoInstance.ConnectRepositoryToDataBase();
+                    _gitRepoService.ConnectRepositoryToDataBase();
 
                 CommitsColection.Clear();
-                _gitRepoInstance.GetDataFromBase().ForEach(x => CommitsColection.Add(x));
+                _gitRepoService.GetDataFromBase().ForEach(x => CommitsColection.Add(x));
             }
             catch (Exception ex)
             {
@@ -361,16 +360,11 @@ namespace RepositoryParser.ViewModel
         {
             AnalysisWindowView _analisysWindow = new AnalysisWindowView();
             _analisysWindow.Show();
-            if (_gitRepoInstance != null)
-                SendMessageToAnalisys();
         }
 
 
         private void ClearDataBase()
         {
-            
-            if (_gitRepoInstance != null)
-            {
                 List<string> Transactions = new List<string>();
                 Transactions.Add(CommitTable.deleteAllQuery);
                 Transactions.Add(RepositoryTable.deleteAllQuery);
@@ -394,9 +388,9 @@ namespace RepositoryParser.ViewModel
                     string delete = "delete from sqlite_sequence where name = '" + name + "'";
                     Transactions.Add(delete);
                 }
-                _gitRepoInstance.SqLiteInstance.ExecuteTransaction(Transactions);
+                SqLiteService.GetInstance().ExecuteTransaction(Transactions);
 
-            }
+            
            // RefreshList();
         }
 
@@ -467,10 +461,6 @@ namespace RepositoryParser.ViewModel
             CommitsColection.Clear();
             list.ForEach(x => CommitsColection.Add(x));
         }
-        private void SendMessageToAnalisys()
-        {
-            Messenger.Default.Send<DataMessageToAnalisys>(new DataMessageToAnalisys(this._gitRepoInstance));
-        }
         #endregion
 
         #region BackgroundWorker
@@ -490,7 +480,7 @@ namespace RepositoryParser.ViewModel
             else
             {
                 CommitsColection.Clear();
-                _gitRepoInstance.GetDataFromBase().ForEach(x => CommitsColection.Add(x));
+                _gitRepoService.GetDataFromBase().ForEach(x => CommitsColection.Add(x));
             }
         }
 

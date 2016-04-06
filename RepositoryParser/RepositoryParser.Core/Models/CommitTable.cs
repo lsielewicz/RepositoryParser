@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RepositoryParser.Core.Models
 {
@@ -16,9 +13,10 @@ namespace RepositoryParser.Core.Models
         public string Date { get; set; }
         public string Email { get; set; }
         public long Revision { get; set; }
+        public string Sha { get; set; }
+       // public Commit Value { get; set; }
         #endregion
-
-       
+     
         #region Constructors
 
         public CommitTable()
@@ -65,12 +63,29 @@ namespace RepositoryParser.Core.Models
             this.Message = message;
             this.Author = author;
             this.Date = date;
+            this.Email = email;
             this.Revision = revision;
+        }
+        /*        public CommitTable(string message, string author, string date, string email, Commit value)
+                {
+                    this.Message = message;
+                    this.Author = author;
+                    this.Date = date;
+                    this.Email = email;
+                    this.Value = value;
+                }*/
+                public CommitTable(string message, string author, string date, string email, string sha)
+        {
+            this.Message = message;
+            this.Author = author;
+            this.Date = date;
+            this.Email = email;
+            this.Sha = sha;
         }
 
         #endregion
 
-            #region querys
+        #region querys
         public static string SqliteQuery = "create table Commits(ID INTEGER PRIMARY KEY AUTOINCREMENT, Message varchar(200), Author varchar(30), Date DATETIME, Email varchar(40))";
 
         public static string InsertSqliteQuery(int id, string message, string author, string date, string email)

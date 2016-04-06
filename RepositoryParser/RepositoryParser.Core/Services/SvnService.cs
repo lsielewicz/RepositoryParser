@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data.SQLite;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Documents;
 using RepositoryParser.Core.Interfaces;
 using RepositoryParser.Core.Models;
 using SharpSvn;
@@ -167,16 +163,16 @@ namespace RepositoryParser.Core.Services
                             else if (changeItem.Action == SvnChangeAction.Modify)
                                 action = "Modified";
                             else if (changeItem.Action == SvnChangeAction.Add)
-                                action = "Deleted";
-                            else if (changeItem.Action == SvnChangeAction.Delete)
                                 action = "Added";
+                            else if (changeItem.Action == SvnChangeAction.Delete)
+                                action = "Deleted";
                             else
                                 action = Convert.ToString(changeItem.Action);
                                                   
                             changesList.Add(new ChangesTable(action,
                                                             changeItem.Path,
                                                             GetDifferences(revision,changeItem.Path,false), 
-                                                            GetDifferences(revision, changeItem.Path, true)));
+                                                            String.Empty));
                         }
                     });
 

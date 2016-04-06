@@ -5,9 +5,6 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -20,7 +17,7 @@ namespace RepositoryParser.ViewModel
     public class AnalisysWindowViewModel : ViewModelBase
     {
         #region Fields
-        private GitRepositoryService _localGitRepositoryService;
+       // private GitRepositoryService _localGitRepositoryService;
         private SqLiteService _localSqliteService;
         private ObservableCollection<string> _localCollection;
         private ObservableCollection<string> _branchCollection;
@@ -50,17 +47,25 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _goToHourActivityCommand;
         private RelayCommand _goToWeekDayActivityWindowCommand;
         private RelayCommand _goToUsersCodeFrequencyCommand;
+        private RelayCommand _onLoadCommand;
         #endregion
         public AnalisysWindowViewModel()
         {
             _authorsList = new List<string>();
-            Messenger.Default.Register<DataMessageToAnalisys>(this, x => HandleDataMessage(x.GitRepoInstance));
             LocalCollection = new ObservableCollection<string>();
             BranchCollection = new ObservableCollection<string>();
             RepositoryCollection = new ObservableCollection<string>();
             localList = new List<CommitTable>();
         }
         #region Buttons getters
+
+        public RelayCommand OnLoadCommand
+        {
+            get
+            {
+                return _onLoadCommand ?? (_onLoadCommand = new RelayCommand(OnLoad));   
+            }
+        }
 
         public RelayCommand GoToUsersCodeFrequencyCommand
         {
@@ -124,16 +129,6 @@ namespace RepositoryParser.ViewModel
         #endregion
 
         #region Messages
-
-        private void HandleDataMessage(GitRepositoryService gitRepo)
-        {
-            _localGitRepositoryService = gitRepo;
-            _localSqliteService = gitRepo.SqLiteInstance;
-            getAuthors();
-            getBranches();
-            getRepositories();
-        }
-
         private void SendMessageToDisplay()
         {
             Messenger.Default.Send<DataMessageToDisplay>(new DataMessageToDisplay(this.localList));
@@ -141,7 +136,7 @@ namespace RepositoryParser.ViewModel
 
         private void SendMessageToDrawChart()
         {
-            Messenger.Default.Send<DataMessageToCharts>(new DataMessageToCharts(this._localGitRepositoryService, _authorsList,
+            Messenger.Default.Send<DataMessageToCharts>(new DataMessageToCharts(_authorsList,
                 GenerateQuery()));
         }
 
@@ -347,7 +342,7 @@ namespace RepositoryParser.ViewModel
             {
                 BranchCollection.Clear();
                 BranchTable temp = new BranchTable();
-                _branchList = temp.GetDataFromBase(_localGitRepositoryService.SqLiteInstance.Connection);
+                _branchList = temp.GetDataFromBase(SqLiteService.GetInstance().Connection);
                 _branchList.ForEach(x => BranchCollection.Add(x.Name));
             }
             else
@@ -357,7 +352,7 @@ namespace RepositoryParser.ViewModel
                                "inner join Repository on BranchForRepo.NR_GitRepository=Repository.ID " +
                                "where Repository.Name='" + MainViewModel.SelectedRepo + "'";
                 BranchTable temp = new BranchTable();
-                _branchList = temp.GetDataFromBase(_localGitRepositoryService.SqLiteInstance.Connection, query);
+                _branchList = temp.GetDataFromBase(SqLiteService.GetInstance().Connection, query);
                 _branchList.ForEach(x => BranchCollection.Add(x.Name));
             }
         }
@@ -366,7 +361,7 @@ namespace RepositoryParser.ViewModel
         {
             RepositoryCollection.Clear();
             RepositoryTable temp= new RepositoryTable();
-            _repoList = temp.GetDataFromBase(_localGitRepositoryService.SqLiteInstance.Connection);
+            _repoList = temp.GetDataFromBase(SqLiteService.GetInstance().Connection);
             _repoList.ForEach(x => RepositoryCollection.Add(x.Name));
         }
         private void getAuthors()
@@ -400,6 +395,14 @@ namespace RepositoryParser.ViewModel
         #endregion
 
         #region Buttons actions
+
+        private void OnLoad()
+        {
+            _localSqliteService = SqLiteService.GetInstance();
+            getAuthors();
+            getBranches();
+            getRepositories();
+        }
 
         private void GoToUsersCodeFrequency()
         {
@@ -601,8 +604,8 @@ namespace RepositoryParser.ViewModel
                 string author = Convert.ToString(reader["Author"]);
                 string date = Convert.ToString(reader["Date"]);
                 string email = Convert.ToString(reader["Email"]);
-                CommitTable tempInstance = new CommitTable(id, message, author, date, email);
-                localList.Add(tempInstance);
+               // CommitTable tempInstance = new CommitTable(id, message, author, date, email);
+                localList.Add(new CommitTable(id,message,author,date,email));
                 id++;
             }
             SendMessageToDisplay();

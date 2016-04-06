@@ -12,10 +12,7 @@
   See http://www.galasoft.ch/mvvm
 */
 
-using System.Windows.Navigation;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
-using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
 
 namespace RepositoryParser.ViewModel

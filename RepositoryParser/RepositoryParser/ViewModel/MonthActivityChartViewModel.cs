@@ -5,11 +5,8 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -24,7 +21,6 @@ namespace RepositoryParser.ViewModel
     {
         #region Fields
         private string _authorTextBox;
-        private GitRepositoryService _gitRepoInstance;
         private ObservableCollection<KeyValuePair<string, int>> _keyCollection;
         private string _filteringQuery;
         private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
@@ -34,7 +30,7 @@ namespace RepositoryParser.ViewModel
         public MonthActivityChartViewModel()
         {
             Messenger.Default.Register<DataMessageToCharts>(this,
-                x => HandleDataMessage(x.RepoInstance, x.FilteringQuery));
+                x => HandleDataMessage(x.FilteringQuery));
             KeyCollection = new ObservableCollection<KeyValuePair<string, int>>();
         }
 
@@ -67,9 +63,8 @@ namespace RepositoryParser.ViewModel
         #endregion
 
         #region Messages
-        private void HandleDataMessage(GitRepositoryService gitRepo, string filteringQuery)
+        private void HandleDataMessage(string filteringQuery)
         {
-            this._gitRepoInstance = gitRepo;
             this._filteringQuery = filteringQuery;
             FillCollection();
         }
@@ -100,7 +95,7 @@ namespace RepositoryParser.ViewModel
                              "and strftime('%m', Date) =" +
                              "'" + dateString + "'";
                 }
-                SQLiteCommand command = new SQLiteCommand(query, _gitRepoInstance.SqLiteInstance.Connection);
+                SQLiteCommand command = new SQLiteCommand(query, SqLiteService.GetInstance().Connection);
                 SQLiteDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {

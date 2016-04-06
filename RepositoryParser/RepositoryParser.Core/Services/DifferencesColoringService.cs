@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using RepositoryParser.Core.Interfaces;
 using RepositoryParser.Core.Models;
 
@@ -32,34 +27,37 @@ namespace RepositoryParser.Core.Services
 
         private ChangesColorModel LineColoring(string line1_output, string line2, bool isParent=false)
         {
-            if(line1_output.StartsWith("+"))
+            if (line1_output.StartsWith("+++") || line1_output.StartsWith("---") || line1_output.StartsWith("diff"))
+                return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Unchanged);
+            else if (line1_output.StartsWith("+") )
                 return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Added);
             else if(line1_output.StartsWith("-"))
                 return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Deleted);
+      
+            return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Unchanged);
+            /* if ((!String.IsNullOrWhiteSpace(line1_output)) && (String.IsNullOrWhiteSpace(line2)))
+             {
+                 if(isParent)
+                     return new ChangesColorModel(line1_output,ChangesColorModel.ChangeType.Deleted);
+                 else
+                     return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Added);
+             }
+             else if ((String.IsNullOrWhiteSpace(line1_output)) && (!String.IsNullOrWhiteSpace(line2)))
+             {
+                 if (isParent)
+                     return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Added);
+                 else
+                     return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Deleted);
+             }
+             else if(line1_output==line2)
+                 return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Unchanged);
+             else if (
+                 !(String.IsNullOrWhiteSpace(line1_output) && String.IsNullOrWhiteSpace(line2) &&
+                   line1_output==line2))
+                 return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Modified);
+             else
+                 return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Unchanged);*/
 
-            if ((!String.IsNullOrWhiteSpace(line1_output)) && (String.IsNullOrWhiteSpace(line2)))
-            {
-                if(isParent)
-                    return new ChangesColorModel(line1_output,ChangesColorModel.ChangeType.Deleted);
-                else
-                    return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Added);
-            }
-            else if ((String.IsNullOrWhiteSpace(line1_output)) && (!String.IsNullOrWhiteSpace(line2)))
-            {
-                if (isParent)
-                    return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Added);
-                else
-                    return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Deleted);
-            }
-            else if(line1_output==line2)
-                return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Unchanged);
-            else if (
-                !(String.IsNullOrWhiteSpace(line1_output) && String.IsNullOrWhiteSpace(line2) &&
-                  line1_output==line2))
-                return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Modified);
-            else
-                return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Unchanged);
-            
         }
 
         private List<string> SplitChanges(string text)

@@ -5,12 +5,8 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls.DataVisualization.Charting;
-using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -25,7 +21,7 @@ namespace RepositoryParser.ViewModel
     {
         #region Fields
         private ObservableCollection<KeyValuePair<string, int>> _keyCollection;
-        private GitRepositoryService _localIGitRepositoryService;
+        //private GitRepositoryService _localIGitRepositoryService;
         private List<string> _authorsList;
         private string _filteringQuery;
         private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources",Assembly.GetExecutingAssembly());
@@ -36,7 +32,7 @@ namespace RepositoryParser.ViewModel
         public ChartWindowViewModel()
         {
             KeyCollection = new ObservableCollection<KeyValuePair<string, int>>();
-            Messenger.Default.Register<DataMessageToCharts>(this, x => HandleDataMessage(x.RepoInstance, x.AuthorsList, x.FilteringQuery));
+            Messenger.Default.Register<DataMessageToCharts>(this, x => HandleDataMessage(x.AuthorsList, x.FilteringQuery));
         }
         #endregion
 
@@ -110,7 +106,7 @@ namespace RepositoryParser.ViewModel
 
 
 
-                SQLiteCommand command = new SQLiteCommand(query, _localIGitRepositoryService.SqLiteInstance.Connection);
+                SQLiteCommand command = new SQLiteCommand(query, SqLiteService.GetInstance().Connection);
                 SQLiteDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
@@ -142,7 +138,7 @@ namespace RepositoryParser.ViewModel
             List<string> newAuthorsList = new List<string>();
             query = "SELECT Author FROM Commits " + MatchQuery(query) + "Group by Author";
 
-            SQLiteCommand command = new SQLiteCommand(query, _localIGitRepositoryService.SqLiteInstance.Connection);
+            SQLiteCommand command = new SQLiteCommand(query, SqLiteService.GetInstance().Connection);
             SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
@@ -154,9 +150,8 @@ namespace RepositoryParser.ViewModel
         #endregion
 
         #region Messsages
-        private void HandleDataMessage(GitRepositoryService repo, List<string> authorsList, string filteringQuery)
+        private void HandleDataMessage(List<string> authorsList, string filteringQuery)
         {
-            this._localIGitRepositoryService = repo;
             this._filteringQuery = filteringQuery;
             if (this._authorsList != null && authorsList.Count > 0)
                 this._authorsList.Clear();

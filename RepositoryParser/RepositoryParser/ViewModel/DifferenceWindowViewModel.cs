@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.SQLite;
-using System.Linq;
 using System.Reflection;
 using System.Resources;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight;
@@ -17,7 +13,6 @@ using GalaSoft.MvvmLight.Messaging;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
-using RepositoryParser.Core.Utils;
 using RepositoryParser.View;
 
 namespace RepositoryParser.ViewModel
@@ -25,7 +20,6 @@ namespace RepositoryParser.ViewModel
     public class DifferenceWindowViewModel : ViewModelBase
     {
         #region Variables
-        private GitRepositoryService _gitRepositoryService;
         private ObservableCollection<KeyValuePair<int, string>> _commitsCollection;
         private KeyValuePair<int, string> _selectedItem;
         private KeyValuePair<string, string> _changeSelectedItem;
@@ -50,7 +44,7 @@ namespace RepositoryParser.ViewModel
 
         public DifferenceWindowViewModel()
         {
-            Messenger.Default.Register<DataMessageToCharts>(this, x => HandleChartMessage(x.RepoInstance, x.FilteringQuery));
+            Messenger.Default.Register<DataMessageToCharts>(this, x => HandleChartMessage(x.FilteringQuery));
             ChangesCollection = new ObservableCollection<KeyValuePair<string, string>>();
 
             this._showDifferencesWorker = new BackgroundWorker();
@@ -76,9 +70,8 @@ namespace RepositoryParser.ViewModel
             if (ListTextB != null)
                 ListTextB.Clear();
         }
-        private void HandleChartMessage(GitRepositoryService repo, string query)
+        private void HandleChartMessage(string query)
         {
-            this._gitRepositoryService = repo;
             this._filteringQuery = query;
             if(!_onLoadWorker.IsBusy)
                 _onLoadWorker.RunWorkerAsync();
@@ -91,7 +84,7 @@ namespace RepositoryParser.ViewModel
                 TextA = "";
                 TextB = "";
                 string query = _changeQuery + " and Changes.Type ='" + dic.Key + "' and Changes.Path='" + dic.Value + "'";
-                SQLiteCommand command = new SQLiteCommand(query, _gitRepositoryService.SqLiteInstance.Connection);
+                SQLiteCommand command = new SQLiteCommand(query, SqLiteService.GetInstance().Connection);
                 SQLiteDataReader reader = command.ExecuteReader();
                 string texta = "";
                 string textb = "";
@@ -126,7 +119,7 @@ namespace RepositoryParser.ViewModel
                 "Select * from Changes inner join ChangesForCommit on Changes.ID=ChangesForCommit.NR_Change where " +
                 "ChangesForCommit.NR_Commit=" + dictionary.Key;
             _changeQuery = query;
-            SQLiteCommand command = new SQLiteCommand(query, _gitRepositoryService.SqLiteInstance.Connection);
+            SQLiteCommand command = new SQLiteCommand(query, SqLiteService.GetInstance().Connection);
             SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
@@ -334,7 +327,7 @@ namespace RepositoryParser.ViewModel
             {
                 query = _filteringQuery;
             }
-            SQLiteCommand command = new SQLiteCommand(query, _gitRepositoryService.SqLiteInstance.Connection);
+            SQLiteCommand command = new SQLiteCommand(query, SqLiteService.GetInstance().Connection);
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {

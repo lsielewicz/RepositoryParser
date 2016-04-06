@@ -8,6 +8,7 @@
         xmlns:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
         xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
         xmlns:resw="clr-namespace:RepositoryParser.Properties"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="{x:Static resw:Resources.AnalysisWindowVie}" Height="640" Width="1100"
         DataContext="{Binding Source={StaticResource Locator}, Path=Analisys}"
@@ -19,6 +20,12 @@
         <conventers:DateFormat x:Key="DateFormat"/>
         <conventers:StringToImageConventer x:Key="StringToImageConventer"/>
     </Window.Resources>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding OnLoadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Grid>
         <Grid.ColumnDefinitions>

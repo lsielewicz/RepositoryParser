@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Linq;
-using System.Runtime.Remoting;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RepositoryParser.Core.Models
 {
@@ -21,7 +17,7 @@ namespace RepositoryParser.Core.Models
 
       
         #region Constructors
-
+        public ChangesTable() { }
         public ChangesTable(int id, string type, string path, string texta, string textb)
         {
             this.ID = id;

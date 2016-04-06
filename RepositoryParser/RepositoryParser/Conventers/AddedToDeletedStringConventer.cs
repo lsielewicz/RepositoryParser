@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace RepositoryParser.Conventers
@@ -15,9 +11,9 @@ namespace RepositoryParser.Conventers
             var stringValue = value as string;
             if (stringValue != null)
             {
-                if (stringValue == "Added")
+                if (stringValue == "Deleted")
                     return "Deleted";
-                else if (stringValue == "Deleted")
+                else if (stringValue == "Added")
                     return "Added";
                 else
                 {

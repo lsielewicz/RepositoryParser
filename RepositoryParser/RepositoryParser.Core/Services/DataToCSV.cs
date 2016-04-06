@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using RepositoryParser.Core.Models;
 
 namespace RepositoryParser.Core.Services
@@ -39,7 +38,7 @@ namespace RepositoryParser.Core.Services
             String csv = String.Join(Environment.NewLine, data2);
             csv = String.Join(
             Environment.NewLine,
-            data.Select(d => d.User + ";" + d.AddedLines + ";" + d.DeletedLines + ";" + d.ModifiedLines)
+            data.Select(d => d.User + ";" + d.AddedLines + ";" + d.DeletedLines)
                  );
             File.WriteAllText(csvPath, csv, Encoding.UTF8);
         }
