@@ -115,6 +115,7 @@
                                                    Background="{Binding ElementName=ChangeType, Path=Text, Converter={StaticResource ChangeTypeToBackgroundColorConventer} }"
                                                    Foreground="Black"
                                                    IsEnabled="False"
+                                                   HorizontalAlignment="Stretch"
                                                    />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -141,6 +142,11 @@
         <ScrollViewer x:Name="CommitScrollViewer" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,30,0,10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" utils:ScrollSynchronizer.ScrollGroup="Group1">
             <StackPanel x:Name="TextAPanel" Grid.Column="1" Grid.Row="2" Margin="5,10,5,10">
                 <ListBox Margin="0,10,0,10" ItemsSource="{Binding ListTextA}" IsEnabled="False">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Line}"

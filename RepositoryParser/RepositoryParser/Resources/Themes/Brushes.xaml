@@ -9,5 +9,8 @@
     <SolidColorBrush x:Key="Grey" Color="#FAFAFA" />
     <SolidColorBrush x:Key="GitOrange" Color="#F34F29"/>
     <SolidColorBrush x:Key="SvnBlue" Color="#809CC8"/>
+    <SolidColorBrush x:Key="ChangesGreen" Color="#6BBC7D"/>
+    <SolidColorBrush x:Key="ChangesRed" Color="#FC7979"/>
+    <SolidColorBrush x:Key="ChangesBlue" Color="#74BBC9"/>
 
 </ResourceDictionary>

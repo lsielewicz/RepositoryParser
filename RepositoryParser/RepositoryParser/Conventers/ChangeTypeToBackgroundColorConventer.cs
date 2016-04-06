@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 
@@ -13,11 +14,11 @@ namespace RepositoryParser.Conventers
             if (s != null)
             {
                 if (s == "Added")
-                    return Brushes.Green;
+                    return (Brush)Application.Current.FindResource("ChangesGreen");
                 else if (s == "Modified")
-                    return Brushes.DeepSkyBlue;
+                    return (Brush)Application.Current.FindResource("ChangesBlue");
                 else if (s == "Deleted")
-                    return Brushes.Red;
+                    return (Brush)Application.Current.FindResource("ChangesRed");
             }
             return Brushes.Transparent;
         }
