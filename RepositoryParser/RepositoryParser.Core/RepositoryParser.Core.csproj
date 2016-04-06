@@ -156,7 +156,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IDifferencesColoringService.cs" />
-    <Compile Include="Interfaces\IGitRepositoryService.cs" />
     <Compile Include="Interfaces\IGitService.cs" />
     <Compile Include="Interfaces\ISqLiteService.cs" />
     <Compile Include="Interfaces\ISvnService.cs" />
@@ -175,7 +174,6 @@
     <Compile Include="Models\UserCodeFrequency.cs" />
     <Compile Include="Services\DifferencesColoringService.cs" />
     <Compile Include="Services\GitCloneService.cs" />
-    <Compile Include="Services\GitRepositoryService.cs" />
     <Compile Include="Models\RepositoryTable.cs" />
     <Compile Include="Services\GitService.cs" />
     <Compile Include="Services\SqLiteService.cs" />
