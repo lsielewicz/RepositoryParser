@@ -1,4 +1,4 @@
-﻿<Window x:Class="RepositoryParser.View.AnalysisWindowView"
+﻿<controls:MetroWindow x:Class="RepositoryParser.View.AnalysisWindowView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,10 +9,11 @@
         xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
         xmlns:resw="clr-namespace:RepositoryParser.Properties"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
         Title="{x:Static resw:Resources.AnalysisWindowVie}" Height="640" Width="1100"
         DataContext="{Binding Source={StaticResource Locator}, Path=Analisys}"
-        Icon="../Assets/Icons/Ratings Filled-50.png"
+        Icon="../Assets/Icons/Chart_Icon_Main.png"
         >
 
     <Window.Resources>
@@ -47,18 +48,9 @@
             <Rectangle.Fill>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF52802B" Offset="0" />
-                    <GradientStop Color="Green" Offset="1" />
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <Label Grid.Row="0"
-               Grid.Column="0" 
-               Grid.ColumnSpan="5" 
-               FontSize="28"
-               VerticalAlignment="Center"
-               HorizontalAlignment="Center"
-               Content="{x:Static resw:Resources.AnalysisWindowTitle}" 
-               Width="auto"  />
 
         <Border Grid.Column="1"
                     Grid.ColumnSpan="3" 
@@ -89,7 +81,7 @@
                     >
                 <StackPanel Orientation="Horizontal" Width="{Binding ElementName=ActivityBtn, Path=ActualWidth}">
                     <Image Source="../Assets/Icons/Pie-Chart.png" Height="24" Margin="2,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.ActivityAnalyseButton}" VerticalAlignment="Center"/>
+                    <TextBlock Text="{x:Static resw:Resources.ActivityAnalyseButton}" VerticalAlignment="Center" FontSize="13"/>
                 </StackPanel>
             </Button>
             <Button x:Name="MonthBtn" 
@@ -101,7 +93,7 @@
                     >
                 <StackPanel Orientation="Horizontal" Width="{Binding ElementName=MonthBtn, Path=ActualWidth}">
                     <Image Source="../Assets/Icons/Column-Chart.png" Height="24" Margin="2,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.MonthActivityAnalyseButton}" VerticalAlignment="Center"/>
+                    <TextBlock Text="{x:Static resw:Resources.MonthActivityAnalyseButton}" VerticalAlignment="Center" FontSize="13"/>
                 </StackPanel>
             </Button>
             <Button x:Name="WeekdayBtn"
@@ -114,7 +106,7 @@
                     >
                 <StackPanel Orientation="Horizontal" Width="{Binding ElementName=WeekdayBtn, Path=ActualWidth}">
                     <Image Source="../Assets/Icons/Area-Chart.png" Height="24" Margin="2,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.WeekdayActivityAnalyseButton}" VerticalAlignment="Center"/>
+                    <TextBlock Text="{x:Static resw:Resources.WeekdayActivityAnalyseButton}" VerticalAlignment="Center" FontSize="13"/>
                 </StackPanel>
             </Button>
             <Button x:Name="DayBtn" 
@@ -127,7 +119,7 @@
                     >
                 <StackPanel Orientation="Horizontal" Width="{Binding ElementName=DayBtn, Path=ActualWidth}">
                     <Image Source="../Assets/Icons/Points-Chart.png" Height="24" Margin="2,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.MonthDayActivityAnalyseButton}" VerticalAlignment="Center"/>
+                    <TextBlock Text="{x:Static resw:Resources.MonthDayActivityAnalyseButton}" VerticalAlignment="Center" FontSize="13"/>
                 </StackPanel>
             </Button>
             <Button x:Name="HourtBtn"
@@ -140,7 +132,7 @@
                     >
                 <StackPanel Orientation="Horizontal" Width="{Binding ElementName=MonthBtn, Path=ActualWidth}">
                     <Image Source="../Assets/Icons/Column-Chart.png" Height="24" Margin="2,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.HourActivityAnalyseButton}" VerticalAlignment="Center"/>
+                    <TextBlock Text="{x:Static resw:Resources.HourActivityAnalyseButton}" VerticalAlignment="Center" FontSize="13"/>
                 </StackPanel>
             </Button>
             <Button x:Name="DiffBtn"
@@ -153,7 +145,7 @@
                     >
                 <StackPanel Orientation="Horizontal" Width="{Binding ElementName=DiffBtn, Path=ActualWidth}">
                     <Image Source="../Assets/Icons/Compare-52.png" Height="24" Margin="2,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.DifferencesButton}" VerticalAlignment="Center"/>
+                    <TextBlock Text="{x:Static resw:Resources.DifferencesButton}" VerticalAlignment="Center" FontSize="13"/>
                 </StackPanel>
             </Button>
 
@@ -167,7 +159,7 @@
                     >
                 <StackPanel Orientation="Horizontal" Width="{Binding ElementName=ActivityBtn, Path=ActualWidth}">
                     <Image Source="../Assets/Icons/Pie-Chart.png" Height="24" Margin="2,0,10,0"/>
-                    <TextBlock VerticalAlignment="Center" Text="{x:Static resw:Resources.GoToUsersFreq}"/>
+                    <TextBlock VerticalAlignment="Center" Text="{x:Static resw:Resources.GoToUsersFreq}" FontSize="13"/>
                 </StackPanel>
             </Button>
         </StackPanel>
@@ -187,6 +179,7 @@
                        HorizontalAlignment="Stretch"
                        Padding="4"
                        FontWeight="Light"
+                       
                        />
             <ListView x:Name="AuthorComboBox" 
                       Grid.Row="1"
@@ -325,7 +318,7 @@
                     >
                 <StackPanel Orientation="Horizontal" Width="{Binding ElementName=MonthBtn, Path=ActualWidth}">
                     <Image Source="../Assets/Icons/Clear.png" Height="24" Margin="2,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.ClearFiltersBtn}" VerticalAlignment="Center"/>
+                    <TextBlock Text="{x:Static resw:Resources.ClearFiltersBtn}" VerticalAlignment="Center" FontSize="13"/>
                 </StackPanel>
             </Button>
         </StackPanel>
@@ -344,7 +337,7 @@
                     >
                 <StackPanel Orientation="Horizontal" Width="{Binding ElementName=SendBtn, Path=Width}">
                     <Image Source="../Assets/Icons/Message_Black.png" Height="24" Margin="2,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.SendDataButton}" VerticalAlignment="Center"/>
+                    <TextBlock Text="{x:Static resw:Resources.SendDataButton}" VerticalAlignment="Center" FontSize="22"/>
                 </StackPanel>
             </Button>
         </StackPanel>
@@ -378,4 +371,5 @@
 -->
 
     </Grid>
-</Window>
+</controls:MetroWindow>
+
