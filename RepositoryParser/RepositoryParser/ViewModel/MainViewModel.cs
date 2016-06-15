@@ -54,8 +54,6 @@ namespace RepositoryParser.ViewModel
         {
             Messenger.Default.Register<DataMessageToDisplay>(this, x => HandleDataMessage(x.CommitList));
             CommitsColection = new ObservableCollection<CommitTable>();
-  
-            SortCommand = new RelayCommand<object>(Sort);
 
             this._worker = new BackgroundWorker();
             this._worker.DoWork += this.DoWork;
@@ -152,8 +150,6 @@ namespace RepositoryParser.ViewModel
                 if (_commitsCollection != value)
                 {
                     _commitsCollection = value;
-                    sortDataView = new CollectionViewSource();
-                    sortDataView.Source = _commitsCollection;
                     RaisePropertyChanged("CommitsCollection");
                 }
             }
@@ -332,7 +328,7 @@ namespace RepositoryParser.ViewModel
         private void RefreshList()
         {
             CommitsColection.Clear();
-           // _gitRepoInstance.GetDataFromBase().ForEach(x => CommitsColection.Add(x));
+            _gitRepoService.GetDataFromBase().ForEach(x => CommitsColection.Add(x));
         }
         private void OnLoad()
         {
@@ -411,46 +407,6 @@ namespace RepositoryParser.ViewModel
                 DataToCsv.CreateCSVFromGitCommitsList(tempList, filename);
                 MessageBox.Show(_resourceManager.GetString("ExportMessage"), _resourceManager.GetString("ExportTitle"));
             }
-        }
-        #endregion
-
-        #region Sorting
-        private CollectionViewSource sortDataView;
-        private string sortColumn;
-        private ListSortDirection sortDirection;
-        public ICommand SortCommand
-        {
-            get;
-            private set;
-        }
-
-        public ListCollectionView SortDataView
-        {
-            get
-            {
-                return (ListCollectionView)sortDataView.View;
-            }
-        }
-        public void Sort(object parameter)
-        {
-            string column = parameter as string;
-            if (sortColumn == column)
-            {
-                sortDirection = sortDirection == ListSortDirection.Descending ?
-                    ListSortDirection.Ascending :
-                    ListSortDirection.Descending;
-            }
-            else
-            {
-                sortColumn = column;
-                sortDirection = ListSortDirection.Descending;
-            }
-            if (sortDataView != null)
-            {
-                sortDataView.SortDescriptions.Clear();
-                sortDataView.SortDescriptions.Add(new SortDescription(sortColumn, sortDirection));
-            }
-
         }
         #endregion
 
