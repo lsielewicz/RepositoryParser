@@ -113,7 +113,7 @@
             <DataGrid Grid.Row="1" Grid.Column="0"
                       ItemsSource="{Binding CommitsColection}"
                       CanUserSortColumns="True"
-                      AlternatingRowBackground="Beige" AlternationCount="2"
+                      AlternatingRowBackground="{StaticResource MyRowColor}" AlternationCount="2"
                       AutoGenerateColumns="False"
                       ColumnWidth="auto"
                       >

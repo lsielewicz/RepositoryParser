@@ -104,31 +104,21 @@
                                        FontSize="14"
                                        />
                     </Border>
+                    <DataGrid Grid.Row="1" Grid.Column="0"
+                      ItemsSource="{Binding CodeFreqCollection}"
+                      CanUserSortColumns="True"
+                      AlternatingRowBackground="{StaticResource MyRowColor}" AlternationCount="2"
+                      AutoGenerateColumns="False"
+                      ColumnWidth="auto"
+                      CanUserAddRows="False"
+                      >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding User}" Header="{x:Static resw:Resources.CommitsList_Author}"/>
+                            <DataGridTextColumn Binding="{Binding AddedLines}" Header="{x:Static resw:Resources.Added}"/>
+                            <DataGridTextColumn Binding="{Binding DeletedLines}" Header="{x:Static resw:Resources.Deleted}"/>
+                        </DataGrid.Columns>
 
-                    <ListView Grid.Row="1" Foreground="Black" ItemsSource="{Binding CodeFreqCollection}">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn DisplayMemberBinding="{Binding User}">
-                                    <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Author}" Margin="0" Padding="30,0" HorizontalAlignment="Stretch" Background="{StaticResource MyGreen}" Foreground="Black"/>
-                                </GridViewColumn >
-
-                                <GridViewColumn DisplayMemberBinding="{Binding AddedLines}">
-                                    <GridViewColumnHeader Content="{x:Static resw:Resources.Added}" Margin="0" Padding="30,0" HorizontalAlignment="Stretch" Background="{StaticResource MyGreen}" Foreground="Black"/>
-                                </GridViewColumn>
-
-                                <GridViewColumn DisplayMemberBinding="{Binding DeletedLines}">
-                                    <GridViewColumnHeader Content="{x:Static resw:Resources.Deleted}" Margin="0" Padding="30,0" HorizontalAlignment="Stretch" Background="{StaticResource MyGreen}" Foreground="Black"/>
-                                </GridViewColumn>
-
-                                <GridViewColumn Width="1500">
-                                    <GridViewColumnHeader HorizontalAlignment="Stretch" Background="{StaticResource MyGreen}" Foreground="Black"/>
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate />
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                    </DataGrid>
                 </Grid>
             </TabItem>
         </TabControl>

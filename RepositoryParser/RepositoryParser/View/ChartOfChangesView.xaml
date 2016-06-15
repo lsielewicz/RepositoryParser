@@ -52,19 +52,19 @@
             </TabItem>
             
             <TabItem Header="{x:Static resw:Resources.ListOfChangesTitle}">
-                <ListView ItemsSource="{Binding ChildCollection}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding Key}">
-                                <GridViewColumnHeader Content="{x:Static resw:Resources.TypeOfChange}" />
-                            </GridViewColumn>
+                <DataGrid Grid.Row="1" Grid.Column="0"
+                      ItemsSource="{Binding  ChildCollection}"
+                      CanUserSortColumns="True"
+                      AlternatingRowBackground="{StaticResource MyRowColor}" AlternationCount="2"
+                      AutoGenerateColumns="False"
+                      ColumnWidth="auto"
+                      >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Key}" Header="{x:Static resw:Resources.TypeOfChange}"/>
+                        <DataGridTextColumn Binding="{Binding Value}" Header="{x:Static resw:Resources.CountOfLines}" Width="400"/>
+                    </DataGrid.Columns>
 
-                            <GridViewColumn Width="auto"  DisplayMemberBinding="{Binding Value}">
-                                <GridViewColumnHeader Content="{x:Static resw:Resources.CountOfLines}" />
-                            </GridViewColumn>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+                </DataGrid>
             </TabItem>
         </TabControl>
         

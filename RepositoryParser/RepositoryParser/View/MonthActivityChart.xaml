@@ -53,18 +53,19 @@
                 </chartingToolkit:Chart>
             </TabItem>
             <TabItem Header="{x:Static resw:Resources.MonthActivityChartList}">
-                <ListView ItemsSource="{Binding KeyCollection}" Foreground="Black">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding Key}" >
-                                <GridViewColumnHeader Content="{x:Static resw:Resources.Month}" HorizontalAlignment="Stretch" Background="{StaticResource MyGreen}" Foreground="Black"/>
-                            </GridViewColumn>
-                            <GridViewColumn Width="auto"  DisplayMemberBinding="{Binding Value}">
-                                <GridViewColumnHeader Content="{x:Static resw:Resources.CountOfCommits}" HorizontalAlignment="Stretch" Background="{StaticResource MyGreen}" Foreground="Black" />
-                            </GridViewColumn>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+                <DataGrid Grid.Row="1" Grid.Column="0"
+                      ItemsSource="{Binding KeyCollection}"
+                      CanUserSortColumns="True"
+                      AlternatingRowBackground="{StaticResource MyRowColor}" AlternationCount="2"
+                      AutoGenerateColumns="False"
+                      ColumnWidth="auto"
+                      >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Key}" Header="{x:Static resw:Resources.Month}"/>
+                        <DataGridTextColumn Binding="{Binding Value}" Header="{x:Static resw:Resources.CountOfCommits}"/>
+                    </DataGrid.Columns>
+
+                </DataGrid>
             </TabItem>
         </TabControl>
 

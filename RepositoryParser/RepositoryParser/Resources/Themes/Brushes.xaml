@@ -12,5 +12,6 @@
     <SolidColorBrush x:Key="ChangesGreen" Color="#6BBC7D"/>
     <SolidColorBrush x:Key="ChangesRed" Color="#FC7979"/>
     <SolidColorBrush x:Key="ChangesBlue" Color="#74BBC9"/>
+    <SolidColorBrush x:Key="MyRowColor" Color="#E2E2E2"/>
 
 </ResourceDictionary>
