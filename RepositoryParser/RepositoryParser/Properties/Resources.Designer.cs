@@ -151,6 +151,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chart.
+        /// </summary>
+        public static string Chart {
+            get {
+                return ResourceManager.GetString("Chart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chart of changes:.
         /// </summary>
         public static string ChartOfChangesTitle {
@@ -579,6 +588,15 @@ namespace RepositoryParser.Properties {
         public static string Lines {
             get {
                 return ResourceManager.GetString("Lines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List.
+        /// </summary>
+        public static string List {
+            get {
+                return ResourceManager.GetString("List", resourceCulture);
             }
         }
         

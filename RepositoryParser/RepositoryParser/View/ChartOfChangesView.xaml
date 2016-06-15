@@ -8,7 +8,7 @@
         xmlns:resw="clr-namespace:RepositoryParser.Properties"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
-         Title="{x:Static resw:Resources.ChartOfChangesView}" Height="600" Width="600"
+         Title="{x:Static resw:Resources.ChartOfChangesView}" Height="700" Width="700"
         DataContext="{Binding Source={StaticResource Locator}, Path=ChartOfChanges}"
         ResizeMode="NoResize"
         Icon="../Assets/Icons/Chart_Icon_Main.png"
@@ -25,14 +25,14 @@
             <RowDefinition Height="15"/>
         </Grid.RowDefinitions>
         <TabControl Grid.Row="1" Grid.Column="1">
-            <TabItem Header="{x:Static resw:Resources.ChartOfChangesTitle}">
+            <TabItem Header="{x:Static resw:Resources.Chart}">
                 <StackPanel  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <chartingToolkit:Chart x:Name="Child"
                                         Title="{x:Static resw:Resources.ChartOfChangesTitle}"
                                        MinHeight="500"
                                        MinWidth="500"
-                                       Background="Beige" 
+                                       Background="{StaticResource Grey}" 
                                        LegendTitle="{x:Static resw:Resources.Legend}"
                                    
                                        >
@@ -51,7 +51,7 @@
                 </StackPanel>
             </TabItem>
             
-            <TabItem Header="{x:Static resw:Resources.ListOfChangesTitle}">
+            <TabItem Header="{x:Static resw:Resources.List}">
                 <DataGrid Grid.Row="1" Grid.Column="0"
                       ItemsSource="{Binding  ChildCollection}"
                       CanUserSortColumns="True"
@@ -67,7 +67,7 @@
                 </DataGrid>
             </TabItem>
         </TabControl>
-        
+        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Background="{StaticResource Graphite}"/>
     </Grid>
 </controls:MetroWindow>
 

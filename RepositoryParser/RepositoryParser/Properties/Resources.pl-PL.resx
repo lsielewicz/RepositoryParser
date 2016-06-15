@@ -524,4 +524,10 @@
   <data name="ExportFailed" xml:space="preserve">
     <value>Nie udało się wyeksportować.</value>
   </data>
+  <data name="Chart" xml:space="preserve">
+    <value>Wykres</value>
+  </data>
+  <data name="List" xml:space="preserve">
+    <value>Lista</value>
+  </data>
 </root>

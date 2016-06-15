@@ -48,19 +48,25 @@
             <Rectangle.Fill>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF52802B" Offset="0" />
-                    <GradientStop Color="Green" Offset="1" />
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
         <Rectangle Grid.ColumnSpan="2" Grid.Row="2" Grid.Column="1" Height="30" VerticalAlignment="Top">
             <Rectangle.Fill>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF52802B" Offset="0" />
-                    <GradientStop Color="Green" Offset="1" />
+                    <GradientStop Color="#424242" Offset="0" />
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{x:Static resw:Resources.DifferenceWindowTitle}" Width="auto"  />
+        <Label Grid.Row="0" Grid.Column="0" 
+               Grid.ColumnSpan="3" 
+               FontSize="28"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Center" 
+               Content="{x:Static resw:Resources.DifferenceWindowTitle}" 
+               Width="auto"  
+               FontWeight="Light"
+               />
 
         <DataGrid Grid.Row="1" Grid.Column="0" Grid.RowSpan="3"
                       ItemsSource="{Binding CommitsCollection}"
@@ -101,7 +107,7 @@
 
         </DataGrid>
 
-        <TextBlock Text="{x:Static resw:Resources.Changes}" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,10,0,10" FontWeight="Light"/>
+        <TextBlock Text="{x:Static resw:Resources.Changes}" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,10,0,10" FontWeight="Light" FontSize="13" Foreground="{StaticResource Grey}"/>
         <ScrollViewer x:Name="CommitScrollViewer" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,30,0,10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" utils:ScrollSynchronizer.ScrollGroup="Group1">
             <StackPanel x:Name="TextAPanel" Grid.Column="1" Grid.Row="2" Margin="5,10,5,10">
                 <ListBox Margin="0,10,0,10" ItemsSource="{Binding ListTextA}" IsEnabled="False">
@@ -122,22 +128,6 @@
             </StackPanel>
         </ScrollViewer>
 
-       <!-- <TextBlock Text="{x:Static resw:Resources.ParentCommit}" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="2" Margin="0,10,0,10" FontWeight="Light"/>
-        <ScrollViewer Grid.Column="2" Grid.Row="2"  Margin="0,30,0,10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" utils:ScrollSynchronizer.ScrollGroup="Group1">
-            <StackPanel x:Name="TextBPanel" Grid.Column="2" Grid.Row="2" Margin="5,10,5,10">
-                <ListBox Margin="0,10,0,10" ItemsSource="{Binding ListTextB}" IsEnabled="False">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Line}"
-                                           Background="{Binding Path=Color,Converter={StaticResource EnumToColorConventer}}"
-                                           Foreground="Black"
-                                    />
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </StackPanel>
-        </ScrollViewer>-->
-
         <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Button x:Name="GoToChrtButton" 
                     Padding="10,0"
@@ -150,13 +140,13 @@
                     >
                 <StackPanel Orientation="Horizontal" Width="{Binding ElementName=SendBtn, Path=Width}">
                     <Image Source="../Assets/Icons/Pie-Chart.png" Height="24" Margin="2,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.GoToDifferencesChartButton}" VerticalAlignment="Center" FontWeight="Light"/>
+                    <TextBlock Text="{x:Static resw:Resources.GoToDifferencesChartButton}" VerticalAlignment="Center" FontWeight="Light" FontSize="13"/>
                 </StackPanel>
             </Button>
         </StackPanel>
 
          <StatusBar Grid.Row="1" Grid.Column="0" 
-                   Grid.RowSpan="2"
+                   Grid.RowSpan="3"
                    Grid.ColumnSpan="3"
                    Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" 
                    Opacity="0.9"

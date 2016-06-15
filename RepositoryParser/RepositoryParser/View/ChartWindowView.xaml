@@ -27,7 +27,6 @@
             <Rectangle.Fill>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF52802B" Offset="0" />
-                    <GradientStop Color="Green" Offset="1" />
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
@@ -35,7 +34,7 @@
         
         
         <TabControl Grid.Row="1">
-            <TabItem Header="{x:Static resw:Resources.ActivityChart}">
+            <TabItem Header="{x:Static resw:Resources.Chart}">
                 <chartingToolkit:Chart x:Name="Chart" 
                                        Title="{x:Static resw:Resources.ActivityChart}" 
                                        Background="{StaticResource Grey}" 
@@ -50,7 +49,7 @@
                     </chartingToolkit:Chart.Series>
                 </chartingToolkit:Chart>
             </TabItem>
-            <TabItem Header="{x:Static resw:Resources.ActivityList}">
+            <TabItem Header="{x:Static resw:Resources.List}">
                 <DataGrid Grid.Row="1" Grid.Column="0"
                       ItemsSource="{Binding KeyCollection}"
                       CanUserSortColumns="True"
