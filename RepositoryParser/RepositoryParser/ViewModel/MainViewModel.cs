@@ -328,7 +328,7 @@ namespace RepositoryParser.ViewModel
         private void RefreshList()
         {
             CommitsColection.Clear();
-           // _gitRepoInstance.GetDataFromBase().ForEach(x => CommitsColection.Add(x));
+            _gitRepoService.GetDataFromBase().ForEach(x => CommitsColection.Add(x));
         }
         private void OnLoad()
         {

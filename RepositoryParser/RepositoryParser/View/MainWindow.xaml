@@ -9,11 +9,25 @@
         xmlns:resw="clr-namespace:RepositoryParser.Properties"
         mc:Ignorable="d"
         Title="{x:Static resw:Resources.MainWindowView}" Height="600" Width="1200"
-        Icon="../Assets/Icons/Chart_Icon_Main.png"
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
         MinHeight="450" MinWidth="800"
+        ShowIconOnTitleBar="True"
+        ShowTitleBar="True"
         >
+    <Controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <Grid Width="{TemplateBinding Width}"
+                 Height="{TemplateBinding Height}"
+                 Margin="0"
+                 Background="Transparent"
+                 RenderOptions.EdgeMode="Aliased"
+                 RenderOptions.BitmapScalingMode="HighQuality">
+                <Image Source="../Assets/Icons/Chart_Icon_Main.png"/>
+            </Grid>
+        </DataTemplate>
+    </Controls:MetroWindow.IconTemplate>
+
     <Window.Resources>
         <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <conventers:NegativeBoolToVisibilityConventer x:Key="NegativeBoolToVisibilityConventer"/>
@@ -34,7 +48,8 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
-            <RowDefinition Height="1.5*" MinHeight="120"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="1.5*" MinHeight="85"/>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="5"/>
@@ -47,17 +62,18 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-
-        <Label x:Uid="MainTitle" 
-               Grid.Row="0" Grid.Column="1" 
-               FontSize="23" 
-               VerticalAlignment="Center" 
-               HorizontalAlignment="Center"  
-               Width="auto"  
-               Content="{x:Static resw:Resources.MainWindowTitle}"
-               />
-        <StackPanel Grid.Row="1" Grid.Column="1">
-            <Label x:Name="UrlLabel" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{x:Static resw:Resources.UrlAdress}"/>
+        
+        <Border Background="{StaticResource Graphite}" Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0">
+            <Label x:Name="UrlLabel"
+                       FontSize="16" 
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Content="{x:Static resw:Resources.UrlAdress}"
+                       Foreground="{StaticResource Grey}"
+                       FontWeight="Light"
+                       />
+        </Border>
+        <StackPanel Grid.Row="2" Grid.Column="1">
             <TextBox x:Name="UrlTextBlock"
                      FontSize="16" 
                      Margin="5" 
@@ -84,7 +100,7 @@
             </Button>
         </StackPanel>
 
-        <Grid Grid.Row="2" Grid.Column="1">
+        <Grid Grid.Row="3" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="3*"/>
@@ -129,7 +145,7 @@
 
         </Grid>
 
-        <StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch">
+        <StackPanel Grid.Row="4" Grid.Column="1" HorizontalAlignment="Stretch">
             <Button x:Name="CloneRepositoryBtn"
                     Command="{Binding StartWorkCommand}" 
                     IsEnabled="{Binding IsCloneButtonEnabled }" 
@@ -150,7 +166,7 @@
             </Button>
         </StackPanel>
 
-        <DockPanel Grid.Row="2" Grid.Column="0">
+        <DockPanel Grid.Row="2" Grid.Column="0" Margin="0,10,0,5">
             <Button x:Name="GoToAnalisysBtn" 
                     Height="50" 
                     VerticalAlignment="Top" 
@@ -167,7 +183,7 @@
 
         </DockPanel>
 
-        <StackPanel Grid.Row="2" Grid.Column="2">
+        <StackPanel Grid.Row="2" Grid.Column="2" Margin="0,10,0,5" Grid.RowSpan="4">
             <Button x:Name="ClearDataBase" 
                     Height="50" 
                     VerticalAlignment="Top" 
@@ -212,10 +228,10 @@
             </Button>
         </StackPanel>
         
-        <StatusBar Grid.Row="1" Grid.Column="0" 
-                   Grid.RowSpan="2"
+        <StatusBar Grid.Row="0" Grid.Column="0" 
+                   Grid.RowSpan="6"
                    Grid.ColumnSpan="3"
-                   Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" 
+                   Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"  
                    Opacity="0.9"
                    Background="{StaticResource Grey}"
                    HorizontalAlignment="Stretch"
