@@ -109,65 +109,24 @@
                 </StackPanel>
             </Border>
         </StackPanel>
-        
-            <ListView ItemsSource="{Binding SortDataView}" Grid.Row="1" Foreground="Black">
-                <ListView.View>
-                    <GridView>
 
-                        <GridViewColumn Width="40" DisplayMemberBinding="{Binding ID}">
-                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_ID}" 
-                                                  Command="{Binding SortCommand}" 
-                                                  CommandParameter="ID" 
-                                                  FontWeight="DemiBold" 
-                                                  MinWidth="35"
-                                                  Background="{StaticResource MyGreen}"
-                                                  />
-                        </GridViewColumn>
+            <DataGrid Grid.Row="1" Grid.Column="0"
+                      ItemsSource="{Binding CommitsColection}"
+                      CanUserSortColumns="True"
+                      AlternatingRowBackground="Beige" AlternationCount="2"
+                      AutoGenerateColumns="False"
+                      ColumnWidth="auto"
+                      >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding ID}" Header="{x:Static resw:Resources.CommitsList_ID}"/>
+                    <DataGridTextColumn Binding="{Binding Message}" Header="{x:Static resw:Resources.CommitsList_Message}" Width="400"/>
+                    <DataGridTextColumn Binding="{Binding Author}" Header="{x:Static resw:Resources.CommitsList_Author}"/>
+                    <DataGridTextColumn Binding="{Binding Date}" Header="{x:Static resw:Resources.CommitsList_Date}"/>
+                    <DataGridTextColumn Binding="{Binding Email}" Header="{x:Static resw:Resources.CommitsList_Email}"/>
+                </DataGrid.Columns>
 
-                        <GridViewColumn Width="auto"  DisplayMemberBinding="{Binding Message}">
-                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Message}" 
-                                                  Command="{Binding SortCommand}" 
-                                                  CommandParameter="Message" 
-                                                  FontWeight="DemiBold" 
-                                                  MinWidth="420" 
-                                                  Background="{StaticResource MyGreen}"
-                                                  />
-                        </GridViewColumn>
+            </DataGrid>
 
-                        <GridViewColumn Width="auto" DisplayMemberBinding="{Binding Author}">
-                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Author}" 
-                                                  Command="{Binding SortCommand}" 
-                                                  CommandParameter="Author" 
-                                                  FontWeight="DemiBold" 
-                                                  MinWidth="130"
-                                                  Background="{StaticResource MyGreen}"
-                                                  />
-                        </GridViewColumn>
-
-                        <GridViewColumn Width="auto" DisplayMemberBinding="{Binding Date}">
-                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Date}" 
-                                                  Command="{Binding SortCommand}" 
-                                                  CommandParameter="Date" 
-                                                  FontWeight="DemiBold"
-                                                  MinWidth="120"
-                                                  Background="{StaticResource MyGreen}"
-                                                  />
-                        </GridViewColumn>
-
-                        <GridViewColumn Width="auto" DisplayMemberBinding="{Binding Email}">
-                            <GridViewColumnHeader Content="{x:Static resw:Resources.CommitsList_Email}"
-                                                  Command="{Binding SortCommand}"
-                                                  CommandParameter="Email" 
-                                                  FontWeight="DemiBold"
-                                                  MinWidth="150"
-                                                  Background="{StaticResource MyGreen}"
-                                                  />
-                        </GridViewColumn>
-
-                    </GridView>
-                </ListView.View>
-            </ListView>
-   
         </Grid>
 
         <StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch">
