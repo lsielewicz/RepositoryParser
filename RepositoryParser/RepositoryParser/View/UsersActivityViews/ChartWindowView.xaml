@@ -10,6 +10,8 @@
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:viewModel="clr-namespace:RepositoryParser.ViewModel"
         xmlns:view="clr-namespace:RepositoryParser.View"
+        xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="{x:Static resw:Resources.UserActivityView}" Height="600" Width="800"
         DataContext="{Binding Source={StaticResource Locator}, Path=UsersActivityContentProvider}"
@@ -23,11 +25,16 @@
         <DataTemplate DataType="{x:Type viewModel:UsersCodeFrequencyViewModel}">
             <local:UserActivityCodeFrequencyView/>
         </DataTemplate>
-        
-        
+
+        <conventers:ViewModelBaseToVisibilityConventer x:Key="ViewModelBaseToVisibilityConventer"/>
     </Window.Resources>
     
-    
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closed">
+            <i:InvokeCommandAction Command="{Binding ClosedEventCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -64,8 +71,17 @@
         </StackPanel>
         
         <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding CurrentViewModel}"/>
-        
-        
+
+        <Image Grid.Row="1"
+               Grid.Column="1"
+               Source="../../Resources/../Assets/Images/arr2.png"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Opacity="0.3"
+               Width="300"
+               Height="300"
+               Visibility="{Binding CurrentViewModel, Converter={StaticResource ViewModelBaseToVisibilityConventer}}"
+               ></Image>
        
 
        

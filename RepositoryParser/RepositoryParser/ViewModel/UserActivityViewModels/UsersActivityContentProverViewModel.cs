@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
@@ -17,6 +18,7 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
         private ViewModelBase _currentViewModel;
         private RelayCommand _openChartViewCommand;
         private RelayCommand _openCodeFrequencyCommand;
+        private RelayCommand _closedEventCommand;
         private List<string> _authorsList;
         private string _filteringQuery; 
 
@@ -52,6 +54,14 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
                 return _openCodeFrequencyCommand ?? (_openCodeFrequencyCommand = new RelayCommand(OpenCodeFrequency));
             }
         }
+
+        public RelayCommand ClosedEventCommand
+        {
+            get
+            {
+                return _closedEventCommand ?? (_closedEventCommand = new RelayCommand(ClosedEvent));
+            }
+        }
         #endregion
 
         #region Methods
@@ -72,6 +82,11 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
         {
             _authorsList = authors;
             _filteringQuery = filternigQuery;
+        }
+
+        private void ClosedEvent()
+        {
+            CurrentViewModel = null;
         }
         #endregion
     }

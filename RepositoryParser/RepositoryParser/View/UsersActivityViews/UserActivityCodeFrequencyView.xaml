@@ -102,8 +102,8 @@
             </TabItem>
         </TabControl>
 
-        <StatusBar Grid.Row="1" Grid.Column="0" 
-                   Grid.ColumnSpan="3"
+        <StatusBar Grid.Row="1" Grid.Column="1" 
+                   Grid.ColumnSpan="2"
                    Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"  
                    Opacity="0.7"
                    Background="{StaticResource Graphite}"
