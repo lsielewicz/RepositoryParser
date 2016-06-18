@@ -235,9 +235,6 @@
     <Compile Include="View\UsersActivityViews\UserActivityCodeFrequencyView.xaml.cs">
       <DependentUpon>UserActivityCodeFrequencyView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UsersActivityViews\UsersCodeFrequencyView.xaml.cs">
-      <DependentUpon>UsersCodeFrequencyView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\WeekDayActivityView.xaml.cs">
       <DependentUpon>WeekDayActivityView.xaml</DependentUpon>
     </Compile>
@@ -314,10 +311,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UsersActivityViews\UserActivityCodeFrequencyView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\UsersActivityViews\UsersCodeFrequencyView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -4,11 +4,11 @@ using MahApps.Metro.Controls;
 namespace RepositoryParser.View
 {
     /// <summary>
-    /// Interaction logic for UsersCodeFrequencyView.xaml
+    /// Interaction logic for ChartWindowView.xaml
     /// </summary>
-    public partial class UsersCodeFrequencyView : MetroWindow
+    public partial class ChartWindowView : MetroWindow
     {
-        public UsersCodeFrequencyView()
+        public ChartWindowView()
         {
             InitializeComponent();
         }

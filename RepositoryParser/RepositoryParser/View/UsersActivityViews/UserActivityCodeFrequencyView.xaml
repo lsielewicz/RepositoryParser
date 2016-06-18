@@ -80,7 +80,7 @@
                                        FontWeight="Light"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center"
-                                       FontSize="14"
+                                       FontSize="14" Margin="0,5,0,0"
                                        />
                     </Border>
                     <DataGrid Grid.Row="1" Grid.Column="0"
