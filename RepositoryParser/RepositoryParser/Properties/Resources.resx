@@ -527,4 +527,16 @@
   <data name="ExportFailed" xml:space="preserve">
     <value>Export Failed</value>
   </data>
+  <data name="Chart" xml:space="preserve">
+    <value>Chart</value>
+  </data>
+  <data name="List" xml:space="preserve">
+    <value>List</value>
+  </data>
+  <data name="CodeFrequencyAnalyse" xml:space="preserve">
+    <value>Code frequency analyse</value>
+  </data>
+  <data name="CoutOfCommitsAnalyse" xml:space="preserve">
+    <value>Count of commits analyse</value>
+  </data>
 </root>

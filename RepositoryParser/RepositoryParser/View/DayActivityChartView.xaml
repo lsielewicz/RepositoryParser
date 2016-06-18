@@ -26,14 +26,13 @@
             <Rectangle.Fill>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF52802B" Offset="0" />
-                    <GradientStop Color="Green" Offset="1" />
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
 
         <Label Grid.Row="0" x:Name="WelcomeLabel" Content="{x:Static resw:Resources.DayActivityWindowTitle}" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <TabControl Grid.Column="0" Grid.Row="1">
-            <TabItem Header="{x:Static resw:Resources.DayActivityChartChart}">
+            <TabItem Header="{x:Static resw:Resources.Chart}">
                 <chartingToolkit:Chart Title="{x:Static resw:Resources.DayActivityChartChart}" Background="{StaticResource Grey}">
                     <chartingToolkit:Chart.LegendStyle>
                         <Style TargetType="Control">
@@ -50,7 +49,7 @@
                     </chartingToolkit:Chart.Series>
                 </chartingToolkit:Chart>
             </TabItem>
-            <TabItem Header="{x:Static resw:Resources.DayActivityChartList}">
+            <TabItem Header="{x:Static resw:Resources.List}">
                 <DataGrid Grid.Row="1" Grid.Column="0"
                       ItemsSource="{Binding KeyCollection}"
                       CanUserSortColumns="True"

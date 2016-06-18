@@ -151,6 +151,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chart.
+        /// </summary>
+        public static string Chart {
+            get {
+                return ResourceManager.GetString("Chart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chart of changes:.
         /// </summary>
         public static string ChartOfChangesTitle {
@@ -214,6 +223,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Code frequency analyse.
+        /// </summary>
+        public static string CodeFrequencyAnalyse {
+            get {
+                return ResourceManager.GetString("CodeFrequencyAnalyse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Author.
         /// </summary>
         public static string CommitsList_Author {
@@ -273,6 +291,15 @@ namespace RepositoryParser.Properties {
         public static string CountOfLines {
             get {
                 return ResourceManager.GetString("CountOfLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Count of commits analyse.
+        /// </summary>
+        public static string CoutOfCommitsAnalyse {
+            get {
+                return ResourceManager.GetString("CoutOfCommitsAnalyse", resourceCulture);
             }
         }
         
@@ -579,6 +606,15 @@ namespace RepositoryParser.Properties {
         public static string Lines {
             get {
                 return ResourceManager.GetString("Lines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List.
+        /// </summary>
+        public static string List {
+            get {
+                return ResourceManager.GetString("List", resourceCulture);
             }
         }
         
