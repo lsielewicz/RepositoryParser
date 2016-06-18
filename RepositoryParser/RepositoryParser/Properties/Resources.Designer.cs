@@ -223,6 +223,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Code frequency analyse.
+        /// </summary>
+        public static string CodeFrequencyAnalyse {
+            get {
+                return ResourceManager.GetString("CodeFrequencyAnalyse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Author.
         /// </summary>
         public static string CommitsList_Author {
@@ -282,6 +291,15 @@ namespace RepositoryParser.Properties {
         public static string CountOfLines {
             get {
                 return ResourceManager.GetString("CountOfLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Count of commits analyse.
+        /// </summary>
+        public static string CoutOfCommitsAnalyse {
+            get {
+                return ResourceManager.GetString("CoutOfCommitsAnalyse", resourceCulture);
             }
         }
         

@@ -14,7 +14,7 @@
         Height="600" 
         Width="800"
         DataContext="{Binding Source={StaticResource Locator}, Path=UsersCodeFrequency}"
-        Icon="../Assets/Icons/Chart_Icon_Main.png"
+        Icon="../../Assets/Icons/Chart_Icon_Main.png"
         >
     <Window.Resources>
         <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
@@ -149,7 +149,7 @@
                     Command="{Binding ExportFileCommand}"
                     >
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=SaveFileBtn, Path=Width}" >
-                    <Image Source="../Assets/Icons/CSV Filled-50.png" Width="24" Margin="10,0,10,0"/>
+                    <Image Source="../../Assets/Icons/CSV Filled-50.png" Width="24" Margin="10,0,10,0"/>
                     <TextBlock Text="{x:Static resw:Resources.ExportToFileButton}" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>

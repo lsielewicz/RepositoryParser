@@ -530,4 +530,10 @@
   <data name="List" xml:space="preserve">
     <value>Lista</value>
   </data>
+  <data name="CodeFrequencyAnalyse" xml:space="preserve">
+    <value>Analiza na podstawie bilansu zmian w kodzie</value>
+  </data>
+  <data name="CoutOfCommitsAnalyse" xml:space="preserve">
+    <value>Analiza na podstawie liczby commitów</value>
+  </data>
 </root>

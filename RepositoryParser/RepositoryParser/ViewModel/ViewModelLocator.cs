@@ -14,6 +14,7 @@
 
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
+using RepositoryParser.ViewModel.UserActivityViewModels;
 
 namespace RepositoryParser.ViewModel
 {
@@ -51,10 +52,19 @@ namespace RepositoryParser.ViewModel
             SimpleIoc.Default.Register<HourActivityViewModel>();
             SimpleIoc.Default.Register<ChartOfChangesViewModel>();
             SimpleIoc.Default.Register<UsersCodeFrequencyViewModel>();
+            SimpleIoc.Default.Register<UsersActivityContentProverViewModel>();
+
 
         }
 
 
+        public UsersActivityContentProverViewModel UsersActivityContentProvider
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<UsersActivityContentProverViewModel>();
+            }
+        }
 
 
         public MainViewModel Main
@@ -139,6 +149,7 @@ namespace RepositoryParser.ViewModel
                 
             }
         }
+
 
         public static void Cleanup()
         {

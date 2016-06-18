@@ -213,13 +213,14 @@
     </Compile>
     <Compile Include="ViewModel\AnalisysWindowViewModel.cs" />
     <Compile Include="ViewModel\ChartOfChangesViewModel.cs" />
-    <Compile Include="ViewModel\ChartWindowViewModel.cs" />
+    <Compile Include="ViewModel\UserActivityViewModels\ChartWindowViewModel.cs" />
     <Compile Include="ViewModel\DayActivityViewModel.cs" />
     <Compile Include="ViewModel\DifferenceWindowViewModel.cs" />
     <Compile Include="ViewModel\HourActivityViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MonthActivityChartViewModel.cs" />
-    <Compile Include="ViewModel\UsersCodeFrequencyViewModel.cs" />
+    <Compile Include="ViewModel\UserActivityViewModels\UsersActivityContentProverViewModel.cs" />
+    <Compile Include="ViewModel\UserActivityViewModels\UsersCodeFrequencyViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\ChartOfChangesView.xaml.cs">
       <DependentUpon>ChartOfChangesView.xaml</DependentUpon>
@@ -227,12 +228,22 @@
     <Compile Include="View\MonthActivityChart.xaml.cs">
       <DependentUpon>MonthActivityChart.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UsersCodeFrequencyView.xaml.cs">
+    <Compile Include="View\UsersActivityViews\UserActivityChartView.xaml.cs">
+      <DependentUpon>UserActivityChartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UsersActivityViews\UserActivityCodeFrequencyView.xaml.cs">
+      <DependentUpon>UserActivityCodeFrequencyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UsersActivityViews\UsersCodeFrequencyView.xaml.cs">
       <DependentUpon>UsersCodeFrequencyView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\WeekDayActivityView.xaml.cs">
       <DependentUpon>WeekDayActivityView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Resources\AppStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Themes\Brushes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -249,7 +260,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ChartWindowView.xaml">
+    <Page Include="View\UsersActivityViews\ChartWindowView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -277,7 +288,7 @@
     <Compile Include="View\AnalysisWindowView.xaml.cs">
       <DependentUpon>AnalysisWindowView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ChartWindowView.xaml.cs">
+    <Compile Include="View\UsersActivityViews\ChartWindowView.xaml.cs">
       <DependentUpon>ChartWindowView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\DayActivityChartView.xaml.cs">
@@ -297,7 +308,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UsersCodeFrequencyView.xaml">
+    <Page Include="View\UsersActivityViews\UserActivityChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UsersActivityViews\UserActivityCodeFrequencyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UsersActivityViews\UsersCodeFrequencyView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -421,6 +440,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Icons\Add File-100.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\Date From-100.png" />
+    <Resource Include="Assets\Icons\Percentage-100.png" />
+    <Resource Include="Assets\Icons\Poll Topic-50.png" />
+    <Resource Include="Assets\Icons\Source Code-100.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\Code-50.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.99.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.99.0\build\net451\System.Data.SQLite.Core.targets')" />
