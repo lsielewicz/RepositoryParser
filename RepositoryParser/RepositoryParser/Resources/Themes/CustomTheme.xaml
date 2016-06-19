@@ -8,13 +8,13 @@
     <Color x:Key="HighlightColor">#424242</Color>
 
     <!--80%-->
-    <Color x:Key="AccentColor">#424242</Color>
+    <Color x:Key="AccentColor">#263238</Color>
     <!--60%-->
-    <Color x:Key="AccentColor2">#749955</Color>
+    <Color x:Key="AccentColor2">#546E7A</Color>
     <!--40%-->
-    <Color x:Key="AccentColor3">#8D8D8D</Color>
+    <Color x:Key="AccentColor3">#90A4AE</Color>
     <!--20%-->
-    <Color x:Key="AccentColor4">#B9CCAA</Color>
+    <Color x:Key="AccentColor4">#CFD8DC</Color>
 
     <!-- re-set brushes too -->
     <SolidColorBrush x:Key="HighlightBrush" Color="{StaticResource HighlightColor}" options:Freeze="True" />

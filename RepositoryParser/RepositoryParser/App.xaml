@@ -9,7 +9,8 @@
     <ResourceDictionary>
       <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:RepositoryParser.ViewModel" />
             <ResourceDictionary.MergedDictionaries>
-                  <ResourceDictionary Source="Resources/Themes/Brushes.xaml"/>
+                <ResourceDictionary Source="Resources/Themes/Brushes.xaml"/>
+                <ResourceDictionary Source="Resources/Themes/Colors.xaml"/>
                 <ResourceDictionary Source="Resources/AppStyles.xaml"/>
                 <!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />

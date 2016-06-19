@@ -21,10 +21,9 @@ namespace RepositoryParser.ViewModel
     {
         #region Fields
         private ObservableCollection<KeyValuePair<string, int>> _keyCollection;
-        //private GitRepositoryService _localIGitRepositoryService;
         private List<string> _authorsList;
         private string _filteringQuery;
-        private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources",Assembly.GetExecutingAssembly());
+        private readonly ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources",Assembly.GetExecutingAssembly());
         private RelayCommand _exportFileCommand;
         #endregion
 
