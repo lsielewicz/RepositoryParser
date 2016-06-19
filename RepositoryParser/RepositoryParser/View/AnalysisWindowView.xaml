@@ -51,7 +51,7 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Text="{x:Static resw:Resources.AnalysisWindowTitle}" Style="{StaticResource AppTitleTextBlock}"/>
         <Border Grid.Column="1"
                     Grid.ColumnSpan="3" 
                     Grid.Row="1"

@@ -62,6 +62,8 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="{x:Static resw:Resources.MainWindowTitle}" Style="{StaticResource AppTitleTextBlock}"></TextBlock>
         
         <Border Background="{StaticResource Graphite}" Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0">
             <Label x:Name="UrlLabel"
