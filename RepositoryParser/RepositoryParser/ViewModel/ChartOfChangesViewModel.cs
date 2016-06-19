@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Resources;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
+using RepositoryParser.Core.Enums;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 
@@ -48,9 +49,9 @@ namespace RepositoryParser.ViewModel
 
             childList.ForEach(x =>
             {
-                if (x.Color == ChangesColorModel.ChangeType.Added)
+                if (x.Color == ChangeType.Added)
                     addedCounter++;
-                else if (x.Color == ChangesColorModel.ChangeType.Deleted)
+                else if (x.Color == ChangeType.Deleted)
                     deletedCounter++;
             });
             ChildCollection.Add(new KeyValuePair<string, int>(_resourceManager.GetString("Added"),addedCounter));
