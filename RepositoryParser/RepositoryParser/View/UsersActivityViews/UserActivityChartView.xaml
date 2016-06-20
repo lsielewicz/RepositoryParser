@@ -32,13 +32,14 @@
                 <chartingToolkit:Chart x:Name="Chart" 
                                        Title="{x:Static resw:Resources.ActivityChart}" 
                                        Background="{StaticResource Grey}" 
-                                       LegendTitle="{x:Static resw:Resources.Legend}">
+                                       LegendTitle="{x:Static resw:Resources.Legend}"
+                                       >
                     <chartingToolkit:Chart.Series>
                         <chartingToolkit:PieSeries
                             ItemsSource="{Binding KeyCollection, Mode=OneWay}"
                             DependentValueBinding="{Binding Path=Value}"
                             IndependentValueBinding="{Binding Path=Key}" 
-                            Background="{StaticResource Graphite}"
+                            Background="{StaticResource Graphite}" 
                             />
                     </chartingToolkit:Chart.Series>
                 </chartingToolkit:Chart>

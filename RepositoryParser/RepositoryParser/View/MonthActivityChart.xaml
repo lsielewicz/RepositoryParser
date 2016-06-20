@@ -45,8 +45,10 @@
                         <chartingToolkit:ColumnSeries
                                     ItemsSource="{Binding KeyCollection, Mode=OneWay}"
                                     DependentValueBinding="{Binding Path=Value}"
-                                    IndependentValueBinding="{Binding Path=Key}"                               
-                            />
+                                    IndependentValueBinding="{Binding Path=Key}"
+                                    DataPointStyle="{StaticResource ColumnDataPoint}"
+                            >
+                        </chartingToolkit:ColumnSeries>
                     </chartingToolkit:Chart.Series>
                     
                 </chartingToolkit:Chart>
