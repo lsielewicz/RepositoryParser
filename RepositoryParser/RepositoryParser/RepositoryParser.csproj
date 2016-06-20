@@ -226,8 +226,14 @@
     <Compile Include="View\ChartOfChangesView.xaml.cs">
       <DependentUpon>ChartOfChangesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\MonthActivityViews\MonthActivityChart.xaml.cs">
-      <DependentUpon>MonthActivityChart.xaml</DependentUpon>
+    <Compile Include="View\DayActivityViews\DayActivityContentProviderView.xaml.cs">
+      <DependentUpon>DayActivityContentProviderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HourActivityViews\HourActivityContentProviderView.xaml.cs">
+      <DependentUpon>HourActivityContentProviderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MonthActivityViews\MonthActivityContentProviderView.xaml.cs">
+      <DependentUpon>MonthActivityContentProviderView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UsersActivityViews\UserActivityChartView.xaml.cs">
       <DependentUpon>UserActivityChartView.xaml</DependentUpon>
@@ -235,8 +241,11 @@
     <Compile Include="View\UsersActivityViews\UserActivityCodeFrequencyView.xaml.cs">
       <DependentUpon>UserActivityCodeFrequencyView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\WeekdayActivityViews\WeekDayActivityView.xaml.cs">
-      <DependentUpon>WeekDayActivityView.xaml</DependentUpon>
+    <Compile Include="View\UsersActivityViews\UserActivityContentProviderView.xaml.cs">
+      <DependentUpon>UserActivityContentProviderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\WeekdayActivityViews\WeekdayActivityContentProviderView.xaml.cs">
+      <DependentUpon>WeekdayActivityContentProviderView.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\AppStyles.xaml">
       <SubType>Designer</SubType>
@@ -262,19 +271,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UsersActivityViews\ChartWindowView.xaml">
+    <Page Include="View\DayActivityViews\DayActivityContentProviderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\DayActivityViews\DayActivityChartView.xaml">
+    <Page Include="View\HourActivityViews\HourActivityContentProviderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MonthActivityViews\MonthActivityContentProviderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DifferenceWindowView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\HourActivityViews\HourActivityView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -290,26 +299,13 @@
     <Compile Include="View\AnalysisWindowView.xaml.cs">
       <DependentUpon>AnalysisWindowView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UsersActivityViews\ChartWindowView.xaml.cs">
-      <DependentUpon>ChartWindowView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\DayActivityViews\DayActivityChartView.xaml.cs">
-      <DependentUpon>DayActivityChartView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\DifferenceWindowView.xaml.cs">
       <DependentUpon>DifferenceWindowView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\HourActivityViews\HourActivityView.xaml.cs">
-      <DependentUpon>HourActivityView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\MonthActivityViews\MonthActivityChart.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\UsersActivityViews\UserActivityChartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -318,7 +314,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\WeekdayActivityViews\WeekDayActivityView.xaml">
+    <Page Include="View\UsersActivityViews\UserActivityContentProviderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WeekdayActivityViews\WeekdayActivityContentProviderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

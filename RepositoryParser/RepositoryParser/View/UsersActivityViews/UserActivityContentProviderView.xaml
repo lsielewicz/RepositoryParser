@@ -1,15 +1,12 @@
-﻿<controls:MetroWindow x:Class="RepositoryParser.View.ChartWindowView"
+﻿<controls:MetroWindow x:Class="RepositoryParser.View.UsersActivityViews.UserActivityContentProviderView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RepositoryParser.View.UsersActivityViews"
-        xmlns:viewModels="clr-namespace:RepositoryParser.ViewModel.UserActivityViewModels"
-        xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         xmlns:resw="clr-namespace:RepositoryParser.Properties"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:viewModel="clr-namespace:RepositoryParser.ViewModel"
-        xmlns:view="clr-namespace:RepositoryParser.View"
         xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
@@ -28,7 +25,7 @@
 
         <conventers:ViewModelBaseToVisibilityConventer x:Key="ViewModelBaseToVisibilityConventer"/>
     </Window.Resources>
-    
+
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
             <i:InvokeCommandAction Command="{Binding ClosedEventCommand}"/>
@@ -68,7 +65,7 @@
                 </StackPanel>
             </Button>
         </StackPanel>
-        
+
         <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding CurrentViewModel}"/>
 
         <Image Grid.Row="1"
@@ -81,9 +78,9 @@
                Height="300"
                Visibility="{Binding CurrentViewModel, Converter={StaticResource ViewModelBaseToVisibilityConventer}}"
                ></Image>
-       
 
-       
+
+
 
     </Grid>
 </controls:MetroWindow>

@@ -11,6 +11,11 @@ using GalaSoft.MvvmLight.Messaging;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.View;
+using RepositoryParser.View.DayActivityViews;
+using RepositoryParser.View.HourActivityViews;
+using RepositoryParser.View.MonthActivityViews;
+using RepositoryParser.View.UsersActivityViews;
+using RepositoryParser.View.WeekdayActivityViews;
 
 namespace RepositoryParser.ViewModel
 {
@@ -406,7 +411,7 @@ namespace RepositoryParser.ViewModel
         private void Chart()
         {
 
-            ChartWindowView _analisysWindow = new ChartWindowView();
+            UserActivityContentProviderView _analisysWindow = new UserActivityContentProviderView();
             _analisysWindow.Show();
 
             SendMessageToDrawChart();
@@ -414,14 +419,14 @@ namespace RepositoryParser.ViewModel
 
         private void GoToWeekDayActivityWindow()
         {
-            WeekDayActivityView _window = new WeekDayActivityView();
+            WeekdayActivityContentProviderView _window = new WeekdayActivityContentProviderView();
             _window.Show();
             SendMessageToDrawChart();
         }
 
         private void GoToHourActivityWindow()
         {
-            HourActivityView _window = new HourActivityView();
+            HourActivityContentProviderView _window = new HourActivityContentProviderView();
             _window.Show();
             SendMessageToDrawChart();
         }
@@ -435,14 +440,14 @@ namespace RepositoryParser.ViewModel
 
         private void GoToDayChartWindow()
         {
-            DayActivityChartView _window = new DayActivityChartView();
+            DayActivityContentProviderView _window = new DayActivityContentProviderView();
             _window.Show();
             SendMessageToDrawChart();
         }
 
         private void MonthActivityWindow()
         {
-            MonthActivityChart _monthWindow = new MonthActivityChart();
+            MonthActivityContentProviderView _monthWindow = new MonthActivityContentProviderView();
             _monthWindow.Show();
             SendMessageToDrawChart();
         }
