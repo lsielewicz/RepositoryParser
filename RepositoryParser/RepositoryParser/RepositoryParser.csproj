@@ -236,6 +236,9 @@
     <Compile Include="View\DayActivityViews\DayActivityContentProviderView.xaml.cs">
       <DependentUpon>DayActivityContentProviderView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\HourActivityViews\HourActivityChartView.xaml.cs">
+      <DependentUpon>HourActivityChartView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\HourActivityViews\HourActivityContentProviderView.xaml.cs">
       <DependentUpon>HourActivityContentProviderView.xaml</DependentUpon>
     </Compile>
@@ -283,6 +286,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DayActivityViews\DayActivityContentProviderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HourActivityViews\HourActivityChartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
