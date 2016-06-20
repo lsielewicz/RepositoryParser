@@ -226,7 +226,7 @@
     <Compile Include="View\ChartOfChangesView.xaml.cs">
       <DependentUpon>ChartOfChangesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\MonthActivityChart.xaml.cs">
+    <Compile Include="View\MonthActivityViews\MonthActivityChart.xaml.cs">
       <DependentUpon>MonthActivityChart.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UsersActivityViews\UserActivityChartView.xaml.cs">
@@ -235,7 +235,7 @@
     <Compile Include="View\UsersActivityViews\UserActivityCodeFrequencyView.xaml.cs">
       <DependentUpon>UserActivityCodeFrequencyView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\WeekDayActivityView.xaml.cs">
+    <Compile Include="View\WeekdayActivityViews\WeekDayActivityView.xaml.cs">
       <DependentUpon>WeekDayActivityView.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\AppStyles.xaml">
@@ -266,7 +266,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\DayActivityChartView.xaml">
+    <Page Include="View\DayActivityViews\DayActivityChartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -274,7 +274,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\HourActivityView.xaml">
+    <Page Include="View\HourActivityViews\HourActivityView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -293,20 +293,20 @@
     <Compile Include="View\UsersActivityViews\ChartWindowView.xaml.cs">
       <DependentUpon>ChartWindowView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\DayActivityChartView.xaml.cs">
+    <Compile Include="View\DayActivityViews\DayActivityChartView.xaml.cs">
       <DependentUpon>DayActivityChartView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\DifferenceWindowView.xaml.cs">
       <DependentUpon>DifferenceWindowView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\HourActivityView.xaml.cs">
+    <Compile Include="View\HourActivityViews\HourActivityView.xaml.cs">
       <DependentUpon>HourActivityView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\MonthActivityChart.xaml">
+    <Page Include="View\MonthActivityViews\MonthActivityChart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -318,7 +318,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\WeekDayActivityView.xaml">
+    <Page Include="View\WeekdayActivityViews\WeekDayActivityView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
