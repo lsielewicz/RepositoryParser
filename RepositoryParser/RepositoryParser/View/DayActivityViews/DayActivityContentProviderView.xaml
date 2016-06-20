@@ -62,7 +62,7 @@
 
         <Image Grid.Row="1"
                Grid.Column="1"
-               Source="../../Resources/../Assets/Images/arr2.png"
+               Source="../../Resources/../Assets/Images/arr.png"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
                Opacity="0.3"

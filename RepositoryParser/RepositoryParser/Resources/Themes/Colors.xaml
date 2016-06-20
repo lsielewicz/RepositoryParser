@@ -7,5 +7,6 @@
 
     <Color x:Key="AppBorder">#B0BEC5</Color>
     <Color x:Key="AppMain">#263238</Color>
+    <Color x:Key="CustomColor1">#95210a</Color>
     
 </ResourceDictionary>
