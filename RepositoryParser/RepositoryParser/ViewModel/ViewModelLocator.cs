@@ -64,6 +64,23 @@ namespace RepositoryParser.ViewModel
             SimpleIoc.Default.Register<WeekdayActivityContentProviderViewModel>();
             SimpleIoc.Default.Register<MonthActivityContentProviderViewModel>();
         }
+
+        public WeekdayActivityContentProviderViewModel WeekdayActivityContentProvider
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<WeekdayActivityContentProviderViewModel>();
+            }
+        }
+
+        public MonthActivityContentProviderViewModel MonthActivityContentProvider
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<MonthActivityContentProviderViewModel>();
+            }
+        }
+
         public HourActivityContentProviderViewModel HourActivityContentProvider
         {
             get
@@ -71,7 +88,6 @@ namespace RepositoryParser.ViewModel
                 return ServiceLocator.Current.GetInstance<HourActivityContentProviderViewModel>();
             }
         }
-
 
         public DayActivityContentProviderViewModel DayActivityContentProvider
         {

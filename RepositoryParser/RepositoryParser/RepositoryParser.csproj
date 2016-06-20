@@ -242,6 +242,9 @@
     <Compile Include="View\HourActivityViews\HourActivityContentProviderView.xaml.cs">
       <DependentUpon>HourActivityContentProviderView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MonthActivityViews\MonthActivityChartView.xaml.cs">
+      <DependentUpon>MonthActivityChartView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MonthActivityViews\MonthActivityContentProviderView.xaml.cs">
       <DependentUpon>MonthActivityContentProviderView.xaml</DependentUpon>
     </Compile>
@@ -294,6 +297,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\HourActivityViews\HourActivityContentProviderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MonthActivityViews\MonthActivityChartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
