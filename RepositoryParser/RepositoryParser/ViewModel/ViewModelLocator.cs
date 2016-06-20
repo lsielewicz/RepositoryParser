@@ -14,7 +14,13 @@
 
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
+using RepositoryParser.View.DayActivityViews;
+using RepositoryParser.View.WeekdayActivityViews;
+using RepositoryParser.ViewModel.DayActivityViewModels;
+using RepositoryParser.ViewModel.HourActivityViewModels;
+using RepositoryParser.ViewModel.MonthActivityViewModels;
 using RepositoryParser.ViewModel.UserActivityViewModels;
+using RepositoryParser.ViewModel.WeekdayActivityViewModels;
 
 namespace RepositoryParser.ViewModel
 {
@@ -53,8 +59,10 @@ namespace RepositoryParser.ViewModel
             SimpleIoc.Default.Register<ChartOfChangesViewModel>();
             SimpleIoc.Default.Register<UsersCodeFrequencyViewModel>();
             SimpleIoc.Default.Register<UsersActivityContentProverViewModel>();
-
-
+            SimpleIoc.Default.Register<DayActivityContentProviderViewModel>();
+            SimpleIoc.Default.Register<HourActivityContentProviderViewModel>();
+            SimpleIoc.Default.Register<WeekdayActivityContentProviderViewModel>();
+            SimpleIoc.Default.Register<MonthActivityContentProviderViewModel>();
         }
 
 

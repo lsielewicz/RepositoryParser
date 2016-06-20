@@ -214,17 +214,24 @@
     </Compile>
     <Compile Include="ViewModel\AnalisysWindowViewModel.cs" />
     <Compile Include="ViewModel\ChartOfChangesViewModel.cs" />
+    <Compile Include="ViewModel\DayActivityViewModels\DayActivityContentProviderViewModel.cs" />
+    <Compile Include="ViewModel\HourActivityViewModels\HourActivityContentProviderViewModel.cs" />
+    <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityContentProviderViewModel.cs" />
     <Compile Include="ViewModel\UserActivityViewModels\ChartWindowViewModel.cs" />
-    <Compile Include="ViewModel\DayActivityViewModel.cs" />
+    <Compile Include="ViewModel\DayActivityViewModels\DayActivityViewModel.cs" />
     <Compile Include="ViewModel\DifferenceWindowViewModel.cs" />
-    <Compile Include="ViewModel\HourActivityViewModel.cs" />
+    <Compile Include="ViewModel\HourActivityViewModels\HourActivityViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\MonthActivityChartViewModel.cs" />
+    <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityChartViewModel.cs" />
     <Compile Include="ViewModel\UserActivityViewModels\UsersActivityContentProverViewModel.cs" />
     <Compile Include="ViewModel\UserActivityViewModels\UsersCodeFrequencyViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="ViewModel\WeekdayActivityViewModels\WeekdayActivityContentProviderViewModel.cs" />
     <Compile Include="View\ChartOfChangesView.xaml.cs">
       <DependentUpon>ChartOfChangesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DayActivityViews\DayActivityChartView.xaml.cs">
+      <DependentUpon>DayActivityChartView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\DayActivityViews\DayActivityContentProviderView.xaml.cs">
       <DependentUpon>DayActivityContentProviderView.xaml</DependentUpon>
@@ -271,6 +278,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\DayActivityViews\DayActivityChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\DayActivityViews\DayActivityContentProviderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -295,7 +306,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModel\WeekDayActivityViewModel.cs" />
+    <Compile Include="ViewModel\WeekdayActivityViewModels\WeekDayActivityViewModel.cs" />
     <Compile Include="View\AnalysisWindowView.xaml.cs">
       <DependentUpon>AnalysisWindowView.xaml</DependentUpon>
     </Compile>
@@ -453,6 +464,7 @@
     <Resource Include="Assets\Images\arr2.png" />
     <Resource Include="Assets\Images\notebook_statiscitcs.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.99.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.99.0\build\net451\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
