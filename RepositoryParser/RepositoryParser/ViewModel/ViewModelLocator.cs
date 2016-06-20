@@ -65,6 +65,13 @@ namespace RepositoryParser.ViewModel
             SimpleIoc.Default.Register<MonthActivityContentProviderViewModel>();
         }
 
+        public DayActivityContentProviderViewModel DayActivityContentProvider
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<DayActivityContentProviderViewModel>();
+            }
+        }
 
         public UsersActivityContentProverViewModel UsersActivityContentProvider
         {

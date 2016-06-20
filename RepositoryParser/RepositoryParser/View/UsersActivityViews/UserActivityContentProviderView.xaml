@@ -77,10 +77,7 @@
                Width="300"
                Height="300"
                Visibility="{Binding CurrentViewModel, Converter={StaticResource ViewModelBaseToVisibilityConventer}}"
-               ></Image>
-
-
-
+               />
 
     </Grid>
 </controls:MetroWindow>
