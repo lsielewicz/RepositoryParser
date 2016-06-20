@@ -7,79 +7,68 @@
         xmlns:resw="clr-namespace:RepositoryParser.Properties"
         xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:viewModel="clr-namespace:RepositoryParser.ViewModel"
+        xmlns:monthActivityViews="clr-namespace:RepositoryParser.View.MonthActivityViews"
+        xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="{x:Static resw:Resources.WeekdayActivity}" Height="600" Width="800"
-        DataContext="{Binding Source={StaticResource Locator}, Path=WeekdayActivity}"
+        DataContext="{Binding Source={StaticResource Locator}, Path=WeekdayActivityContentProvider}"
         Icon="../../Assets/Icons/Chart_Icon_Main.png">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewModel:WeekDayActivityViewModel}">
+            <local:WeekdayActivityChartView/>
+        </DataTemplate>
+
+        <conventers:ViewModelBaseToVisibilityConventer x:Key="ViewModelBaseToVisibilityConventer"/>
+    </Window.Resources>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closed">
+            <i:InvokeCommandAction Command="{Binding ClosedEventCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*" MinWidth="300"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" MinHeight="60"/>
             <RowDefinition Height="9*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
-        <Rectangle Grid.ColumnSpan="1000" Grid.Row="0">
+
+        <Rectangle Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="0">
             <Rectangle.Fill>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="{StaticResource AppBorder}" Offset="0" />
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-
-
-
-        <Label Grid.Row="0" x:Name="WelcomeLabel" Content="{x:Static resw:Resources.WeekdayActivityWindowTitle}" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <TabControl Grid.Column="0" Grid.Row="1">
-            <TabItem Header="{x:Static resw:Resources.Chart}">
-                <chartingToolkit:Chart Title="{x:Static resw:Resources.WeekdayActivityChartChart}" Background="{StaticResource Grey}" >
-                    <chartingToolkit:Chart.LegendStyle>
-                        <Style TargetType="Control">
-                            <Setter Property="Width" Value="0" />
-                            <Setter Property="Height" Value="0" />
-                        </Style>
-                    </chartingToolkit:Chart.LegendStyle>
-                    <chartingToolkit:Chart.Series>
-                        <chartingToolkit:AreaSeries
-                                    ItemsSource="{Binding KeyCollection, Mode=OneWay}"
-                                    DependentValueBinding="{Binding Path=Value}"
-                                    IndependentValueBinding="{Binding Path=Key}">
-                        </chartingToolkit:AreaSeries>
-                    </chartingToolkit:Chart.Series>
-                </chartingToolkit:Chart>
-            </TabItem>
-            <TabItem Header="{x:Static resw:Resources.List}">
-                <DataGrid Grid.Row="1" Grid.Column="0"
-                      ItemsSource="{Binding KeyCollection}"
-                      CanUserSortColumns="True"
-                      AlternatingRowBackground="{StaticResource MyRowColor}" AlternationCount="2"
-                      AutoGenerateColumns="False"
-                      ColumnWidth="auto"
-                      >
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Key}" Header="{x:Static resw:Resources.Weekday}"/>
-                        <DataGridTextColumn Binding="{Binding Value}" Header="{x:Static resw:Resources.CountOfCommits}"/>
-                    </DataGrid.Columns>
-
-                </DataGrid>
-            </TabItem>
-        </TabControl>
-        <DockPanel Grid.Column="0" Grid.Row="2">
-            <Button x:Name="SaveFileBtn" 
-                    Background="{StaticResource MyGreen}"  
-                    Margin="15,5" 
-                    HorizontalAlignment="Left"
-                    Padding="5,0"
-                    MaxHeight="50"
-                    Command="{Binding ExportFileCommand}"
-                    >
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=SaveFileBtn, Path=Width}" >
-                    <Image Source="../../Assets/Icons/CSV Filled-50.png" Width="24" Margin="10,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.ExportToFileButton}" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{x:Static resw:Resources.ChartWindowTitle}" Style="{StaticResource AppTitleTextBlock}" />
+        <StackPanel Grid.Column="0" Grid.Row="1" Grid.RowSpan="2">
+            <Button Style="{StaticResource AppGraphiteButton}" Command="{Binding OpenChartViewCommand}" x:Name="Btn1">
+                <StackPanel Orientation="Horizontal" Width="{Binding ElementName=Btn1, Path=ActualWidth}">
+                    <Image Style="{StaticResource AppButtonIcon}"  Source="../../Assets/Icons/Poll Topic-50.png" />
+                    <TextBlock Style="{StaticResource AppWhiteTextBlock}" Text="{x:Static resw:Resources.CountOfCommits}"/>
                 </StackPanel>
             </Button>
-        </DockPanel>
+        </StackPanel>
+
+        <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding CurrentViewModel}"/>
+
+        <Image Grid.Row="1"
+               Grid.Column="1"
+               Source="../../Resources/../Assets/Images/arr2.png"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Opacity="0.3"
+               Width="300"
+               Height="300"
+               Visibility="{Binding CurrentViewModel, Converter={StaticResource ViewModelBaseToVisibilityConventer}}"
+               />
 
     </Grid>
 </controls:MetroWindow>
