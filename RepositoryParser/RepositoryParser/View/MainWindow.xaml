@@ -139,7 +139,7 @@
                     <DataGridTextColumn Binding="{Binding ID}" Header="{x:Static resw:Resources.CommitsList_ID}"/>
                     <DataGridTextColumn Binding="{Binding Message}" Header="{x:Static resw:Resources.CommitsList_Message}" Width="400"/>
                     <DataGridTextColumn Binding="{Binding Author}" Header="{x:Static resw:Resources.CommitsList_Author}"/>
-                    <DataGridTextColumn Binding="{Binding Date}" Header="{x:Static resw:Resources.CommitsList_Date}"/>
+                    <DataGridTextColumn Binding="{Binding Date}" Header="{x:Static resw:Resources.CommitsList_Date}" SortMemberPath="Date"/>
                     <DataGridTextColumn Binding="{Binding Email}" Header="{x:Static resw:Resources.CommitsList_Email}"/>
                 </DataGrid.Columns>
 

@@ -47,7 +47,7 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{x:Static resw:Resources.ChartWindowTitle}" Style="{StaticResource AppTitleTextBlock}" />
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{x:Static resw:Resources.WeekdayActivityWindowTitle}" Style="{StaticResource AppTitleTextBlock}" />
         <StackPanel Grid.Column="0" Grid.Row="1" Grid.RowSpan="2">
             <Button Style="{StaticResource AppGraphiteButton}" Command="{Binding OpenChartViewCommand}" x:Name="Btn1">
                 <StackPanel Orientation="Horizontal" Width="{Binding ElementName=Btn1, Path=ActualWidth}">

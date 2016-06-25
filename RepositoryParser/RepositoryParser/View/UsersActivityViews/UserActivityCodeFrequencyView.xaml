@@ -131,16 +131,9 @@
         <DockPanel Grid.Column="1" Grid.Row="2">
             <Button x:Name="SaveFileBtn" 
                     HorizontalAlignment="Left"
-                    Style="{StaticResource AppGraphiteButton}"
-                    Height="35"
+                    Style="{StaticResource ExportButton}"
                     Command="{Binding ExportFileCommand}"
-                    Padding="0,0,10,0"
-                    >
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=SaveFileBtn, Path=Width}" >
-                    <Image Source="../../Assets/Icons/CSV Filled-50.png" Width="24" Margin="10,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.ExportToFileButton}" VerticalAlignment="Center"/>
-                </StackPanel>
-            </Button>
+                    />
         </DockPanel>
 
         <Border Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="1" Background="{StaticResource MyGreen}"></Border>
