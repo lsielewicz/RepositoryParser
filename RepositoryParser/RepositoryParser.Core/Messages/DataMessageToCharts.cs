@@ -5,8 +5,9 @@ namespace RepositoryParser.Core.Messages
 {
     public class DataMessageToCharts : MessageBase
     {
-        public List<string> AuthorsList { get; set; }
-        public string FilteringQuery { get; set; }
+        public List<string> AuthorsList { get; private set; }
+        public string FilteringQuery { get; private set; }
+        public bool IsFromContent { get; private set; }
 
         public DataMessageToCharts(List<string> list)
         {
@@ -21,6 +22,12 @@ namespace RepositoryParser.Core.Messages
         {
             FilteringQuery = generatedQuery;
             AuthorsList = authorsList;
+        }
+        public DataMessageToCharts(List<string> authorsList, string generatedQuery, bool isToContent)
+        {
+            FilteringQuery = generatedQuery;
+            AuthorsList = authorsList;
+            IsFromContent = isToContent;
         }
     }
 }

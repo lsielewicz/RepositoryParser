@@ -21,6 +21,8 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
         public MonthActivityContentProviderViewModel()
         {
             Messenger.Default.Register<DataMessageToCharts>(this, x => HandleDataMessage(x.AuthorsList, x.FilteringQuery));
+            CurrentViewModel = new ViewModelLocator().MonthActivity;
+            CurrentViewModel = null;
         }
 
         #region Getters setters
@@ -56,12 +58,14 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
 
         private void OpenChartView()
         {
+           
+            Messenger.Default.Send<DataMessageToCharts>(new DataMessageToCharts(_filteringQuery));
             CurrentViewModel = (new ViewModelLocator()).MonthActivity;
-            Messenger.Default.Send<DataMessageToCharts>(new DataMessageToCharts(_authorsList, _filteringQuery));
         }
 
         private void HandleDataMessage(List<string> authors, string filternigQuery)
         {
+            CurrentViewModel = null;
             _authorsList = authors;
             _filteringQuery = filternigQuery;
         }

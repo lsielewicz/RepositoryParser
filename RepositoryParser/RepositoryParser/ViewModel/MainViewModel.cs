@@ -30,6 +30,7 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _closedEventCommand;
         private RelayCommand _openEventCommand;
         private RelayCommand _openFilteringCommand;
+        private RelayCommand _openAnalysisCommand;
         private List<string> _authorsList;
         private string _filteringQuery;
 
@@ -40,6 +41,7 @@ namespace RepositoryParser.ViewModel
             CurrentViewModel = (new ViewModelLocator()).DataBaseManagement;
             CurrentViewModel = (new ViewModelLocator()).Presentation;
             CurrentViewModel = (new ViewModelLocator()).Filtering;
+            CurrentViewModel = (new ViewModelLocator()).Analysis;
             CurrentViewModel = null;
         }
 
@@ -53,6 +55,14 @@ namespace RepositoryParser.ViewModel
             {
                 _currentViewModel = value;
                 RaisePropertyChanged("CurrentViewModel");
+            }
+        }
+
+        public RelayCommand OpenAnalysisCommand
+        {
+            get
+            {
+                return _openAnalysisCommand ?? (_openAnalysisCommand = new RelayCommand(OpenAnalysis));
             }
         }
 
@@ -100,6 +110,12 @@ namespace RepositoryParser.ViewModel
 
         #region Methods
 
+        private void OpenAnalysis()
+        {
+            CurrentViewModel = (new ViewModelLocator()).Analysis;
+            Messenger.Default.Send<DataMessageToCharts>(new DataMessageToCharts(_authorsList,_filteringQuery,true));
+        }
+
         private void OpenFiltering()
         {
             CurrentViewModel = (new ViewModelLocator()).Filtering;
@@ -135,7 +151,6 @@ namespace RepositoryParser.ViewModel
 
         private void HandleDataMessage(List<string> authors, string filternigQuery)
         {
-            CurrentViewModel = null;
             _authorsList = authors;
             _filteringQuery = filternigQuery;
         }

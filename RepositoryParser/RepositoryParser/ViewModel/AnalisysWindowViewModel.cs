@@ -21,6 +21,7 @@ namespace RepositoryParser.ViewModel
 {
     public class AnalisysWindowViewModel : ViewModelBase
     {
+        /*
         #region Fields
        // private GitRepositoryService _localGitRepositoryService;
         private SqLiteService _localSqliteService;
@@ -251,7 +252,7 @@ namespace RepositoryParser.ViewModel
                 {
                     _comboBoxSelectedItem = value;
                     /*if (_comboBoxSelectedItem != null)
-                        ComboBox(_comboBoxSelectedItem);*/
+                        ComboBox(_comboBoxSelectedItem);#1#
                     RaisePropertyChanged("ComboBoxSelectedItem");
                 }
             }
@@ -617,8 +618,7 @@ namespace RepositoryParser.ViewModel
             FromDate = String.Empty;
             ToDate = String.Empty;
 
-            SendMessageToDrawChart();
-        }
-        #endregion
+            SendMessageToDrawChart();    }*/
     }
+
 }

@@ -54,30 +54,33 @@ namespace RepositoryParser.ViewModel
             RepositoryCollection = new ObservableCollection<string>();
             localList = new List<CommitTable>();
             OnLoad();
+            ClearFilters();
         }
 
         #region Buttons getters
 
         public static string SelectedBranch
         {
-            get { return FilteringViewModel.selectedBranch; }
+            get
+            {
+                return FilteringViewModel.selectedBranch;
+            }
             set
             {
-                if (FilteringViewModel.selectedBranch != value)
                     FilteringViewModel.selectedBranch = value;
             }
         }
 
         public static string SelectedRepo
         {
-            get { return FilteringViewModel.selectedRepo; }
+            get
+            {
+                return FilteringViewModel.selectedRepo;
+            }
             set
             {
-                if (FilteringViewModel.selectedRepo != value)
-                {
                     FilteringViewModel.selectedRepo = value;
-                    FilteringViewModel.selectedBranch = "";
-                }
+                    FilteringViewModel.selectedBranch = String.Empty;
             }
         }
 
@@ -369,8 +372,7 @@ namespace RepositoryParser.ViewModel
             localList.Clear();
             string query = GenerateQuery();
             ExecuteRefresh(query);
-            SendMessageToDisplay();
-            
+            //SendMessageToDisplay();
         }
 
 
@@ -504,6 +506,7 @@ namespace RepositoryParser.ViewModel
                 id++;
             }
             SendMessageToDisplay();
+            SendMessageToDrawChart();
         }
 
         public RelayCommand ClearFiltersCommand
@@ -523,7 +526,7 @@ namespace RepositoryParser.ViewModel
             FromDate = String.Empty;
             ToDate = String.Empty;
 
-            //SendMessageToDrawChart();
+            SendMessageToDrawChart();
         }
         #endregion
 

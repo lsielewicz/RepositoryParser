@@ -16,30 +16,33 @@
              xmlns:usersActivityViews="clr-namespace:RepositoryParser.View.UsersActivityViews"
              xmlns:weekdayActivityViewModels="clr-namespace:RepositoryParser.ViewModel.WeekdayActivityViewModels"
              xmlns:weekdayActivityViews="clr-namespace:RepositoryParser.View.WeekdayActivityViews"
+             xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
+             DataContext="{Binding Source={StaticResource Locator}, Path=Analysis}"
              >
     
     <UserControl.Resources>
-        <DataTemplate DataType="{x:Type dayActivityViewModels:DayActivityContentProviderViewModel}">
+<!--        <DataTemplate DataType="{x:Type dayActivityViewModels:DayActivityContentProviderViewModel}">
             <dayActivityViews:DayActivityContentProviderView/>
         </DataTemplate>
 
         <DataTemplate DataType="{x:Type hourActivityViewModels:HourActivityContentProviderViewModel}">
             <hourActivityViews:HourActivityContentProviderView/>
-        </DataTemplate>
+        </DataTemplate>-->
 
         <DataTemplate DataType="{x:Type monthActivityViewModels:MonthActivityContentProviderViewModel}">
             <monthActivityViews:MonthActivityContentProviderView/>
         </DataTemplate>
+        <conventers:ViewModelBaseToVisibilityConventer x:Key="ViewModelBaseToVisibilityConventer" />
 
-        <DataTemplate DataType="{x:Type userActivityViewModels:UsersActivityContentProverViewModel}">
+        <!--   <DataTemplate DataType="{x:Type userActivityViewModels:UsersActivityContentProverViewModel}">
             <usersActivityViews:UserActivityContentProviderView/>
         </DataTemplate>
 
         <DataTemplate DataType="{x:Type weekdayActivityViewModels:WeekdayActivityContentProviderViewModel}">
             <weekdayActivityViews:WeekdayActivityContentProviderView/>
-        </DataTemplate>
+        </DataTemplate>-->
     </UserControl.Resources>
     
     <Grid>
@@ -61,6 +64,21 @@
                 <Run Text="{x:Static resw:Resources.AnalysisWindowVie}"/>
             </TextBlock>
         </Border>
-        
+
+        <StackPanel Grid.Row="1" Grid.Column="1" Visibility="{Binding CurrentViewModel, Converter={StaticResource ViewModelBaseToVisibilityConventer}}">
+            <Button x:Name="MonthBtn" 
+                    Style="{StaticResource MainTile}"
+                    Command="{Binding  OpenMonthActityCommand}"
+                    >
+                <StackPanel Orientation="Horizontal" Width="{Binding ElementName=MonthBtn, Path=ActualWidth}">
+                    <Image Source="../Assets/Icons/Column-Chart.png" Height="24" Margin="2,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.MonthActivityAnalyseButton}" VerticalAlignment="Center" FontSize="13"/>
+                </StackPanel>
+            </Button>
+            
+        </StackPanel>
+
+
+        <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding CurrentViewModel}"/>
     </Grid>
 </UserControl>

@@ -47,6 +47,11 @@
         <DataTemplate DataType="{x:Type viewModel:FilteringViewModel}">
             <view:FilteringView/>
         </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:AnalysisViewModel}">
+            <view:AnalysisView/>
+        </DataTemplate>
+        
     </Window.Resources>
 
     <i:Interaction.Triggers>
@@ -107,6 +112,17 @@
                     <TextBlock Text="{x:Static resw:Resources.Filtering}" Style="{StaticResource AppWhiteTextBlock}"/>
                 </StackPanel>
             </Button>
+
+            <Button x:Name="AnalysisBtn"
+                    Style="{StaticResource MainTile}"
+                    Command="{Binding OpenAnalysisCommand}"
+                    >
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=AnalysisBtn, Path=ActualWidth}" >
+                    <Image Source="../Assets/Icons/Analysis_grey.png" Width="36" Margin="10,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.AnalysisButton}" Style="{StaticResource AppWhiteTextBlock}"/>
+                </StackPanel>
+            </Button>
+            
         </StackPanel>
 
         <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding CurrentViewModel}"/>

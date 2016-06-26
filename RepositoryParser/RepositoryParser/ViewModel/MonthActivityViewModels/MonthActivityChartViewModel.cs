@@ -31,6 +31,7 @@ namespace RepositoryParser.ViewModel
         {
             Messenger.Default.Register<DataMessageToCharts>(this,
                 x => HandleDataMessage(x.FilteringQuery));
+
             KeyCollection = new ObservableCollection<KeyValuePair<string, int>>();
         }
 
@@ -139,6 +140,8 @@ namespace RepositoryParser.ViewModel
 
         private string MatchQuery(string query)
         {
+            if (String.IsNullOrEmpty(query))
+                return String.Empty;
             Regex r = new Regex(@"(select \* from Commits)(.*)", RegexOptions.IgnoreCase);
             Match m = r.Match(query);
             if (m.Success)
