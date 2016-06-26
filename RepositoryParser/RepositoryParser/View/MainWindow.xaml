@@ -43,6 +43,10 @@
         <DataTemplate DataType="{x:Type viewModel:DataBaseManagementViewModel}">
             <view:DataBaseManagementView/>
         </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:FilteringViewModel}">
+            <view:FilteringView/>
+        </DataTemplate>
     </Window.Resources>
 
     <i:Interaction.Triggers>
@@ -79,8 +83,8 @@
                     Command="{Binding OpenPresentationCommand}"
                     >
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=PresentationBtn, Path=ActualWidth}" >
-                        <Image Source="../Assets/Icons/Analysis_grey.png" Width="24" Margin="10,0,10,0"/>
-                        <TextBlock Text="{x:Static resw:Resources.Presentation}" Style="{StaticResource AppWhiteTextBlock}"/>
+                        <Image Source="../Assets/Icons/Analysis_grey.png" Width="36" Margin="10,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.Presentation}" Style="{StaticResource AppWhiteTextBlock}"/>
                     </StackPanel>
                 </Button>
 
@@ -89,8 +93,18 @@
                     Command="{Binding OpenDataBaseManagementCommand}"
                     >
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=DBManagementBtn, Path=ActualWidth}" >
-                    <Image Source="../Assets/Icons/Analysis_grey.png" Width="24" Margin="10,0,10,0"/>
+                    <Image Source="../Assets/Icons/Analysis_grey.png" Width="36" Margin="10,0,10,0"/>
                     <TextBlock Text="{x:Static resw:Resources.DataBaseManagement}" Style="{StaticResource AppWhiteTextBlock}"/>
+                </StackPanel>
+            </Button>
+
+            <Button x:Name="FilteringBtn"
+                    Style="{StaticResource MainTile}"
+                    Command="{Binding OpenFilteringCommand}"
+                    >
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=FilteringBtn, Path=ActualWidth}" >
+                    <Image Source="../Assets/Icons/Analysis_grey.png" Width="36" Margin="10,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.Filtering}" Style="{StaticResource AppWhiteTextBlock}"/>
                 </StackPanel>
             </Button>
         </StackPanel>

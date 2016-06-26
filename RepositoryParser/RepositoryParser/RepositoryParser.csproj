@@ -214,9 +214,11 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="ViewModel\AnalisysWindowViewModel.cs" />
+    <Compile Include="ViewModel\AnalysisViewModel.cs" />
     <Compile Include="ViewModel\ChartOfChangesViewModel.cs" />
     <Compile Include="ViewModel\DataBaseManagementViewModel.cs" />
     <Compile Include="ViewModel\DayActivityViewModels\DayActivityContentProviderViewModel.cs" />
+    <Compile Include="ViewModel\FilteringViewModel.cs" />
     <Compile Include="ViewModel\HourActivityViewModels\HourActivityContentProviderViewModel.cs" />
     <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityContentProviderViewModel.cs" />
     <Compile Include="ViewModel\PresentationViewModel.cs" />
@@ -241,6 +243,9 @@
     </Compile>
     <Compile Include="View\DayActivityViews\DayActivityContentProviderView.xaml.cs">
       <DependentUpon>DayActivityContentProviderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\FilteringView.xaml.cs">
+      <DependentUpon>FilteringView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\HourActivityViews\HourActivityChartView.xaml.cs">
       <DependentUpon>HourActivityChartView.xaml</DependentUpon>
@@ -309,6 +314,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DayActivityViews\DayActivityContentProviderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\FilteringView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

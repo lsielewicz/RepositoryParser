@@ -24,44 +24,27 @@ namespace RepositoryParser.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        private static string selectedBranch;
-        private static string selectedRepo;
         private ViewModelBase _currentViewModel;
         private RelayCommand _openDataBaseManagementCommand;
         private RelayCommand _openPresentationCommand;
         private RelayCommand _closedEventCommand;
         private RelayCommand _openEventCommand;
+        private RelayCommand _openFilteringCommand;
         private List<string> _authorsList;
         private string _filteringQuery;
 
         public MainViewModel()
         {
             Messenger.Default.Register<DataMessageToCharts>(this, x => HandleDataMessage(x.AuthorsList, x.FilteringQuery));
+
+            CurrentViewModel = (new ViewModelLocator()).DataBaseManagement;
+            CurrentViewModel = (new ViewModelLocator()).Presentation;
+            CurrentViewModel = (new ViewModelLocator()).Filtering;
+            CurrentViewModel = null;
         }
 
         #region Getters setters
-        public static string SelectedBranch
-        {
-            get { return selectedBranch; }
-            set
-            {
-                if (selectedBranch != value)
-                    selectedBranch = value;
-            }
-        }
-
-        public static string SelectedRepo
-        {
-            get { return selectedRepo; }
-            set
-            {
-                if (selectedRepo != value)
-                {
-                    selectedRepo = value;
-                    selectedBranch = "";
-                }
-            }
-        }
+        
 
         public ViewModelBase CurrentViewModel
         {
@@ -107,13 +90,36 @@ namespace RepositoryParser.ViewModel
                 return _closedEventCommand ?? (_closedEventCommand = new RelayCommand(ClosedEvent));
             }
         }
+
+        public RelayCommand OpenFilteringCommand
+        {
+            get { return _openFilteringCommand ?? (_openFilteringCommand = new RelayCommand(OpenFiltering)); }
+        }
+
         #endregion
 
         #region Methods
 
+        private void OpenFiltering()
+        {
+            CurrentViewModel = (new ViewModelLocator()).Filtering;
+        }
+
         private void OnLoad()
         {
-            
+            try
+            {
+                GitService gitRepoService = new GitService();
+                string repoPath = "./DataBases/CommonRepositoryDataBase.sqlite";
+                if (!File.Exists(repoPath))
+                    gitRepoService.ConnectRepositoryToDataBase(true);
+                else
+                    gitRepoService.ConnectRepositoryToDataBase();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+            }
         }
 
         private void OpenDataBaseManagement()

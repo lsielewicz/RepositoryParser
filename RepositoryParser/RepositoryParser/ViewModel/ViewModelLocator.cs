@@ -65,6 +65,24 @@ namespace RepositoryParser.ViewModel
             SimpleIoc.Default.Register<MonthActivityContentProviderViewModel>();
             SimpleIoc.Default.Register<PresentationViewModel>();
             SimpleIoc.Default.Register<DataBaseManagementViewModel>();
+            SimpleIoc.Default.Register<FilteringViewModel>();
+            SimpleIoc.Default.Register<AnalysisViewModel>();
+        }
+
+        public AnalysisViewModel Analysis
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<AnalysisViewModel>();
+            }
+        }
+
+        public FilteringViewModel Filtering
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<FilteringViewModel>();
+            }
         }
 
         public DataBaseManagementViewModel DataBaseManagement

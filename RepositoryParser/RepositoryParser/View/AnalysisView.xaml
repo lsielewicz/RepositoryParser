@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="RepositoryParser.View.AnalysisView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RepositoryParser.View"
+             xmlns:resw="clr-namespace:RepositoryParser.Properties"
+             xmlns:viewModel="clr-namespace:RepositoryParser.ViewModel"
+             xmlns:dayActivityViewModels="clr-namespace:RepositoryParser.ViewModel.DayActivityViewModels"
+             xmlns:dayActivityViews="clr-namespace:RepositoryParser.View.DayActivityViews"
+             xmlns:hourActivityViewModels="clr-namespace:RepositoryParser.ViewModel.HourActivityViewModels"
+             xmlns:hourActivityViews="clr-namespace:RepositoryParser.View.HourActivityViews"
+             xmlns:monthActivityViewModels="clr-namespace:RepositoryParser.ViewModel.MonthActivityViewModels"
+             xmlns:userActivityViewModels="clr-namespace:RepositoryParser.ViewModel.UserActivityViewModels"
+             xmlns:monthActivityViews="clr-namespace:RepositoryParser.View.MonthActivityViews"
+             xmlns:usersActivityViews="clr-namespace:RepositoryParser.View.UsersActivityViews"
+             xmlns:weekdayActivityViewModels="clr-namespace:RepositoryParser.ViewModel.WeekdayActivityViewModels"
+             xmlns:weekdayActivityViews="clr-namespace:RepositoryParser.View.WeekdayActivityViews"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="600"
+             >
+    
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type dayActivityViewModels:DayActivityContentProviderViewModel}">
+            <dayActivityViews:DayActivityContentProviderView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type hourActivityViewModels:HourActivityContentProviderViewModel}">
+            <hourActivityViews:HourActivityContentProviderView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type monthActivityViewModels:MonthActivityContentProviderViewModel}">
+            <monthActivityViews:MonthActivityContentProviderView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type userActivityViewModels:UsersActivityContentProverViewModel}">
+            <usersActivityViews:UserActivityContentProviderView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type weekdayActivityViewModels:WeekdayActivityContentProviderViewModel}">
+            <weekdayActivityViews:WeekdayActivityContentProviderView/>
+        </DataTemplate>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Background="{StaticResource Graphite}">
+            <TextBlock Style="{StaticResource SubTitleTextBlock}" >
+                <Run Text="#"/>
+                <Run Text="{x:Static resw:Resources.AnalysisWindowVie}"/>
+            </TextBlock>
+        </Border>
+        
+    </Grid>
+</UserControl>
