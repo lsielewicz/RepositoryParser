@@ -156,6 +156,7 @@
     <Compile Include="Messages\DataMessageToChartOfChanges.cs" />
     <Compile Include="Messages\DataMessageToCharts.cs" />
     <Compile Include="Messages\DataMessageToDisplay.cs" />
+    <Compile Include="Messages\RefreshMessageToPresentation.cs" />
     <Compile Include="Models\BranchForRepoTable.cs" />
     <Compile Include="Models\BranchTable.cs" />
     <Compile Include="Models\ChangesColorModel.cs" />

@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
 using MessageBox = System.Windows.MessageBox;
@@ -49,6 +51,8 @@ namespace RepositoryParser.ViewModel
             this.clearDBWorker = new BackgroundWorker();
             this.clearDBWorker.DoWork += this.DoClearWork;
             this.clearDBWorker.RunWorkerCompleted += this.DoClearWorkCompleted;
+
+            OnLoad();
         }
 
         #region Getters/Setters
@@ -295,7 +299,7 @@ namespace RepositoryParser.ViewModel
             SqLiteService.GetInstance().ExecuteTransaction(Transactions);
 
 
-            // RefreshList();
+            Messenger.Default.Send<RefreshMessageToPresentation>(new RefreshMessageToPresentation(true));
         }
         #endregion
 
@@ -319,7 +323,7 @@ namespace RepositoryParser.ViewModel
             }
             else
             {
-
+                Messenger.Default.Send<RefreshMessageToPresentation>(new RefreshMessageToPresentation(true));
             }
         }
 
@@ -333,6 +337,7 @@ namespace RepositoryParser.ViewModel
 
         private void DoClearWorkCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            Messenger.Default.Send<RefreshMessageToPresentation>(new RefreshMessageToPresentation(true));
             ProgressBarVisibility = false;
         }
         #endregion

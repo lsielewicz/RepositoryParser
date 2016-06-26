@@ -94,7 +94,44 @@
         </Setter>
 
     </Style>
-    
-    
-    
+
+    <Style x:Key="MainTile" TargetType="Button">
+        <Setter Property="Height" Value="80"/>
+        <Setter Property="Margin" Value="0,0,0,5"/>
+        <Setter Property="Background" Value="{StaticResource Graphite}"/>
+        <Setter Property="Foreground" Value="{StaticResource Grey}"/>
+        <Setter Property="FontWeight" Value="Light"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border  RenderTransformOrigin="0.5 0.5"
+                              x:Name="Border"  
+                              Background="{TemplateBinding Background}">
+                        <Border.RenderTransform>
+                            <ScaleTransform ScaleX="1.0" ScaleY="1.0" CenterX="0.5" CenterY="0.5" />
+                        </Border.RenderTransform>
+                        <ContentPresenter 
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                RecognizesAccessKey="True"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard AutoReverse="True">
+                                        <DoubleAnimation Storyboard.TargetName="Border" Storyboard.TargetProperty="RenderTransform.ScaleX" From="1.0" To="0.9" Duration="00:00:0.1"/>
+                                        <DoubleAnimation Storyboard.TargetName="Border" Storyboard.TargetProperty="RenderTransform.ScaleY" From="1.0" To="0.9" Duration="00:00:0.1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

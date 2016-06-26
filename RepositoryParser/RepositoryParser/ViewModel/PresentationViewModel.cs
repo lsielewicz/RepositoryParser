@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
@@ -30,8 +31,9 @@ namespace RepositoryParser.ViewModel
 
         public PresentationViewModel()
         {
+            Messenger.Default.Register<RefreshMessageToPresentation>(this, x=> HandleRefreshMessage(x.Refresh));
+            OnLoad();
             Messenger.Default.Register<DataMessageToDisplay>(this, x => HandleDataMessage(x.CommitList));
-            CommitsColection = new ObservableCollection<CommitTable>();
             RefreshList();
         }
 
@@ -104,6 +106,32 @@ namespace RepositoryParser.ViewModel
                 DataToCsv.CreateCSVFromGitCommitsList(tempList, filename);
                 MessageBox.Show(_resourceManager.GetString("ExportMessage"), _resourceManager.GetString("ExportTitle"));
             }
+        }
+
+        private void OnLoad()
+        {
+            try
+            {
+                //_gitRepoInstance = new GitRepositoryService();
+                _gitRepoService = new GitService();
+                string repoPath = "./DataBases/CommonRepositoryDataBase.sqlite";
+                if (!File.Exists(repoPath))
+                    _gitRepoService.ConnectRepositoryToDataBase(true);
+                else
+                    _gitRepoService.ConnectRepositoryToDataBase();
+                CommitsColection = new ObservableCollection<CommitTable>();
+                _gitRepoService.GetDataFromBase().ForEach(x => CommitsColection.Add(x));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void HandleRefreshMessage(bool refresh)
+        {
+            if(refresh)
+                RefreshList();
         }
         #endregion
 

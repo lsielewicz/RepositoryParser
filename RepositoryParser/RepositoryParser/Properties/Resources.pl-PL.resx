@@ -536,4 +536,12 @@
   <data name="CoutOfCommitsAnalyse" xml:space="preserve">
     <value>Analiza na podstawie liczby commitów</value>
   </data>
+  <data name="DataBaseManagement" xml:space="preserve">
+    <value>Zarządzanie bazą danych</value>
+    <comment>main</comment>
+  </data>
+  <data name="Presentation" xml:space="preserve">
+    <value>Prezentacja</value>
+    <comment>main</comment>
+  </data>
 </root>

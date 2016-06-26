@@ -44,6 +44,13 @@
         </Setter>
     </Style>
 
-   
+   <Style x:Key="SubTitleTextBlock"  TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource Grey}"/>
+        <Setter Property="FontWeight" Value="Light"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Margin" Value="10,0,0,0"/>
+    </Style>
 
 </ResourceDictionary>

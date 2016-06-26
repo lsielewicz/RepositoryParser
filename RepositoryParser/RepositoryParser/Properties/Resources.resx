@@ -539,4 +539,12 @@
   <data name="CoutOfCommitsAnalyse" xml:space="preserve">
     <value>Count of commits analyse</value>
   </data>
+  <data name="DataBaseManagement" xml:space="preserve">
+    <value>Database Management</value>
+    <comment>main</comment>
+  </data>
+  <data name="Presentation" xml:space="preserve">
+    <value>Presentation</value>
+    <comment>main</comment>
+  </data>
 </root>
