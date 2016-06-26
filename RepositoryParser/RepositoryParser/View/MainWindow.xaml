@@ -89,11 +89,9 @@
                     HorizontalAlignment="Center" 
                     Command="{Binding PickFileCommand}" 
                     FontSize="14"
-                    Foreground="{StaticResource Grey}"
-                    Background="{StaticResource Graphite}"
-                    Padding="4"
-                    FontWeight="Light"
+                    Padding="25,4"
                     MinHeight="40"
+                    Style="{StaticResource AppGraphiteButton}"
                     >
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../Assets/Icons/Add File-100.png" Height="24" Width="24"/>

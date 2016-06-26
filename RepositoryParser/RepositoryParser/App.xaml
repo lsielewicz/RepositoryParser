@@ -19,6 +19,8 @@
                 <!-- Accent and AppTheme setting -->
                 <ResourceDictionary Source="../Resources/Themes/CustomTheme.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                <ResourceDictionary Source="../Resources/ButtonStyles.xaml"/>
+                <ResourceDictionary Source="../Resources/AppStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
   </Application.Resources>
