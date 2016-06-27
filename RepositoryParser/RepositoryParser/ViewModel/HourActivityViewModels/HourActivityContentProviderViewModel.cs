@@ -62,6 +62,7 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels
 
         private void HandleDataMessage(List<string> authors, string filternigQuery)
         {
+            CurrentViewModel = null;
             _authorsList = authors;
             _filteringQuery = filternigQuery;
         }

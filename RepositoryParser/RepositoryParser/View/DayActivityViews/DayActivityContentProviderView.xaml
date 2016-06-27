@@ -1,34 +1,23 @@
-﻿<controls:MetroWindow x:Class="RepositoryParser.View.DayActivityViews.DayActivityContentProviderView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:RepositoryParser.View.DayActivityViews"
-        xmlns:resw="clr-namespace:RepositoryParser.Properties"
-        xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
-        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:viewModel="clr-namespace:RepositoryParser.ViewModel"
-        xmlns:usersActivityViews="clr-namespace:RepositoryParser.View.UsersActivityViews"
-        xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        mc:Ignorable="d"
-        Title="{x:Static resw:Resources.DayActivityView}" Height="600" Width="800"
-        DataContext="{Binding Source={StaticResource Locator}, Path=DayActivityContentProvider }"
-        Icon="../../Assets/Icons/Chart_Icon_Main.png"
-        >
-    <Window.Resources>
+﻿<UserControl x:Class="RepositoryParser.View.DayActivityViews.DayActivityContentProviderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RepositoryParser.View.DayActivityViews"
+             xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
+             xmlns:viewModel="clr-namespace:RepositoryParser.ViewModel"
+             xmlns:resw="clr-namespace:RepositoryParser.Properties"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="600"
+             DataContext="{Binding Source={StaticResource Locator}, Path=DayActivityContentProvider }"
+             >
+    <UserControl.Resources>
         <DataTemplate DataType="{x:Type viewModel:DayActivityViewModel}">
             <local:DayActivityChartView/>
         </DataTemplate>
 
         <conventers:ViewModelBaseToVisibilityConventer x:Key="ViewModelBaseToVisibilityConventer"/>
-    </Window.Resources>
-
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Closed">
-            <i:InvokeCommandAction Command="{Binding ClosedEventCommand}"/>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
+    </UserControl.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -72,5 +61,4 @@
                />
 
     </Grid>
-</controls:MetroWindow>
-
+</UserControl>

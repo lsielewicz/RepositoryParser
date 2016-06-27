@@ -10,15 +10,15 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MahApps.Metro.Controls;
 
 namespace RepositoryParser.View.HourActivityViews
 {
     /// <summary>
     /// Interaction logic for HourActivityContentProviderView.xaml
     /// </summary>
-    public partial class HourActivityContentProviderView : MetroWindow
+    public partial class HourActivityContentProviderView : UserControl
     {
         public HourActivityContentProviderView()
         {
