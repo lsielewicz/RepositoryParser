@@ -57,7 +57,7 @@ namespace RepositoryParser.ViewModel.WeekdayActivityViewModels
         private void OpenChartView()
         {
             CurrentViewModel = (new ViewModelLocator()).WeekdayActivity;
-            Messenger.Default.Send<ChartMessageLevel3>(new ChartMessageLevel3(_authorsList, _filteringQuery));
+            Messenger.Default.Send<ChartMessageLevel3WeekdayActivity>(new ChartMessageLevel3WeekdayActivity(_authorsList, _filteringQuery));
         }
 
         private void HandleDataMessage(List<string> authors, string filternigQuery)

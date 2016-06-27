@@ -40,9 +40,10 @@
             <usersActivityViews:UserActivityContentProviderView/>
         </DataTemplate>
 
-        <!--<DataTemplate DataType="{x:Type weekdayActivityViewModels:WeekdayActivityContentProviderViewModel}">
+        <DataTemplate DataType="{x:Type weekdayActivityViewModels:WeekdayActivityContentProviderViewModel}">
             <weekdayActivityViews:WeekdayActivityContentProviderView/>
-        </DataTemplate>-->
+        </DataTemplate>
+        
     </UserControl.Resources>
     
     <Grid>
@@ -83,6 +84,16 @@
                 <StackPanel Orientation="Horizontal" Width="{Binding ElementName=MonthBtn, Path=ActualWidth}">
                     <Image Source="../Assets/Icons/Column-Chart.png" Height="24" Margin="2,0,10,0"/>
                     <TextBlock Text="{x:Static resw:Resources.UserActivityView}" VerticalAlignment="Center" FontSize="13"/>
+                </StackPanel>
+            </Button>
+
+            <Button x:Name="WeedayBtn" 
+                    Style="{StaticResource MainTile}"
+                    Command="{Binding  OpenWeekdayActivityCommand}"
+                    >
+                <StackPanel Orientation="Horizontal" Width="{Binding ElementName=MonthBtn, Path=ActualWidth}">
+                    <Image Source="../Assets/Icons/Column-Chart.png" Height="24" Margin="2,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.WeekdayActivityAnalyseButton}" VerticalAlignment="Center" FontSize="13"/>
                 </StackPanel>
             </Button>
         </StackPanel>

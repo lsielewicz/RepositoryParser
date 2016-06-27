@@ -28,7 +28,7 @@ namespace RepositoryParser.ViewModel
 
         public WeekDayActivityViewModel()
         {
-            Messenger.Default.Register<ChartMessageLevel3>(this,
+            Messenger.Default.Register<ChartMessageLevel3WeekdayActivity>(this,
                 x => HandleDataMessage(x.FilteringQuery));
             KeyCollection = new ObservableCollection<KeyValuePair<string, int>>();
         }

@@ -57,7 +57,7 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels
         private void OpenChartView()
         {
             CurrentViewModel = (new ViewModelLocator()).HourActivity;
-            Messenger.Default.Send<ChartMessageLevel3>(new ChartMessageLevel3(_authorsList, _filteringQuery));
+            Messenger.Default.Send<ChartMessageLevel3HourActivity>(new ChartMessageLevel3HourActivity(_authorsList, _filteringQuery));
         }
 
         private void HandleDataMessage(List<string> authors, string filternigQuery)

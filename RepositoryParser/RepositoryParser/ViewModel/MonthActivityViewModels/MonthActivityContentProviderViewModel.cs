@@ -8,6 +8,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using RepositoryParser.Core.Messages;
 
+
 namespace RepositoryParser.ViewModel.MonthActivityViewModels
 {
     public class MonthActivityContentProviderViewModel : ViewModelBase
@@ -59,7 +60,7 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
         private void OpenChartView()
         {
             CurrentViewModel = (new ViewModelLocator()).MonthActivity;
-     /*       Messenger.Default.Send<ChartMessageLevel3MonthActivity>(new ChartMessageLevel3(_filteringQuery));*/
+            Messenger.Default.Send<ChartMessageLevel3MonthActivity>(new ChartMessageLevel3MonthActivity(_filteringQuery));
         }
 
         private void HandleDataMessage(List<string> authors, string filternigQuery)

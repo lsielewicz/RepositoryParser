@@ -18,6 +18,7 @@ namespace RepositoryParser.ViewModel
         private string _filteringQuery;
         private RelayCommand _openMonthActivityCommand;
         private RelayCommand _openUserActivityCommand;
+        private RelayCommand _openWeekdayActivityCommand;
         private ViewModelBase _currentViewModel;
         #endregion
 
@@ -61,9 +62,25 @@ namespace RepositoryParser.ViewModel
                 return _openUserActivityCommand ?? (_openUserActivityCommand = new RelayCommand(OpenUserActivity));
             }
         }
+
+        public RelayCommand OpenWeekdayActivityCommand
+        {
+            get
+            {
+                return _openWeekdayActivityCommand ?? (_openWeekdayActivityCommand = new RelayCommand(OpenWeekdayActivity));
+            }
+        }
+
         #endregion
 
         #region Methods
+
+        private void OpenWeekdayActivity()
+        {
+            CurrentViewModel = new ViewModelLocator().WeekdayActivityContentProvider;
+            Messenger.Default.Send<ChartMessageLevel2>(new ChartMessageLevel2(_authorsList, _filteringQuery));
+        }
+
         private void OpenMonthActivity()
         {
             CurrentViewModel = new ViewModelLocator().MonthActivityContentProvider;
