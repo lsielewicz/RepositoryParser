@@ -24,7 +24,10 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
 
         public UsersActivityContentProverViewModel()
         {
-            Messenger.Default.Register<DataMessageToCharts>(this, x=> HandleDataMessage(x.AuthorsList, x.FilteringQuery));
+            Messenger.Default.Register<ChartMessageLevel2>(this, x=> HandleDataMessage(x.AuthorsList, x.FilteringQuery));
+            CurrentViewModel = new ViewModelLocator().UsersCodeFrequency;
+            CurrentViewModel = new ViewModelLocator().Chart;
+            CurrentViewModel = null;
         }
 
         #region Getters setters
@@ -69,17 +72,18 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
         private void OpenChartView()
         {
             CurrentViewModel = (new ViewModelLocator()).Chart;
-            Messenger.Default.Send<DataMessageToCharts>(new DataMessageToCharts(_authorsList, _filteringQuery));
+            Messenger.Default.Send<ChartMessageLevel3UserActivity>(new ChartMessageLevel3UserActivity(_authorsList, _filteringQuery));
         }
 
         private void OpenCodeFrequency()
         {
             CurrentViewModel = (new ViewModelLocator()).UsersCodeFrequency;
-            Messenger.Default.Send<DataMessageToCharts>(new DataMessageToCharts(_authorsList,_filteringQuery));
+            Messenger.Default.Send<ChartMessageLevel3UserFrequencyCode>(new ChartMessageLevel3UserFrequencyCode(_filteringQuery));
         }
 
         private void HandleDataMessage(List<string> authors, string filternigQuery)
         {
+            CurrentViewModel = null;
             _authorsList = authors;
             _filteringQuery = filternigQuery;
         }

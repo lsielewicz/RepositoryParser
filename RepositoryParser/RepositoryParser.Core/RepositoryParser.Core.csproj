@@ -153,8 +153,11 @@
     <Compile Include="Interfaces\ISqLiteService.cs" />
     <Compile Include="Interfaces\ISvnService.cs" />
     <Compile Include="Interfaces\IWindowService.cs" />
+    <Compile Include="Messages\ChartMessageLevel0.cs" />
+    <Compile Include="Messages\ChartMessageLevel1.cs" />
+    <Compile Include="Messages\ChartMessageLevel2.cs" />
+    <Compile Include="Messages\ChartMessageLevel3.cs" />
     <Compile Include="Messages\DataMessageToChartOfChanges.cs" />
-    <Compile Include="Messages\DataMessageToCharts.cs" />
     <Compile Include="Messages\DataMessageToDisplay.cs" />
     <Compile Include="Messages\RefreshMessageToPresentation.cs" />
     <Compile Include="Models\BranchForRepoTable.cs" />

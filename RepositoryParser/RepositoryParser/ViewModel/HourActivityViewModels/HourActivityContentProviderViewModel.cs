@@ -20,7 +20,7 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels
 
         public HourActivityContentProviderViewModel()
         {
-            Messenger.Default.Register<DataMessageToCharts>(this, x => HandleDataMessage(x.AuthorsList, x.FilteringQuery));
+            Messenger.Default.Register<ChartMessageLevel2>(this, x => HandleDataMessage(x.AuthorsList, x.FilteringQuery));
         }
 
         #region Getters setters
@@ -57,7 +57,7 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels
         private void OpenChartView()
         {
             CurrentViewModel = (new ViewModelLocator()).HourActivity;
-            Messenger.Default.Send<DataMessageToCharts>(new DataMessageToCharts(_authorsList, _filteringQuery));
+            Messenger.Default.Send<ChartMessageLevel3>(new ChartMessageLevel3(_authorsList, _filteringQuery));
         }
 
         private void HandleDataMessage(List<string> authors, string filternigQuery)

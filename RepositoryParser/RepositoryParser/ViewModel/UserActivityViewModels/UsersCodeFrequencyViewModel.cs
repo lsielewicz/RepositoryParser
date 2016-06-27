@@ -40,7 +40,7 @@ namespace RepositoryParser.ViewModel
 
         public UsersCodeFrequencyViewModel()
         {
-            Messenger.Default.Register<DataMessageToCharts>(this,x=>HandleDataMessage(x.FilteringQuery));
+            Messenger.Default.Register<ChartMessageLevel3UserFrequencyCode>(this,x=>HandleDataMessage(x.FilteringQuery));
             _sqLiteService=SqLiteService.GetInstance();
             _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
             _dataCalcWorker =new BackgroundWorker();

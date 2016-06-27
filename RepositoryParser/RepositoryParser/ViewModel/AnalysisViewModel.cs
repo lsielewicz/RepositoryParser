@@ -23,10 +23,15 @@ namespace RepositoryParser.ViewModel
 
         public AnalysisViewModel()
         {
-            Messenger.Default.Register<DataMessageToCharts>(this, x=> HandleDataMessage(x.AuthorsList,x.FilteringQuery, x.IsFromContent));
+            Messenger.Default.Register<ChartMessageLevel1>(this, x=> HandleDataMessage(x.AuthorsList,x.FilteringQuery));
             _authorsList = new List<string>();
 
             CurrentViewModel = new ViewModelLocator().MonthActivityContentProvider;
+            CurrentViewModel = new ViewModelLocator().UsersActivityContentProvider;
+            CurrentViewModel = new ViewModelLocator().WeekdayActivityContentProvider;
+            CurrentViewModel = new ViewModelLocator().HourActivityContentProvider;
+            CurrentViewModel = new ViewModelLocator().DayActivityContentProvider;
+            CurrentViewModel = new ViewModelLocator().Difference;
             CurrentViewModel = null;
         }
 
@@ -62,26 +67,23 @@ namespace RepositoryParser.ViewModel
         private void OpenMonthActivity()
         {
             CurrentViewModel = new ViewModelLocator().MonthActivityContentProvider;
-            Messenger.Default.Send<DataMessageToCharts>(new DataMessageToCharts(_authorsList,_filteringQuery));
+            Messenger.Default.Send<ChartMessageLevel2>(new ChartMessageLevel2(_authorsList,_filteringQuery));
         }
 
         private void OpenUserActivity()
         {
             CurrentViewModel = new ViewModelLocator().UsersActivityContentProvider;
-            Messenger.Default.Send<DataMessageToCharts>(new DataMessageToCharts(_authorsList, _filteringQuery));
+            Messenger.Default.Send<ChartMessageLevel2>(new ChartMessageLevel2(_authorsList, _filteringQuery));
         }
         #endregion
 
 
         #region Messages
-        private void HandleDataMessage(List<string> authors, string filternigQuery, bool isTocontent)
+        private void HandleDataMessage(List<string> authors, string filternigQuery)
         {
-            if (isTocontent)
-            {
                 CurrentViewModel = null;
                 _authorsList = authors;
                 _filteringQuery = filternigQuery;
-            }
         }
         #endregion
     }

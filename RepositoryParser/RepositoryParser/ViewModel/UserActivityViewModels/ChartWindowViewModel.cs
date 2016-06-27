@@ -31,7 +31,7 @@ namespace RepositoryParser.ViewModel
         public ChartWindowViewModel()
         {
             KeyCollection = new ObservableCollection<KeyValuePair<string, int>>();
-            Messenger.Default.Register<DataMessageToCharts>(this, x => HandleDataMessage(x.AuthorsList, x.FilteringQuery));
+            Messenger.Default.Register<ChartMessageLevel3UserActivity>(this, x => HandleDataMessage(x.AuthorsList, x.FilteringQuery));
         }
         #endregion
 

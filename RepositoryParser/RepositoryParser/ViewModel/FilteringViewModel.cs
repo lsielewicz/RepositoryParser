@@ -538,7 +538,7 @@ namespace RepositoryParser.ViewModel
 
         private void SendMessageToDrawChart()
         {
-            Messenger.Default.Send<DataMessageToCharts>(new DataMessageToCharts(_authorsList,
+            Messenger.Default.Send<ChartMessageLevel0>(new ChartMessageLevel0(_authorsList,
                 GenerateQuery()));
         }
 

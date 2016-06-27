@@ -20,7 +20,7 @@ namespace RepositoryParser.ViewModel.WeekdayActivityViewModels
 
         public WeekdayActivityContentProviderViewModel()
         {
-            Messenger.Default.Register<DataMessageToCharts>(this, x => HandleDataMessage(x.AuthorsList, x.FilteringQuery));
+            Messenger.Default.Register<ChartMessageLevel2>(this, x => HandleDataMessage(x.AuthorsList, x.FilteringQuery));
         }
 
         #region Getters setters
@@ -57,11 +57,12 @@ namespace RepositoryParser.ViewModel.WeekdayActivityViewModels
         private void OpenChartView()
         {
             CurrentViewModel = (new ViewModelLocator()).WeekdayActivity;
-            Messenger.Default.Send<DataMessageToCharts>(new DataMessageToCharts(_authorsList, _filteringQuery));
+            Messenger.Default.Send<ChartMessageLevel3>(new ChartMessageLevel3(_authorsList, _filteringQuery));
         }
 
         private void HandleDataMessage(List<string> authors, string filternigQuery)
         {
+            CurrentViewModel = null;
             _authorsList = authors;
             _filteringQuery = filternigQuery;
         }

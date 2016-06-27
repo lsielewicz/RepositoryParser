@@ -36,7 +36,7 @@ namespace RepositoryParser.ViewModel
 
         public MainViewModel()
         {
-            Messenger.Default.Register<DataMessageToCharts>(this, x => HandleDataMessage(x.AuthorsList, x.FilteringQuery));
+            Messenger.Default.Register<ChartMessageLevel0>(this, x => HandleDataMessage(x.AuthorsList, x.FilteringQuery));
 
             CurrentViewModel = (new ViewModelLocator()).DataBaseManagement;
             CurrentViewModel = (new ViewModelLocator()).Presentation;
@@ -113,7 +113,7 @@ namespace RepositoryParser.ViewModel
         private void OpenAnalysis()
         {
             CurrentViewModel = (new ViewModelLocator()).Analysis;
-            Messenger.Default.Send<DataMessageToCharts>(new DataMessageToCharts(_authorsList,_filteringQuery,true));
+            Messenger.Default.Send<ChartMessageLevel1>(new ChartMessageLevel1(_authorsList,_filteringQuery));
         }
 
         private void OpenFiltering()
