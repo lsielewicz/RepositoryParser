@@ -10,15 +10,15 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MahApps.Metro.Controls;
 
 namespace RepositoryParser.View.UsersActivityViews
 {
     /// <summary>
     /// Interaction logic for UserActivityContentProviderView.xaml
     /// </summary>
-    public partial class UserActivityContentProviderView : MetroWindow
+    public partial class UserActivityContentProviderView : UserControl
     {
         public UserActivityContentProviderView()
         {

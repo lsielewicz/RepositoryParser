@@ -36,11 +36,11 @@
         </DataTemplate>
         <conventers:ViewModelBaseToVisibilityConventer x:Key="ViewModelBaseToVisibilityConventer" />
 
-        <!--   <DataTemplate DataType="{x:Type userActivityViewModels:UsersActivityContentProverViewModel}">
+           <DataTemplate DataType="{x:Type userActivityViewModels:UsersActivityContentProverViewModel}">
             <usersActivityViews:UserActivityContentProviderView/>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type weekdayActivityViewModels:WeekdayActivityContentProviderViewModel}">
+        <!--<DataTemplate DataType="{x:Type weekdayActivityViewModels:WeekdayActivityContentProviderViewModel}">
             <weekdayActivityViews:WeekdayActivityContentProviderView/>
         </DataTemplate>-->
     </UserControl.Resources>
@@ -75,7 +75,16 @@
                     <TextBlock Text="{x:Static resw:Resources.MonthActivityAnalyseButton}" VerticalAlignment="Center" FontSize="13"/>
                 </StackPanel>
             </Button>
-            
+
+            <Button x:Name="UsersBtn" 
+                    Style="{StaticResource MainTile}"
+                    Command="{Binding  OpenUserActivityCommand}"
+                    >
+                <StackPanel Orientation="Horizontal" Width="{Binding ElementName=MonthBtn, Path=ActualWidth}">
+                    <Image Source="../Assets/Icons/Column-Chart.png" Height="24" Margin="2,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.UserActivityView}" VerticalAlignment="Center" FontSize="13"/>
+                </StackPanel>
+            </Button>
         </StackPanel>
 
 

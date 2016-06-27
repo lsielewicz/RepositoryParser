@@ -17,6 +17,7 @@ namespace RepositoryParser.ViewModel
         private List<string> _authorsList;
         private string _filteringQuery;
         private RelayCommand _openMonthActivityCommand;
+        private RelayCommand _openUserActivityCommand;
         private ViewModelBase _currentViewModel;
         #endregion
 
@@ -47,6 +48,14 @@ namespace RepositoryParser.ViewModel
                 return _openMonthActivityCommand ?? (_openMonthActivityCommand = new RelayCommand(OpenMonthActivity));
             }
         }
+
+        public RelayCommand OpenUserActivityCommand
+        {
+            get
+            {
+                return _openUserActivityCommand ?? (_openUserActivityCommand = new RelayCommand(OpenUserActivity));
+            }
+        }
         #endregion
 
         #region Methods
@@ -54,6 +63,12 @@ namespace RepositoryParser.ViewModel
         {
             CurrentViewModel = new ViewModelLocator().MonthActivityContentProvider;
             Messenger.Default.Send<DataMessageToCharts>(new DataMessageToCharts(_authorsList,_filteringQuery));
+        }
+
+        private void OpenUserActivity()
+        {
+            CurrentViewModel = new ViewModelLocator().UsersActivityContentProvider;
+            Messenger.Default.Send<DataMessageToCharts>(new DataMessageToCharts(_authorsList, _filteringQuery));
         }
         #endregion
 
