@@ -323,7 +323,7 @@ namespace RepositoryParser.ViewModel
             }
             else
             {
-                Messenger.Default.Send<RefreshMessageToPresentation>(new RefreshMessageToPresentation(true));
+                //Messenger.Default.Send<RefreshMessageToPresentation>(new RefreshMessageToPresentation(true));
             }
         }
 
@@ -337,7 +337,7 @@ namespace RepositoryParser.ViewModel
 
         private void DoClearWorkCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            Messenger.Default.Send<RefreshMessageToPresentation>(new RefreshMessageToPresentation(true));
+           // Messenger.Default.Send<RefreshMessageToPresentation>(new RefreshMessageToPresentation(true));
             ProgressBarVisibility = false;
         }
         #endregion

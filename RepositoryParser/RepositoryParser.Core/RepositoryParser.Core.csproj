@@ -159,6 +159,7 @@
     <Compile Include="Messages\ChartMessageLevel3.cs" />
     <Compile Include="Messages\DataMessageToChartOfChanges.cs" />
     <Compile Include="Messages\DataMessageToDisplay.cs" />
+    <Compile Include="Messages\RefreshMessageToFiltering.cs" />
     <Compile Include="Messages\RefreshMessageToPresentation.cs" />
     <Compile Include="Models\BranchForRepoTable.cs" />
     <Compile Include="Models\BranchTable.cs" />

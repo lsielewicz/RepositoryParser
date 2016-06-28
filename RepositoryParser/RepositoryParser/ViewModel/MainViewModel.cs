@@ -119,6 +119,7 @@ namespace RepositoryParser.ViewModel
         private void OpenFiltering()
         {
             CurrentViewModel = (new ViewModelLocator()).Filtering;
+            Messenger.Default.Send<RefreshMessageToFiltering>(new RefreshMessageToFiltering(true));
         }
 
         private void OnLoad()
@@ -146,6 +147,7 @@ namespace RepositoryParser.ViewModel
         private void OpenPresentation()
         {
             CurrentViewModel = (new ViewModelLocator()).Presentation;
+            Messenger.Default.Send<RefreshMessageToPresentation>(new RefreshMessageToPresentation(true));
         }
 
 

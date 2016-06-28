@@ -48,7 +48,7 @@ namespace RepositoryParser.ViewModel
 
         public FilteringViewModel()
         {
-            Messenger.Default.Register<RefreshMessageToPresentation>(this, x=>HandleRefreshMessage(x.Refresh));
+            Messenger.Default.Register<RefreshMessageToFiltering>(this, x=>HandleRefreshMessage(x.Refresh));
             _authorsList = new List<string>();
             LocalCollection = new ObservableCollection<string>();
             BranchCollection = new ObservableCollection<string>();
