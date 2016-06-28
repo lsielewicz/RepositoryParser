@@ -48,6 +48,7 @@ namespace RepositoryParser.ViewModel
 
         public FilteringViewModel()
         {
+            Messenger.Default.Register<RefreshMessageToPresentation>(this, x=>HandleRefreshMessage(x.Refresh));
             _authorsList = new List<string>();
             LocalCollection = new ObservableCollection<string>();
             BranchCollection = new ObservableCollection<string>();
@@ -269,6 +270,16 @@ namespace RepositoryParser.ViewModel
         #endregion
 
         #region Methods
+
+        private void HandleRefreshMessage(bool refresh)
+        {
+            if (refresh)
+            {
+                OnLoad();
+                ClearFilters();
+            }
+        }
+
         private void BranchSelectedItemAction(string selecteditem)
         {
             localList.Clear();

@@ -194,12 +194,12 @@
 
             </Grid>
 
-            <StackPanel Grid.Row="0" Grid.Column="3" Grid.RowSpan="2" Margin="1,5,1,0">
+            <StackPanel Grid.Row="0" Grid.Column="3" Grid.RowSpan="2" Margin="1,5,1,0" Name="ClearFiltersBtn">
                 <Button Command="{Binding ClearFiltersCommand}" 
                     Style="{StaticResource AppGraphiteButton}"
                     >
-                    <StackPanel Orientation="Horizontal" Width="{Binding ElementName=MonthBtn, Path=ActualWidth}">
-                        <Image Source="../Assets/Icons/Clear.png" Height="24" Margin="2,0,10,0"/>
+                    <StackPanel Orientation="Horizontal" Width="{Binding ElementName=ClearFiltersBtn, Path=ActualWidth}" HorizontalAlignment="Stretch">
+                        <Image Source="../Assets/Icons/Clear.png" Height="24" Margin="10,0,10,0"/>
                         <TextBlock Text="{x:Static resw:Resources.ClearFiltersBtn}" VerticalAlignment="Center" FontSize="13"/>
                     </StackPanel>
                 </Button>

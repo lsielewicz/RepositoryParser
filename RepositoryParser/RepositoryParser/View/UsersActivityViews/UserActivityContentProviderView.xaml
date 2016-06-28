@@ -42,13 +42,13 @@
                    />
         
         <StackPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
-            <Button Style="{StaticResource AppGraphiteButton}" Command="{Binding OpenChartViewCommand}" x:Name="Btn1" Margin="10,0,0,0">
+            <Button Style="{StaticResource AppGraphiteButton}" Command="{Binding OpenChartViewCommand}" x:Name="Btn1" Margin="10,0,0,5">
                 <StackPanel Orientation="Horizontal" Width="{Binding ElementName=Btn1, Path=ActualWidth}">
                     <Image Style="{StaticResource AppButtonIcon}"  Source="../../Assets/Icons/Poll Topic-50.png" Margin="5,0,5,0"/>
                     <TextBlock Style="{StaticResource AppWhiteTextBlock}" Text="{x:Static resw:Resources.CountOfCommits}"/>
                 </StackPanel>
             </Button>
-            <Button Style="{StaticResource AppGraphiteButton}" Command="{Binding OpenCodeFrequencyCommand}" x:Name="Btn2" Margin="10,0,0,0">
+            <Button Style="{StaticResource AppGraphiteButton}" Command="{Binding OpenCodeFrequencyCommand}" x:Name="Btn2" Margin="10,0,0,5">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="{Binding ElementName=Btn2, Path=ActualWidth}">
                     <Image Style="{StaticResource AppButtonIcon}"  Source="../../Assets/Icons/Code-50.png" Margin="5,0,5,0"/>
                     <TextBlock Style="{StaticResource AppWhiteTextBlock}" Text="{x:Static resw:Resources.CountOfLines}"/>
