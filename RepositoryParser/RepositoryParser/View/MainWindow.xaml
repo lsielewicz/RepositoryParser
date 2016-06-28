@@ -8,13 +8,13 @@
         xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
         xmlns:resw="clr-namespace:RepositoryParser.Properties"
         mc:Ignorable="d"
-        Title="{x:Static resw:Resources.MainWindowView}" Height="600" Width="1200"
+        Title="{x:Static resw:Resources.MainWindowView}" Height="720" Width="1200"
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:viewModel="clr-namespace:RepositoryParser.ViewModel"
         xmlns:usersActivityViews="clr-namespace:RepositoryParser.View.UsersActivityViews"
         xmlns:view="clr-namespace:RepositoryParser.View"
         DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
-        MinHeight="450" MinWidth="800"
+        MinHeight="600" MinWidth="800"
         ShowIconOnTitleBar="True"
         ShowTitleBar="True"
         >
@@ -26,7 +26,7 @@
                  Background="Transparent"
                  RenderOptions.EdgeMode="Aliased"
                  RenderOptions.BitmapScalingMode="HighQuality">
-                <Image Source="../Assets/Icons/Chart_Icon_Main.png"/>
+                <Image Source="../Assets/Icons/RepositoryAnalyserIconICO.png"/>
             </Grid>
         </DataTemplate>
     </Controls:MetroWindow.IconTemplate>
@@ -35,7 +35,9 @@
         <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <conventers:NegativeBoolToVisibilityConventer x:Key="NegativeBoolToVisibilityConventer"/>
         <conventers:BoolToBackgroundColorConventer x:Key="BoolToBackgroundColorConventer"/>
-
+        <conventers:ViewModelBaseToVisibilityConventer x:Key="ViewModelBaseToVisibilityConventer"/>
+        <conventers:NegativeViewModelBaseToVisibilityConventer x:Key="NegativeViewModelBaseToVisibilityConventer"/>
+        
         <DataTemplate DataType="{x:Type viewModel:PresentationViewModel}">
             <view:PresentationView/>
         </DataTemplate>
@@ -80,7 +82,12 @@
             </Rectangle.Fill>
         </Rectangle>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="{x:Static resw:Resources.MainWindowTitle}" Style="{StaticResource AppTitleTextBlock}"></TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="0" 
+                   Grid.ColumnSpan="3" 
+                   Text="{x:Static resw:Resources.MainWindowTitle}" 
+                   Style="{StaticResource AppTitleTextBlock}"
+                   Visibility="{Binding CurrentViewModel, Converter={StaticResource NegativeViewModelBaseToVisibilityConventer}}"
+                   />
     
         <StackPanel Grid.Row="1" Grid.Column="0">
             <Button x:Name="PresentationBtn"
@@ -88,7 +95,7 @@
                     Command="{Binding OpenPresentationCommand}"
                     >
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=PresentationBtn, Path=ActualWidth}" >
-                        <Image Source="../Assets/Icons/Analysis_grey.png" Width="36" Margin="10,0,10,0"/>
+                        <Image Source="../Assets/Icons/Presentation-100.png" Width="36" Margin="10,0,10,0"/>
                     <TextBlock Text="{x:Static resw:Resources.Presentation}" Style="{StaticResource AppWhiteTextBlock}"/>
                     </StackPanel>
                 </Button>
@@ -98,7 +105,7 @@
                     Command="{Binding OpenDataBaseManagementCommand}"
                     >
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=DBManagementBtn, Path=ActualWidth}" >
-                    <Image Source="../Assets/Icons/Analysis_grey.png" Width="36" Margin="10,0,10,0"/>
+                    <Image Source="../Assets/Icons/ManagementIcon.png" Width="36" Margin="10,0,10,0"/>
                     <TextBlock Text="{x:Static resw:Resources.DataBaseManagement}" Style="{StaticResource AppWhiteTextBlock}"/>
                 </StackPanel>
             </Button>
@@ -108,7 +115,7 @@
                     Command="{Binding OpenFilteringCommand}"
                     >
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=FilteringBtn, Path=ActualWidth}" >
-                    <Image Source="../Assets/Icons/Analysis_grey.png" Width="36" Margin="10,0,10,0"/>
+                    <Image Source="../Assets/Icons/Filter-100.png" Width="36" Margin="10,0,10,0"/>
                     <TextBlock Text="{x:Static resw:Resources.Filtering}" Style="{StaticResource AppWhiteTextBlock}"/>
                 </StackPanel>
             </Button>
@@ -126,7 +133,15 @@
         </StackPanel>
 
         <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding CurrentViewModel}"/>
-        
-        
+        <Image Grid.Row="1"
+               Grid.Column="1"
+               Source="../Resources/../Assets/Images/RepositoryAnalyserLogo.png"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Opacity="1"
+               Margin="75"
+               Visibility="{Binding CurrentViewModel, Converter={StaticResource ViewModelBaseToVisibilityConventer}}"
+               />
+
     </Grid>
 </Controls:MetroWindow>

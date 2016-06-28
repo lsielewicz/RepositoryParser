@@ -119,19 +119,17 @@
                     Command="{Binding StartWorkCommand}" 
                     IsEnabled="{Binding IsCloneButtonEnabled }" 
                     HorizontalAlignment="Center" 
-                    VerticalAlignment="Center" 
-                    Background="{StaticResource MyGreen}" 
-                    FontSize="20" 
+                    VerticalAlignment="Center"  
+                    
                     Margin="2" 
                     Padding="4" 
                     MinWidth="250"
-                    Style="{StaticResource AppGraphiteButton}"
-                    BorderThickness="1"
-                    BorderBrush="{StaticResource Graphite}"
+                    Style="{StaticResource MainTile}"
+                    Height="50"
                     >
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=CloneRepositoryBtn, Path=Width}" >
-                        <Image Source="../Assets/Icons/Add Database-52.png" Width="24" Margin="10,0,10,0"/>
-                        <TextBlock Text="{x:Static resw:Resources.AddRepositoryButton}" VerticalAlignment="Center"/>
+                        <Image Source="../Assets/Icons/Add Database-5white0.png" Width="32" Margin="10,0,10,0"/>
+                        <TextBlock Text="{x:Static resw:Resources.AddRepositoryButton}" FontSize="18"  Style="{StaticResource AppWhiteTextBlock}"/>
                     </StackPanel>
                 </Button>
             </StackPanel>

@@ -50,7 +50,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="70"/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -66,57 +65,104 @@
             </TextBlock>
         </Border>
 
-        <StackPanel Grid.Row="1" Grid.Column="1" Visibility="{Binding CurrentViewModel, Converter={StaticResource ViewModelBaseToVisibilityConventer}}">
+        <Grid Grid.Row="1" Grid.Column="1"
+              Visibility="{Binding CurrentViewModel, Converter={StaticResource ViewModelBaseToVisibilityConventer}}"
+              Margin="150,20"
+              >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
             <Button x:Name="MonthBtn" 
-                    Style="{StaticResource MainTile}"
+                    Style="{StaticResource AnalysisTile2}"
                     Command="{Binding  OpenMonthActityCommand}"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Grid.Row="0"
+                    Grid.Column="0"
                     >
-                <StackPanel Orientation="Horizontal" Width="{Binding ElementName=MonthBtn, Path=ActualWidth}">
-                    <Image Source="../Assets/Icons/Column-Chart.png" Height="24" Margin="2,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.MonthActivityAnalyseButton}" VerticalAlignment="Center" FontSize="13"/>
+                <StackPanel Orientation="Vertical" Width="{Binding ElementName=MonthBtn, Path=ActualWidth}">
+                    <Image Source="../Assets/Icons/BlueColumnChart.png" Height="100" Margin="2,0,10,0" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{x:Static resw:Resources.MonthActivityAnalyseButton}" VerticalAlignment="Center" FontSize="13" HorizontalAlignment="Center" Foreground="{StaticResource Graphite}"/>
                 </StackPanel>
             </Button>
 
             <Button x:Name="UsersBtn" 
-                    Style="{StaticResource MainTile}"
+                    Style="{StaticResource AnalysisTile2}"
                     Command="{Binding  OpenUserActivityCommand}"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Grid.Row="1"
+                    Grid.Column="0"
                     >
-                <StackPanel Orientation="Horizontal" Width="{Binding ElementName=MonthBtn, Path=ActualWidth}">
-                    <Image Source="../Assets/Icons/Column-Chart.png" Height="24" Margin="2,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.UserActivityView}" VerticalAlignment="Center" FontSize="13"/>
+                <StackPanel Orientation="Vertical" Width="{Binding ElementName=MonthBtn, Path=ActualWidth}">
+                    <Image Source="../Assets/Icons/BluePieChart.png" Height="100" Margin="2,0,10,0" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{x:Static resw:Resources.UserActivityView}" VerticalAlignment="Center" FontSize="13" HorizontalAlignment="Center" Foreground="{StaticResource Graphite}"/>
                 </StackPanel>
             </Button>
 
             <Button x:Name="WeedayBtn" 
-                    Style="{StaticResource MainTile}"
+                    Style="{StaticResource AnalysisTile2}"
                     Command="{Binding  OpenWeekdayActivityCommand}"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Grid.Row="2"
+                    Grid.Column="0"
                     >
-                <StackPanel Orientation="Horizontal" Width="{Binding ElementName=MonthBtn, Path=ActualWidth}">
-                    <Image Source="../Assets/Icons/Column-Chart.png" Height="24" Margin="2,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.WeekdayActivityAnalyseButton}" VerticalAlignment="Center" FontSize="13"/>
+                <StackPanel Orientation="Vertical" Width="{Binding ElementName=MonthBtn, Path=ActualWidth}">
+                    <Image Source="../Assets/Icons/BlueAreaChart.png" Height="100" Margin="2,0,10,0" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{x:Static resw:Resources.WeekdayActivityAnalyseButton}" VerticalAlignment="Center" FontSize="13" HorizontalAlignment="Center" Foreground="{StaticResource Graphite}"/>
                 </StackPanel>
             </Button>
 
             <Button x:Name="DayBtn" 
-                    Style="{StaticResource MainTile}"
+                    Style="{StaticResource AnalysisTile2}"
                     Command="{Binding  OpenDayActivityCommand}"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Grid.Row="0"
+                    Grid.Column="1"
                     >
-                <StackPanel Orientation="Horizontal" Width="{Binding ElementName=DayBtn, Path=ActualWidth}">
-                    <Image Source="../Assets/Icons/Column-Chart.png" Height="24" Margin="2,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.MonthDayActivityAnalyseButton}" VerticalAlignment="Center" FontSize="13"/>
+                <StackPanel Orientation="Vertical" Width="{Binding ElementName=MonthBtn, Path=ActualWidth}">
+                    <Image Source="../Assets/Icons/BlueLineChart.png" Height="100" Margin="2,0,10,0" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{x:Static resw:Resources.MonthDayActivityAnalyseButton}" VerticalAlignment="Center" FontSize="13" HorizontalAlignment="Center" Foreground="{StaticResource Graphite}"/>
                 </StackPanel>
             </Button>
 
             <Button x:Name="HourBtn" 
-                    Style="{StaticResource MainTile}"
+                    Style="{StaticResource AnalysisTile2}"
                     Command="{Binding  OpenHourActivityCommand}"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Grid.Row="1"
+                    Grid.Column="1"
                     >
-                <StackPanel Orientation="Horizontal" Width="{Binding ElementName=HourBtn, Path=ActualWidth}">
-                    <Image Source="../Assets/Icons/Column-Chart.png" Height="24" Margin="2,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.HourActivityAnalyseButton}" VerticalAlignment="Center" FontSize="13"/>
+                <StackPanel Orientation="Vertical" Width="{Binding ElementName=MonthBtn, Path=ActualWidth}">
+                    <Image Source="../Assets/Icons/BlueColumnChart.png" Height="100" Margin="2,0,10,0" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{x:Static resw:Resources.HourActivityAnalyseButton}" VerticalAlignment="Center" FontSize="13" HorizontalAlignment="Center" Foreground="{StaticResource Graphite}"/>
                 </StackPanel>
             </Button>
-        </StackPanel>
+
+            <Button x:Name="CompareBtn" 
+                    Style="{StaticResource AnalysisTile2}"
+                    Command="{Binding}"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    >
+                <StackPanel Orientation="Vertical" Width="{Binding ElementName=CompareBtn, Path=ActualWidth}">
+                    <Image Source="../Assets/Icons/BlueCompare.png" Height="100" Margin="2,0,10,0" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{x:Static resw:Resources.DifferencesButton}" VerticalAlignment="Center" FontSize="13" HorizontalAlignment="Center" Foreground="{StaticResource Graphite}"/>
+                </StackPanel>
+            </Button>
+        </Grid>
 
 
         <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding CurrentViewModel}"/>

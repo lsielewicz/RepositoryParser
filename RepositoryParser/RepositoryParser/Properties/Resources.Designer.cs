@@ -124,7 +124,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Analyse:.
+        ///   Looks up a localized string similar to Analyse.
         /// </summary>
         public static string AnalysisWindowTitle {
             get {
@@ -484,7 +484,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date:.
+        ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string FilteringDate {
             get {
@@ -511,7 +511,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pick Repository:.
+        ///   Looks up a localized string similar to Pick Repository.
         /// </summary>
         public static string FilteringPickRepository {
             get {

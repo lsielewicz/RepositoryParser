@@ -78,7 +78,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>RepositoryAnalyserIcon.ico</ApplicationIcon>
+    <ApplicationIcon>RepositoryAnalyserIcon_BLUE.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>4648EEDE4895459D3AE8B628CF249DE60FCC2651</ManifestCertificateThumbprint>
@@ -206,6 +206,7 @@
     <Compile Include="Conventers\DateFormat.cs" />
     <Compile Include="Conventers\EnumToColorConventer.cs" />
     <Compile Include="Conventers\NegativeBoolToVisibilityConventer.cs" />
+    <Compile Include="Conventers\NegativeViewModelBaseToVisibilityConventer.cs" />
     <Compile Include="Conventers\StringToImageConventer.cs" />
     <Compile Include="Conventers\ViewModelBaseToVisibilityConventer.cs" />
     <Compile Include="Properties\Resources.pl-PL.Designer.cs">
@@ -524,6 +525,39 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Icons\CSV_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\Add Database-5white0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\Message-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\BlueAreaChart.png" />
+    <Resource Include="Assets\Icons\BlueCircleChart.png" />
+    <Resource Include="Assets\Icons\BlueColumnChart.png" />
+    <Resource Include="Assets\Icons\BlueCombOChart.png" />
+    <Resource Include="Assets\Icons\BlueLineChart.png" />
+    <Resource Include="Assets\Icons\BlueLineChart2.png" />
+    <Resource Include="Assets\Icons\BluePieChart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\BlueCompare.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="RepositoryAnalyserIcon_BLUE.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\RepositoryAnalyserIconICO.png" />
+    <Resource Include="Assets\Icons\RepositoryAnalyserIcon_BLUE.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\RepositoryAnalyserLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\Filter-100.png" />
+    <Resource Include="Assets\Icons\ManagementIcon.png" />
+    <Resource Include="Assets\Icons\Presentation-100.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.99.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.99.0\build\net451\System.Data.SQLite.Core.targets')" />

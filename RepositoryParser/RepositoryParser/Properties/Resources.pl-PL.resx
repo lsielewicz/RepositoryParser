@@ -190,7 +190,7 @@
     <comment>DayAcitvityChartPage</comment>
   </data>
   <data name="DayActivityWindowTitle" xml:space="preserve">
-    <value>Analiza aktywności wedlug dni:</value>
+    <value>Analiza aktywności wedlug dni</value>
     <comment>DayAcitvityChartPage</comment>
   </data>
   <data name="DifferencesButton" xml:space="preserve">
@@ -215,27 +215,27 @@
     <comment>MainPage</comment>
   </data>
   <data name="Filtering" xml:space="preserve">
-    <value>Filtrowanie:</value>
+    <value>Filtrowanie</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="FilteringAuthor" xml:space="preserve">
-    <value>Autor:</value>
+    <value>Autor</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="FilteringDate" xml:space="preserve">
-    <value>Data:</value>
+    <value>Data</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="FilteringMessage" xml:space="preserve">
-    <value>Treść wiadomości:</value>
+    <value>Treść wiadomości</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="FilteringPickBranch" xml:space="preserve">
-    <value>Wybierz gałąź:</value>
+    <value>Wybierz gałąź</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="FilteringPickRepository" xml:space="preserve">
-    <value>Wybierz repozytorium:</value>
+    <value>Wybierz repozytorium</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="Hour" xml:space="preserve">
@@ -247,19 +247,19 @@
     <comment>AnalysisPage</comment>
   </data>
   <data name="HoursActivityChartChart" xml:space="preserve">
-    <value>Wykres aktywności według godzin:</value>
+    <value>Wykres aktywności według godzin</value>
     <comment>HourAcitvityChartPage</comment>
   </data>
   <data name="HoursActivityChartList" xml:space="preserve">
-    <value>Lista aktywności według godzin:</value>
+    <value>Lista aktywności według godzin</value>
     <comment>HourAcitvityChartPage</comment>
   </data>
   <data name="HoursActivityWindowTitle" xml:space="preserve">
-    <value>Analiza aktywności według godzin:</value>
+    <value>Analiza aktywności według godzin</value>
     <comment>HourAcitvityChartPage</comment>
   </data>
   <data name="Legend" xml:space="preserve">
-    <value>Legenda:</value>
+    <value>Legenda</value>
     <comment>ChartPage</comment>
   </data>
   <data name="LocalAdress" xml:space="preserve">
@@ -323,7 +323,7 @@
     <comment>MonthAcitvityChartPage</comment>
   </data>
   <data name="MonthActivityWindowTitle" xml:space="preserve">
-    <value>Analiza aktywności według miesięcy:</value>
+    <value>Analiza aktywności według miesięcy</value>
     <comment>MonthAcitvityChartPage</comment>
   </data>
   <data name="MonthDayActivityAnalyseButton" xml:space="preserve">
@@ -406,7 +406,7 @@
     <comment>ChartOfChangesChart</comment>
   </data>
   <data name="ChartOfChangesTitle" xml:space="preserve">
-    <value>Wykres zmian:</value>
+    <value>Wykres zmian</value>
     <comment>ChartOfChangesCharts</comment>
   </data>
   <data name="CountOfLines" xml:space="preserve">
@@ -418,11 +418,11 @@
     <comment>ChartOfChangesChart</comment>
   </data>
   <data name="GoToDifferencesChartButton" xml:space="preserve">
-    <value>Pokaż wykres zmian.</value>
+    <value>Pokaż wykres zmian</value>
     <comment>DifferencesViewPage</comment>
   </data>
   <data name="ListOfChangesTitle" xml:space="preserve">
-    <value>Lista zmian:</value>
+    <value>Lista zmian</value>
     <comment>ChartOfChangesChart</comment>
   </data>
   <data name="Modified" xml:space="preserve">

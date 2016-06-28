@@ -22,36 +22,33 @@
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="4*" MinWidth="300"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" MinHeight="60"/>
+                <RowDefinition Height="35"/>
                 <RowDefinition Height="9*"/>
                 <RowDefinition Height="10"/>
             </Grid.RowDefinitions>
 
-            <Rectangle Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="0">
-                <Rectangle.Fill>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="{StaticResource AppBorder}" Offset="0" />
-                    </LinearGradientBrush>
-                </Rectangle.Fill>
-            </Rectangle>
-            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{x:Static resw:Resources.HoursActivityWindowTitle}" Style="{StaticResource AppTitleTextBlock}" />
-            <StackPanel Grid.Column="0" Grid.Row="1" Grid.RowSpan="2">
-                <Button Style="{StaticResource AppGraphiteButton}" Command="{Binding OpenChartViewCommand}" x:Name="Btn1">
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
+                       Text="{x:Static resw:Resources.HoursActivityWindowTitle}"
+                       Style="{StaticResource AnalysisContentProviderTitleTextBlock}" 
+                       />
+            
+            <StackPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
+                <Button Style="{StaticResource AppGraphiteButton}" Command="{Binding OpenChartViewCommand}" x:Name="Btn1" Margin="10,0,0,0">
                     <StackPanel Orientation="Horizontal" Width="{Binding ElementName=Btn1, Path=ActualWidth}">
-                        <Image Style="{StaticResource AppButtonIcon}"  Source="../../Assets/Icons/Poll Topic-50.png" />
+                        <Image Style="{StaticResource AppButtonIcon}"  Source="../../Assets/Icons/Poll Topic-50.png" Margin="5,0,5,0"/>
                         <TextBlock Style="{StaticResource AppWhiteTextBlock}" Text="{x:Static resw:Resources.CountOfCommits}"/>
                     </StackPanel>
                 </Button>
             </StackPanel>
 
-            <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding CurrentViewModel}"/>
+            <ContentControl Grid.Row="1" Grid.Column="0" Content="{Binding CurrentViewModel}"/>
 
             <Image Grid.Row="1"
-               Grid.Column="1"
+               Grid.Column="0"
                Source="../../Resources/../Assets/Images/notebook_statiscitcs.png"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
