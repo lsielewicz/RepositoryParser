@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
+using RepositoryParser.Core.Enums;
 using RepositoryParser.Core.Models;
 
 namespace RepositoryParser.Conventers
@@ -13,13 +14,13 @@ namespace RepositoryParser.Conventers
         {
             if (value != null)
             {
-                var s = (ChangesColorModel.ChangeType)value ;
+                var s = (ChangeType)value ;
               
-                if (s == ChangesColorModel.ChangeType.Added)
+                if (s == ChangeType.Added)
                     return (Brush)Application.Current.FindResource("ChangesGreen");
-                else if (s == ChangesColorModel.ChangeType.Modified)
+                else if (s == ChangeType.Modified)
                     return (Brush)Application.Current.FindResource("ChangesBlue");
-                else if (s == ChangesColorModel.ChangeType.Deleted)
+                else if (s == ChangeType.Deleted)
                     return (Brush)Application.Current.FindResource("ChangesRed");
                 else 
                         return Brushes.Transparent;

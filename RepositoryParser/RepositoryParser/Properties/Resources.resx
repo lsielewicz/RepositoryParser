@@ -138,7 +138,7 @@
     <comment>MainPage</comment>
   </data>
   <data name="AnalysisWindowTitle" xml:space="preserve">
-    <value>Analyse:</value>
+    <value>Analyse</value>
     <comment>AnalisysPage</comment>
   </data>
   <data name="Changes" xml:space="preserve">
@@ -223,7 +223,7 @@
     <comment>AnalysisPage</comment>
   </data>
   <data name="FilteringDate" xml:space="preserve">
-    <value>Date:</value>
+    <value>Date</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="FilteringMessage" xml:space="preserve">
@@ -235,7 +235,7 @@
     <comment>AnalysisPage</comment>
   </data>
   <data name="FilteringPickRepository" xml:space="preserve">
-    <value>Pick Repository:</value>
+    <value>Pick Repository</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="Hour" xml:space="preserve">
@@ -538,5 +538,13 @@
   </data>
   <data name="CoutOfCommitsAnalyse" xml:space="preserve">
     <value>Count of commits analyse</value>
+  </data>
+  <data name="DataBaseManagement" xml:space="preserve">
+    <value>Database Management</value>
+    <comment>main</comment>
+  </data>
+  <data name="Presentation" xml:space="preserve">
+    <value>Presentation</value>
+    <comment>main</comment>
   </data>
 </root>

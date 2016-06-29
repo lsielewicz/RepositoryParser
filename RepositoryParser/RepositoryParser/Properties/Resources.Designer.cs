@@ -124,7 +124,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Analyse:.
+        ///   Looks up a localized string similar to Analyse.
         /// </summary>
         public static string AnalysisWindowTitle {
             get {
@@ -304,6 +304,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Database Management.
+        /// </summary>
+        public static string DataBaseManagement {
+            get {
+                return ResourceManager.GetString("DataBaseManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data loading, please wait....
         /// </summary>
         public static string DataLoadingStatus {
@@ -475,7 +484,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date:.
+        ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string FilteringDate {
             get {
@@ -502,7 +511,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pick Repository:.
+        ///   Looks up a localized string similar to Pick Repository.
         /// </summary>
         public static string FilteringPickRepository {
             get {
@@ -903,6 +912,15 @@ namespace RepositoryParser.Properties {
         public static string PickRepositoryType {
             get {
                 return ResourceManager.GetString("PickRepositoryType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Presentation.
+        /// </summary>
+        public static string Presentation {
+            get {
+                return ResourceManager.GetString("Presentation", resourceCulture);
             }
         }
         

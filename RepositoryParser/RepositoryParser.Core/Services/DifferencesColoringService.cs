@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using RepositoryParser.Core.Enums;
 using RepositoryParser.Core.Interfaces;
 using RepositoryParser.Core.Models;
 
@@ -28,13 +29,13 @@ namespace RepositoryParser.Core.Services
         private ChangesColorModel LineColoring(string line1_output, string line2, bool isParent=false)
         {
             if (line1_output.StartsWith("+++") || line1_output.StartsWith("---") || line1_output.StartsWith("diff"))
-                return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Unchanged);
+                return new ChangesColorModel(line1_output, ChangeType.Unchanged);
             else if (line1_output.StartsWith("+") )
-                return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Added);
+                return new ChangesColorModel(line1_output, ChangeType.Added);
             else if(line1_output.StartsWith("-"))
-                return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Deleted);
+                return new ChangesColorModel(line1_output, ChangeType.Deleted);
       
-            return new ChangesColorModel(line1_output, ChangesColorModel.ChangeType.Unchanged);
+            return new ChangesColorModel(line1_output, ChangeType.Unchanged);
             /* if ((!String.IsNullOrWhiteSpace(line1_output)) && (String.IsNullOrWhiteSpace(line2)))
              {
                  if(isParent)

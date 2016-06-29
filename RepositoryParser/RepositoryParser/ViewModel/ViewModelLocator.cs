@@ -14,7 +14,13 @@
 
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
+using RepositoryParser.View.DayActivityViews;
+using RepositoryParser.View.WeekdayActivityViews;
+using RepositoryParser.ViewModel.DayActivityViewModels;
+using RepositoryParser.ViewModel.HourActivityViewModels;
+using RepositoryParser.ViewModel.MonthActivityViewModels;
 using RepositoryParser.ViewModel.UserActivityViewModels;
+using RepositoryParser.ViewModel.WeekdayActivityViewModels;
 
 namespace RepositoryParser.ViewModel
 {
@@ -43,7 +49,6 @@ namespace RepositoryParser.ViewModel
             ////}
 
             SimpleIoc.Default.Register<MainViewModel>();
-            SimpleIoc.Default.Register<AnalisysWindowViewModel>();
             SimpleIoc.Default.Register<ChartWindowViewModel>();
             SimpleIoc.Default.Register<MonthActivityChartViewModel>();
             SimpleIoc.Default.Register<DifferenceWindowViewModel>();
@@ -53,10 +58,79 @@ namespace RepositoryParser.ViewModel
             SimpleIoc.Default.Register<ChartOfChangesViewModel>();
             SimpleIoc.Default.Register<UsersCodeFrequencyViewModel>();
             SimpleIoc.Default.Register<UsersActivityContentProverViewModel>();
-
-
+            SimpleIoc.Default.Register<DayActivityContentProviderViewModel>();
+            SimpleIoc.Default.Register<HourActivityContentProviderViewModel>();
+            SimpleIoc.Default.Register<WeekdayActivityContentProviderViewModel>();
+            SimpleIoc.Default.Register<MonthActivityContentProviderViewModel>();
+            SimpleIoc.Default.Register<PresentationViewModel>();
+            SimpleIoc.Default.Register<DataBaseManagementViewModel>();
+            SimpleIoc.Default.Register<FilteringViewModel>();
+            SimpleIoc.Default.Register<AnalysisViewModel>();
         }
 
+        public AnalysisViewModel Analysis
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<AnalysisViewModel>();
+            }
+        }
+
+        public FilteringViewModel Filtering
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<FilteringViewModel>();
+            }
+        }
+
+        public DataBaseManagementViewModel DataBaseManagement
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<DataBaseManagementViewModel>();
+            }
+        }
+
+        public PresentationViewModel Presentation
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<PresentationViewModel>();
+            }
+        }
+
+        public WeekdayActivityContentProviderViewModel WeekdayActivityContentProvider
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<WeekdayActivityContentProviderViewModel>();
+            }
+        }
+
+        public MonthActivityContentProviderViewModel MonthActivityContentProvider
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<MonthActivityContentProviderViewModel>();
+            }
+        }
+
+        public HourActivityContentProviderViewModel HourActivityContentProvider
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<HourActivityContentProviderViewModel>();
+            }
+        }
+
+        public DayActivityContentProviderViewModel DayActivityContentProvider
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<DayActivityContentProviderViewModel>();
+            }
+        }
 
         public UsersActivityContentProverViewModel UsersActivityContentProvider
         {
@@ -72,13 +146,6 @@ namespace RepositoryParser.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
-            }
-        }
-        public AnalisysWindowViewModel Analisys
-        {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<AnalisysWindowViewModel>();
             }
         }
 

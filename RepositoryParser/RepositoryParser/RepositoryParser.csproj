@@ -78,7 +78,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>RepositoryAnalyserIcon.ico</ApplicationIcon>
+    <ApplicationIcon>RepositoryAnalyserIcon_BLUE.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>4648EEDE4895459D3AE8B628CF249DE60FCC2651</ManifestCertificateThumbprint>
@@ -200,11 +200,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Conventers\BoolToBackgroundColorConventer.cs" />
+    <Compile Include="Conventers\BoolToImageConventer.cs" />
     <Compile Include="Conventers\BoolToVisibilityConventer.cs" />
     <Compile Include="Conventers\ChangeTypeToBackgroundColorConventer.cs" />
     <Compile Include="Conventers\DateFormat.cs" />
     <Compile Include="Conventers\EnumToColorConventer.cs" />
     <Compile Include="Conventers\NegativeBoolToVisibilityConventer.cs" />
+    <Compile Include="Conventers\NegativeViewModelBaseToVisibilityConventer.cs" />
     <Compile Include="Conventers\StringToImageConventer.cs" />
     <Compile Include="Conventers\ViewModelBaseToVisibilityConventer.cs" />
     <Compile Include="Properties\Resources.pl-PL.Designer.cs">
@@ -212,22 +214,59 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="ViewModel\AnalisysWindowViewModel.cs" />
+    <Compile Include="ViewModel\AnalysisViewModel.cs" />
     <Compile Include="ViewModel\ChartOfChangesViewModel.cs" />
+    <Compile Include="ViewModel\DataBaseManagementViewModel.cs" />
+    <Compile Include="ViewModel\DayActivityViewModels\DayActivityContentProviderViewModel.cs" />
+    <Compile Include="ViewModel\FilteringViewModel.cs" />
+    <Compile Include="ViewModel\HourActivityViewModels\HourActivityContentProviderViewModel.cs" />
+    <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityContentProviderViewModel.cs" />
+    <Compile Include="ViewModel\PresentationViewModel.cs" />
     <Compile Include="ViewModel\UserActivityViewModels\ChartWindowViewModel.cs" />
-    <Compile Include="ViewModel\DayActivityViewModel.cs" />
+    <Compile Include="ViewModel\DayActivityViewModels\DayActivityViewModel.cs" />
     <Compile Include="ViewModel\DifferenceWindowViewModel.cs" />
-    <Compile Include="ViewModel\HourActivityViewModel.cs" />
+    <Compile Include="ViewModel\HourActivityViewModels\HourActivityViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\MonthActivityChartViewModel.cs" />
+    <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityChartViewModel.cs" />
     <Compile Include="ViewModel\UserActivityViewModels\UsersActivityContentProverViewModel.cs" />
     <Compile Include="ViewModel\UserActivityViewModels\UsersCodeFrequencyViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="ViewModel\WeekdayActivityViewModels\WeekdayActivityContentProviderViewModel.cs" />
+    <Compile Include="View\AnalysisView.xaml.cs">
+      <DependentUpon>AnalysisView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ChartOfChangesView.xaml.cs">
       <DependentUpon>ChartOfChangesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\MonthActivityChart.xaml.cs">
-      <DependentUpon>MonthActivityChart.xaml</DependentUpon>
+    <Compile Include="View\DataBaseManagementView.xaml.cs">
+      <DependentUpon>DataBaseManagementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DayActivityViews\DayActivityChartView.xaml.cs">
+      <DependentUpon>DayActivityChartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DayActivityViews\DayActivityContentProviderView.xaml.cs">
+      <DependentUpon>DayActivityContentProviderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DifferencesView.xaml.cs">
+      <DependentUpon>DifferencesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\FilteringView.xaml.cs">
+      <DependentUpon>FilteringView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HourActivityViews\HourActivityChartView.xaml.cs">
+      <DependentUpon>HourActivityChartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HourActivityViews\HourActivityContentProviderView.xaml.cs">
+      <DependentUpon>HourActivityContentProviderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MonthActivityViews\MonthActivityChartView.xaml.cs">
+      <DependentUpon>MonthActivityChartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MonthActivityViews\MonthActivityContentProviderView.xaml.cs">
+      <DependentUpon>MonthActivityContentProviderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PresentationView.xaml.cs">
+      <DependentUpon>PresentationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UsersActivityViews\UserActivityChartView.xaml.cs">
       <DependentUpon>UserActivityChartView.xaml</DependentUpon>
@@ -235,18 +274,36 @@
     <Compile Include="View\UsersActivityViews\UserActivityCodeFrequencyView.xaml.cs">
       <DependentUpon>UserActivityCodeFrequencyView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\WeekDayActivityView.xaml.cs">
-      <DependentUpon>WeekDayActivityView.xaml</DependentUpon>
+    <Compile Include="View\UsersActivityViews\UserActivityContentProviderView.xaml.cs">
+      <DependentUpon>UserActivityContentProviderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\WeekdayActivityViews\WeekdayActivityChartView.xaml.cs">
+      <DependentUpon>WeekdayActivityChartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\WeekdayActivityViews\WeekdayActivityContentProviderView.xaml.cs">
+      <DependentUpon>WeekdayActivityContentProviderView.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\AppStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Resources\ButtonStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Themes\Brushes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Resources\Themes\Colors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Themes\CustomTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AnalysisView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -258,19 +315,39 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UsersActivityViews\ChartWindowView.xaml">
+    <Page Include="View\DataBaseManagementView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\DayActivityViews\DayActivityChartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\DayActivityChartView.xaml">
+    <Page Include="View\DayActivityViews\DayActivityContentProviderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\DifferenceWindowView.xaml">
+    <Page Include="View\DifferencesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\HourActivityView.xaml">
+    <Page Include="View\FilteringView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HourActivityViews\HourActivityChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HourActivityViews\HourActivityContentProviderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MonthActivityViews\MonthActivityChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MonthActivityViews\MonthActivityContentProviderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -282,29 +359,17 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModel\WeekDayActivityViewModel.cs" />
+    <Compile Include="ViewModel\WeekdayActivityViewModels\WeekDayActivityViewModel.cs" />
     <Compile Include="View\AnalysisWindowView.xaml.cs">
       <DependentUpon>AnalysisWindowView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\UsersActivityViews\ChartWindowView.xaml.cs">
-      <DependentUpon>ChartWindowView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\DayActivityChartView.xaml.cs">
-      <DependentUpon>DayActivityChartView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\DifferenceWindowView.xaml.cs">
-      <DependentUpon>DifferenceWindowView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\HourActivityView.xaml.cs">
-      <DependentUpon>HourActivityView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\MonthActivityChart.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="View\PresentationView.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\UsersActivityViews\UserActivityChartView.xaml">
       <SubType>Designer</SubType>
@@ -314,7 +379,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\WeekDayActivityView.xaml">
+    <Page Include="View\UsersActivityViews\UserActivityContentProviderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WeekdayActivityViews\WeekdayActivityChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WeekdayActivityViews\WeekdayActivityContentProviderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -448,6 +521,45 @@
     <Resource Include="Assets\Images\arr.png" />
     <Resource Include="Assets\Images\arr2.png" />
     <Resource Include="Assets\Images\notebook_statiscitcs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\CSV_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\Add Database-5white0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\Message-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\BlueAreaChart.png" />
+    <Resource Include="Assets\Icons\BlueCircleChart.png" />
+    <Resource Include="Assets\Icons\BlueColumnChart.png" />
+    <Resource Include="Assets\Icons\BlueCombOChart.png" />
+    <Resource Include="Assets\Icons\BlueLineChart.png" />
+    <Resource Include="Assets\Icons\BlueLineChart2.png" />
+    <Resource Include="Assets\Icons\BluePieChart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\BlueCompare.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="RepositoryAnalyserIcon_BLUE.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\RepositoryAnalyserIconICO.png" />
+    <Resource Include="Assets\Icons\RepositoryAnalyserIcon_BLUE.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\RepositoryAnalyserLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\Filter-100.png" />
+    <Resource Include="Assets\Icons\ManagementIcon.png" />
+    <Resource Include="Assets\Icons\Presentation-100.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\iconICO.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.99.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.99.0\build\net451\System.Data.SQLite.Core.targets')" />

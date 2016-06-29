@@ -1,4 +1,5 @@
 ﻿using System;
+using RepositoryParser.Core.Enums;
 
 namespace RepositoryParser.Core.Models
 {
@@ -7,13 +8,7 @@ namespace RepositoryParser.Core.Models
         public string Line { get; set; }
         public ChangeType Color { get; set; }
 
-        public enum ChangeType
-        {
-            Unchanged,
-            Added,
-            Modified,
-            Deleted
-        }
+
 
         public ChangesColorModel()
         {

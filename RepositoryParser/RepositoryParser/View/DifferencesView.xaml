@@ -1,0 +1,167 @@
+﻿<UserControl x:Class="RepositoryParser.View.DifferencesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RepositoryParser.View"
+             xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
+             xmlns:resw="clr-namespace:RepositoryParser.Properties"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="600"
+             DataContext="{Binding Source={StaticResource Locator}, Path=Difference}"
+             >
+    
+    <UserControl.Resources>
+        <conventers:ChangeTypeToBackgroundColorConventer x:Key="ChangeTypeToBackgroundColorConventer"/>
+        <conventers:EnumToColorConventer x:Key="EnumToColorConventer"/>
+        <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" 
+                       Grid.ColumnSpan="3"
+                       Text="{x:Static resw:Resources.DifferenceWindowTitle}"
+                       Style="{StaticResource AnalysisContentProviderTitleTextBlock}" 
+                       />
+
+        <Rectangle Grid.ColumnSpan="2" Grid.Row="2" Grid.Column="1" Height="30" VerticalAlignment="Top">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="{StaticResource AppMain}" Offset="0" />
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <DataGrid Grid.Row="1" Grid.Column="0" Grid.RowSpan="3"
+                      ItemsSource="{Binding CommitsCollection, Mode=OneWay}"
+                      SelectedItem="{Binding SelectedItem, Mode=Default}"
+                      CanUserSortColumns="True"
+                      AlternatingRowBackground="{StaticResource MyRowColor}" AlternationCount="2"
+                      AutoGenerateColumns="False"
+                      ColumnWidth="auto"
+                     IsReadOnly="True"
+                      >
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Key}" Header="{x:Static resw:Resources.CommitsList_ID}"/>
+                <DataGridTextColumn Binding="{Binding Value}" Header="{x:Static resw:Resources.CommitsList_Message}" Width="200"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                      ItemsSource="{Binding ChangesCollection}"
+                      SelectedItem="{Binding ChangeSelectedItem}"
+                      CanUserSortColumns="True"
+                      AlternatingRowBackground="{StaticResource MyRowColor}" AlternationCount="2"
+                      AutoGenerateColumns="False"
+                      ColumnWidth="auto"
+                      IsReadOnly="True"
+                      >
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="{x:Static resw:Resources.TypeOfChange}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock x:Name="ChangeType"
+                                       Text="{Binding Path=Key}"
+                                       Background="{Binding ElementName=ChangeType, Path=Text, Converter={StaticResource ChangeTypeToBackgroundColorConventer} }"
+                                       />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Binding="{Binding Value}" Header="{x:Static resw:Resources.FileName}"/>
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+        <TextBlock Text="{x:Static resw:Resources.Changes}" 
+                   HorizontalAlignment="Center" 
+                   Grid.Row="2"
+                   Grid.Column="1" 
+                   Grid.ColumnSpan="2" 
+                   Margin="0,10,0,10" 
+                   FontWeight="Light" 
+                   FontSize="13" 
+                   Foreground="{StaticResource Grey}"
+                   />
+        <ScrollViewer x:Name="CommitScrollViewer" 
+                      Grid.Row="2" 
+                      Grid.Column="1" 
+                      Grid.ColumnSpan="2"
+                      Margin="0,30,0,10"
+                      VerticalScrollBarVisibility="Auto" 
+                      HorizontalScrollBarVisibility="Auto"
+                      >
+            <StackPanel x:Name="TextAPanel" Margin="5,10,5,10">
+                <ListBox Margin="0,10,0,10" ItemsSource="{Binding ListTextA}" IsEnabled="False">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Line}"
+                                       Background="{Binding Path=Color,Converter={StaticResource EnumToColorConventer}}"  
+                                       Foreground="Black"
+                                />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Button x:Name="GoToChrtButton" 
+                    Padding="10,0"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"
+                    Background="{StaticResource Graphite}"
+                    Foreground="{StaticResource Grey}"
+                    Command="{Binding GoToChartOfChangesCommand}"
+                    Height="50"
+                    >
+                <StackPanel Orientation="Horizontal" Width="{Binding ElementName=SendBtn, Path=Width}">
+                    <Image Source="../Assets/Icons/Pie-Chart.png" Height="24" Margin="2,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.GoToDifferencesChartButton}" VerticalAlignment="Center" FontWeight="Light" FontSize="13"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
+        <StatusBar Grid.Row="1" Grid.Column="0" 
+                   Grid.RowSpan="3"
+                   Grid.ColumnSpan="3"
+                   Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}}" 
+                   Style="{StaticResource AppStatusBar}"
+                   >
+        </StatusBar>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" 
+                    Grid.Column="0" Grid.RowSpan="5"
+                    Grid.ColumnSpan="3" 
+                    VerticalAlignment="Center" HorizontalAlignment="Center"
+                    Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
+                    >
+            <controls:ProgressRing  IsActive="{Binding ProgressBarVisibility}"
+                                    Style="{StaticResource AppProgressRing}"
+                                    />
+            <Separator/>
+            <TextBlock Text="{x:Static resw:Resources.DataLoadingStatus}" 
+                       Foreground="{StaticResource MyGreen}" 
+                       FontSize="18" 
+                       Visibility="{Binding IsOpening, Converter={StaticResource BoolToVisibilityConverter}}"
+                       />
+        </StackPanel>
+    </Grid>
+</UserControl>

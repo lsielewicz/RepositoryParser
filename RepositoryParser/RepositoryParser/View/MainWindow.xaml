@@ -8,10 +8,13 @@
         xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
         xmlns:resw="clr-namespace:RepositoryParser.Properties"
         mc:Ignorable="d"
-        Title="{x:Static resw:Resources.MainWindowView}" Height="600" Width="1200"
+        Title="{x:Static resw:Resources.MainWindowView}" Height="720" Width="1200"
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:viewModel="clr-namespace:RepositoryParser.ViewModel"
+        xmlns:usersActivityViews="clr-namespace:RepositoryParser.View.UsersActivityViews"
+        xmlns:view="clr-namespace:RepositoryParser.View"
         DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
-        MinHeight="450" MinWidth="800"
+        MinHeight="600" MinWidth="800"
         ShowIconOnTitleBar="True"
         ShowTitleBar="True"
         >
@@ -23,7 +26,7 @@
                  Background="Transparent"
                  RenderOptions.EdgeMode="Aliased"
                  RenderOptions.BitmapScalingMode="HighQuality">
-                <Image Source="../Assets/Icons/Chart_Icon_Main.png"/>
+                <Image Source="../Assets/Icons/RepositoryAnalyserIconICO.png"/>
             </Grid>
         </DataTemplate>
     </Controls:MetroWindow.IconTemplate>
@@ -32,230 +35,113 @@
         <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <conventers:NegativeBoolToVisibilityConventer x:Key="NegativeBoolToVisibilityConventer"/>
         <conventers:BoolToBackgroundColorConventer x:Key="BoolToBackgroundColorConventer"/>
+        <conventers:ViewModelBaseToVisibilityConventer x:Key="ViewModelBaseToVisibilityConventer"/>
+        <conventers:NegativeViewModelBaseToVisibilityConventer x:Key="NegativeViewModelBaseToVisibilityConventer"/>
+        
+        <DataTemplate DataType="{x:Type viewModel:PresentationViewModel}">
+            <view:PresentationView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:DataBaseManagementViewModel}">
+            <view:DataBaseManagementView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:FilteringViewModel}">
+            <view:FilteringView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:AnalysisViewModel}">
+            <view:AnalysisView/>
+        </DataTemplate>
+        
     </Window.Resources>
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding OnLoadCommand}"/>
+            <i:InvokeCommandAction Command="{Binding OpenEventCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="6*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="1.5*" MinHeight="85"/>
-            <RowDefinition Height="5*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <Rectangle Grid.ColumnSpan="1000" Grid.Row="0">
+
+
+        <Rectangle Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="0">
             <Rectangle.Fill>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF52802B" Offset="0" />
+                    <GradientStop Color="{StaticResource AppBorder}" Offset="0" />
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        
-        <Border Background="{StaticResource Graphite}" Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0">
-            <Label x:Name="UrlLabel"
-                       FontSize="16" 
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
-                       Content="{x:Static resw:Resources.UrlAdress}"
-                       Foreground="{StaticResource Grey}"
-                       FontWeight="Light"
-                       />
-        </Border>
-        <StackPanel Grid.Row="2" Grid.Column="1">
-            <TextBox x:Name="UrlTextBlock"
-                     FontSize="16" 
-                     Margin="5" 
-                     Text="{Binding UrlTextBox}" 
-                     Background="{Binding IsGitRepositoryPicked, Converter={StaticResource BoolToBackgroundColorConventer}}" 
-                     Opacity="0.95"
-                     BorderBrush="Black"
-                     BorderThickness="1"
-                     />
-            <Button x:Name="PicFileBtn" 
-                    HorizontalAlignment="Center" 
-                    Command="{Binding PickFileCommand}" 
-                    FontSize="14"
-                    Foreground="{StaticResource Grey}"
-                    Background="{StaticResource Graphite}"
-                    Padding="4"
-                    FontWeight="Light"
-                    MinHeight="40"
+
+        <TextBlock Grid.Row="0" Grid.Column="0" 
+                   Grid.ColumnSpan="3" 
+                   Text="{x:Static resw:Resources.MainWindowTitle}" 
+                   Style="{StaticResource AppTitleTextBlock}"
+                   Visibility="{Binding CurrentViewModel, Converter={StaticResource NegativeViewModelBaseToVisibilityConventer}}"
+                   />
+    
+        <StackPanel Grid.Row="1" Grid.Column="0">
+            <Button x:Name="PresentationBtn"
+                    Style="{StaticResource MainTile}"
+                    Command="{Binding OpenPresentationCommand}"
                     >
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="../Assets/Icons/Add File-100.png" Height="24" Width="24"/>
-                    <TextBlock Text="{x:Static resw:Resources.LocalAdress}"  VerticalAlignment="Center" Padding="5,0"/>
-                </StackPanel>
-            </Button>
-        </StackPanel>
-
-        <Grid Grid.Row="3" Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="3*"/>
-            </Grid.RowDefinitions>
-            
-        <StackPanel Grid.Row="0" Grid.Column="0">
-            <TextBlock Text="{x:Static resw:Resources.PickRepositoryType}" HorizontalAlignment="Center" FontSize="16"></TextBlock>
-            <Border BorderBrush="{StaticResource MyGreen}" BorderThickness="0,1">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="2">
-                    <Button Margin="4,0" VerticalAlignment="Center" Background="Transparent" BorderThickness="0" MinWidth="90" Command="{Binding PickGitRepositoryCommand}">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="../Assets/Icons/Git-64.png" Height="32" Width="32"/>
-                            <TextBlock Text="{x:Static resw:Resources.GitRepository}" VerticalAlignment="Center" Padding="5,0" FontSize="13" FontWeight="Light"/>
-                        </StackPanel>
-                    </Button>
-                    <Button Margin="4,0" VerticalAlignment="Center" Background="Transparent" BorderThickness="0" MinWidth="90" Command="{Binding PickSvnRepositoryCommand}">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="../Assets/Icons/svn-64.ico" Height="32" Width="32"/>
-                                <TextBlock Text="{x:Static resw:Resources.SvnRepository}" VerticalAlignment="Center" Padding="5,0" FontSize="13" FontWeight="Light"/>
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
-            </Border>
-        </StackPanel>
-
-            <DataGrid Grid.Row="1" Grid.Column="0"
-                      ItemsSource="{Binding CommitsColection}"
-                      CanUserSortColumns="True"
-                      AlternatingRowBackground="{StaticResource MyRowColor}" AlternationCount="2"
-                      AutoGenerateColumns="False"
-                      ColumnWidth="auto"
-                      >
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding ID}" Header="{x:Static resw:Resources.CommitsList_ID}"/>
-                    <DataGridTextColumn Binding="{Binding Message}" Header="{x:Static resw:Resources.CommitsList_Message}" Width="400"/>
-                    <DataGridTextColumn Binding="{Binding Author}" Header="{x:Static resw:Resources.CommitsList_Author}"/>
-                    <DataGridTextColumn Binding="{Binding Date}" Header="{x:Static resw:Resources.CommitsList_Date}"/>
-                    <DataGridTextColumn Binding="{Binding Email}" Header="{x:Static resw:Resources.CommitsList_Email}"/>
-                </DataGrid.Columns>
-
-            </DataGrid>
-
-        </Grid>
-
-        <StackPanel Grid.Row="4" Grid.Column="1" HorizontalAlignment="Stretch">
-            <Button x:Name="CloneRepositoryBtn"
-                    Command="{Binding StartWorkCommand}" 
-                    IsEnabled="{Binding IsCloneButtonEnabled }" 
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Center" 
-                    Height="50"  
-                    Background="{StaticResource MyGreen}" 
-                    FontSize="20" 
-                    Margin="2" 
-                    Padding="4" 
-                    MinWidth="250"
-                    FontWeight="Light"
-                    >
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=CloneRepositoryBtn, Path=Width}" >
-                    <Image Source="../Assets/Icons/Add Database-52.png" Width="24" Margin="10,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.AddRepositoryButton}" VerticalAlignment="Center"/>
-                </StackPanel>
-            </Button>
-        </StackPanel>
-
-        <DockPanel Grid.Row="2" Grid.Column="0" Margin="0,10,0,5">
-            <Button x:Name="GoToAnalisysBtn" 
-                    Height="50" 
-                    VerticalAlignment="Top" 
-                    Command="{Binding GoToPageAnalysisCommand}" 
-                    Background="{StaticResource Graphite}"
-                    Foreground="{StaticResource Grey}"
-                    FontWeight="Light"
-                    Margin="0,0,0,5">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=GoToAnalisysBtn, Path=ActualWidth}" >
-                    <Image Source="../Assets/Icons/Analysis_grey.png" Width="24" Margin="10,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.AnalysisButton}" VerticalAlignment="Center" FontSize="13"/>
-                </StackPanel>
-            </Button>
-
-        </DockPanel>
-
-        <StackPanel Grid.Row="2" Grid.Column="2" Margin="0,10,0,5" Grid.RowSpan="4">
-            <Button x:Name="ClearDataBase" 
-                    Height="50" 
-                    VerticalAlignment="Top" 
-                    FontWeight="Light"
-                    Background="{StaticResource Graphite}"
-                    Foreground="{StaticResource Grey}"
-                    Command="{Binding AsyncClearDBCommand}" 
-                    Margin="0,0,0,5">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=ClearDataBase, Path=ActualWidth}" >
-                    <Image Source="../Assets/Icons/Delete_grey.png" Width="24" Margin="10,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.ClearDBButton}" VerticalAlignment="Center" FontSize="13"/>
-                </StackPanel>
-            </Button>
-            <Button x:Name="RefreshBtn" 
-                    Height="50" 
-                    VerticalAlignment="Top"
-                    FontWeight="Light"
-                    Background="{StaticResource Graphite}"
-                    Foreground="{StaticResource Grey}"
-                    Command="{Binding RefreshCommand}" 
-                    Margin="0,0,0,5"
-                    Padding="0"
-                    >
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=RefreshBtn, Path=ActualWidth}" >
-                        <Image Source="../Assets/Icons/Refresh_grey.png" Width="24" Margin="10,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.RefreshButton}" VerticalAlignment="Center" FontSize="13"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=PresentationBtn, Path=ActualWidth}" >
+                        <Image Source="../Assets/Icons/Presentation-100.png" Width="36" Margin="10,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.Presentation}" Style="{StaticResource AppWhiteTextBlock}"/>
                     </StackPanel>
-            </Button>
-                    
-            <Button x:Name="Save"
-                    Height="50" 
-                    VerticalAlignment="Bottom" 
-                    Background="{StaticResource Graphite}"
-                    Foreground="{StaticResource Grey}" 
-                    Command="{Binding ExportFileCommand}"
-                    FontWeight="Light"
-                    Margin="0,0,0,5">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=Save, Path=ActualWidth}" >
-                    <Image Source="../Assets/Icons/Export_grey.png" Width="24" Margin="10,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.ExportToFileButton}" VerticalAlignment="Center" FontSize="13"/>
+                </Button>
+
+            <Button x:Name="DBManagementBtn"
+                    Style="{StaticResource MainTile}"
+                    Command="{Binding OpenDataBaseManagementCommand}"
+                    >
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=DBManagementBtn, Path=ActualWidth}" >
+                    <Image Source="../Assets/Icons/ManagementIcon.png" Width="36" Margin="10,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.DataBaseManagement}" Style="{StaticResource AppWhiteTextBlock}"/>
                 </StackPanel>
             </Button>
-        </StackPanel>
-        
-        <StatusBar Grid.Row="0" Grid.Column="0" 
-                   Grid.RowSpan="6"
-                   Grid.ColumnSpan="3"
-                   Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"  
-                   Opacity="0.9"
-                   Background="{StaticResource Grey}"
-                   HorizontalAlignment="Stretch"
-                   VerticalAlignment="Stretch"
-                   >
-        </StatusBar>
-        <StackPanel Orientation="Horizontal" Grid.Row="0" 
-                    Grid.Column="0" Grid.RowSpan="5"
-                    Grid.ColumnSpan="3" 
-                    VerticalAlignment="Center" HorizontalAlignment="Center"
-                    Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
+
+            <Button x:Name="FilteringBtn"
+                    Style="{StaticResource MainTile}"
+                    Command="{Binding OpenFilteringCommand}"
                     >
-            <Controls:ProgressRing HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       IsActive="{Binding ProgressBarVisibility}"
-                                       Width="100"
-                                       Height="18"
-                                       Margin="3"
-                                       Opacity="1"
-                                        Foreground="{StaticResource MyGreen}"
-                                       />
-            <Separator/>
-            <TextBlock Text="{x:Static resw:Resources.ProgressBarText}" Foreground="{StaticResource MyGreen}" FontSize="18" Visibility="{Binding IsOpening, Converter={StaticResource BoolToVisibilityConverter}}"/>
-            <TextBlock Text="{x:Static resw:Resources.ClearingDataBase}" Foreground="{StaticResource MyGreen}" FontSize="18" Visibility="{Binding IsOpening, Converter={StaticResource NegativeBoolToVisibilityConventer}}"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=FilteringBtn, Path=ActualWidth}" >
+                    <Image Source="../Assets/Icons/Filter-100.png" Width="36" Margin="10,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.Filtering}" Style="{StaticResource AppWhiteTextBlock}"/>
+                </StackPanel>
+            </Button>
+
+            <Button x:Name="AnalysisBtn"
+                    Style="{StaticResource MainTile}"
+                    Command="{Binding OpenAnalysisCommand}"
+                    >
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=AnalysisBtn, Path=ActualWidth}" >
+                    <Image Source="../Assets/Icons/Analysis_grey.png" Width="36" Margin="10,0,10,0"/>
+                    <TextBlock Text="{x:Static resw:Resources.AnalysisButton}" Style="{StaticResource AppWhiteTextBlock}"/>
+                </StackPanel>
+            </Button>
+            
         </StackPanel>
+
+        <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding CurrentViewModel}"/>
+        <Image Grid.Row="1"
+               Grid.Column="1"
+               Source="../Resources/../Assets/Images/RepositoryAnalyserLogo.png"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Opacity="1"
+               Margin="75"
+               Visibility="{Binding CurrentViewModel, Converter={StaticResource ViewModelBaseToVisibilityConventer}}"
+               />
+
     </Grid>
 </Controls:MetroWindow>

@@ -11,6 +11,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Win32;
+using RepositoryParser.Core.Enums;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
@@ -39,7 +40,7 @@ namespace RepositoryParser.ViewModel
 
         public UsersCodeFrequencyViewModel()
         {
-            Messenger.Default.Register<DataMessageToCharts>(this,x=>HandleDataMessage(x.FilteringQuery));
+            Messenger.Default.Register<ChartMessageLevel3UserFrequencyCode>(this,x=>HandleDataMessage(x.FilteringQuery));
             _sqLiteService=SqLiteService.GetInstance();
             _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
             _dataCalcWorker =new BackgroundWorker();
@@ -212,9 +213,9 @@ namespace RepositoryParser.ViewModel
 
                             _colorService.TextAList.ForEach(x =>
                             {
-                                if (x.Color == ChangesColorModel.ChangeType.Added)
+                                if (x.Color == ChangeType.Added)
                                     added++;
-                                else if (x.Color == ChangesColorModel.ChangeType.Deleted)
+                                else if (x.Color == ChangeType.Deleted)
                                     deleted++;
                             });
                         }

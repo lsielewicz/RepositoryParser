@@ -47,11 +47,11 @@
         <Rectangle Grid.ColumnSpan="1000" Grid.Row="0">
             <Rectangle.Fill>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF52802B" Offset="0" />
+                    <GradientStop Color="{StaticResource AppBorder}" Offset="0" />
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Text="{x:Static resw:Resources.AnalysisWindowTitle}" Style="{StaticResource AppTitleTextBlock}"/>
         <Border Grid.Column="1"
                     Grid.ColumnSpan="3" 
                     Grid.Row="1"
@@ -74,10 +74,7 @@
             <Button x:Name="ActivityBtn" 
                     Height="50" 
                     Command="{Binding ChartCommand}" 
-                    Margin="0,0,0,5" 
-                    Background="{StaticResource Graphite}"
-                    Foreground="{StaticResource Grey}"
-                    FontWeight="Light"
+                    Style="{StaticResource AppGraphiteButton}"
                     >
                 <StackPanel Orientation="Horizontal" Width="{Binding ElementName=ActivityBtn, Path=ActualWidth}">
                     <Image Source="../Assets/Icons/Pie-Chart.png" Height="24" Margin="2,0,10,0"/>
@@ -85,11 +82,8 @@
                 </StackPanel>
             </Button>
             <Button x:Name="MonthBtn" 
-                    Height="50" Margin="0,0,0,5" 
                     Command="{Binding MonthActivityWindowCommand}" 
-                    Background="{StaticResource Graphite}"
-                    Foreground="{StaticResource Grey}"
-                    FontWeight="Light"
+                    Style="{StaticResource AppGraphiteButton}"
                     >
                 <StackPanel Orientation="Horizontal" Width="{Binding ElementName=MonthBtn, Path=ActualWidth}">
                     <Image Source="../Assets/Icons/Column-Chart.png" Height="24" Margin="2,0,10,0"/>
@@ -97,12 +91,8 @@
                 </StackPanel>
             </Button>
             <Button x:Name="WeekdayBtn"
-                    Height="50"
-                    Margin="0,0,0,5"
                     Command="{Binding GoToWeekDayActivityWindowCommand}"
-                    Background="{StaticResource Graphite}"
-                    Foreground="{StaticResource Grey}"
-                    FontWeight="Light"
+                    Style="{StaticResource AppGraphiteButton}"
                     >
                 <StackPanel Orientation="Horizontal" Width="{Binding ElementName=WeekdayBtn, Path=ActualWidth}">
                     <Image Source="../Assets/Icons/Area-Chart.png" Height="24" Margin="2,0,10,0"/>
@@ -110,12 +100,8 @@
                 </StackPanel>
             </Button>
             <Button x:Name="DayBtn" 
-                    Height="50" 
-                    Margin="0,0,0,5" 
                     Command="{Binding GoToDayChartWindowCommand}" 
-                    Background="{StaticResource Graphite}"
-                    Foreground="{StaticResource Grey}" 
-                    FontWeight="Light"
+                    Style="{StaticResource AppGraphiteButton}"
                     >
                 <StackPanel Orientation="Horizontal" Width="{Binding ElementName=DayBtn, Path=ActualWidth}">
                     <Image Source="../Assets/Icons/Points-Chart.png" Height="24" Margin="2,0,10,0"/>
@@ -123,12 +109,8 @@
                 </StackPanel>
             </Button>
             <Button x:Name="HourtBtn"
-                    Height="50" 
-                    Margin="0,0,0,5"
                     Command="{Binding GoToHourActivityWindowCommand}"
-                    Background="{StaticResource Graphite}"
-                    Foreground="{StaticResource Grey}"
-                    FontWeight="Light"
+                    Style="{StaticResource AppGraphiteButton}"
                     >
                 <StackPanel Orientation="Horizontal" Width="{Binding ElementName=MonthBtn, Path=ActualWidth}">
                     <Image Source="../Assets/Icons/Column-Chart.png" Height="24" Margin="2,0,10,0"/>
@@ -136,12 +118,8 @@
                 </StackPanel>
             </Button>
             <Button x:Name="DiffBtn"
-                    Height="50"
-                    Margin="0,0,0,5"
                     Command="{Binding GoToDifferencesCommand}"
-                    Background="{StaticResource Graphite}"
-                    Foreground="{StaticResource Grey}"
-                    FontWeight="Light"
+                    Style="{StaticResource AppGraphiteButton}"
                     >
                 <StackPanel Orientation="Horizontal" Width="{Binding ElementName=DiffBtn, Path=ActualWidth}">
                     <Image Source="../Assets/Icons/Compare-52.png" Height="24" Margin="2,0,10,0"/>
@@ -296,12 +274,8 @@
         </Grid>
 
         <StackPanel Grid.Row="1" Grid.Column="4" Grid.RowSpan="2" Margin="1,5,1,0">
-            <Button Height="50" 
-                    Command="{Binding ClearFiltersCommand}" 
-                    Margin="0,0,0,5" 
-                    Background="{StaticResource Graphite}"
-                    Foreground="{StaticResource Grey}"
-                    FontWeight="Light"
+            <Button Command="{Binding ClearFiltersCommand}" 
+                    Style="{StaticResource AppGraphiteButton}"
                     >
                 <StackPanel Orientation="Horizontal" Width="{Binding ElementName=MonthBtn, Path=ActualWidth}">
                     <Image Source="../Assets/Icons/Clear.png" Height="24" Margin="2,0,10,0"/>
@@ -313,14 +287,15 @@
         <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5">
             <Button x:Name="SendBtn"
                     Command="{Binding SendDataCommand}"
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Center"
-                    Background="{StaticResource MyGreen}" 
+                    Style="{StaticResource AppGraphiteButton}"
+                    Background="{StaticResource MyGreen}"
+                    Foreground="{StaticResource Graphite}"
                     FontSize="20" 
                     Margin="2" 
-                    Padding="20,4" 
-                    FontWeight="Light"
-                    Height="50"
+                    Padding="25,4" 
+                    HorizontalAlignment="Center"
+                    BorderBrush="{StaticResource Graphite}"
+                    BorderThickness="2"
                     >
                 <StackPanel Orientation="Horizontal" Width="{Binding ElementName=SendBtn, Path=Width}">
                     <Image Source="../Assets/Icons/Message_Black.png" Height="24" Margin="2,0,10,0"/>
