@@ -36,6 +36,7 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _closedEventCommand;
         private bool _progressBarVisibility;
 
+
         private BackgroundWorker _showDifferencesWorker;
         private BackgroundWorker _onLoadWorker;
         #endregion
@@ -258,9 +259,13 @@ namespace RepositoryParser.ViewModel
             }
             set
             {
-                _selectedItem = value;
-                selection(_selectedItem);
-                RaisePropertyChanged("SelectedItem");
+                if (_selectedItem.Key != value.Key && _selectedItem.Value != value.Value)
+                {
+                    _selectedItem = new KeyValuePair<int, string>(value.Key,value.Value);
+                    selection(_selectedItem);
+                    RaisePropertyChanged("SelectedItem");
+                }
+                
             }
         }
 

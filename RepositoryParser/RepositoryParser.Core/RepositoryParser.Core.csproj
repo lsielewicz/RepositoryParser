@@ -169,6 +169,7 @@
     <Compile Include="Models\CommitForBranchTable.cs" />
     <Compile Include="Models\CommitTable.cs" />
     <Compile Include="Models\GitCloneBranch.cs" />
+    <Compile Include="Models\KeyValuePairObject.cs" />
     <Compile Include="Models\UserCodeFrequency.cs" />
     <Compile Include="Services\DifferencesColoringService.cs" />
     <Compile Include="Services\GitCloneService.cs" />

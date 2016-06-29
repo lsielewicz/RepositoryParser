@@ -47,19 +47,19 @@
         </Rectangle>
 
         <DataGrid Grid.Row="1" Grid.Column="0" Grid.RowSpan="3"
-                      ItemsSource="{Binding CommitsCollection}"
-                      SelectedItem="{Binding SelectedItem}"
+                      ItemsSource="{Binding CommitsCollection, Mode=OneWay}"
+                      SelectedItem="{Binding SelectedItem, Mode=Default}"
                       CanUserSortColumns="True"
                       AlternatingRowBackground="{StaticResource MyRowColor}" AlternationCount="2"
                       AutoGenerateColumns="False"
                       ColumnWidth="auto"
+                     IsReadOnly="True"
                       >
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Key}" Header="{x:Static resw:Resources.CommitsList_ID}"/>
                 <DataGridTextColumn Binding="{Binding Value}" Header="{x:Static resw:Resources.CommitsList_Message}" Width="200"/>
             </DataGrid.Columns>
         </DataGrid>
-
 
         <DataGrid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
                       ItemsSource="{Binding ChangesCollection}"
@@ -68,6 +68,7 @@
                       AlternatingRowBackground="{StaticResource MyRowColor}" AlternationCount="2"
                       AutoGenerateColumns="False"
                       ColumnWidth="auto"
+                      IsReadOnly="True"
                       >
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="{x:Static resw:Resources.TypeOfChange}">
@@ -85,13 +86,29 @@
 
         </DataGrid>
 
-        <TextBlock Text="{x:Static resw:Resources.Changes}" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,10,0,10" FontWeight="Light" FontSize="13" Foreground="{StaticResource Grey}"/>
-        <ScrollViewer x:Name="CommitScrollViewer" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,30,0,10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-            <StackPanel x:Name="TextAPanel" Grid.Column="1" Grid.Row="2" Margin="5,10,5,10">
+        <TextBlock Text="{x:Static resw:Resources.Changes}" 
+                   HorizontalAlignment="Center" 
+                   Grid.Row="2"
+                   Grid.Column="1" 
+                   Grid.ColumnSpan="2" 
+                   Margin="0,10,0,10" 
+                   FontWeight="Light" 
+                   FontSize="13" 
+                   Foreground="{StaticResource Grey}"
+                   />
+        <ScrollViewer x:Name="CommitScrollViewer" 
+                      Grid.Row="2" 
+                      Grid.Column="1" 
+                      Grid.ColumnSpan="2"
+                      Margin="0,30,0,10"
+                      VerticalScrollBarVisibility="Auto" 
+                      HorizontalScrollBarVisibility="Auto"
+                      >
+            <StackPanel x:Name="TextAPanel" Margin="5,10,5,10">
                 <ListBox Margin="0,10,0,10" ItemsSource="{Binding ListTextA}" IsEnabled="False">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                         </Style>
                     </ListBox.ItemContainerStyle>
                     <ListBox.ItemTemplate>
@@ -126,7 +143,7 @@
         <StatusBar Grid.Row="1" Grid.Column="0" 
                    Grid.RowSpan="3"
                    Grid.ColumnSpan="3"
-                   Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" 
+                   Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}}" 
                    Style="{StaticResource AppStatusBar}"
                    >
         </StatusBar>
@@ -140,7 +157,11 @@
                                     Style="{StaticResource AppProgressRing}"
                                     />
             <Separator/>
-            <TextBlock Text="{x:Static resw:Resources.DataLoadingStatus}" Foreground="{StaticResource MyGreen}" FontSize="18" Visibility="{Binding IsOpening, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            <TextBlock Text="{x:Static resw:Resources.DataLoadingStatus}" 
+                       Foreground="{StaticResource MyGreen}" 
+                       FontSize="18" 
+                       Visibility="{Binding IsOpening, Converter={StaticResource BoolToVisibilityConverter}}"
+                       />
         </StackPanel>
     </Grid>
 </UserControl>

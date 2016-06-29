@@ -214,7 +214,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="ViewModel\AnalisysWindowViewModel.cs" />
     <Compile Include="ViewModel\AnalysisViewModel.cs" />
     <Compile Include="ViewModel\ChartOfChangesViewModel.cs" />
     <Compile Include="ViewModel\DataBaseManagementViewModel.cs" />

@@ -90,6 +90,7 @@
                       AutoGenerateColumns="False"
                       ColumnWidth="auto"
                       CanUserAddRows="False"
+                      IsReadOnly="True"
                       >
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding User}" Header="{x:Static resw:Resources.CommitsList_Author}"/>

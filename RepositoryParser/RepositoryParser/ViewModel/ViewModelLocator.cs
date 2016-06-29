@@ -49,7 +49,6 @@ namespace RepositoryParser.ViewModel
             ////}
 
             SimpleIoc.Default.Register<MainViewModel>();
-            SimpleIoc.Default.Register<AnalisysWindowViewModel>();
             SimpleIoc.Default.Register<ChartWindowViewModel>();
             SimpleIoc.Default.Register<MonthActivityChartViewModel>();
             SimpleIoc.Default.Register<DifferenceWindowViewModel>();
@@ -147,13 +146,6 @@ namespace RepositoryParser.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
-            }
-        }
-        public AnalisysWindowViewModel Analisys
-        {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<AnalisysWindowViewModel>();
             }
         }
 

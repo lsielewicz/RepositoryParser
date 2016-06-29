@@ -36,6 +36,7 @@
                       AlternatingRowBackground="{StaticResource MyRowColor}" AlternationCount="2"
                       AutoGenerateColumns="False"
                       ColumnWidth="auto"
+                      IsReadOnly="True"
                       >
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding ID}" Header="{x:Static resw:Resources.CommitsList_ID}"/>
