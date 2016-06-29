@@ -130,8 +130,8 @@ namespace RepositoryParser.ViewModel
 
         private void HandleRefreshMessage(bool refresh)
         {
-            if(refresh)
-                RefreshList();
+           // if(refresh)
+               // RefreshList();
         }
         #endregion
 

@@ -21,6 +21,7 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _openWeekdayActivityCommand;
         private RelayCommand _openDayActivityCommand;
         private RelayCommand _openHourActivityCommand;
+        private RelayCommand _openDifferencesCommand;
         private ViewModelBase _currentViewModel;
         #endregion
 
@@ -46,6 +47,14 @@ namespace RepositoryParser.ViewModel
             {
                 _currentViewModel = value;
                 RaisePropertyChanged("CurrentViewModel");
+            }
+        }
+
+        public RelayCommand OpenDifferenesCommand
+        {
+            get
+            {
+                return _openDifferencesCommand ?? (_openDifferencesCommand = new RelayCommand(OpenDifferences));
             }
         }
 
@@ -91,6 +100,12 @@ namespace RepositoryParser.ViewModel
         #endregion
 
         #region Methods
+
+        private void OpenDifferences()
+        {
+            CurrentViewModel = new ViewModelLocator().Difference;
+            Messenger.Default.Send<ChartMessageLevel2>(new ChartMessageLevel2(_filteringQuery));
+        }
 
         private void OpenDayActivity()
         {

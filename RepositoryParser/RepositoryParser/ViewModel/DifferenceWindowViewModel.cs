@@ -72,6 +72,8 @@ namespace RepositoryParser.ViewModel
         }
         private void HandleChartMessage(string query)
         {
+            ClosedEvent();
+
             this._filteringQuery = query;
             if(!_onLoadWorker.IsBusy)
                 _onLoadWorker.RunWorkerAsync();

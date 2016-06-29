@@ -44,6 +44,10 @@
             <weekdayActivityViews:WeekdayActivityContentProviderView/>
         </DataTemplate>
         
+        <DataTemplate DataType="{x:Type viewModel:DifferenceWindowViewModel}">
+            <local:DifferencesView/>
+        </DataTemplate>
+        
     </UserControl.Resources>
     
     <Grid>
@@ -151,7 +155,7 @@
 
             <Button x:Name="CompareBtn" 
                     Style="{StaticResource AnalysisTile2}"
-                    Command="{Binding}"
+                    Command="{Binding OpenDifferenesCommand}"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     Grid.Row="2"

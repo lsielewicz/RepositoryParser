@@ -39,8 +39,8 @@ namespace RepositoryParser.ViewModel
             Messenger.Default.Register<ChartMessageLevel0>(this, x => HandleDataMessage(x.AuthorsList, x.FilteringQuery));
 
             CurrentViewModel = (new ViewModelLocator()).DataBaseManagement;
-            CurrentViewModel = (new ViewModelLocator()).Presentation;
             CurrentViewModel = (new ViewModelLocator()).Filtering;
+            CurrentViewModel = (new ViewModelLocator()).Presentation;
             CurrentViewModel = (new ViewModelLocator()).Analysis;
             CurrentViewModel = null;
         }
@@ -147,7 +147,7 @@ namespace RepositoryParser.ViewModel
         private void OpenPresentation()
         {
             CurrentViewModel = (new ViewModelLocator()).Presentation;
-            Messenger.Default.Send<RefreshMessageToPresentation>(new RefreshMessageToPresentation(true));
+           
         }
 
 

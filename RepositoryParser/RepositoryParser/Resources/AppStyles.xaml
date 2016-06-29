@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:RepositoryParser.Resources"
                     xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
-                    xmlns:resw="clr-namespace:RepositoryParser.Properties">
+                    xmlns:resw="clr-namespace:RepositoryParser.Properties"
+                    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls">
     
   
 
@@ -61,4 +62,22 @@
         <Setter Property="Margin" Value="10,0,0,0"/>
     </Style>
 
+    <Style TargetType="StatusBar" x:Key="AppStatusBar">
+        <Setter Property="Opacity" Value="0.7"/>
+        <Setter Property="Background" Value="{StaticResource Graphite}"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+    </Style>
+    
+    <Style TargetType="controls:ProgressRing" x:Key="AppProgressRing">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Width" Value="100"/>
+        <Setter Property="Height" Value="18"/>
+        <Setter Property="Margin" Value="3"/>
+        <Setter Property="Foreground" Value="{StaticResource Grey}"/>
+        <Setter Property="Opacity" Value="1"/>
+    </Style>
+    
+    
 </ResourceDictionary>

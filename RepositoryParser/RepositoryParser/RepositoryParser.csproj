@@ -248,6 +248,9 @@
     <Compile Include="View\DayActivityViews\DayActivityContentProviderView.xaml.cs">
       <DependentUpon>DayActivityContentProviderView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\DifferencesView.xaml.cs">
+      <DependentUpon>DifferencesView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\FilteringView.xaml.cs">
       <DependentUpon>FilteringView.xaml</DependentUpon>
     </Compile>
@@ -325,6 +328,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\DifferencesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\FilteringView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -345,10 +352,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\DifferenceWindowView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -360,9 +363,6 @@
     <Compile Include="ViewModel\WeekdayActivityViewModels\WeekDayActivityViewModel.cs" />
     <Compile Include="View\AnalysisWindowView.xaml.cs">
       <DependentUpon>AnalysisWindowView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\DifferenceWindowView.xaml.cs">
-      <DependentUpon>DifferenceWindowView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

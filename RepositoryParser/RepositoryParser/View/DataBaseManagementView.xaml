@@ -148,13 +148,10 @@
             </StackPanel>
 
             <StatusBar Grid.Row="0" Grid.Column="0" 
-                   Grid.RowSpan="6"
-                   Grid.ColumnSpan="3"
-                   Visibility="Collapsed"  
-                   Opacity="0.75"
-                   Background="{StaticResource Grey}"
-                   HorizontalAlignment="Stretch"
-                   VerticalAlignment="Stretch"
+                   Grid.RowSpan="4"
+                   Grid.ColumnSpan="2"
+                   Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"  
+                   Style="{StaticResource AppStatusBar}"
                    >
             </StatusBar>
             <StackPanel Orientation="Horizontal" Grid.Row="0" 
@@ -163,14 +160,8 @@
                     VerticalAlignment="Center" HorizontalAlignment="Center"
                     Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
                     >
-                <controls:ProgressRing HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       IsActive="{Binding ProgressBarVisibility}"
-                                       Width="100"
-                                       Height="18"
-                                       Margin="3"
-                                       Opacity="1"
-                                       Foreground="{StaticResource Graphite}"
+                <controls:ProgressRing IsActive="{Binding ProgressBarVisibility}"
+                                       Style="{StaticResource AppProgressRing}"
                                        />
                 <Separator/>
                 <TextBlock Text="{x:Static resw:Resources.ProgressBarText}" Foreground="{StaticResource MyGreen}" FontSize="18" Visibility="{Binding IsOpening, Converter={StaticResource BoolToVisibilityConverter}}"/>
