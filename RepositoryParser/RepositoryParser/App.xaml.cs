@@ -1,4 +1,9 @@
-﻿using System.Windows;
+﻿
+using System;
+using System.Globalization;
+using System.Threading;
+using System.Windows;
+using System.Windows.Markup;
 
 namespace RepositoryParser
 {
@@ -7,5 +12,6 @@ namespace RepositoryParser
     /// </summary>
     public partial class App : Application
     {
+
     }
 }
