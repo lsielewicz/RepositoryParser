@@ -1,0 +1,121 @@
+﻿<Button x:Class="RepositoryParser.Controls.ImageButton.ImageButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RepositoryParser.Controls.ImageButton"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             x:Name="Root"
+             >
+    <Button.Resources>
+        <local:LenghtToAnimationLenghtConventer x:Key="LenghtToAnimationLenghtConventer"/>
+    </Button.Resources>
+    
+    <Button.Style>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Light"/>
+            <Setter Property="Opacity" Value="0.99"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            HorizontalAlignment="Stretch"
+                            RenderTransformOrigin="0.5 0.5"
+                            x:Name="Border"  
+                            Background="{TemplateBinding Background}">
+                            <Border.RenderTransform>
+                                <ScaleTransform ScaleX="1.0" ScaleY="1.0" CenterX="0.5" CenterY="0.5" />
+                            </Border.RenderTransform>
+                            <ContentPresenter 
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                RecognizesAccessKey="True">
+                               <ContentPresenter.Content>
+                                   <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                       <Image
+                                           Margin="5,0"
+                                           DockPanel.Dock="Left"
+                                           Source="{Binding ElementName=Root, Path=ImageSource}" 
+                                           Width="{Binding ElementName=Root, Path=ImageWidth}" 
+                                           Height="{Binding ElementName=Root, Path=ImageHeight}" 
+                                           x:Name="ControlImage"/>
+                                       <TextBlock
+                                           x:Name="ControlText"
+                                           DockPanel.Dock="Left"
+                                           Margin="5,0"
+                                           Text="{Binding ElementName=Root, Path=Text}" 
+                                           FontWeight="{TemplateBinding FontWeight}" 
+                                           FontSize="{TemplateBinding FontSize}"
+                                           VerticalAlignment="Center"/>
+                                   </DockPanel>
+                               </ContentPresenter.Content>
+                            </ContentPresenter>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard AutoReverse="True">
+                                            <DoubleAnimation Storyboard.TargetName="Border" Storyboard.TargetProperty="RenderTransform.ScaleX" From="1.0" To="0.8" Duration="00:00:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetName="Border" Storyboard.TargetProperty="RenderTransform.ScaleY" From="1.0" To="0.8" Duration="00:00:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                            </Trigger>
+                            
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter 
+                                    TargetName="ControlImage" 
+                                    Property="Height" 
+                                    Value="{Binding ElementName=Root, Path=ImageHeight, Converter={StaticResource LenghtToAnimationLenghtConventer}}"/>
+                                <Setter 
+                                    TargetName="ControlImage" 
+                                    Property="Width" 
+                                    Value="{Binding ElementName=Root, Path=ImageWidth, Converter={StaticResource LenghtToAnimationLenghtConventer}}"/>
+                                <Setter
+                                    TargetName="ControlText"
+                                    Property="FontWeight"
+                                    Value="Normal"/>
+                                <Setter
+                                    Property="Opacity"
+                                    Value="1"/>
+                                <!-- <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard SpeedRatio="6">
+                                            <DoubleAnimation 
+                                                Storyboard.TargetName="ControlImage" 
+                                                Storyboard.TargetProperty="Width"  
+                                                From="{Binding ElementName=ControlImage, Path=Width, Converter={StaticResource AnimationLenghtConventer}}" 
+                                                To="{Binding ElementName=ControlImage, Path=Width}" 
+                                                Duration="00:00:0.1"/>
+                                            <DoubleAnimation 
+                                                Storyboard.TargetName="ControlImage" 
+                                                Storyboard.TargetProperty="Height" 
+                                                From="{Binding ElementName=ControlImage, Path=Height, Converter={StaticResource AnimationLenghtConventer}}" 
+                                                To="{Binding ElementName=ControlImage, Path=Height}" 
+                                                Duration="00:00:0.1"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard  SpeedRatio="6">
+                                            <DoubleAnimation Storyboard.TargetName="ControlImage" Storyboard.TargetProperty="Width" From="36" To="24" Duration="00:00:0.1"/>
+                                            <DoubleAnimation Storyboard.TargetName="ControlImage" Storyboard.TargetProperty="Height" From="36" To="24" Duration="00:00:0.1"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>-->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Button.Style>
+
+</Button>

@@ -13,6 +13,7 @@
         xmlns:viewModel="clr-namespace:RepositoryParser.ViewModel"
         xmlns:usersActivityViews="clr-namespace:RepositoryParser.View.UsersActivityViews"
         xmlns:view="clr-namespace:RepositoryParser.View"
+        xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
         DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
         MinHeight="600" MinWidth="800"
         ShowIconOnTitleBar="True"
@@ -129,6 +130,15 @@
                     <TextBlock Text="{x:Static resw:Resources.AnalysisButton}" Style="{StaticResource AppWhiteTextBlock}"/>
                 </StackPanel>
             </Button>
+            
+            <imageButton:ImageButton 
+                Text="test bardzo" 
+                ImageSource="../Assets/Icons/Analysis_grey.png"
+                Foreground="White"
+                Background="{StaticResource Graphite}"
+                ImageHeight="24"
+                ImageWidth="24"
+                />
             
         </StackPanel>
 

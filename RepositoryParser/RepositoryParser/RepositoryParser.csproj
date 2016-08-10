@@ -426,6 +426,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RepositoryParser.Controls\RepositoryParser.Controls.csproj">
+      <Project>{bef0c006-c870-488d-a113-7bfb643cb28b}</Project>
+      <Name>RepositoryParser.Controls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RepositoryParser.Core\RepositoryParser.Core.csproj">
       <Project>{dcce33ce-2322-4412-940c-5ab8e1d560d6}</Project>
       <Name>RepositoryParser.Core</Name>
