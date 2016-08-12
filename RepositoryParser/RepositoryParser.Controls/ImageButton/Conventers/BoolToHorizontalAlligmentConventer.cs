@@ -5,15 +5,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace RepositoryParser.Controls.ImageButton
+namespace RepositoryParser.Controls.ImageButton.Conventers
 {
-    public class FontSizeToAnimatedFontSizeConventer : IValueConverter
+    public class BoolToHorizontalAlligmentConventer : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (double) value + 1.0;
+            if (value != null && value is bool)
+            {
+                if ((bool)value == true)
+                    return HorizontalAlignment.Center;
+            }
+            return HorizontalAlignment.Left;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

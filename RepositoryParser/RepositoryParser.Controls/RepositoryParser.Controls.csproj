@@ -48,11 +48,12 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ImageButton\FontSizeToAnimatedFontSizeConventer.cs" />
+    <Compile Include="ImageButton\Conventers\BoolToHorizontalAlligmentConventer.cs" />
+    <Compile Include="ImageButton\Conventers\BoolToOrientationConventer.cs" />
     <Compile Include="ImageButton\ImageButton.xaml.cs">
       <DependentUpon>ImageButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ImageButton\LenghtToAnimationLenghtConventer.cs" />
+    <Compile Include="ImageButton\Conventers\LenghtToAnimationLenghtConventer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -77,7 +78,7 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ControlsDictionary.xaml">
+    <Page Include="Controls.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

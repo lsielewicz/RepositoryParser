@@ -4,24 +4,29 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RepositoryParser.Controls.ImageButton"
+             xmlns:conventers="clr-namespace:RepositoryParser.Controls.ImageButton.Conventers"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              x:Name="Root"
              >
     <Button.Resources>
-        <local:LenghtToAnimationLenghtConventer x:Key="LenghtToAnimationLenghtConventer"/>
+        <conventers:LenghtToAnimationLenghtConventer x:Key="LenghtToAnimationLenghtConventer"/>
+        <conventers:BoolToOrientationConventer x:Key="BoolToOrientationConventer"/>
+        <conventers:BoolToHorizontalAlligmentConventer x:Key="BoolToHorizontalAlligmentConventer"/>
     </Button.Resources>
-    
+   
     <Button.Style>
         <Style TargetType="Button">
             <Setter Property="Width" Value="auto"/>
-            <Setter Property="Height" Value="45"/>
+            <Setter Property="Height" Value="50"/>
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="FontWeight" Value="Light"/>
+            <Setter Property="Foreground" Value="White"/>
             <Setter Property="Opacity" Value="0.99"/>
+            <Setter Property="Margin" Value="5,0,2,2"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="Button">
+                    <ControlTemplate TargetType="{x:Type local:ImageButton}">
                         <Border
                             HorizontalAlignment="Stretch"
                             RenderTransformOrigin="0.5 0.5"
@@ -31,28 +36,28 @@
                                 <ScaleTransform ScaleX="1.0" ScaleY="1.0" CenterX="0.5" CenterY="0.5" />
                             </Border.RenderTransform>
                             <ContentPresenter 
-                                HorizontalAlignment="Left"
+                                HorizontalAlignment="{TemplateBinding IsTile, Converter={StaticResource BoolToHorizontalAlligmentConventer}}"
                                 VerticalAlignment="Center"
                                 RecognizesAccessKey="True">
-                               <ContentPresenter.Content>
-                                   <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                       <Image
-                                           Margin="5,0"
+                                <ContentPresenter.Content>
+                                    <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Orientation="{TemplateBinding IsTile, Converter={StaticResource BoolToOrientationConventer}}">
+                                        <Image
+                                           Margin="10,0"
                                            DockPanel.Dock="Left"
-                                           Source="{Binding ElementName=Root, Path=ImageSource}" 
-                                           Width="{Binding ElementName=Root, Path=ImageWidth}" 
-                                           Height="{Binding ElementName=Root, Path=ImageHeight}" 
+                                           Source="{TemplateBinding ImageSource}" 
+                                           Width="{TemplateBinding ImageWidth}" 
+                                           Height="{TemplateBinding ImageHeight}" 
                                            x:Name="ControlImage"/>
-                                       <TextBlock
+                                        <TextBlock
                                            x:Name="ControlText"
                                            DockPanel.Dock="Left"
                                            Margin="5,0"
-                                           Text="{Binding ElementName=Root, Path=Text}" 
+                                           Text="{TemplateBinding Text}" 
                                            FontWeight="{TemplateBinding FontWeight}" 
                                            FontSize="{TemplateBinding FontSize}"
                                            VerticalAlignment="Center"/>
-                                   </DockPanel>
-                               </ContentPresenter.Content>
+                                    </StackPanel>
+                                </ContentPresenter.Content>
                             </ContentPresenter>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -66,7 +71,7 @@
                                     </BeginStoryboard>
                                 </Trigger.EnterActions>
                             </Trigger>
-                            
+
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter 
                                     TargetName="ControlImage" 
