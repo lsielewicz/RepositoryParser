@@ -55,7 +55,9 @@
                                            Text="{TemplateBinding Text}" 
                                            FontWeight="{TemplateBinding FontWeight}" 
                                            FontSize="{TemplateBinding FontSize}"
-                                           VerticalAlignment="Center"/>
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="{TemplateBinding IsTile, Converter={StaticResource BoolToHorizontalAlligmentConventer}}" 
+                                            />
                                     </StackPanel>
                                 </ContentPresenter.Content>
                             </ContentPresenter>
