@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:RepositoryParser.View.DayActivityViews"
              xmlns:resw="clr-namespace:RepositoryParser.Properties"
              xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+             xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator}, Path=DayActivity }"
@@ -64,11 +65,15 @@
         </TabControl>
 
         <DockPanel Grid.Column="1" Grid.Row="2">
-            <Button x:Name="SaveFileBtn" 
-                    HorizontalAlignment="Left"
-                    Style="{StaticResource ExportButton}"
-                    Command="{Binding ExportFileCommand}"
-                    />
+            <imageButton:ImageButton 
+                Command="{Binding ExportFileCommand}"
+                ImageSource="../../Assets/Icons/Export_grey.png"
+                Text="{x:Static resw:Resources.ExportToFileButton}"
+                Height="40"
+                ImageHeight="24" 
+                ImageWidth="24"
+                Background="{StaticResource Graphite}"
+                Width="180"/>
         </DockPanel>
 
         <Border Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="1" Background="{StaticResource MyGreen}"/>

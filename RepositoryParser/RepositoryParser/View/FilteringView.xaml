@@ -7,6 +7,8 @@
              xmlns:resw="clr-namespace:RepositoryParser.Properties"
              xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator}, Path=Filtering}"
@@ -15,6 +17,11 @@
         <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <conventers:DateFormat x:Key="DateFormat"/>
         <conventers:StringToImageConventer x:Key="StringToImageConventer"/>
+        <Style TargetType="Border" x:Key="AttributeBorderStyle">
+            <Setter Property="Background" Value="{StaticResource MyGreen}"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Graphite}"/>
+        </Style>
     </UserControl.Resources>
     
     <Grid>
@@ -44,9 +51,8 @@
                 <ColumnDefinition x:Name="BranchColumn" Width="3*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="8*"/>
+                <RowDefinition Height="12*"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="70"/>
             </Grid.RowDefinitions>
 
 
@@ -57,25 +63,24 @@
                     <RowDefinition Height="10"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" 
-                       Text="{x:Static resw:Resources.FilteringAuthor}" 
-                       Margin="5,0,0,0" 
-                       Background="{StaticResource MyGreen}"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Stretch"
-                       Padding="4"
-                       FontWeight="Light"
-                       
-                       />
+                <Border Grid.Row="0" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="{StaticResource MyGreen}" Margin="5,0">
+                    <TextBlock
+                        Text="{x:Static resw:Resources.FilteringAuthor}" 
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Stretch"
+                        Padding="4"
+                        FontWeight="Light"/>
+                </Border>
                 <ListView x:Name="AuthorComboBox" 
                       Grid.Row="1"
                       VerticalAlignment="Stretch"
                       HorizontalAlignment="Stretch" 
-                      Margin="5,0,0,0"
+                      Margin="5,0"
                       ItemsSource="{Binding LocalCollection}"
                       DisplayMemberPath="{Binding Author}"  
                       SelectedItem="{Binding ComboBoxSelectedItem}"
-                      IsSynchronizedWithCurrentItem="True"                     
+                      IsSynchronizedWithCurrentItem="True" 
+                      BorderThickness="0"
                       />
             </Grid>
 
@@ -84,20 +89,19 @@
                     <RowDefinition Height="25"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="25"/>
-                    <RowDefinition Height="0.3*"/>
-                    <RowDefinition Height="10"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="1.5*"/>
                     <RowDefinition Height="10"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" 
+                <Border Grid.Row="0" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="{StaticResource MyGreen}" Margin="5,0">
+                    <TextBlock 
                        Text="{x:Static resw:Resources.FilteringDate}" 
-                       Margin="5,0,0,0" 
-                       Background="{StaticResource MyGreen}"
+                       Background="Transparent"
                        VerticalAlignment="Top"
                        HorizontalAlignment="Stretch"
                        Padding="4"
                        FontWeight="Light"
                        />
+                 </Border>
                 <DockPanel Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" LastChildFill="True">
                     <xctk:DateTimePicker DockPanel.Dock="Left"
                                         HorizontalAlignment="Stretch"
@@ -120,27 +124,29 @@
                     <Label x:Name="zzlbl" Content="-" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </DockPanel>
 
-                <TextBlock Grid.Row="2" 
-                       Text="{x:Static resw:Resources.FilteringMessage}" 
-                       Margin="5,0,0,0" 
-                       Background="{StaticResource MyGreen}"
+                <Border Grid.Row="2" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="{StaticResource MyGreen}" Margin="5,0">
+                    <TextBlock 
+                       Text="{x:Static resw:Resources.FilteringMessage}"        
+                       Background="Transparent"
                        VerticalAlignment="Top"
                        HorizontalAlignment="Stretch"
                        Padding="4"
-                       FontWeight="Light"
-                       />
-                <TextBox  Grid.Row="3" 
-                      x:Name="MsgTB" 
-                      Text="{Binding MessageTextBox}" 
-                      Margin="5"
-                      VerticalAlignment="Top"
-                      HorizontalAlignment="Stretch"
-                      />
-                <Image Grid.Row="5" 
-                   Source="{Binding RepoType, Converter={StaticResource StringToImageConventer}}"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"
-                   />
+                       FontWeight="Light"/>
+                </Border>
+                
+                <StackPanel Grid.Row="3">
+                <TextBox   
+                    x:Name="MsgTB" 
+                    Text="{Binding MessageTextBox}" 
+                    Margin="5"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Stretch"
+                    controls:TextBoxHelper.ClearTextButton="True"/>
+                <Image 
+                    Source="{Binding RepoType, Converter={StaticResource StringToImageConventer}}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"/>
+                </StackPanel>
             </Grid>
 
             <Grid x:Name="RepositoryGrid" Grid.Row="0" Grid.Column="2" Margin="2,5">
@@ -152,72 +158,80 @@
                     <RowDefinition Height="10"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" 
+                <Border Grid.Row="0" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="{StaticResource MyGreen}" Margin="5,0">
+                    <TextBlock
                        Text="{x:Static resw:Resources.FilteringPickRepository}" 
-                       Margin="5,0,0,0" 
-                       Background="{StaticResource MyGreen}"
+                       Background="Transparent"
                        VerticalAlignment="Top"
                        HorizontalAlignment="Stretch"
                        Padding="4"
                        FontWeight="Light"
                        />
+                 </Border>
                 <ListView x:Name="RepositoryList" 
                       Grid.Row="1"
                       HorizontalAlignment="Stretch" 
                       VerticalAlignment="Stretch"
-                      Margin="5,0,0,0"
+                      Margin="5,0"
                       ItemsSource="{Binding RepositoryCollection}"
                       DisplayMemberPath="{Binding Name}"  
                       SelectedItem="{Binding RepositorySelectedItem}"
-                      IsSynchronizedWithCurrentItem="True"                    
-                      />
-                <TextBlock Grid.Row="2" 
+                      IsSynchronizedWithCurrentItem="True"
+                      BorderThickness="0"/>
+                <Border Grid.Row="2" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="{StaticResource MyGreen}" Margin="5,0">
+                    <TextBlock
                        Text="{x:Static resw:Resources.FilteringPickBranch}" 
-                       Margin="5,0,0,0" 
-                       Background="{StaticResource MyGreen}"
+                       Background="Transparent"
                        VerticalAlignment="Top"
                        HorizontalAlignment="Stretch"
                        Padding="4"
                        FontWeight="Light"
                        />
+                    </Border>
                 <ListView x:Name="BranchList"
                       Grid.Row="3"
                       HorizontalAlignment="Stretch" 
                       VerticalAlignment="Stretch"
-                      Margin="5,0,0,0"
+                      Margin="5,0"
                       ItemsSource="{Binding BranchCollection}"
                       DisplayMemberPath="{Binding Name}"  
                       SelectedItem="{Binding BranchSelectedItem}"
                       IsSynchronizedWithCurrentItem="True"
                       IsEnabled="{Binding BranchEnabled, UpdateSourceTrigger=PropertyChanged}"
+                      BorderThickness="0"
                       />
 
             </Grid>
 
             <StackPanel Grid.Row="0" Grid.Column="3" Grid.RowSpan="2" Margin="1,5,1,0" Name="ClearFiltersBtn">
-                <Button Command="{Binding ClearFiltersCommand}" 
-                    Style="{StaticResource AppGraphiteButton}"
-                    >
-                    <StackPanel Orientation="Horizontal" Width="{Binding ElementName=ClearFiltersBtn, Path=ActualWidth}" HorizontalAlignment="Stretch">
-                        <Image Source="../Assets/Icons/Clear.png" Height="24" Margin="10,0,10,0"/>
-                        <TextBlock Text="{x:Static resw:Resources.ClearFiltersBtn}" VerticalAlignment="Center" FontSize="13"/>
-                    </StackPanel>
-                </Button>
+                <imageButton:ImageButton 
+                    Command="{Binding ClearFiltersCommand}" 
+                    Background="Transparent"
+                    Foreground="Black"
+                    ImageSource="../Assets/Icons/PNG_Gray/Clear_LightGray.png"
+                    ImageHeight="32"
+                    ImageWidth="32"
+                    Text="{x:Static resw:Resources.ClearFiltersBtn}"
+                    Height="45"
+                    BorderBrush="{StaticResource LightGray}"
+                    BorderThickness="0,0,0,0.5"
+                    />
+                <imageButton:ImageButton 
+                    x:Name="SendBtn"
+                    Command="{Binding SendDataCommand}"
+                    Height="45"
+                    BorderBrush="{StaticResource LightGray}"
+                    BorderThickness="0,0,0,0.5"
+                    ImageHeight="32"
+                    ImageWidth="32"
+                    Background="Transparent"
+                    Foreground="Black"
+                    ImageSource="../Assets/Icons/PNG_Gray/Send_LightGray.png"
+                    Text="{x:Static resw:Resources.SendDataButton}"/>
             </StackPanel>
 
             <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" VerticalAlignment="Center" >
-                <Button x:Name="SendBtn"
-                    Command="{Binding SendDataCommand}"
-                    Style="{StaticResource MainTile}"
-                    HorizontalAlignment="Center"
-                    Height="50"
-                    Width="200"
-                    >
-                    <StackPanel Orientation="Horizontal" Width="{Binding ElementName=SendBtn, Path=Width}" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Image Source="../Assets/Icons/Message-50.png" Height="32" Margin="15,0,10,0"/>
-                        <TextBlock Text="{x:Static resw:Resources.SendDataButton}" VerticalAlignment="Center" FontSize="18" Style="{StaticResource AppWhiteTextBlock}"/>
-                    </StackPanel>
-                </Button>
+                
             </StackPanel>
         </Grid>
     </Grid>

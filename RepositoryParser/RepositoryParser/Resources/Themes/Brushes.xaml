@@ -6,6 +6,8 @@
 
     <SolidColorBrush x:Key="MyGreen" Color="#aaaaaa" />
     <SolidColorBrush x:Key="Graphite" Color="#1a472a" />
+    <SolidColorBrush x:Key="DarkGray" Color="#5d5d5d"/>
+    <SolidColorBrush x:Key="LightGray" Color="#666666"/>
    <!-- <SolidColorBrush x:Key="Graphite" Color="#336699" />-->
     <SolidColorBrush x:Key="Grey" Color="#FAFAFA" />
     <SolidColorBrush x:Key="GitOrange" Color="#F34F29"/>

@@ -7,6 +7,7 @@
              xmlns:resw="clr-namespace:RepositoryParser.Properties"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
+             xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator}, Path=DataBaseManagement}"
@@ -47,7 +48,7 @@
         <Grid Grid.Row="1" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="210"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="35"/>
@@ -68,22 +69,19 @@
                      BorderThickness="1"
                      controls:TextBoxHelper.Watermark="{x:Static resw:Resources.UrlAdress}"
                      />
-                <Button x:Name="PicFileBtn" 
+                <imageButton:ImageButton
+                    x:Name="PicFileBtn" 
                     HorizontalAlignment="Center" 
                     Command="{Binding PickFileCommand}" 
+                    ImageWidth="32"
+                    ImageHeight="32"
+                    Background="Transparent"
+                    Foreground="Black"
+                    Height="45"
                     FontSize="14"
-                    Padding="25,4"
-                    Height="40"
-                    Width="180"
-                    Margin="5,15,5,25"
-                    Style="{StaticResource AppGraphiteButton}"
-
-                    >
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="../Assets/Icons/Add File-100.png" Height="24" Width="24"/>
-                        <TextBlock Text="{x:Static resw:Resources.LocalAdress}"  VerticalAlignment="Center" Padding="5,0"/>
-                    </StackPanel>
-                </Button>
+                    ImageSource="../Assets/Icons/PNG_Gray/Plus Math-100.png"
+                    Text="{x:Static resw:Resources.LocalAdress}"
+                    />
 
                 <Grid>
                     <Grid.RowDefinitions>
@@ -91,8 +89,8 @@
                         <RowDefinition Height="3*"/>
                     </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0" Grid.Column="0">
-                        <TextBlock Text="{x:Static resw:Resources.PickRepositoryType}" HorizontalAlignment="Center" FontSize="16"></TextBlock>
+                    <StackPanel Grid.Row="0" Grid.Column="0" Margin="5,15">
+                      <!--  <TextBlock Text="{x:Static resw:Resources.PickRepositoryType}" HorizontalAlignment="Center" FontSize="16"></TextBlock>-->
                         <Border BorderBrush="{StaticResource MyGreen}" BorderThickness="0,1">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="2">
                                 <Button Margin="4,0" VerticalAlignment="Center" Background="Transparent" BorderThickness="0" MinWidth="90" Command="{Binding PickGitRepositoryCommand}">
@@ -115,36 +113,32 @@
 
           
             <StackPanel Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
-                <Button x:Name="CloneRepositoryBtn"
+                <imageButton:ImageButton x:Name="CloneRepositoryBtn"
                     Command="{Binding StartWorkCommand}" 
                     IsEnabled="{Binding IsCloneButtonEnabled }" 
+                    Background="{StaticResource Graphite}"
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center"  
-                    
-                    Margin="2" 
-                    Padding="4" 
-                    MinWidth="250"
-                    Style="{StaticResource MainTile}"
+                    ImageSource="../Assets/Icons/Add Database-5white0.png"
+                    Text="{x:Static resw:Resources.AddRepositoryButton}"
                     Height="50"
-                    >
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=CloneRepositoryBtn, Path=Width}" >
-                        <Image Source="../Assets/Icons/Add Database-5white0.png" Width="32" Margin="10,0,10,0"/>
-                        <TextBlock Text="{x:Static resw:Resources.AddRepositoryButton}" FontSize="18"  Style="{StaticResource AppWhiteTextBlock}"/>
-                    </StackPanel>
-                </Button>
+                    />
             </StackPanel>
 
             <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Margin="0,10,0,5">
-                <Button x:Name="ClearDataBase" 
+                <imageButton:ImageButton x:Name="ClearDataBase" 
                     VerticalAlignment="Top" 
-                    Style="{StaticResource AppGraphiteButton}"
-                    Command="{Binding AsyncClearDBCommand}" 
-                    >
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=ClearDataBase, Path=ActualWidth}" >
-                        <Image Source="../Assets/Icons/Delete_grey.png" Width="24" Margin="10,0,10,0"/>
-                        <TextBlock Text="{x:Static resw:Resources.ClearDBButton}" VerticalAlignment="Center" FontSize="13"/>
-                    </StackPanel>
-                </Button>
+                    Command="{Binding AsyncClearDBCommand}"
+                    ImageSource="../Assets/Icons/PNG_Gray/Delete File-100.png"
+                    Text="{x:Static resw:Resources.ClearDBButton}"  
+                    Height="45"
+                    BorderBrush="{StaticResource LightGray}"
+                    BorderThickness="0,0,0,0.5"
+                    ImageHeight="32"
+                    ImageWidth="32"
+                    Background="Transparent"
+                    Foreground="Black"
+                    />
             </StackPanel>
 
             <StatusBar Grid.Row="0" Grid.Column="0" 

@@ -22,7 +22,6 @@
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator}, Path=Analysis}"
              >
-    
     <UserControl.Resources>
         <DataTemplate DataType="{x:Type dayActivityViewModels:DayActivityContentProviderViewModel}">
             <dayActivityViews:DayActivityContentProviderView/>
@@ -141,7 +140,7 @@
                 Foreground="Black"
                 Grid.Row="0"
                 Grid.Column="1"
-                ImageSource="../Assets/Icons/PNG_DarkGray/PieChart_DarkGray.png"
+                ImageSource="../Assets/Icons/PNG_DarkGray/LineChart_DarkGray.png"
                 Text="{x:Static resw:Resources.MonthDayActivityAnalyseButton}"/>
 
             <imageButton:ImageButton 

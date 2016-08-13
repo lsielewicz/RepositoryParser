@@ -27,6 +27,7 @@
         OverrideDefaultWindowCommandsBrush="Black"
         TitlebarHeight="40"
         >
+
     <Controls:MetroWindow.TitleTemplate>
         <DataTemplate>
             <TextBlock
@@ -39,7 +40,7 @@
                 Margin="5"/>
         </DataTemplate>
     </Controls:MetroWindow.TitleTemplate>
-    
+
     <Controls:MetroWindow.WindowTitleBrush>
         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" Opacity="0.35">
             <GradientStop Color="{StaticResource AccentColor}" Offset="0.0"/>
@@ -69,7 +70,9 @@
                 />
         </Controls:WindowCommands>
     </Controls:MetroWindow.LeftWindowCommands>
-    
+
+
+
     <Window.Resources>
         <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <conventers:NegativeBoolToVisibilityConventer x:Key="NegativeBoolToVisibilityConventer"/>
@@ -107,27 +110,10 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="210"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-
-
-<!--        <Rectangle Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="0">
-            <Rectangle.Fill>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="{StaticResource AppBorder}" Offset="0" />
-                </LinearGradientBrush>
-            </Rectangle.Fill>
-        </Rectangle>
-
-        <TextBlock Grid.Row="0" Grid.Column="0" 
-                   Grid.ColumnSpan="3" 
-                   Text="{x:Static resw:Resources.MainWindowTitle}" 
-                   Style="{StaticResource AppTitleTextBlock}"
-                   Visibility="{Binding CurrentViewModel, Converter={StaticResource NegativeViewModelBaseToVisibilityConventer}}"
-                   />-->
-    
         <!--Buttons Panel: left -->
         <StackPanel Grid.Row="1" Grid.Column="0">
             <imageButton:ImageButton 

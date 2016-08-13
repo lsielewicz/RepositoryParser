@@ -8,6 +8,7 @@
              xmlns:viewModel="clr-namespace:RepositoryParser.ViewModel"
              xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600">
     <UserControl.Resources>
@@ -42,12 +43,18 @@
                    />
         
         <StackPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
-            <Button Style="{StaticResource AppGraphiteButton}" Command="{Binding OpenChartViewCommand}" x:Name="Btn01" Margin="10,0,0,0">
-                <StackPanel Orientation="Horizontal" Width="{Binding ElementName=Btn01, Path=ActualWidth}">
-                    <Image Style="{StaticResource AppButtonIcon}"  Source="../../Assets/Icons/Poll Topic-50.png" Margin="5,0,5,0"/>
-                    <TextBlock Style="{StaticResource AppWhiteTextBlock}" Text="{x:Static resw:Resources.CountOfCommits}"/>
-                </StackPanel>
-            </Button>
+            <imageButton:ImageButton 
+                Command="{Binding OpenChartViewCommand}"
+                x:Name="Btn01" 
+                BorderBrush="{StaticResource LightGray}"
+                BorderThickness="0,0,0,0.5"
+                ImageHeight="32"
+                ImageWidth="32"
+                Background="Transparent"
+                Foreground="Black"
+                ImageSource="../../Assets/Icons/PNG_Gray/Poll Topic-100.png"
+                Text="{x:Static resw:Resources.CountOfCommits}"
+                Height="45"/>
         </StackPanel>
 
         <ContentControl Grid.Row="1" Grid.Column="0" Content="{Binding CurrentViewModel}"/>
