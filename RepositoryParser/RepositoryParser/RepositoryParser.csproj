@@ -208,6 +208,8 @@
     <Compile Include="Conventers\NegativeViewModelBaseToVisibilityConventer.cs" />
     <Compile Include="Conventers\StringToImageConventer.cs" />
     <Compile Include="Conventers\ViewModelBaseToVisibilityConventer.cs" />
+    <Compile Include="Helpers\CustomInputDialog.cs" />
+    <Compile Include="Helpers\StaticServiceProvider.cs" />
     <Compile Include="Properties\Resources.pl-PL.Designer.cs">
       <DependentUpon>Resources.pl-PL.resx</DependentUpon>
       <AutoGen>True</AutoGen>
