@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RepositoryParser.View"
              xmlns:resw="clr-namespace:RepositoryParser.Properties"
+             xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator}, Path=Presentation}"
@@ -48,13 +49,26 @@
         </DataGrid>
         
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Button Style="{StaticResource ExportButton}" Command="{Binding ExportFileCommand}"/>
-            <Button Style="{StaticResource AppGraphiteButton}" Command="{Binding RefreshCommand}" Height="35" Margin="5" Width="150">
-                <StackPanel Orientation="Horizontal" Width="{Binding ElementName=SendBtn, Path=Width}">
-                    <Image Source="../Assets/Icons/Refresh_grey.png" Height="24" Margin="2,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.RefreshButton}" VerticalAlignment="Center" FontWeight="Light" FontSize="13"/>
-                </StackPanel>
-            </Button>
+            <imageButton:ImageButton 
+                Command="{Binding ExportFileCommand}"
+                ImageSource="../Assets/Icons/Export_grey.png"
+                Text="{x:Static resw:Resources.ExportToFileButton}"
+                Height="40"
+                ImageHeight="24" 
+                ImageWidth="24"
+                Background="{StaticResource Graphite}"
+                Width="180"/>
+            <imageButton:ImageButton 
+                Command="{Binding RefreshCommand}" 
+                Height="40" 
+                ImageHeight="24" 
+                ImageWidth="24"
+                ImageSource="../Assets/Icons/Refresh_grey.png"
+                Text="{x:Static resw:Resources.RefreshButton}"
+                Background="{StaticResource Graphite}"
+                Width="180"
+                >
+            </imageButton:ImageButton>
         </StackPanel>
     </Grid>
 </UserControl>

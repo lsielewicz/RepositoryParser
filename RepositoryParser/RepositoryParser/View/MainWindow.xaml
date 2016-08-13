@@ -61,6 +61,15 @@
         </DataTemplate>
     </Controls:MetroWindow.IconTemplate>
 
+    <Controls:MetroWindow.LeftWindowCommands>
+        <Controls:WindowCommands>
+            <Button 
+                Content="Start"
+                Command="{Binding GoToStartScreenCommand}"
+                />
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.LeftWindowCommands>
+    
     <Window.Resources>
         <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <conventers:NegativeBoolToVisibilityConventer x:Key="NegativeBoolToVisibilityConventer"/>
@@ -153,7 +162,7 @@
         <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding CurrentViewModel}"/>
         <Image Grid.Row="1"
                Grid.Column="1"
-               Source="../Resources/../Assets/Images/RepositoryAnalyserLogo.png"
+               Source="../Resources/../Assets/Images/AppLogoGreen2.png"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
                Opacity="1"

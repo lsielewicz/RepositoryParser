@@ -31,6 +31,7 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _openEventCommand;
         private RelayCommand _openFilteringCommand;
         private RelayCommand _openAnalysisCommand;
+        private RelayCommand _goToStartScreenCommand;
         private List<string> _authorsList;
         private string _filteringQuery;
 
@@ -56,6 +57,14 @@ namespace RepositoryParser.ViewModel
                 _currentViewModel = value;
                 RaisePropertyChanged("CurrentViewModel");
             }
+        }
+
+        public RelayCommand GoToStartScreenCommand
+        {
+            get { return _goToStartScreenCommand ?? (_goToStartScreenCommand = new RelayCommand(() =>
+            {
+                CurrentViewModel = null;
+            })); }
         }
 
         public RelayCommand OpenAnalysisCommand
