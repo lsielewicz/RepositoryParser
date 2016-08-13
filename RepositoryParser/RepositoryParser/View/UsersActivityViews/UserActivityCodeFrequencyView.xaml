@@ -24,22 +24,15 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="9*"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Background="{StaticResource Graphite}">
-            <TextBlock Style="{StaticResource AppWhiteTextBlock}" Text="{x:Static resw:Resources.CodeFrequencyAnalyse}" HorizontalAlignment="Center"/>
-        </Border>
 
-        <TabControl Grid.Row="1" Grid.Column="1">
+        <TabControl Grid.Row="0">
             <TabItem Header="{x:Static resw:Resources.AddedChart}">
                 <chartingToolkit:Chart Background="{StaticResource Grey}" LegendTitle="{x:Static resw:Resources.Legend}" Title="{x:Static resw:Resources.AddedChart}">
                     <chartingToolkit:Chart.Series>
@@ -104,33 +97,38 @@
             </TabItem>
         </TabControl>
 
-        <StatusBar Grid.Row="1" Grid.Column="1" 
+        <StatusBar Grid.Row="0"
                    Grid.ColumnSpan="2"
                    Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"  
                    Opacity="0.7"
-                   Background="{StaticResource Graphite}"
+                   Background="White"
                    HorizontalAlignment="Stretch"
                    VerticalAlignment="Stretch"
                    >
         </StatusBar>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
                     VerticalAlignment="Center" HorizontalAlignment="Center"
                     Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
                     >
             <controls:ProgressRing HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        IsActive="{Binding ProgressBarVisibility}"
-                                       Width="100"
-                                       Height="18"
                                        Margin="3"
                                        Opacity="1"
-                                       Foreground="{StaticResource Grey}"
+                                       Foreground="{StaticResource Graphite}"
                                        />
             <Separator/>
-            <TextBlock Text="{x:Static resw:Resources.DataLoadingStatus}" Foreground="{StaticResource Grey}" FontSize="18" Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}}" FontWeight="Light"/>
+            <TextBlock 
+                Text="{x:Static resw:Resources.DataLoadingStatus}"
+                Foreground="{StaticResource Graphite}"
+                FontSize="14" 
+                Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}}"
+                FontWeight="Light"
+                VerticalAlignment="Center"
+                />
         </StackPanel>
 
-        <DockPanel Grid.Column="1" Grid.Row="2">
+        <DockPanel Grid.Row="1">
             <imageButton:ImageButton 
                 Command="{Binding ExportFileCommand}"
                 ImageSource="../../Assets/Icons/Export_grey.png"
@@ -141,8 +139,5 @@
                 Background="{StaticResource Graphite}"
                 Width="180"/>
         </DockPanel>
-
-        <Border Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="1" Background="{StaticResource MyGreen}"></Border>
-        
     </Grid>
 </UserControl>

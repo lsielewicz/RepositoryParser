@@ -158,8 +158,18 @@
                                        Style="{StaticResource AppProgressRing}"
                                        />
                 <Separator/>
-                <TextBlock Text="{x:Static resw:Resources.ProgressBarText}" Foreground="{StaticResource MyGreen}" FontSize="18" Visibility="{Binding IsOpening, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                <TextBlock Text="{x:Static resw:Resources.ClearingDataBase}" Foreground="{StaticResource MyGreen}" FontSize="18" Visibility="{Binding IsOpening, Converter={StaticResource NegativeBoolToVisibilityConventer}}"/>
+                <TextBlock 
+                    Text="{x:Static resw:Resources.ProgressBarText}"
+                    Foreground="{StaticResource Graphite}"
+                    FontSize="14" 
+                    Visibility="{Binding IsOpening, Converter={StaticResource BoolToVisibilityConverter}}"
+                    VerticalAlignment="Center"/>
+                <TextBlock 
+                    Text="{x:Static resw:Resources.ClearingDataBase}"
+                    Foreground="{StaticResource Graphite}"
+                    FontSize="14" 
+                    Visibility="{Binding IsOpening, Converter={StaticResource NegativeBoolToVisibilityConventer}}"
+                    VerticalAlignment="Center"/>
             </StackPanel>
         </Grid>
 
