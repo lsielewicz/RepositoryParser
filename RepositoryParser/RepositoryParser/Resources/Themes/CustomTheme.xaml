@@ -10,9 +10,9 @@
     <Color x:Key="c0c0">#C0C0C0</Color>
     
     <!--80%-->
-    <Color x:Key="AccentColor">#336600</Color>
+    <Color x:Key="AccentColor">#1a472a</Color>
     <!--60%-->
-    <Color x:Key="AccentColor2">#477519</Color>
+    <Color x:Key="AccentColor2">#2a623d</Color>
     <!--40%-->
     <Color x:Key="AccentColor3">#5b8432</Color>
     <!--20%-->
