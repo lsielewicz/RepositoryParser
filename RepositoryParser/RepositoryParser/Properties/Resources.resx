@@ -142,7 +142,7 @@
     <comment>AnalisysPage</comment>
   </data>
   <data name="Changes" xml:space="preserve">
-    <value>Changes</value>
+    <value>Select item to see changes</value>
     <comment>DifferencesPage</comment>
   </data>
   <data name="ChartWindowTitle" xml:space="preserve">

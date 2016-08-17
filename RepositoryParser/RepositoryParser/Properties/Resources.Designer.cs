@@ -142,7 +142,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Changes.
+        ///   Looks up a localized string similar to Select item to see changes.
         /// </summary>
         public static string Changes {
             get {

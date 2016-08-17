@@ -50,6 +50,13 @@
         </LinearGradientBrush>
     </Controls:MetroWindow.WindowTitleBrush>
     
+    <Controls:MetroWindow.NonActiveWindowTitleBrush>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" Opacity="0.35">
+            <GradientStop Color="#5d5d5d" Offset="0.0"/>
+            <GradientStop Color="White" Offset="1"></GradientStop>
+        </LinearGradientBrush>
+    </Controls:MetroWindow.NonActiveWindowTitleBrush>
+    
     <Controls:MetroWindow.IconTemplate>
         <DataTemplate>
             <Border Width="{TemplateBinding Width}"
@@ -147,10 +154,20 @@
                 Text="{x:Static resw:Resources.AnalysisButton}"/>
         </StackPanel>
 
+        <Border 
+            Grid.Row="1" 
+            Grid.Column="0"  
+            BorderThickness="3" 
+            BorderBrush="{StaticResource HorizontalShadowBorder}"
+            Margin="0"
+            VerticalAlignment="Bottom"
+            Grid.ColumnSpan="2"/>
+        
+        
         <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding CurrentViewModel}"/>
         <Image Grid.Row="1"
                Grid.Column="1"
-               Source="../Resources/../Assets/Images/AppLogoGreen2.png"
+               Source="../Resources/../Assets/Images/AppLogoGreen_DarkGray.png"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
                Opacity="1"

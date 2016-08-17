@@ -80,7 +80,6 @@
                     <DataGrid Grid.Row="1" Grid.Column="0"
                       ItemsSource="{Binding CodeFreqCollection}"
                       CanUserSortColumns="True"
-                      AlternatingRowBackground="{StaticResource MyRowColor}" AlternationCount="2"
                       AutoGenerateColumns="False"
                       ColumnWidth="auto"
                       CanUserAddRows="False"

@@ -204,6 +204,7 @@
     <Compile Include="Conventers\ChangeTypeToBackgroundColorConventer.cs" />
     <Compile Include="Conventers\DateFormat.cs" />
     <Compile Include="Conventers\EnumToColorConventer.cs" />
+    <Compile Include="Conventers\KeyValuePairToVisibilityConventer.cs" />
     <Compile Include="Conventers\NegativeBoolToVisibilityConventer.cs" />
     <Compile Include="Conventers\NegativeViewModelBaseToVisibilityConventer.cs" />
     <Compile Include="Conventers\StringToImageConventer.cs" />
@@ -613,6 +614,13 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\AppLogoGreen_DarkGray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\PNG_DarkGray\Export-100.png" />
+    <Resource Include="Assets\Icons\PNG_DarkGray\Refresh-96.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.99.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.99.0\build\net451\System.Data.SQLite.Core.targets')" />

@@ -45,7 +45,6 @@
                 <DataGrid 
                       ItemsSource="{Binding KeyCollection}"
                       CanUserSortColumns="True"
-                      AlternatingRowBackground="{StaticResource MyRowColor}" AlternationCount="2"
                       AutoGenerateColumns="False"
                       ColumnWidth="auto"
                       IsReadOnly="True"

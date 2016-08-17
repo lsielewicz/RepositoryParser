@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:RepositoryParser.View"
              xmlns:resw="clr-namespace:RepositoryParser.Properties"
              xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
+             xmlns:circleHeaderButton="clr-namespace:RepositoryParser.Controls.CircleHeaderButton;assembly=RepositoryParser.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator}, Path=Presentation}"
@@ -14,61 +15,54 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="70"/>
-            <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Background="{StaticResource Graphite}">
+        <Border Grid.Row="0" Grid.Column="1" Background="{StaticResource Graphite}">
             <TextBlock Style="{StaticResource SubTitleTextBlock}" >
                 <Run Text="#"/>
                 <Run Text="{x:Static resw:Resources.Presentation}"/>
             </TextBlock>
         </Border>
         
-        <DataGrid Grid.Row="1" Grid.Column="1"
+        <DataGrid Grid.Row="2" Grid.Column="1"
                       ItemsSource="{Binding CommitsColection}"
                       CanUserSortColumns="True"
-                      AlternatingRowBackground="{StaticResource MyRowColor}" AlternationCount="2"
                       AutoGenerateColumns="False"
                       ColumnWidth="auto"
                       IsReadOnly="True"
                       >
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding ID}" Header="{x:Static resw:Resources.CommitsList_ID}"/>
-                <DataGridTextColumn Binding="{Binding Message}" Header="{x:Static resw:Resources.CommitsList_Message}" Width="400"/>
-                <DataGridTextColumn Binding="{Binding Author}" Header="{x:Static resw:Resources.CommitsList_Author}" Width="150"/>
+                <DataGridTextColumn Binding="{Binding Message}" Header="{x:Static resw:Resources.CommitsList_Message}" Width="380"/>
+                <DataGridTextColumn Binding="{Binding Author}" Header="{x:Static resw:Resources.CommitsList_Author}" Width="120"/>
                 <DataGridTextColumn Binding="{Binding Date}" Header="{x:Static resw:Resources.CommitsList_Date}" SortMemberPath="Date"/>
                 <DataGridTextColumn Binding="{Binding Email}" Header="{x:Static resw:Resources.CommitsList_Email}"/>
             </DataGrid.Columns>
         </DataGrid>
         
-        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <imageButton:ImageButton 
+        <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,1" Orientation="Horizontal">
+            <circleHeaderButton:CircleHeaderButton 
                 Command="{Binding ExportFileCommand}"
-                ImageSource="../Assets/Icons/Export_grey.png"
-                Text="{x:Static resw:Resources.ExportToFileButton}"
-                Height="40"
+                ImageSource="../Assets/Icons/PNG_DarkGray/Export-100.png"
+                ToolTip="{x:Static resw:Resources.ExportToFileButton}"
+                Height="48"
+                Width="48"
                 ImageHeight="24" 
-                ImageWidth="24"
-                Background="{StaticResource Graphite}"
-                Width="180"/>
-            <imageButton:ImageButton 
+                ImageWidth="24"/>
+            <circleHeaderButton:CircleHeaderButton
                 Command="{Binding RefreshCommand}" 
-                Height="40" 
+                Height="48" 
+                Width="48"
                 ImageHeight="24" 
                 ImageWidth="24"
-                ImageSource="../Assets/Icons/Refresh_grey.png"
-                Text="{x:Static resw:Resources.RefreshButton}"
-                Background="{StaticResource Graphite}"
-                Width="180"
-                >
-            </imageButton:ImageButton>
+                ImageSource="../Assets/Icons/PNG_DarkGray/Refresh-96.png"
+                ToolTip="{x:Static resw:Resources.RefreshButton}"/>
         </StackPanel>
     </Grid>
 </UserControl>

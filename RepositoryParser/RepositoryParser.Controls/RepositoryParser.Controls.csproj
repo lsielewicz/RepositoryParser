@@ -48,6 +48,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CircleHeaderButton\CircleHeaderButton.xaml.cs">
+      <DependentUpon>CircleHeaderButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ImageButton\Conventers\BoolToHorizontalAlligmentConventer.cs" />
     <Compile Include="ImageButton\Conventers\BoolToOrientationConventer.cs" />
     <Compile Include="ImageButton\ImageButton.xaml.cs">
@@ -78,6 +81,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="CircleHeaderButton\CircleHeaderButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

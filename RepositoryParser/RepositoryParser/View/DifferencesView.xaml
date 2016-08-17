@@ -7,6 +7,7 @@
              xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
              xmlns:resw="clr-namespace:RepositoryParser.Properties"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator}, Path=Difference}"
@@ -16,6 +17,7 @@
         <conventers:ChangeTypeToBackgroundColorConventer x:Key="ChangeTypeToBackgroundColorConventer"/>
         <conventers:EnumToColorConventer x:Key="EnumToColorConventer"/>
         <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <conventers:KeyValuePairToVisibilityConventer x:Key="KeyValuePairToVisibilityConventer"/>
     </UserControl.Resources>
 
     <Grid>
@@ -38,22 +40,16 @@
                        Style="{StaticResource AnalysisContentProviderTitleTextBlock}" 
                        />
 
-        <Rectangle Grid.ColumnSpan="2" Grid.Row="2" Grid.Column="1" Height="30" VerticalAlignment="Top">
-            <Rectangle.Fill>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="{StaticResource AppMain}" Offset="0" />
-                </LinearGradientBrush>
-            </Rectangle.Fill>
-        </Rectangle>
-
+        <Border Grid.ColumnSpan="2" Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" BorderThickness="2" BorderBrush="{StaticResource HorizontalShadowBorder}"/>
+        <Border Grid.ColumnSpan="2" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" BorderThickness="2" BorderBrush="{StaticResource HorizontalShadowBorder}"/>
+        
         <DataGrid Grid.Row="1" Grid.Column="0" Grid.RowSpan="3"
                       ItemsSource="{Binding CommitsCollection, Mode=OneWay}"
                       SelectedItem="{Binding SelectedItem, Mode=Default}"
                       CanUserSortColumns="True"
-                      AlternatingRowBackground="{StaticResource MyRowColor}" AlternationCount="2"
                       AutoGenerateColumns="False"
                       ColumnWidth="auto"
-                     IsReadOnly="True"
+                      IsReadOnly="True"
                       >
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Key}" Header="{x:Static resw:Resources.CommitsList_ID}"/>
@@ -65,7 +61,6 @@
                       ItemsSource="{Binding ChangesCollection}"
                       SelectedItem="{Binding ChangeSelectedItem}"
                       CanUserSortColumns="True"
-                      AlternatingRowBackground="{StaticResource MyRowColor}" AlternationCount="2"
                       AutoGenerateColumns="False"
                       ColumnWidth="auto"
                       IsReadOnly="True"
@@ -86,6 +81,7 @@
 
         </DataGrid>
 
+        <!--Changes column-->
         <TextBlock Text="{x:Static resw:Resources.Changes}" 
                    HorizontalAlignment="Center" 
                    Grid.Row="2"
@@ -94,7 +90,8 @@
                    Margin="0,10,0,10" 
                    FontWeight="Light" 
                    FontSize="13" 
-                   Foreground="{StaticResource Grey}"
+                   VerticalAlignment="Center"
+                   Visibility="{Binding ChangeSelectedItem, Converter={StaticResource KeyValuePairToVisibilityConventer}}"
                    />
         <ScrollViewer x:Name="CommitScrollViewer" 
                       Grid.Row="2" 
@@ -124,22 +121,18 @@
         </ScrollViewer>
 
         <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Button x:Name="GoToChrtButton" 
-                    Padding="10,0"
+            <imageButton:ImageButton x:Name="GoToChrtButton" 
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center"
-                    Background="{StaticResource Graphite}"
-                    Foreground="{StaticResource Grey}"
                     Command="{Binding GoToChartOfChangesCommand}"
                     Height="50"
-                    >
-                <StackPanel Orientation="Horizontal" Width="{Binding ElementName=SendBtn, Path=Width}">
-                    <Image Source="../Assets/Icons/Pie-Chart.png" Height="24" Margin="2,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.GoToDifferencesChartButton}" VerticalAlignment="Center" FontWeight="Light" FontSize="13"/>
-                </StackPanel>
-            </Button>
+                    ImageSource="../Assets/Icons/PNG_DarkGray/PieChart_DarkGray.png"
+                    Text="{x:Static resw:Resources.GoToDifferencesChartButton}"
+                    Foreground="Black"
+                    />
         </StackPanel>
 
+        <!--Progess ring-->
         <StatusBar Grid.Row="1" Grid.Column="0" 
                    Grid.RowSpan="3"
                    Grid.ColumnSpan="3"
@@ -158,9 +151,10 @@
                                     />
             <Separator/>
             <TextBlock Text="{x:Static resw:Resources.DataLoadingStatus}" 
-                       Foreground="{StaticResource MyGreen}" 
-                       FontSize="18" 
+                       Foreground="{StaticResource Graphite}" 
+                       FontSize="14" 
                        Visibility="{Binding IsOpening, Converter={StaticResource BoolToVisibilityConverter}}"
+                       VerticalAlignment="Center"
                        />
         </StackPanel>
     </Grid>
