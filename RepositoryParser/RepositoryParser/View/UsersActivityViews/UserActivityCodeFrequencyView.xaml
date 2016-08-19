@@ -10,6 +10,7 @@
              xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
+             xmlns:extensions="clr-namespace:RepositoryParser.Controls.Extensions;assembly=RepositoryParser.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600">
     <UserControl.Resources>
@@ -78,12 +79,15 @@
                                        />
                     </Border>
                     <DataGrid Grid.Row="1" Grid.Column="0"
-                      ItemsSource="{Binding CodeFreqCollection}"
-                      CanUserSortColumns="True"
-                      AutoGenerateColumns="False"
-                      ColumnWidth="auto"
-                      CanUserAddRows="False"
-                      IsReadOnly="True"
+                        ItemsSource="{Binding CodeFreqCollection}"
+                        CanUserSortColumns="True"
+                        AutoGenerateColumns="False"
+                        ColumnWidth="auto"
+                        CanUserAddRows="False"
+                        IsReadOnly="True"
+                        VerticalScrollBarVisibility="Auto"
+                        Style="{StaticResource AzureDataGrid}"
+                        extensions:DataGridExtensions.LastColumnFill="True"
                       >
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding User}" Header="{x:Static resw:Resources.CommitsList_Author}"/>

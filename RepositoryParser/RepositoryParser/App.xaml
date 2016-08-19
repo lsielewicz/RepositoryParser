@@ -11,7 +11,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <!--RepositoryParser.Controls Lib-->
                 <ResourceDictionary Source="pack://application:,,,/RepositoryParser.Controls;component/Controls.xaml"/>
-                <!---->
+                <!--Internal Libraries-->
                 <ResourceDictionary Source="Resources/Themes/Brushes.xaml"/>
                 <ResourceDictionary Source="Resources/Themes/Colors.xaml"/>
                 <ResourceDictionary Source="../Resources/ButtonStyles.xaml"/>

@@ -7,6 +7,7 @@
              xmlns:resw="clr-namespace:RepositoryParser.Properties"
              xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
              xmlns:circleHeaderButton="clr-namespace:RepositoryParser.Controls.CircleHeaderButton;assembly=RepositoryParser.Controls"
+             xmlns:extensions="clr-namespace:RepositoryParser.Controls.Extensions;assembly=RepositoryParser.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator}, Path=Presentation}"
@@ -30,13 +31,18 @@
             </TextBlock>
         </Border>
         
-        <DataGrid Grid.Row="2" Grid.Column="1"
-                      ItemsSource="{Binding CommitsColection}"
-                      CanUserSortColumns="True"
-                      AutoGenerateColumns="False"
-                      ColumnWidth="auto"
-                      IsReadOnly="True"
-                      >
+        <DataGrid 
+            Grid.Row="2" 
+            Grid.Column="1"
+            ItemsSource="{Binding CommitsColection}"
+            CanUserSortColumns="True"
+            AutoGenerateColumns="False"
+            ColumnWidth="auto"
+            IsReadOnly="True" 
+            VerticalScrollBarVisibility="Auto"
+            Style="{StaticResource AzureDataGrid}"
+            extensions:DataGridExtensions.LastColumnFill="True"
+            >
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding ID}" Header="{x:Static resw:Resources.CommitsList_ID}"/>
                 <DataGridTextColumn Binding="{Binding Message}" Header="{x:Static resw:Resources.CommitsList_Message}" Width="380"/>
@@ -45,8 +51,8 @@
                 <DataGridTextColumn Binding="{Binding Email}" Header="{x:Static resw:Resources.CommitsList_Email}"/>
             </DataGrid.Columns>
         </DataGrid>
-        
-        <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,1" Orientation="Horizontal">
+
+        <StackPanel  Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,1" Orientation="Horizontal">
             <circleHeaderButton:CircleHeaderButton 
                 Command="{Binding ExportFileCommand}"
                 ImageSource="../Assets/Icons/PNG_DarkGray/Export-100.png"

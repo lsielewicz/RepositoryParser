@@ -8,6 +8,7 @@
              xmlns:resw="clr-namespace:RepositoryParser.Properties"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
+             xmlns:extensions="clr-namespace:RepositoryParser.Controls.Extensions;assembly=RepositoryParser.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator}, Path=Difference}"
@@ -44,12 +45,15 @@
         <Border Grid.ColumnSpan="2" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" BorderThickness="2" BorderBrush="{StaticResource HorizontalShadowBorder}"/>
         
         <DataGrid Grid.Row="1" Grid.Column="0" Grid.RowSpan="3"
-                      ItemsSource="{Binding CommitsCollection, Mode=OneWay}"
-                      SelectedItem="{Binding SelectedItem, Mode=Default}"
-                      CanUserSortColumns="True"
-                      AutoGenerateColumns="False"
-                      ColumnWidth="auto"
-                      IsReadOnly="True"
+                    ItemsSource="{Binding CommitsCollection, Mode=OneWay}"
+                    SelectedItem="{Binding SelectedItem, Mode=Default}"
+                    CanUserSortColumns="True"
+                    AutoGenerateColumns="False"
+                    ColumnWidth="auto"
+                    IsReadOnly="True"
+                    VerticalScrollBarVisibility="Auto"
+                    Style="{StaticResource AzureDataGrid}"
+                    extensions:DataGridExtensions.LastColumnFill="True"
                       >
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Key}" Header="{x:Static resw:Resources.CommitsList_ID}"/>
@@ -58,12 +62,14 @@
         </DataGrid>
 
         <DataGrid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
-                      ItemsSource="{Binding ChangesCollection}"
-                      SelectedItem="{Binding ChangeSelectedItem}"
-                      CanUserSortColumns="True"
-                      AutoGenerateColumns="False"
-                      ColumnWidth="auto"
-                      IsReadOnly="True"
+                    ItemsSource="{Binding ChangesCollection}"
+                    SelectedItem="{Binding ChangeSelectedItem}"
+                    CanUserSortColumns="True"
+                    AutoGenerateColumns="False"
+                    ColumnWidth="auto"
+                    IsReadOnly="True"
+                    VerticalScrollBarVisibility="Auto"
+                    extensions:DataGridExtensions.LastColumnFill="True"
                       >
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="{x:Static resw:Resources.TypeOfChange}">

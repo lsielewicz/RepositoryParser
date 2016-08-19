@@ -81,6 +81,8 @@
                       SelectedItem="{Binding ComboBoxSelectedItem}"
                       IsSynchronizedWithCurrentItem="True" 
                       BorderThickness="0"
+                      ItemContainerStyle="{StaticResource RepositoryAnalyserListViewItem}"
+                      Foreground="Black"
                       />
             </Grid>
 
@@ -177,7 +179,9 @@
                       DisplayMemberPath="{Binding Name}"  
                       SelectedItem="{Binding RepositorySelectedItem}"
                       IsSynchronizedWithCurrentItem="True"
-                      BorderThickness="0"/>
+                      BorderThickness="0"
+                      ItemContainerStyle="{StaticResource RepositoryAnalyserListViewItem}"
+                      Foreground="Black"/>
                 <Border Grid.Row="2" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="{StaticResource MyGreen}" Margin="5,0">
                     <TextBlock
                        Text="{x:Static resw:Resources.FilteringPickBranch}" 
@@ -199,6 +203,8 @@
                       IsSynchronizedWithCurrentItem="True"
                       IsEnabled="{Binding BranchEnabled, UpdateSourceTrigger=PropertyChanged}"
                       BorderThickness="0"
+                      ItemContainerStyle="{StaticResource RepositoryAnalyserListViewItem}"
+                      Foreground="Black"
                       />
 
             </Grid>

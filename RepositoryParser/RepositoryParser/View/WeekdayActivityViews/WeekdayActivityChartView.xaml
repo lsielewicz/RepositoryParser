@@ -7,6 +7,7 @@
              xmlns:resw="clr-namespace:RepositoryParser.Properties"
              xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
              xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
+             xmlns:extensions="clr-namespace:RepositoryParser.Controls.Extensions;assembly=RepositoryParser.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator}, Path=WeekdayActivity}"
@@ -40,11 +41,14 @@
             </TabItem>
             <TabItem Header="{x:Static resw:Resources.List}">
                 <DataGrid 
-                      ItemsSource="{Binding KeyCollection}"
-                      CanUserSortColumns="True"
-                      AutoGenerateColumns="False"
-                      ColumnWidth="auto"
-                      IsReadOnly="True"
+                    ItemsSource="{Binding KeyCollection}"
+                    CanUserSortColumns="True"
+                    AutoGenerateColumns="False"
+                    ColumnWidth="auto"
+                    IsReadOnly="True"
+                    VerticalScrollBarVisibility="Auto"
+                    Style="{StaticResource AzureDataGrid}"
+                    extensions:DataGridExtensions.LastColumnFill="True"
                       >
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Key}" Header="{x:Static resw:Resources.Weekday}"/>

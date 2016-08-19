@@ -1,0 +1,123 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:RepositoryParser.Controls.Styles">
+
+
+
+    <Style x:Key="RepositoryAnalyserListViewItem" TargetType="{x:Type ListViewItem}">
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Border.BorderBrush" Value="#666666"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="MinHeight" Value="20"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                    <Border x:Name="Border">
+                        <DockPanel LastChildFill="True">
+                            <Polygon 
+                                x:Name="Pointer" 
+                                Points="0,0 8,5, 0,10" 
+                                Stroke="{TemplateBinding Foreground}" 
+                                Fill="{TemplateBinding Foreground}"
+                                StrokeThickness="1"
+                                Visibility="Collapsed"
+                                DockPanel.Dock="Left"
+                                VerticalAlignment="Center"
+                                Margin="2,0,3,0"/>
+                            <GridViewRowPresenter DockPanel.Dock="Left" VerticalAlignment="Center">
+                                <GridViewRowPresenter.Resources>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=Foreground}"/>
+                                        <Style.Triggers>
+                                            <!--Item Enabled-->
+                                            <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True">
+                                                <Setter Property="Foreground" Value="Black"/>
+                                            </DataTrigger>
+                                            <!--Item Selected-->
+                                            <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True">
+                                                <Setter Property="Foreground" Value="Black"/>
+                                            </DataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" Value="False" />
+                                                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True" />
+                                                </MultiDataTrigger.Conditions>
+                                                <MultiDataTrigger.Setters>
+                                                    <Setter Property="Foreground" Value="Black" />
+                                                </MultiDataTrigger.Setters>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </GridViewRowPresenter.Resources>
+                            </GridViewRowPresenter>
+                            <ContentPresenter x:Name="ContentPresenter" Visibility="Collapsed" VerticalAlignment="Center"/>
+                        </DockPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!---->
+                        <Trigger Property="GridView.ColumnCollection" Value="{x:Null}">
+                            <Setter TargetName="ContentPresenter" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <!--Item Selected Trigger-->
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter Property="Foreground" Value="Black" />
+                            <Setter TargetName="Border" Property="Background" Value="#2a623d" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="#666666" />
+                            <Setter TargetName="Border" Property="Opacity" Value="0.8"/>
+                            <Setter TargetName="Pointer" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <!--Mouse Over the item Trigger-->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                            <Setter TargetName="Border" Property="BorderThickness" Value="0,0,0,2"/>
+                            <Setter TargetName="Border" Property="BorderBrush" Value="#666666"/>
+                            <Setter TargetName="Pointer" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <!--Active Selected Item State-->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="true" />
+                                <Condition Property="Selector.IsSelectionActive" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Foreground" Value="Black" />
+                            <Setter TargetName="Border" Property="Background" Value="#2a623d" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="#666666" />
+                            <Setter TargetName="Border" Property="Opacity" Value="1"/>
+                            <Setter TargetName="Pointer" Property="Visibility" Value="Visible"/>
+                        </MultiTrigger>
+                        <!--Selected lost focus-->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="true" />
+                                <Condition Property="Selector.IsSelectionActive" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Foreground" Value="Black" />
+                            <Setter TargetName="Border" Property="Background" Value="#2a623d" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="#666666" />
+                            <Setter TargetName="Border" Property="Opacity" Value="1"/>
+                            <Setter TargetName="Pointer" Property="Visibility" Value="Visible"/>
+                        </MultiTrigger>
+                        <!--Inactive Aelected Item State-->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False" />
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="Border" Property="Background" Value="#666666" />
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#2a623d" />
+                                <Setter TargetName="Border" Property="Opacity" Value="1"/>
+                                <Setter TargetName="Pointer" Property="Visibility" Value="Visible"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <!---->
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>    
+    </Style>
+    
+</ResourceDictionary>

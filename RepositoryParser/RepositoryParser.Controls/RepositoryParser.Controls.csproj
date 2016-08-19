@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MahApps.Metro">
+      <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\MahApps.Metro.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -51,6 +54,7 @@
     <Compile Include="CircleHeaderButton\CircleHeaderButton.xaml.cs">
       <DependentUpon>CircleHeaderButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\DataGridExtensions.cs" />
     <Compile Include="ImageButton\Conventers\BoolToHorizontalAlligmentConventer.cs" />
     <Compile Include="ImageButton\Conventers\BoolToOrientationConventer.cs" />
     <Compile Include="ImageButton\ImageButton.xaml.cs">
@@ -93,7 +97,16 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\DataGridStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ListViewStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
