@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.SQLite;
+using System.Globalization;
 using System.Reflection;
 using System.Resources;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -234,7 +236,7 @@ namespace RepositoryParser.ViewModel
             SummaryString = _resourceManager.GetString("Added") + ": " + sumAdded + " " +
                             _resourceManager.GetString("Lines") + "\n" +
                             _resourceManager.GetString("Deleted") + ": " + sumDeleted + " " +
-                            _resourceManager.GetString("Lines") + "\n";
+                            _resourceManager.GetString("Lines");
 
         }
 

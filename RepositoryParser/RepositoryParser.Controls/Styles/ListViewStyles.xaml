@@ -82,11 +82,13 @@
                                 <Condition Property="IsSelected" Value="true" />
                                 <Condition Property="Selector.IsSelectionActive" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter Property="Foreground" Value="Black" />
+                            <Setter Property="Foreground" Value="White" />
                             <Setter TargetName="Border" Property="Background" Value="#2a623d" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="#666666" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="Transparent" />
                             <Setter TargetName="Border" Property="Opacity" Value="1"/>
                             <Setter TargetName="Pointer" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="Border" Property="Margin" Value="0,1,0,0"/>
+                            <Setter TargetName="Border" Property="BorderThickness" Value="0,0,0,1"/>
                         </MultiTrigger>
                         <!--Selected lost focus-->
                         <MultiTrigger>
@@ -94,11 +96,13 @@
                                 <Condition Property="IsSelected" Value="true" />
                                 <Condition Property="Selector.IsSelectionActive" Value="False" />
                             </MultiTrigger.Conditions>
-                            <Setter Property="Foreground" Value="Black" />
+                            <Setter Property="Foreground" Value="White" />
                             <Setter TargetName="Border" Property="Background" Value="#2a623d" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="#666666" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="Transparent" />
                             <Setter TargetName="Border" Property="Opacity" Value="1"/>
                             <Setter TargetName="Pointer" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="Border" Property="Margin" Value="0,1,0,0"/>
+                            <Setter TargetName="Border" Property="BorderThickness" Value="0,0,0,1"/>
                         </MultiTrigger>
                         <!--Inactive Aelected Item State-->
                         <MultiTrigger>

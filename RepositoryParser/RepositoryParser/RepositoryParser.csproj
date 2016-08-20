@@ -89,7 +89,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -204,6 +204,7 @@
     <Compile Include="Conventers\ChangeTypeToBackgroundColorConventer.cs" />
     <Compile Include="Conventers\DateFormat.cs" />
     <Compile Include="Conventers\EnumToColorConventer.cs" />
+    <Compile Include="Conventers\InverseBoolConventer.cs" />
     <Compile Include="Conventers\KeyValuePairToVisibilityConventer.cs" />
     <Compile Include="Conventers\NegativeBoolToVisibilityConventer.cs" />
     <Compile Include="Conventers\NegativeViewModelBaseToVisibilityConventer.cs" />
@@ -269,6 +270,9 @@
     </Compile>
     <Compile Include="View\PresentationView.xaml.cs">
       <DependentUpon>PresentationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UndockedPresentationWindowView.xaml.cs">
+      <DependentUpon>UndockedPresentationWindowView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UsersActivityViews\UserActivityChartView.xaml.cs">
       <DependentUpon>UserActivityChartView.xaml</DependentUpon>
@@ -373,6 +377,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\UndockedPresentationWindowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\UsersActivityViews\UserActivityChartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -422,7 +430,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="RepositoryParser_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -621,6 +628,9 @@
   <ItemGroup>
     <Resource Include="Assets\Icons\PNG_DarkGray\Export-100.png" />
     <Resource Include="Assets\Icons\PNG_DarkGray\Refresh-96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\PNG_DarkGray\Maximize Window-100.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

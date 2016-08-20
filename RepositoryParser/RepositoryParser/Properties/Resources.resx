@@ -547,4 +547,11 @@
     <value>Presentation</value>
     <comment>main</comment>
   </data>
+  <data name="DockUndockButton" xml:space="preserve">
+    <value>Dock/Undock page</value>
+    <comment>Presentation</comment>
+  </data>
+  <data name="DataUndockedInfo" xml:space="preserve">
+    <value>Close the new presentation window to restore the old presentation view</value>
+  </data>
 </root>

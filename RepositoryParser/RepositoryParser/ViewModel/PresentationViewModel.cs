@@ -15,16 +15,21 @@ using Microsoft.Win32;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
+using RepositoryParser.View;
 
 namespace RepositoryParser.ViewModel
 {
     public class PresentationViewModel : ViewModelBase  
     {
         #region private variables
+
+        private bool isUndocked;
+        private UndockedPresentationWindowView undockedWindow;
         private ObservableCollection<CommitTable> _commitsCollection;
         private GitService _gitRepoService;
         private RelayCommand _refreshCommand;
         private RelayCommand _exportFileCommand;
+        private RelayCommand<object> _dockUndockPageCommand;
         private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
         #endregion
 
@@ -38,6 +43,12 @@ namespace RepositoryParser.ViewModel
         }
 
         #region Getters/Setters
+
+        public bool IsDocked
+        {
+            get { return !isUndocked; }
+        }
+
         public ObservableCollection<CommitTable> CommitsColection
         {
             get
@@ -65,6 +76,45 @@ namespace RepositoryParser.ViewModel
         public RelayCommand ExportFileCommand
         {
             get { return _exportFileCommand ?? (_exportFileCommand = new RelayCommand(ExportFile)); }
+        }
+
+        public RelayCommand<object> DockUndockPageCommand
+        {
+            get
+            {
+                return _dockUndockPageCommand ?? (_dockUndockPageCommand = new RelayCommand<object>((obj) =>
+                {
+                    if (!isUndocked)
+                    {
+                        PresentationView presentationView = obj as PresentationView;
+                        undockedWindow = new UndockedPresentationWindowView(presentationView);
+                        if (presentationView != null)
+                        {
+                            presentationView.RootGrid.Children.Remove(presentationView.PresentationGrid);
+                            undockedWindow.PresentationGrid.Children.Add(presentationView.PresentationGrid);
+                        }
+
+                        undockedWindow.Show();
+                        isUndocked = true;
+                        RaisePropertyChanged("IsDocked");
+                    }
+                    else
+                    {
+                        isUndocked = false;
+                        RaisePropertyChanged("IsDocked");
+                        UndockedPresentationWindowView undockedView = obj as UndockedPresentationWindowView;
+                        if (undockedView != null)
+                        {
+                            PresentationView presentationView = undockedView.ParentView;
+                            undockedView.PresentationGrid.Children.Remove(presentationView.PresentationGrid);
+                            presentationView.RootGrid.Children.Add(presentationView.PresentationGrid);
+                        }
+
+
+                    }
+                   
+                }));
+            }
         }
         #endregion
 

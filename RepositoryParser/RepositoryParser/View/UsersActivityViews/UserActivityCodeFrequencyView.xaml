@@ -12,7 +12,8 @@
              xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
              xmlns:extensions="clr-namespace:RepositoryParser.Controls.Extensions;assembly=RepositoryParser.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="600">
+             d:DesignHeight="600" d:DesignWidth="600"
+             DataContext="{Binding Source={StaticResource Locator},Path=UsersCodeFrequency}">
     <UserControl.Resources>
         <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </UserControl.Resources>
@@ -57,11 +58,11 @@
                     </chartingToolkit:Chart.Series>
                 </chartingToolkit:Chart>
             </TabItem>
-
+            <!--Summary-->
             <TabItem Header="{x:Static resw:Resources.Summary}">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
@@ -70,13 +71,15 @@
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch"
                             >
-                        <TextBlock Foreground="{StaticResource Grey}"
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5">
+                            <TextBlock Foreground="{StaticResource Grey}"
                                        Text="{Binding SummaryString}"
                                        FontWeight="Light"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center"
-                                       FontSize="14" Margin="0,5,0,0"
+                                       FontSize="14" 
                                        />
+                        </StackPanel>
                     </Border>
                     <DataGrid Grid.Row="1" Grid.Column="0"
                         ItemsSource="{Binding CodeFreqCollection}"
@@ -90,8 +93,8 @@
                         extensions:DataGridExtensions.LastColumnFill="True"
                       >
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding User}" Header="{x:Static resw:Resources.CommitsList_Author}"/>
-                            <DataGridTextColumn Binding="{Binding AddedLines}" Header="{x:Static resw:Resources.Added}"/>
+                            <DataGridTextColumn Binding="{Binding User}" Header="{x:Static resw:Resources.CommitsList_Author}" Width="200"/>
+                            <DataGridTextColumn Binding="{Binding AddedLines}" Header="{x:Static resw:Resources.Added}" Width="Auto"/>
                             <DataGridTextColumn Binding="{Binding DeletedLines}" Header="{x:Static resw:Resources.Deleted}"/>
                         </DataGrid.Columns>
 

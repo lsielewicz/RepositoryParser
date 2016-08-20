@@ -51,7 +51,7 @@
                     extensions:DataGridExtensions.LastColumnFill="True"
                       >
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Key}" Header="{x:Static resw:Resources.CommitsList_Author}"/>
+                        <DataGridTextColumn Binding="{Binding Key}" Header="{x:Static resw:Resources.CommitsList_Author}" Width="200"/>
                         <DataGridTextColumn Binding="{Binding Value}" Header="{x:Static resw:Resources.CountOfCommits}"/>
                     </DataGrid.Columns>
 

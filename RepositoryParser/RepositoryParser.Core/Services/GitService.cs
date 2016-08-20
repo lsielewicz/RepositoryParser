@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -75,7 +76,7 @@ namespace RepositoryParser.Core.Services
             List<CommitTable> commitList = new List<CommitTable>();
             foreach (var commit in branch.Commits)
             {
-                string date = commit.Author.When.ToString();
+                string date = commit.Author.When.ToString(new CultureInfo("pl-PL"));
                 date = SqLiteService.getDateTimeFormat(date);
                 date = date.Remove(19);
                 commitList.Add(new CommitTable(commit.MessageShort,commit.Author.Name,date,commit.Author.Email,commit.Sha));

@@ -8,12 +8,17 @@
              xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
              xmlns:circleHeaderButton="clr-namespace:RepositoryParser.Controls.CircleHeaderButton;assembly=RepositoryParser.Controls"
              xmlns:extensions="clr-namespace:RepositoryParser.Controls.Extensions;assembly=RepositoryParser.Controls"
+             xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator}, Path=Presentation}"
+             x:Name="PresentationRoot"
              >
-    <Grid>
-
+    <UserControl.Resources>
+        <conventers:InverseBoolConventer x:Key="InverseBoolConventer"/>
+    </UserControl.Resources>
+    
+    <Grid x:Name="RootGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
             <RowDefinition Height="Auto"/>
@@ -30,8 +35,24 @@
                 <Run Text="{x:Static resw:Resources.Presentation}"/>
             </TextBlock>
         </Border>
+
+        <StackPanel
+            Visibility="{Binding IsDocked, Converter={StaticResource InverseBoolConventer}}"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Grid.Row="2"
+            Grid.Column="1">
+            <TextBlock 
+                Text="{x:Static resw:Resources.DataUndockedInfo}" 
+                FontSize="28" 
+                FontWeight="Light"
+                Foreground="#666666"
+                TextWrapping="Wrap"
+                VerticalAlignment="Center"/>
+        </StackPanel>
         
         <DataGrid 
+            x:Name="PresentationGrid"
             Grid.Row="2" 
             Grid.Column="1"
             ItemsSource="{Binding CommitsColection}"
@@ -60,7 +81,8 @@
                 Height="48"
                 Width="48"
                 ImageHeight="24" 
-                ImageWidth="24"/>
+                ImageWidth="24"
+                BorderBrush="{StaticResource Graphite}"/>
             <circleHeaderButton:CircleHeaderButton
                 Command="{Binding RefreshCommand}" 
                 Height="48" 
@@ -68,7 +90,19 @@
                 ImageHeight="24" 
                 ImageWidth="24"
                 ImageSource="../Assets/Icons/PNG_DarkGray/Refresh-96.png"
-                ToolTip="{x:Static resw:Resources.RefreshButton}"/>
+                ToolTip="{x:Static resw:Resources.RefreshButton}"
+                BorderBrush="{StaticResource Graphite}"/>
+            <circleHeaderButton:CircleHeaderButton
+                Command="{Binding DockUndockPageCommand}" 
+                CommandParameter="{Binding ElementName=PresentationRoot}"
+                Height="48" 
+                Width="48"
+                ImageHeight="24" 
+                ImageWidth="24"
+                ImageSource="../Assets/Icons/PNG_DarkGray/Maximize Window-100.png"
+                ToolTip="{x:Static resw:Resources.DockUndockButton}"
+                BorderBrush="{StaticResource Graphite}"
+                IsEnabled="{Binding IsDocked}"/>
         </StackPanel>
     </Grid>
 </UserControl>

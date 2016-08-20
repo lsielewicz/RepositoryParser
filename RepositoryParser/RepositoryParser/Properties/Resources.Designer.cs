@@ -322,6 +322,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close the new presentation window to restore the old presentation view.
+        /// </summary>
+        public static string DataUndockedInfo {
+            get {
+                return ResourceManager.GetString("DataUndockedInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Day.
         /// </summary>
         public static string Day {
@@ -408,6 +417,15 @@ namespace RepositoryParser.Properties {
         public static string DiffView {
             get {
                 return ResourceManager.GetString("DiffView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dock/Undock page.
+        /// </summary>
+        public static string DockUndockButton {
+            get {
+                return ResourceManager.GetString("DockUndockButton", resourceCulture);
             }
         }
         
