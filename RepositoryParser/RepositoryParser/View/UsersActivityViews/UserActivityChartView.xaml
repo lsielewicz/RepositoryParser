@@ -6,31 +6,26 @@
                 xmlns:local="clr-namespace:RepositoryParser.View.UsersActivityViews"
                 xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
                 xmlns:resw="clr-namespace:RepositoryParser.Properties"
+                xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
+                xmlns:extensions="clr-namespace:RepositoryParser.Controls.Extensions;assembly=RepositoryParser.Controls"
                 mc:Ignorable="d" 
                 d:DesignHeight="600" d:DesignWidth="600"
                 DataContext="{Binding Source={StaticResource Locator}, Path=Chart}"
                 >
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="35"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="10"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Background="{StaticResource Graphite}">
-            <TextBlock Style="{StaticResource AppWhiteTextBlock}" Text="{x:Static resw:Resources.CoutOfCommitsAnalyse}" HorizontalAlignment="Center"/>
-        </Border>
 
-        <TabControl Grid.Row="1" Grid.Column="1">
+        <TabControl Grid.Row="0" Grid.Column="0">
             <TabItem Header="{x:Static resw:Resources.Chart}">
                 <chartingToolkit:Chart x:Name="Chart" 
-                                       Title="{x:Static resw:Resources.ActivityChart}" 
+                                       Title="{x:Static resw:Resources.CountOfCommits}" 
                                        Background="{StaticResource Grey}" 
                                        LegendTitle="{x:Static resw:Resources.Legend}"
                                        >
@@ -46,15 +41,17 @@
             </TabItem>
             <TabItem Header="{x:Static resw:Resources.List}">
                 <DataGrid Grid.Row="1" Grid.Column="0"
-                      ItemsSource="{Binding KeyCollection}"
-                      CanUserSortColumns="True"
-                      AlternatingRowBackground="{StaticResource MyRowColor}" AlternationCount="2"
-                      AutoGenerateColumns="False"
-                      ColumnWidth="auto"
-                      IsReadOnly="True"
+                    ItemsSource="{Binding KeyCollection}"
+                    CanUserSortColumns="True"
+                    AutoGenerateColumns="False"
+                    ColumnWidth="auto"
+                    IsReadOnly="True"
+                    VerticalScrollBarVisibility="Auto"
+                    Style="{StaticResource AzureDataGrid}"
+                    extensions:DataGridExtensions.LastColumnFill="True"
                       >
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Key}" Header="{x:Static resw:Resources.CommitsList_Author}"/>
+                        <DataGridTextColumn Binding="{Binding Key}" Header="{x:Static resw:Resources.CommitsList_Author}" Width="200"/>
                         <DataGridTextColumn Binding="{Binding Value}" Header="{x:Static resw:Resources.CountOfCommits}"/>
                     </DataGrid.Columns>
 
@@ -62,14 +59,17 @@
             </TabItem>
         </TabControl>
 
-        <DockPanel Grid.Column="1" Grid.Row="2">
-            <Button x:Name="SaveFileBtn" 
-                    HorizontalAlignment="Left"
-                    Style="{StaticResource ExportButton}"
-                    Command="{Binding ExportFileCommand}"
-                    />
+        <DockPanel Grid.Column="0" Grid.Row="1">
+            <imageButton:ImageButton 
+                Command="{Binding ExportFileCommand}"
+                ImageSource="../../Assets/Icons/Export_grey.png"
+                Text="{x:Static resw:Resources.ExportToFileButton}"
+                Height="40"
+                ImageHeight="24" 
+                ImageWidth="24"
+                Background="{StaticResource Graphite}"
+                Width="180"/>
         </DockPanel>
-        
-        <Border Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="1" Background="{StaticResource MyGreen}"/>
+
     </Grid>
 </UserControl>

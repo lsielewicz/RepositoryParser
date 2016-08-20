@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.SQLite;
+using System.Linq;
 using System.Reflection;
 using System.Resources;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight;
@@ -31,7 +33,6 @@ namespace RepositoryParser.ViewModel
         private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
         private DifferencesColoringService _colorService;
         private ObservableCollection<ChangesColorModel> _listTextA;
-        private ObservableCollection<ChangesColorModel> _listTextB;
         private RelayCommand _goToChartOfChangesCommand;
         private RelayCommand _closedEventCommand;
         private bool _progressBarVisibility;
@@ -68,8 +69,10 @@ namespace RepositoryParser.ViewModel
                 ChangesCollection.Clear();
             if (ListTextA != null)
                 ListTextA.Clear();
-            if (ListTextB != null)
-                ListTextB.Clear();
+
+            SelectedItem = new KeyValuePair<int, string>();
+            ChangeSelectedItem = new KeyValuePair<string, string>();
+
         }
         private void HandleChartMessage(string query)
         {
@@ -103,11 +106,17 @@ namespace RepositoryParser.ViewModel
                 _colorService.FillColorDifferences();
 
                 ListTextA = new ObservableCollection<ChangesColorModel>();
-                ListTextB = new ObservableCollection<ChangesColorModel>();
                 Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    _colorService.TextAList.ForEach(x => ListTextA.Add(x));
-                    _colorService.TextBList.ForEach(x => ListTextB.Add(x));
+                    int startedIndex = 0;
+                    if (_colorService != null && _colorService.TextAList.Count > 3 && Regex.IsMatch(_colorService.TextAList.First().Line, "diff --git") && Regex.IsMatch(_colorService.TextAList[3].Line,"Binary files"))
+                        startedIndex = 3;
+                    else if (_colorService != null && _colorService.TextAList.Count > 3 && Regex.IsMatch(_colorService.TextAList.First().Line, "diff --git") && !Regex.IsMatch(_colorService.TextAList[3].Line, "Binary files"))
+                        startedIndex = 5;
+
+                    //  _colorService.TextAList.ForEach(x => ListTextA.Add(x));
+                    foreach (var item in _colorService.TextAList.Skip(startedIndex))
+                        ListTextA.Add(item);
                 }));
 
 
@@ -170,19 +179,6 @@ namespace RepositoryParser.ViewModel
                 }
             }
         }
-        public ObservableCollection<ChangesColorModel> ListTextB
-        {
-            get { return _listTextB; }
-            set
-            {
-                if (_listTextB != value)
-                {
-                    _listTextB = value;
-                    RaisePropertyChanged("ListTextB");
-                }
-            }
-        }
-
 
         public string TextA
         {
@@ -274,7 +270,6 @@ namespace RepositoryParser.ViewModel
             get
             {
                 return _changeSelectedItem;
-
             }
             set
             {

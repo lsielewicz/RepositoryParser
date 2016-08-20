@@ -9,6 +9,9 @@
     <ResourceDictionary>
       <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:RepositoryParser.ViewModel" />
             <ResourceDictionary.MergedDictionaries>
+                <!--RepositoryParser.Controls Lib-->
+                <ResourceDictionary Source="pack://application:,,,/RepositoryParser.Controls;component/Controls.xaml"/>
+                <!--Internal Libraries-->
                 <ResourceDictionary Source="Resources/Themes/Brushes.xaml"/>
                 <ResourceDictionary Source="Resources/Themes/Colors.xaml"/>
                 <ResourceDictionary Source="../Resources/ButtonStyles.xaml"/>
@@ -17,6 +20,8 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
                 <!-- Accent and AppTheme setting -->
                 <ResourceDictionary Source="../Resources/Themes/CustomTheme.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />

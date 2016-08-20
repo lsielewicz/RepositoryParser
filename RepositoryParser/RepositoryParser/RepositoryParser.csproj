@@ -18,7 +18,6 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>C:\Users\ressh\Desktop\WebSite\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -65,7 +64,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -75,7 +74,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>RepositoryAnalyserIcon_BLUE.ico</ApplicationIcon>
@@ -90,7 +89,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -124,16 +123,16 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.SQLite, Version=1.0.99.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.Core.1.0.99.0\lib\net451\System.Data.SQLite.dll</HintPath>
+    <Reference Include="System.Data.SQLite, Version=1.0.102.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.102.0\lib\net451\System.Data.SQLite.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Data.SQLite.EF6, Version=1.0.99.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.99.0\lib\net451\System.Data.SQLite.EF6.dll</HintPath>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.102.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.102.0\lib\net451\System.Data.SQLite.EF6.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Data.SQLite.Linq, Version=1.0.99.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.99.0\lib\net451\System.Data.SQLite.Linq.dll</HintPath>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.102.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.102.0\lib\net451\System.Data.SQLite.Linq.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Windows.Controls.DataVisualization.Toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -205,10 +204,14 @@
     <Compile Include="Conventers\ChangeTypeToBackgroundColorConventer.cs" />
     <Compile Include="Conventers\DateFormat.cs" />
     <Compile Include="Conventers\EnumToColorConventer.cs" />
+    <Compile Include="Conventers\InverseBoolConventer.cs" />
+    <Compile Include="Conventers\KeyValuePairToVisibilityConventer.cs" />
     <Compile Include="Conventers\NegativeBoolToVisibilityConventer.cs" />
     <Compile Include="Conventers\NegativeViewModelBaseToVisibilityConventer.cs" />
     <Compile Include="Conventers\StringToImageConventer.cs" />
     <Compile Include="Conventers\ViewModelBaseToVisibilityConventer.cs" />
+    <Compile Include="Helpers\CustomInputDialog.cs" />
+    <Compile Include="Helpers\StaticServiceProvider.cs" />
     <Compile Include="Properties\Resources.pl-PL.Designer.cs">
       <DependentUpon>Resources.pl-PL.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -267,6 +270,9 @@
     </Compile>
     <Compile Include="View\PresentationView.xaml.cs">
       <DependentUpon>PresentationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UndockedPresentationWindowView.xaml.cs">
+      <DependentUpon>UndockedPresentationWindowView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UsersActivityViews\UserActivityChartView.xaml.cs">
       <DependentUpon>UserActivityChartView.xaml</DependentUpon>
@@ -371,6 +377,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\UndockedPresentationWindowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\UsersActivityViews\UserActivityChartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -420,12 +430,15 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="RepositoryParser_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RepositoryParser.Controls\RepositoryParser.Controls.csproj">
+      <Project>{bef0c006-c870-488d-a113-7bfb643cb28b}</Project>
+      <Name>RepositoryParser.Controls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RepositoryParser.Core\RepositoryParser.Core.csproj">
       <Project>{dcce33ce-2322-4412-940c-5ab8e1d560d6}</Project>
       <Name>RepositoryParser.Core</Name>
@@ -561,15 +574,74 @@
   <ItemGroup>
     <Resource Include="Assets\Icons\iconICO.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\AppLogoBlack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\AppLogoGreen.png" />
+    <Resource Include="Assets\Images\AppLogoGrey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\AppLogoGreen2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\PNG_Gray\AreaChart_Gray.png" />
+    <Resource Include="Assets\Icons\PNG_Gray\ColumnChart_Gray.png" />
+    <Resource Include="Assets\Icons\PNG_Gray\Compare_Gray.png" />
+    <Resource Include="Assets\Icons\PNG_Gray\DoughnutChart_Gray.png" />
+    <Resource Include="Assets\Icons\PNG_Gray\LineChart_Gray.png" />
+    <Resource Include="Assets\Icons\PNG_Gray\PieChart_Gray.png" />
+    <Resource Include="Assets\Icons\PNG_Gray\Setting Gray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\PNG_DarkGray\AreaChart_DarkGray.png" />
+    <Resource Include="Assets\Icons\PNG_DarkGray\ColumnChart_DarkGray.png" />
+    <Resource Include="Assets\Icons\PNG_DarkGray\Compare_DarkGray.png" />
+    <Resource Include="Assets\Icons\PNG_DarkGray\LineChart_DarkGray.png" />
+    <Resource Include="Assets\Icons\PNG_DarkGray\PieChart_DarkGray.png" />
+    <Resource Include="Assets\Icons\PNG_DarkGray\Settings_DarkGray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\PNG_Gray\Clear_LightGray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\PNG_Gray\Send_LightGray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\PNG_Gray\Delete File-100.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\PNG_Gray\Plus Math-100.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\PNG_Gray\Poll Topic-100.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\PNG_Gray\Code-100.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\AppLogoGreen_DarkGray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\PNG_DarkGray\Export-100.png" />
+    <Resource Include="Assets\Icons\PNG_DarkGray\Refresh-96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\PNG_DarkGray\Maximize Window-100.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\System.Data.SQLite.Core.1.0.99.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.99.0\build\net451\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.99.0\build\net451\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.99.0\build\net451\System.Data.SQLite.Core.targets'))" />
     <Error Condition="!Exists('..\packages\LibGit2Sharp.NativeBinaries.1.0.129\build\LibGit2Sharp.NativeBinaries.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\LibGit2Sharp.NativeBinaries.1.0.129\build\LibGit2Sharp.NativeBinaries.props'))" />
+    <Error Condition="!Exists('..\packages\Fody.1.28.3\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.28.3\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets'))" />
   </Target>
+  <Import Project="..\packages\Fody.1.28.3\build\Fody.targets" Condition="Exists('..\packages\Fody.1.28.3\build\Fody.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -577,4 +649,8 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target AfterTargets="AfterBuild;NonWinFodyTarget" Name="CleanReferenceCopyLocalPaths">
+    <Delete Files="@(ReferenceCopyLocalPaths->'$(OutDir)%(DestinationSubDirectory)%(Filename)%(Extension)')" />
+  </Target>
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets')" />
 </Project>

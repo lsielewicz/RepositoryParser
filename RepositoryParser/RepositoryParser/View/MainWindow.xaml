@@ -13,23 +13,74 @@
         xmlns:viewModel="clr-namespace:RepositoryParser.ViewModel"
         xmlns:usersActivityViews="clr-namespace:RepositoryParser.View.UsersActivityViews"
         xmlns:view="clr-namespace:RepositoryParser.View"
+        xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
+        xmlns:command="http://www.galasoft.ch/mvvmlight"
         DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
         MinHeight="600" MinWidth="800"
         ShowIconOnTitleBar="True"
         ShowTitleBar="True"
+        ShowCloseButton="True"
+        BorderThickness="1.5" 
+        GlowBrush="#1a472a"
+        ResizeMode="CanResizeWithGrip"
+        WindowTransitionsEnabled="False"
+        WindowStartupLocation="CenterScreen"  
+        OverrideDefaultWindowCommandsBrush="Black"
+        TitlebarHeight="40"
+        Closing="MainWindow_OnClosing"
         >
+
+    <Controls:MetroWindow.TitleTemplate>
+        <DataTemplate>
+            <TextBlock
+                Text="REPOSITORY ANALYSER"
+                FontSize="16"
+                FontWeight="DemiBold"
+                Foreground="{StaticResource Graphite}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="5"/>
+        </DataTemplate>
+    </Controls:MetroWindow.TitleTemplate>
+
+    <Controls:MetroWindow.WindowTitleBrush>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" Opacity="0.35">
+            <GradientStop Color="{StaticResource AccentColor}" Offset="0.0"/>
+            <GradientStop Color="White" Offset="1"></GradientStop>
+        </LinearGradientBrush>
+    </Controls:MetroWindow.WindowTitleBrush>
+    
+    <Controls:MetroWindow.NonActiveWindowTitleBrush>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" Opacity="0.35">
+            <GradientStop Color="#5d5d5d" Offset="0.0"/>
+            <GradientStop Color="White" Offset="1"></GradientStop>
+        </LinearGradientBrush>
+    </Controls:MetroWindow.NonActiveWindowTitleBrush>
+    
     <Controls:MetroWindow.IconTemplate>
         <DataTemplate>
-            <Grid Width="{TemplateBinding Width}"
+            <Border Width="{TemplateBinding Width}"
                  Height="{TemplateBinding Height}"
-                 Margin="0"
+                 Padding="4,0,8,0"
+                 Margin="10,0,0,0"
                  Background="Transparent"
                  RenderOptions.EdgeMode="Aliased"
                  RenderOptions.BitmapScalingMode="HighQuality">
-                <Image Source="../Assets/Icons/RepositoryAnalyserIconICO.png"/>
-            </Grid>
+                <Path Width="25" Height="25" Stretch="Fill" Fill="{StaticResource Graphite}" Data="F1 M 22.3908,33.9299L 34.0851,45.6243L 29.7767,49.9327L 18.0823,38.2384L 22.3908,33.9299 Z M 17.1591,37.3152L 14.6971,35.3402C 13.9076,34.5507 14.2153,32.873 15.0049,32.0835L 16.2359,30.8525C 17.0254,30.063 18.5238,29.7552 19.3133,30.5447L 21.4675,33.0067L 17.1591,37.3152 Z M 35.9418,52.3947L 30.6999,50.856L 35.0084,46.5475L 36.4473,51.8893L 35.9418,52.3947 Z M 39.9167,15.8333C 42.1028,15.8333 44.25,17.8139 44.25,20L 44,21L 56,21L 56,57L 24,57L 24,47.75L 27,50.75L 27,54L 53,54L 53,24L 47.5,24L 49.5,28L 30.5,28L 32.5,24L 27,24L 27,35.5L 24,32L 24,21L 36,21L 35.75,20C 35.75,17.8139 37.7305,15.8333 39.9167,15.8333 Z M 39.9166,18.2084C 39.0422,18.2084 38,18.8756 38,19.75C 38,20.0384 38.3653,20.7671 38.5,21L 41.5,21C 41.6347,20.7671 42,20.0384 42,19.75C 42,18.8756 40.7911,18.2084 39.9166,18.2084 Z "/>
+            </Border>
         </DataTemplate>
     </Controls:MetroWindow.IconTemplate>
+
+    <Controls:MetroWindow.LeftWindowCommands>
+        <Controls:WindowCommands>
+            <Button 
+                Content="Start"
+                Command="{Binding GoToStartScreenCommand}"
+                />
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.LeftWindowCommands>
+
+
 
     <Window.Resources>
         <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
@@ -64,78 +115,59 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="15"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="210"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-
-
-        <Rectangle Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="0">
-            <Rectangle.Fill>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="{StaticResource AppBorder}" Offset="0" />
-                </LinearGradientBrush>
-            </Rectangle.Fill>
-        </Rectangle>
-
-        <TextBlock Grid.Row="0" Grid.Column="0" 
-                   Grid.ColumnSpan="3" 
-                   Text="{x:Static resw:Resources.MainWindowTitle}" 
-                   Style="{StaticResource AppTitleTextBlock}"
-                   Visibility="{Binding CurrentViewModel, Converter={StaticResource NegativeViewModelBaseToVisibilityConventer}}"
-                   />
-    
+        <!--Buttons Panel: left -->
         <StackPanel Grid.Row="1" Grid.Column="0">
-            <Button x:Name="PresentationBtn"
-                    Style="{StaticResource MainTile}"
-                    Command="{Binding OpenPresentationCommand}"
-                    >
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=PresentationBtn, Path=ActualWidth}" >
-                        <Image Source="../Assets/Icons/Presentation-100.png" Width="36" Margin="10,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.Presentation}" Style="{StaticResource AppWhiteTextBlock}"/>
-                    </StackPanel>
-                </Button>
-
-            <Button x:Name="DBManagementBtn"
-                    Style="{StaticResource MainTile}"
-                    Command="{Binding OpenDataBaseManagementCommand}"
-                    >
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=DBManagementBtn, Path=ActualWidth}" >
-                    <Image Source="../Assets/Icons/ManagementIcon.png" Width="36" Margin="10,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.DataBaseManagement}" Style="{StaticResource AppWhiteTextBlock}"/>
-                </StackPanel>
-            </Button>
-
-            <Button x:Name="FilteringBtn"
-                    Style="{StaticResource MainTile}"
-                    Command="{Binding OpenFilteringCommand}"
-                    >
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=FilteringBtn, Path=ActualWidth}" >
-                    <Image Source="../Assets/Icons/Filter-100.png" Width="36" Margin="10,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.Filtering}" Style="{StaticResource AppWhiteTextBlock}"/>
-                </StackPanel>
-            </Button>
-
-            <Button x:Name="AnalysisBtn"
-                    Style="{StaticResource MainTile}"
-                    Command="{Binding OpenAnalysisCommand}"
-                    >
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="{Binding ElementName=AnalysisBtn, Path=ActualWidth}" >
-                    <Image Source="../Assets/Icons/Analysis_grey.png" Width="36" Margin="10,0,10,0"/>
-                    <TextBlock Text="{x:Static resw:Resources.AnalysisButton}" Style="{StaticResource AppWhiteTextBlock}"/>
-                </StackPanel>
-            </Button>
+            <imageButton:ImageButton 
+                x:Name="PresentationBtn"
+                Background="{StaticResource Graphite}"
+                Command="{Binding OpenPresentationCommand}"
+                ImageSource="../Assets/Icons/Presentation-100.png"
+                Text="{x:Static resw:Resources.Presentation}"/>
             
+            <imageButton:ImageButton 
+                x:Name="DBManagementBtn"
+                Background="{StaticResource Graphite}"
+                Command="{Binding OpenDataBaseManagementCommand}"
+                ImageSource="../Assets/Icons/ManagementIcon.png"
+                Text="{x:Static resw:Resources.DataBaseManagement}"/>
+
+            <imageButton:ImageButton 
+                x:Name="FilteringBtn"
+                Background="{StaticResource Graphite}"
+                Command="{Binding OpenFilteringCommand}"
+                ImageSource="../Assets/Icons/Filter-100.png"
+                Text="{x:Static resw:Resources.Filtering}"/>
+
+            <imageButton:ImageButton 
+                x:Name="AnalysisBtn"
+                Background="{StaticResource Graphite}"
+                Command="{Binding OpenAnalysisCommand}"
+                ImageSource="../Assets/Icons/Analysis_grey.png"
+                Text="{x:Static resw:Resources.AnalysisButton}"/>
         </StackPanel>
 
+        <Border 
+            Grid.Row="1" 
+            Grid.Column="0"  
+            BorderThickness="3" 
+            BorderBrush="{StaticResource HorizontalShadowBorder}"
+            Margin="0"
+            VerticalAlignment="Bottom"
+            Grid.ColumnSpan="2"/>
+        
+        
         <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding CurrentViewModel}"/>
         <Image Grid.Row="1"
                Grid.Column="1"
-               Source="../Resources/../Assets/Images/RepositoryAnalyserLogo.png"
+               Source="../Resources/../Assets/Images/AppLogoGreen_DarkGray.png"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
                Opacity="1"

@@ -544,4 +544,11 @@
     <value>Prezentacja</value>
     <comment>main</comment>
   </data>
+  <data name="DockUndockButton" xml:space="preserve">
+    <value>Dokuj/Oddokuj stronę</value>
+    <comment>Presentation</comment>
+  </data>
+  <data name="DataUndockedInfo" xml:space="preserve">
+    <value>Zamknij okno prezenctacji, aby przywrócić pozycje tabeli.</value>
+  </data>
 </root>

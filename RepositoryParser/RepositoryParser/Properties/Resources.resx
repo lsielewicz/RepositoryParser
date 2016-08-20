@@ -142,7 +142,7 @@
     <comment>AnalisysPage</comment>
   </data>
   <data name="Changes" xml:space="preserve">
-    <value>Changes</value>
+    <value>Select item to see changes</value>
     <comment>DifferencesPage</comment>
   </data>
   <data name="ChartWindowTitle" xml:space="preserve">
@@ -546,5 +546,12 @@
   <data name="Presentation" xml:space="preserve">
     <value>Presentation</value>
     <comment>main</comment>
+  </data>
+  <data name="DockUndockButton" xml:space="preserve">
+    <value>Dock/Undock page</value>
+    <comment>Presentation</comment>
+  </data>
+  <data name="DataUndockedInfo" xml:space="preserve">
+    <value>Close the new presentation window to restore the old presentation view</value>
   </data>
 </root>

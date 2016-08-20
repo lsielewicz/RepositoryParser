@@ -13,9 +13,11 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using MahApps.Metro.Controls.Dialogs;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
+using RepositoryParser.Helpers;
 using RepositoryParser.View;
 using MessageBox = System.Windows.MessageBox;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
@@ -31,8 +33,10 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _openEventCommand;
         private RelayCommand _openFilteringCommand;
         private RelayCommand _openAnalysisCommand;
+        private RelayCommand _goToStartScreenCommand;
         private List<string> _authorsList;
         private string _filteringQuery;
+        private RelayCommand _onClosingCommand;
 
         public MainViewModel()
         {
@@ -46,7 +50,6 @@ namespace RepositoryParser.ViewModel
         }
 
         #region Getters setters
-        
 
         public ViewModelBase CurrentViewModel
         {
@@ -56,6 +59,14 @@ namespace RepositoryParser.ViewModel
                 _currentViewModel = value;
                 RaisePropertyChanged("CurrentViewModel");
             }
+        }
+
+        public RelayCommand GoToStartScreenCommand
+        {
+            get { return _goToStartScreenCommand ?? (_goToStartScreenCommand = new RelayCommand(() =>
+            {
+                CurrentViewModel = null;
+            })); }
         }
 
         public RelayCommand OpenAnalysisCommand

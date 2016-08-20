@@ -7,6 +7,7 @@
              xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
              xmlns:viewModel="clr-namespace:RepositoryParser.ViewModel"
              xmlns:resw="clr-namespace:RepositoryParser.Properties"
+             xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator}, Path=HourActivityContentProvider}"
@@ -37,12 +38,18 @@
                        />
             
             <StackPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
-                <Button Style="{StaticResource AppGraphiteButton}" Command="{Binding OpenChartViewCommand}" x:Name="Btn1" Margin="10,0,0,0">
-                    <StackPanel Orientation="Horizontal" Width="{Binding ElementName=Btn1, Path=ActualWidth}">
-                        <Image Style="{StaticResource AppButtonIcon}"  Source="../../Assets/Icons/Poll Topic-50.png" Margin="5,0,5,0"/>
-                        <TextBlock Style="{StaticResource AppWhiteTextBlock}" Text="{x:Static resw:Resources.CountOfCommits}"/>
-                    </StackPanel>
-                </Button>
+                <imageButton:ImageButton
+                    Command="{Binding OpenChartViewCommand}" 
+                    x:Name="Btn1"
+                    BorderBrush="{StaticResource LightGray}"
+                    BorderThickness="0,0,0,0.5"
+                    ImageHeight="32"
+                    ImageWidth="32"
+                    Background="Transparent"
+                    Foreground="Black"
+                    ImageSource="../../Assets/Icons/PNG_Gray/Poll Topic-100.png"
+                    Text="{x:Static resw:Resources.CountOfCommits}"
+                    Height="45"/>
             </StackPanel>
 
             <ContentControl Grid.Row="1" Grid.Column="0" Content="{Binding CurrentViewModel}"/>
