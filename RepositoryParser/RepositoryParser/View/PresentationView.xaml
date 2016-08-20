@@ -16,6 +16,7 @@
              >
     <UserControl.Resources>
         <conventers:InverseBoolConventer x:Key="InverseBoolConventer"/>
+        <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </UserControl.Resources>
     
     <Grid x:Name="RootGrid">
@@ -36,21 +37,20 @@
             </TextBlock>
         </Border>
 
-        <StackPanel
+
+        <TextBlock 
             Visibility="{Binding IsDocked, Converter={StaticResource InverseBoolConventer}}"
             HorizontalAlignment="Center"
-            VerticalAlignment="Center"
             Grid.Row="2"
-            Grid.Column="1">
-            <TextBlock 
-                Text="{x:Static resw:Resources.DataUndockedInfo}" 
-                FontSize="28" 
-                FontWeight="Light"
-                Foreground="#666666"
-                TextWrapping="Wrap"
-                VerticalAlignment="Center"/>
-        </StackPanel>
-        
+            Grid.Column="1"
+            Text="{x:Static resw:Resources.DataUndockedInfo}" 
+            FontSize="28" 
+            FontWeight="Light"
+            Foreground="#666666"
+            TextWrapping="Wrap"
+            VerticalAlignment="Center"
+            TextAlignment="Center"/>
+
         <DataGrid 
             x:Name="PresentationGrid"
             Grid.Row="2" 

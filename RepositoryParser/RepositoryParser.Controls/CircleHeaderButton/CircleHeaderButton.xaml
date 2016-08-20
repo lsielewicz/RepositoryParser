@@ -122,8 +122,10 @@
                                 <Setter TargetName="Ellipse" Property="Opacity" Value="0.7" />
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Foreground" Value="#666666" />
-                                <Setter TargetName="Ellipse" Property="Opacity" Value="0.3" />
+                                <Setter Property="Foreground" Value="white" />
+                                <Setter TargetName="Ellipse" Property="Opacity" Value="0.8" />
+                                <Setter TargetName="EllipseBg" Property="Fill" Value="#888888"/>
+                                <Setter TargetName="EllipseBg" Property="Opacity" Value="0.8"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
