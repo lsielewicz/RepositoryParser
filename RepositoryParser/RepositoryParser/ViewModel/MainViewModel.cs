@@ -36,7 +36,6 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _goToStartScreenCommand;
         private List<string> _authorsList;
         private string _filteringQuery;
-        private RelayCommand _onClosingCommand;
 
         public MainViewModel()
         {

@@ -36,8 +36,6 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _startWorkCommand;
         private RelayCommand _asyncClearDBCommand;
         private RelayCommand _pickFileCommand;
-        private RelayCommand _onLoadCommand;
-        private RelayCommand _goToPageAnalysisCommand;
         private RelayCommand _pickGitRepositoryCommand;
         private RelayCommand _pickSvnRepositoryCommand;
         #endregion
