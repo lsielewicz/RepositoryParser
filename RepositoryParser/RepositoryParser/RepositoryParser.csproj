@@ -28,10 +28,10 @@
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <TargetCulture>pl-PL</TargetCulture>
+    <MapFileExtensions>false</MapFileExtensions>
     <ProductName>RepositoryAnalyser</ProductName>
     <PublisherName>Łukasz Sielewicz</PublisherName>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
@@ -657,4 +657,16 @@
     <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.102.0\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.102.0\build\net46\System.Data.SQLite.Core.targets'))" />
   </Target>
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.102.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.102.0\build\net46\System.Data.SQLite.Core.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>RMDIR "$(TargetDir)de/" /S /Q
+RMDIR "$(TargetDir)es/" /S /Q
+RMDIR "$(TargetDir)fr/" /S /Q
+RMDIR "$(TargetDir)hu/" /S /Q
+RMDIR "$(TargetDir)it/" /S /Q
+RMDIR "$(TargetDir)pt-BR/" /S /Q
+RMDIR "$(TargetDir)ro/" /S /Q
+RMDIR "$(TargetDir)ru/" /S /Q
+RMDIR "$(TargetDir)sv/" /S /Q
+RMDIR "$(TargetDir)zh-Hans/" /S /Q</PostBuildEvent>
+  </PropertyGroup>
 </Project>
