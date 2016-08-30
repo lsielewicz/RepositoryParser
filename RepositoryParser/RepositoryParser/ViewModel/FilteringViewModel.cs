@@ -81,7 +81,7 @@ namespace RepositoryParser.ViewModel
             set
             {
                     FilteringViewModel.selectedRepo = value;
-                    FilteringViewModel.selectedBranch = String.Empty;
+                   
             }
         }
 
@@ -235,7 +235,7 @@ namespace RepositoryParser.ViewModel
                     if (_branchSelectedItem != null)
                     {
                         BranchSelectedItemAction(_branchSelectedItem);
-                        SelectedBranch = _branchSelectedItem;
+                        FilteringViewModel.selectedBranch = _branchSelectedItem;
                         //SendMessageToDrawChart();
                     }
                     RaisePropertyChanged("BranchSelectedItem");
@@ -259,8 +259,8 @@ namespace RepositoryParser.ViewModel
                     if (firstOrDefault != null)
                         RepoType = firstOrDefault.Type;
 
-                    getBranches();
-                    getAuthors();
+                    GetBranches();
+                    GetAuthors();
 
                 }
                 RaisePropertyChanged("RepositorySelectedItem");
@@ -276,7 +276,7 @@ namespace RepositoryParser.ViewModel
             if (refresh)
             {
                 OnLoad();
-                ClearFilters();
+              //  ClearFilters();
             }
         }
 
@@ -303,7 +303,7 @@ namespace RepositoryParser.ViewModel
 
         }
 
-        private void getBranches()
+        private void GetBranches()
         {
             BranchCollection.Clear();
             if (String.IsNullOrEmpty(SelectedRepo))
@@ -325,14 +325,14 @@ namespace RepositoryParser.ViewModel
             }
         }
 
-        private void getRepositories()
+        private void GetRepositories()
         {
             RepositoryCollection.Clear();
             RepositoryTable temp = new RepositoryTable();
             _repoList = temp.GetDataFromBase(SqLiteService.GetInstance().Connection);
             _repoList.ForEach(x => RepositoryCollection.Add(x.Name));
         }
-        private void getAuthors()
+        private void GetAuthors()
         {
             _authorsList.Clear();
             LocalCollection.Clear();
@@ -364,9 +364,9 @@ namespace RepositoryParser.ViewModel
         private void OnLoad()
         {
             _localSqliteService = SqLiteService.GetInstance();
-            getAuthors();
-            getBranches();
-            getRepositories();
+            GetAuthors();
+            GetBranches();
+            GetRepositories();
         }
 
 
@@ -512,7 +512,6 @@ namespace RepositoryParser.ViewModel
                 string author = Convert.ToString(reader["Author"]);
                 string date = Convert.ToString(reader["Date"]);
                 string email = Convert.ToString(reader["Email"]);
-                // CommitTable tempInstance = new CommitTable(id, message, author, date, email);
                 localList.Add(new CommitTable(id, message, author, date, email));
                 id++;
             }
@@ -524,15 +523,12 @@ namespace RepositoryParser.ViewModel
         {
             get { return _clearFiltersCommand ?? (_clearFiltersCommand = new RelayCommand(ClearFilters)); }
         }
+
         private void ClearFilters()
         {
-            SelectedBranch = String.Empty;
-            SelectedRepo = String.Empty;
-            BranchSelectedItem = String.Empty;
-            RepositorySelectedItem = String.Empty;
+            RepositorySelectedItem = RepositoryCollection.FirstOrDefault() ?? string.Empty;
+            BranchSelectedItem = BranchCollection.FirstOrDefault() ?? string.Empty;
             ComboBoxSelectedItem = String.Empty;
-            BranchEnabled = false;
-            RepoType = String.Empty;
             MessageTextBox = String.Empty;
             FromDate = String.Empty;
             ToDate = String.Empty;

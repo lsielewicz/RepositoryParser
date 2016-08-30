@@ -122,14 +122,14 @@ namespace RepositoryParser.ViewModel
 
         private void OpenAnalysis()
         {
-            CurrentViewModel = (new ViewModelLocator()).Analysis;
+            CurrentViewModel = ViewModelLocator.Instance.Analysis;
             Messenger.Default.Send<ChartMessageLevel1>(new ChartMessageLevel1(_authorsList,_filteringQuery));
         }
 
         private void OpenFiltering()
         {
-            CurrentViewModel = (new ViewModelLocator()).Filtering;
-            Messenger.Default.Send<RefreshMessageToFiltering>(new RefreshMessageToFiltering(true));
+            CurrentViewModel = ViewModelLocator.Instance.Filtering;
+           // Messenger.Default.Send<RefreshMessageToFiltering>(new RefreshMessageToFiltering(true));
         }
 
         private void OnLoad()
@@ -151,15 +151,13 @@ namespace RepositoryParser.ViewModel
 
         private void OpenDataBaseManagement()
         {
-            CurrentViewModel = (new ViewModelLocator()).DataBaseManagement;
+            CurrentViewModel = ViewModelLocator.Instance.DataBaseManagement;
         }
 
         private void OpenPresentation()
         {
-            CurrentViewModel = (new ViewModelLocator()).Presentation;
-           
+            CurrentViewModel = ViewModelLocator.Instance.Presentation;  
         }
-
 
         private void HandleDataMessage(List<string> authors, string filternigQuery)
         {

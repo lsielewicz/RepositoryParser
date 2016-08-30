@@ -30,6 +30,21 @@ namespace RepositoryParser.ViewModel
     /// </summary>
     public class ViewModelLocator
     {
+        #region Singleton
+
+        private static ViewModelLocator _instance;
+
+        public static ViewModelLocator Instance
+        {
+            get
+            {
+                if(_instance == null)
+                    _instance = new ViewModelLocator();
+                return _instance;
+            }
+        }
+        #endregion
+
         /// <summary>
         /// Initializes a new instance of the ViewModelLocator class.
         /// </summary>

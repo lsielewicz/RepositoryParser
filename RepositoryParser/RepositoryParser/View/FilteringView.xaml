@@ -71,13 +71,13 @@
                         Padding="4"
                         FontWeight="Light"/>
                 </Border>
+                <!--List of Authors-->
                 <ListView x:Name="AuthorComboBox" 
                       Grid.Row="1"
                       VerticalAlignment="Stretch"
                       HorizontalAlignment="Stretch" 
                       Margin="5,0"
-                      ItemsSource="{Binding LocalCollection}"
-                      DisplayMemberPath="{Binding Author}"  
+                      ItemsSource="{Binding LocalCollection}" 
                       SelectedItem="{Binding ComboBoxSelectedItem}"
                       IsSynchronizedWithCurrentItem="True" 
                       BorderThickness="0"
@@ -170,18 +170,19 @@
                        FontWeight="Light"
                        />
                  </Border>
-                <ListView x:Name="RepositoryList" 
-                      Grid.Row="1"
-                      HorizontalAlignment="Stretch" 
-                      VerticalAlignment="Stretch"
-                      Margin="5,0"
-                      ItemsSource="{Binding RepositoryCollection}"
-                      DisplayMemberPath="{Binding Name}"  
-                      SelectedItem="{Binding RepositorySelectedItem}"
-                      IsSynchronizedWithCurrentItem="True"
-                      BorderThickness="0"
-                      ItemContainerStyle="{StaticResource RepositoryAnalyserListViewItem}"
-                      Foreground="Black"/>
+                <!--List of Repositories-->
+                <ListView 
+                    x:Name="RepositoryList" 
+                    ItemsSource="{Binding RepositoryCollection}"
+                    Grid.Row="1"
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Stretch"
+                    Margin="5,0"
+                    SelectedItem="{Binding RepositorySelectedItem}"
+                    IsSynchronizedWithCurrentItem="True"
+                    BorderThickness="0"
+                    ItemContainerStyle="{StaticResource RepositoryAnalyserListViewItem}"
+                    Foreground="Black"/>
                 <Border Grid.Row="2" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="{StaticResource MyGreen}" Margin="5,0">
                     <TextBlock
                        Text="{x:Static resw:Resources.FilteringPickBranch}" 
@@ -192,13 +193,13 @@
                        FontWeight="Light"
                        />
                     </Border>
+                <!--List of branches-->
                 <ListView x:Name="BranchList"
                       Grid.Row="3"
                       HorizontalAlignment="Stretch" 
                       VerticalAlignment="Stretch"
                       Margin="5,0"
                       ItemsSource="{Binding BranchCollection}"
-                      DisplayMemberPath="{Binding Name}"  
                       SelectedItem="{Binding BranchSelectedItem}"
                       IsSynchronizedWithCurrentItem="True"
                       IsEnabled="{Binding BranchEnabled, UpdateSourceTrigger=PropertyChanged}"

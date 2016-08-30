@@ -321,7 +321,9 @@ namespace RepositoryParser.ViewModel
             }
             else
             {
+                this.UrlTextBox = string.Empty;
                 Messenger.Default.Send<RefreshMessageToPresentation>(new RefreshMessageToPresentation(true));
+                Messenger.Default.Send<RefreshMessageToFiltering>(new RefreshMessageToFiltering(true));
             }
         }
 
@@ -336,6 +338,7 @@ namespace RepositoryParser.ViewModel
         private void DoClearWorkCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Messenger.Default.Send<RefreshMessageToPresentation>(new RefreshMessageToPresentation(true));
+            Messenger.Default.Send<RefreshMessageToFiltering>(new RefreshMessageToFiltering(true));
             ProgressBarVisibility = false;
         }
         #endregion
