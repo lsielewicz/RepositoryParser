@@ -94,6 +94,7 @@
                     <RowDefinition Height="1.5*"/>
                     <RowDefinition Height="10"/>
                 </Grid.RowDefinitions>
+                <!--Date column-->
                 <Border Grid.Row="0" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="{StaticResource MyGreen}" Margin="5,0">
                     <TextBlock 
                        Text="{x:Static resw:Resources.FilteringDate}" 
@@ -109,7 +110,7 @@
                                         HorizontalAlignment="Stretch"
 		                                Margin="10"
 		                                VerticalAlignment="Top"  
-                                        Text="{Binding FromDate}"
+                                        Text="{Binding FromDate, UpdateSourceTrigger=PropertyChanged, Delay=500, Mode=TwoWay}"
                                         Format="Custom"
                                         FormatString="yyyy-MM-dd"
                                         Width="120"
@@ -118,7 +119,7 @@
                                         HorizontalAlignment="Stretch"
                                         Margin="10"
                                         VerticalAlignment="Top"
-                                        Text="{Binding ToDate}"
+                                        Text="{Binding ToDate, UpdateSourceTrigger=PropertyChanged, Delay=500, Mode=TwoWay}"
                                         Format="Custom"
                                         FormatString="yyyy-MM-dd"
                                         Width="120"
@@ -135,11 +136,11 @@
                        Padding="4"
                        FontWeight="Light"/>
                 </Border>
-                
+                <!--Text searching-->
                 <StackPanel Grid.Row="3">
                 <TextBox   
                     x:Name="MsgTB" 
-                    Text="{Binding MessageTextBox}" 
+                    Text="{Binding MessageTextBox, UpdateSourceTrigger=PropertyChanged, Delay=1000, Mode=TwoWay}" 
                     Margin="5"
                     VerticalAlignment="Top"
                     HorizontalAlignment="Stretch"

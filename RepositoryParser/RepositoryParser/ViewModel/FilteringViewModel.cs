@@ -133,6 +133,7 @@ namespace RepositoryParser.ViewModel
                 if (_messageTextBox != value)
                 {
                     _messageTextBox = value;
+                    this.SendFilteredData();
                     RaisePropertyChanged("MessageTextBox");
                 }
             }
@@ -146,6 +147,7 @@ namespace RepositoryParser.ViewModel
                 if (_fromDate != value)
                 {
                     _fromDate = value;
+                    this.SendFilteredData();
                     RaisePropertyChanged("FromDate");
                 }
             }
@@ -159,6 +161,7 @@ namespace RepositoryParser.ViewModel
                 if (_toDate != value)
                 {
                     _toDate = value;
+                    this.SendFilteredData();
                     RaisePropertyChanged("ToDate");
                 }
             }
