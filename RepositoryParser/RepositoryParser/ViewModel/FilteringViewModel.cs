@@ -95,7 +95,7 @@ namespace RepositoryParser.ViewModel
 
         public RelayCommand SendDataCommand
         {
-            get { return _sendDataCommand ?? (_sendDataCommand = new RelayCommand(SelectedData)); }
+            get { return _sendDataCommand ?? (_sendDataCommand = new RelayCommand(SendFilteredData)); }
         }
 
         public RelayCommand MessageFilterCommnad
@@ -234,8 +234,8 @@ namespace RepositoryParser.ViewModel
                     _branchSelectedItem = value;
                     if (_branchSelectedItem != null)
                     {
-                        BranchSelectedItemAction(_branchSelectedItem);
                         FilteringViewModel.selectedBranch = _branchSelectedItem;
+                        BranchSelectedItemAction(_branchSelectedItem);
                         //SendMessageToDrawChart();
                     }
                     RaisePropertyChanged("BranchSelectedItem");
@@ -251,16 +251,16 @@ namespace RepositoryParser.ViewModel
                 _repositorySelectedItem = value;
                 if (_repositorySelectedItem != null)
                 {
-                    RepositorySelectedItemAction(_repositorySelectedItem);
                     SelectedRepo = _repositorySelectedItem;
                     BranchEnabled = true;
-
+                  //  RepositorySelectedItemAction(_repositorySelectedItem);
                     var firstOrDefault = _repoList.FirstOrDefault(x => x.Name == _repositorySelectedItem);
                     if (firstOrDefault != null)
                         RepoType = firstOrDefault.Type;
 
                     GetBranches();
                     GetAuthors();
+                    BranchSelectedItem = BranchCollection.FirstOrDefault() ?? string.Empty;
 
                 }
                 RaisePropertyChanged("RepositorySelectedItem");
@@ -283,24 +283,25 @@ namespace RepositoryParser.ViewModel
         private void BranchSelectedItemAction(string selecteditem)
         {
             localList.Clear();
-            string query = "SELECT * FROM Commits " +
+/*            string query = "SELECT * FROM Commits " +
                            "INNER JOIN CommitForBranch on Commits.ID=CommitForBranch.NR_Commit " +
                            "INNER JOIN BRANCH on CommitForBranch.NR_Branch=Branch.ID " +
                            "WHERE Branch.Name='" + selecteditem + "'";
 
-            ExecuteRefresh(query);
+            ExecuteRefresh(query);*/
+            this.SendFilteredData();
         }
 
         private void RepositorySelectedItemAction(string selecteditem)
         {
             localList.Clear();
-            string query = "SELECT * FROM Commits " +
+/*            string query = "SELECT * FROM Commits " +
                            "inner join CommitForBranch on Commits.ID=CommitForBranch.NR_Commit " +
                            "inner join BranchForRepo on CommitForBranch.NR_Branch=BranchForRepo.NR_GitBranch " +
                            "inner join Repository on BranchForRepo.NR_GitRepository=Repository.ID " +
                            "WHERE Repository.Name='" + selecteditem + "'";
-            ExecuteRefresh(query);
-
+            ExecuteRefresh(query);*/
+            this.SendFilteredData();
         }
 
         private void GetBranches()
@@ -378,7 +379,7 @@ namespace RepositoryParser.ViewModel
             ExecuteRefresh(query);
         }
 
-        private void SelectedData()
+        private void SendFilteredData()
         {
             localList.Clear();
             string query = GenerateQuery();
@@ -532,8 +533,6 @@ namespace RepositoryParser.ViewModel
             MessageTextBox = String.Empty;
             FromDate = String.Empty;
             ToDate = String.Empty;
-
-            SendMessageToDrawChart();
         }
         #endregion
 
