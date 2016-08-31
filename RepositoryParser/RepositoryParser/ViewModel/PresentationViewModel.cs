@@ -31,6 +31,7 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _exportFileCommand;
         private RelayCommand<object> _dockUndockPageCommand;
         private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
+        public PresentationView ViewInstance { get; set; }
         #endregion
 
 
@@ -87,7 +88,7 @@ namespace RepositoryParser.ViewModel
                     if (!isUndocked)
                     {
                         PresentationView presentationView = obj as PresentationView;
-                        undockedWindow = new UndockedPresentationWindowView(presentationView);
+                        undockedWindow = new UndockedPresentationWindowView();
                         if (presentationView != null)
                         {
                             presentationView.RootGrid.Children.Remove(presentationView.PresentationGrid);
@@ -103,11 +104,10 @@ namespace RepositoryParser.ViewModel
                         isUndocked = false;
                         RaisePropertyChanged("IsDocked");
                         UndockedPresentationWindowView undockedView = obj as UndockedPresentationWindowView;
-                        if (undockedView != null)
+                        if (undockedView != null && ViewInstance != null)
                         {
-                            PresentationView presentationView = undockedView.ParentView;
-                            undockedView.PresentationGrid.Children.Remove(presentationView.PresentationGrid);
-                            presentationView.RootGrid.Children.Add(presentationView.PresentationGrid);
+                            undockedView.PresentationGrid.Children.Remove(ViewInstance.PresentationGrid);
+                            ViewInstance.RootGrid.Children.Add(ViewInstance.PresentationGrid);
                         }
 
 

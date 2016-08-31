@@ -28,6 +28,7 @@ namespace RepositoryParser.View
             PresentationViewModel viewModel = DataContext as PresentationViewModel;
             if (viewModel != null)
             {
+                viewModel.ViewInstance = this;
                 if (!viewModel.IsDocked)
                 {
                     this.RootGrid.Children.Remove(this.PresentationGrid);

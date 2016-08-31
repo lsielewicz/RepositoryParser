@@ -20,10 +20,8 @@ namespace RepositoryParser.View
     /// </summary>
     public partial class UndockedPresentationWindowView : MetroWindow
     {
-        public PresentationView ParentView { get; set; }
-        public UndockedPresentationWindowView(PresentationView parentView)
+        public UndockedPresentationWindowView()
         {
-            this.ParentView = parentView;
             InitializeComponent();
         }
     }
