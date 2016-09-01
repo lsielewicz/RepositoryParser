@@ -88,6 +88,7 @@
         <conventers:BoolToBackgroundColorConventer x:Key="BoolToBackgroundColorConventer"/>
         <conventers:ViewModelBaseToVisibilityConventer x:Key="ViewModelBaseToVisibilityConventer"/>
         <conventers:NegativeViewModelBaseToVisibilityConventer x:Key="NegativeViewModelBaseToVisibilityConventer"/>
+        <conventers:NegativeBoolConventer x:Key="NegativeBoolConventer"/>
         
         <DataTemplate DataType="{x:Type viewModel:PresentationViewModel}">
             <view:PresentationView/>
@@ -126,32 +127,35 @@
         <!--Buttons Panel: left -->
         <StackPanel Grid.Row="1" Grid.Column="0">
             <imageButton:ImageButton 
-                x:Name="PresentationBtn"
-                Background="{StaticResource Graphite}"
-                Command="{Binding OpenPresentationCommand}"
-                ImageSource="../Assets/Icons/Presentation-100.png"
-                Text="{x:Static resw:Resources.Presentation}"/>
-            
-            <imageButton:ImageButton 
-                x:Name="DBManagementBtn"
+                x:Name="DbManagementBtn"
                 Background="{StaticResource Graphite}"
                 Command="{Binding OpenDataBaseManagementCommand}"
                 ImageSource="../Assets/Icons/ManagementIcon.png"
                 Text="{x:Static resw:Resources.DataBaseManagement}"/>
-
+            
+            <imageButton:ImageButton 
+                x:Name="PresentationBtn"
+                Background="{StaticResource Graphite}"
+                Command="{Binding OpenPresentationCommand}"
+                ImageSource="../Assets/Icons/Presentation-100.png"
+                Text="{x:Static resw:Resources.Presentation}"
+                IsEnabled="{Binding IsDataBaseEmpty, Converter={StaticResource NegativeBoolConventer}}"/>
+                    
             <imageButton:ImageButton 
                 x:Name="FilteringBtn"
                 Background="{StaticResource Graphite}"
                 Command="{Binding OpenFilteringCommand}"
                 ImageSource="../Assets/Icons/Filter-100.png"
-                Text="{x:Static resw:Resources.Filtering}"/>
+                Text="{x:Static resw:Resources.Filtering}"
+                IsEnabled="{Binding IsDataBaseEmpty, Converter={StaticResource NegativeBoolConventer}}"/>
 
             <imageButton:ImageButton 
                 x:Name="AnalysisBtn"
                 Background="{StaticResource Graphite}"
                 Command="{Binding OpenAnalysisCommand}"
                 ImageSource="../Assets/Icons/Analysis_grey.png"
-                Text="{x:Static resw:Resources.AnalysisButton}"/>
+                Text="{x:Static resw:Resources.AnalysisButton}"
+                IsEnabled="{Binding IsDataBaseEmpty, Converter={StaticResource NegativeBoolConventer}}"/>
         </StackPanel>
 
         <Border 
@@ -162,8 +166,7 @@
             Margin="0"
             VerticalAlignment="Bottom"
             Grid.ColumnSpan="2"/>
-        
-        
+ 
         <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding CurrentViewModel}"/>
         <Image Grid.Row="1"
                Grid.Column="1"

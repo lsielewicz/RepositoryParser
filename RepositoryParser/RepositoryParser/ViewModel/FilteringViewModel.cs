@@ -311,6 +311,7 @@ namespace RepositoryParser.ViewModel
             GetAuthors();
             GetBranches();
             GetRepositories();
+            ClearFilters();
         }
 
         private void SendFilteredData()

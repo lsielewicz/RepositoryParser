@@ -149,6 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\ChangeType.cs" />
+    <Compile Include="Helpers\DataBaseHelper.cs" />
     <Compile Include="Interfaces\IDifferencesColoringService.cs" />
     <Compile Include="Interfaces\IGitService.cs" />
     <Compile Include="Interfaces\ISqLiteService.cs" />

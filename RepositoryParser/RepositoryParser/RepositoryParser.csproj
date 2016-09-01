@@ -208,6 +208,7 @@
     <Compile Include="Conventers\EnumToColorConventer.cs" />
     <Compile Include="Conventers\InverseBoolConventer.cs" />
     <Compile Include="Conventers\KeyValuePairToVisibilityConventer.cs" />
+    <Compile Include="Conventers\NegativeBoolConventer.cs" />
     <Compile Include="Conventers\NegativeBoolToVisibilityConventer.cs" />
     <Compile Include="Conventers\NegativeViewModelBaseToVisibilityConventer.cs" />
     <Compile Include="Conventers\StringToImageConventer.cs" />
