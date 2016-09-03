@@ -555,4 +555,7 @@
     <value>Brak danych do wyświetlenia</value>
     <comment>Presentation</comment>
   </data>
+  <data name="ClearFilter" xml:space="preserve">
+    <value>Wyczysc filtr</value>
+  </data>
 </root>

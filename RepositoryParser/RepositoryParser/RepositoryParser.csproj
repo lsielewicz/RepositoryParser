@@ -218,6 +218,7 @@
     <Compile Include="Conventers\StringToImageConventer.cs" />
     <Compile Include="Conventers\ViewModelBaseToVisibilityConventer.cs" />
     <Compile Include="Helpers\CustomInputDialog.cs" />
+    <Compile Include="Helpers\Enums\FilteringColumn.cs" />
     <Compile Include="Helpers\StaticServiceProvider.cs" />
     <Compile Include="Properties\Resources.pl-PL.Designer.cs">
       <DependentUpon>Resources.pl-PL.resx</DependentUpon>
@@ -640,6 +641,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Icons\PNG_DarkGray\Maximize Window-100.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\PNG_DarkGray\Delete-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\Delete Filled-50.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

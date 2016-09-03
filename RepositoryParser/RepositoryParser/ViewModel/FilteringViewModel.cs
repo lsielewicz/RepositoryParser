@@ -12,6 +12,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
+using RepositoryParser.Helpers.Enums;
 
 namespace RepositoryParser.ViewModel
 {
@@ -38,6 +39,7 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _clearFiltersCommand;
         private RelayCommand _sendDataCommand;
         private RelayCommand _onLoadCommand;
+        private RelayCommand<object> _clearSpecifiedFilterCommand;
 
         public static string SelectedBranch { get; private set; }
         public static string SelectedRepo { get; private set; }
@@ -69,6 +71,33 @@ namespace RepositoryParser.ViewModel
         public RelayCommand ClearFiltersCommand
         {
             get { return _clearFiltersCommand ?? (_clearFiltersCommand = new RelayCommand(ClearFilters)); }
+        }
+
+        public RelayCommand<object> ClearSpecifiedFilterFilterCommand
+        {
+            get
+            {
+                return _clearSpecifiedFilterCommand ?? (_clearSpecifiedFilterCommand = new RelayCommand<object>(
+                    (param) =>
+                    {
+                        if (param is FilteringColumn)
+                        {
+                            if ((FilteringColumn) param == FilteringColumn.AuthorsColumn)
+                            {
+                                this.AuthorsSelectedItem = null;
+                            }
+                            else if ((FilteringColumn) param == FilteringColumn.DateColumn)
+                            {
+                                FromDate = string.Empty;
+                                ToDate = string.Empty;
+                            }
+                            else if ((FilteringColumn) param == FilteringColumn.MessageSearchingColumn)
+                            {
+                                MessageTextBox = string.Empty;
+                            }
+                    }
+                    }));
+            }
         }
         #endregion
 
@@ -299,10 +328,7 @@ namespace RepositoryParser.ViewModel
                 string author = Convert.ToString(reader["Author"]);
                 _authorsList.Add(author);
             }
-            //fill collection
-            _authorsList.Add(string.Empty);
             _authorsList.ForEach(x => AuthorsCollection.Add(x));
-
         }
 
         private void OnLoad()
@@ -460,7 +486,7 @@ namespace RepositoryParser.ViewModel
         {
             RepositorySelectedItem = RepositoryCollection.FirstOrDefault() ?? string.Empty;
             BranchSelectedItem = BranchCollection.FirstOrDefault() ?? string.Empty;
-            AuthorsSelectedItem = String.Empty;
+            AuthorsSelectedItem = null;
             MessageTextBox = String.Empty;
             FromDate = String.Empty;
             ToDate = String.Empty;

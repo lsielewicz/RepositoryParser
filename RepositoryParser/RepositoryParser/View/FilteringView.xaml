@@ -9,6 +9,7 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:enums="clr-namespace:RepositoryParser.Helpers.Enums"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator}, Path=Filtering}"
@@ -37,7 +38,7 @@
         </Grid.ColumnDefinitions>
 
         <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Background="{StaticResource Graphite}">
-            <TextBlock Style="{StaticResource SubTitleTextBlock}" >
+            <TextBlock Style="{StaticResource SubTitleTextBlock}">
                 <Run Text="#"/>
                 <Run Text="{x:Static resw:Resources.Filtering}"/>
             </TextBlock>
@@ -58,18 +59,36 @@
 
             <Grid x:Name="AuthorsGrid" Grid.Row="0" Grid.Column="0" Margin="2,5">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="10"/>
                 </Grid.RowDefinitions>
 
-                <Border Grid.Row="0" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="{StaticResource MyGreen}" Margin="5,0">
-                    <TextBlock
-                        Text="{x:Static resw:Resources.FilteringAuthor}" 
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Stretch"
-                        Padding="4"
-                        FontWeight="Light"/>
+                <Border Grid.Row="0" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="{StaticResource MyGreen}" Margin="5,0" Padding="0">
+                    <DockPanel LastChildFill="True" Margin="0">
+                        <imageButton:ImageButton
+                            x:Name="ClearAuthorColumnFilterButton"
+                            DockPanel.Dock="Right"
+                            ImageSource="../Assets/Icons/PNG_DarkGray/../Delete Filled-50.png"
+                            ImageWidth="16"
+                            ImageHeight="16"
+                            Width="18"
+                            Height="18"
+                            Padding="0"
+                            VerticalAlignment="Center"
+                            Margin="0"
+                            ToolTip="{x:Static resw:Resources.ClearFilter}"
+                            Command="{Binding ClearSpecifiedFilterFilterCommand}"
+                            CommandParameter="{x:Static enums:FilteringColumn.AuthorsColumn}"
+                           />
+                        <TextBlock
+                            DockPanel.Dock="Left"
+                            Text="{x:Static resw:Resources.FilteringAuthor}" 
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Stretch"
+                            Padding="4"
+                            FontWeight="Light"/>
+                    </DockPanel>
                 </Border>
                 <!--List of Authors-->
                 <ListView x:Name="AuthorComboBox" 
@@ -96,14 +115,29 @@
                 </Grid.RowDefinitions>
                 <!--Date column-->
                 <Border Grid.Row="0" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="{StaticResource MyGreen}" Margin="5,0">
-                    <TextBlock 
-                       Text="{x:Static resw:Resources.FilteringDate}" 
-                       Background="Transparent"
-                       VerticalAlignment="Top"
-                       HorizontalAlignment="Stretch"
-                       Padding="4"
-                       FontWeight="Light"
-                       />
+                    <DockPanel LastChildFill="True" Margin="0">
+                        <imageButton:ImageButton
+                            x:Name="ClearDateColumnFilterButton"
+                            DockPanel.Dock="Right"
+                            ImageSource="../Assets/Icons/PNG_DarkGray/../Delete Filled-50.png"
+                            ImageWidth="16"
+                            ImageHeight="16"
+                            Width="18"
+                            Height="18"
+                            Padding="0"
+                            VerticalAlignment="Center"
+                            Margin="0"
+                            ToolTip="{x:Static resw:Resources.ClearFilter}"
+                            Command="{Binding ClearSpecifiedFilterFilterCommand}"
+                            CommandParameter="{x:Static enums:FilteringColumn.DateColumn}"/>
+                        <TextBlock 
+                           Text="{x:Static resw:Resources.FilteringDate}" 
+                           Background="Transparent"
+                           VerticalAlignment="Top"
+                           HorizontalAlignment="Stretch"
+                           Padding="4"
+                           FontWeight="Light"/>
+                        </DockPanel>
                  </Border>
                 <DockPanel Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" LastChildFill="True">
                     <xctk:DateTimePicker DockPanel.Dock="Left"
@@ -128,27 +162,42 @@
                 </DockPanel>
 
                 <Border Grid.Row="2" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="{StaticResource MyGreen}" Margin="5,0">
-                    <TextBlock 
-                       Text="{x:Static resw:Resources.FilteringMessage}"        
-                       Background="Transparent"
-                       VerticalAlignment="Top"
-                       HorizontalAlignment="Stretch"
-                       Padding="4"
-                       FontWeight="Light"/>
+                    <DockPanel LastChildFill="True" Margin="0">
+                        <imageButton:ImageButton
+                            x:Name="ClearMessageFilterButton"
+                            DockPanel.Dock="Right"
+                            ImageSource="../Assets/Icons/PNG_DarkGray/../Delete Filled-50.png"
+                            ImageWidth="16"
+                            ImageHeight="16"
+                            Width="18"
+                            Height="18"
+                            Padding="0"
+                            VerticalAlignment="Center"
+                            Margin="0"
+                            ToolTip="{x:Static resw:Resources.ClearFilter}"
+                            Command="{Binding ClearSpecifiedFilterFilterCommand}"
+                            CommandParameter="{x:Static enums:FilteringColumn.MessageSearchingColumn}"/>
+                        <TextBlock 
+                            Text="{x:Static resw:Resources.FilteringMessage}"        
+                            Background="Transparent"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Stretch"
+                            Padding="4"
+                            FontWeight="Light"/>
+                    </DockPanel>
                 </Border>
                 <!--Text searching-->
                 <StackPanel Grid.Row="3">
-                <TextBox   
-                    x:Name="MsgTB" 
-                    Text="{Binding MessageTextBox, UpdateSourceTrigger=PropertyChanged, Delay=1000, Mode=TwoWay}" 
-                    Margin="5"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Stretch"
-                    controls:TextBoxHelper.ClearTextButton="True"/>
-                <Image 
-                    Source="{Binding RepoType, Converter={StaticResource StringToImageConventer}}"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"/>
+                    <TextBox   
+                        x:Name="MsgTB" 
+                        Text="{Binding MessageTextBox, UpdateSourceTrigger=PropertyChanged, Delay=1000, Mode=TwoWay}" 
+                        Margin="5"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Stretch"/>
+                    <Image 
+                        Source="{Binding RepoType, Converter={StaticResource StringToImageConventer}}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
                 </StackPanel>
             </Grid>
 

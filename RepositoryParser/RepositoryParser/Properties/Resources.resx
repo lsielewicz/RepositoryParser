@@ -558,4 +558,7 @@
     <value>No data to display</value>
     <comment>Presentation</comment>
   </data>
+  <data name="ClearFilter" xml:space="preserve">
+    <value>Clear filter</value>
+  </data>
 </root>

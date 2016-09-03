@@ -44,7 +44,7 @@
                                 <ContentPresenter.Content>
                                     <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Orientation="{TemplateBinding IsTile, Converter={StaticResource BoolToOrientationConventer}}">
                                         <Image
-                                           Margin="10,0"
+                                           Margin="{TemplateBinding Margin}"
                                            DockPanel.Dock="Left"
                                            Source="{TemplateBinding ImageSource}" 
                                            Width="{TemplateBinding ImageWidth}" 
