@@ -880,6 +880,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No data to display.
+        /// </summary>
+        public static string NoDataToDisplay {
+            get {
+                return ResourceManager.GetString("NoDataToDisplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Repository Path.
         /// </summary>
         public static string NoRepositoryPathError {

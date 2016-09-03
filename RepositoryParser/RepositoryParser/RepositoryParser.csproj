@@ -206,8 +206,12 @@
     <Compile Include="Conventers\ChangeTypeToBackgroundColorConventer.cs" />
     <Compile Include="Conventers\DateFormat.cs" />
     <Compile Include="Conventers\EnumToColorConventer.cs" />
+    <Compile Include="Conventers\IntegerToVisibilityConventer.cs" />
     <Compile Include="Conventers\InverseBoolConventer.cs" />
+    <Compile Include="Conventers\InverseBoolToVisibiliyConventer.cs" />
+    <Compile Include="Conventers\InverseIntegerToVisibilityConventer.cs" />
     <Compile Include="Conventers\KeyValuePairToVisibilityConventer.cs" />
+    <Compile Include="Conventers\MultiBooleanAndIntegerToVisibilityConvnenter.cs" />
     <Compile Include="Conventers\NegativeBoolConventer.cs" />
     <Compile Include="Conventers\NegativeBoolToVisibilityConventer.cs" />
     <Compile Include="Conventers\NegativeViewModelBaseToVisibilityConventer.cs" />

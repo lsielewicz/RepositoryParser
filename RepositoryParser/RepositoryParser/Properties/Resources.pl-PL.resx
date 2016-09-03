@@ -551,4 +551,8 @@
   <data name="DataUndockedInfo" xml:space="preserve">
     <value>Zamknij okno prezenctacji, aby przywrócić pozycje tabeli.</value>
   </data>
+  <data name="NoDataToDisplay" xml:space="preserve">
+    <value>Brak danych do wyświetlenia</value>
+    <comment>Presentation</comment>
+  </data>
 </root>
