@@ -36,8 +36,6 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _startWorkCommand;
         private RelayCommand _asyncClearDBCommand;
         private RelayCommand _pickFileCommand;
-        private RelayCommand _onLoadCommand;
-        private RelayCommand _goToPageAnalysisCommand;
         private RelayCommand _pickGitRepositoryCommand;
         private RelayCommand _pickSvnRepositoryCommand;
         #endregion
@@ -323,7 +321,10 @@ namespace RepositoryParser.ViewModel
             }
             else
             {
+                this.UrlTextBox = string.Empty;
                 Messenger.Default.Send<RefreshMessageToPresentation>(new RefreshMessageToPresentation(true));
+                Messenger.Default.Send<RefreshMessageToFiltering>(new RefreshMessageToFiltering(true));
+                ViewModelLocator.Instance.Main.IsDataBaseEmpty = false;
             }
         }
 
@@ -337,8 +338,17 @@ namespace RepositoryParser.ViewModel
 
         private void DoClearWorkCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            Messenger.Default.Send<RefreshMessageToPresentation>(new RefreshMessageToPresentation(true));
-            ProgressBarVisibility = false;
+            if (e.Error != null)
+            {
+                MessageBox.Show(e.Error.Message);
+            }
+            else
+            {
+                Messenger.Default.Send<RefreshMessageToPresentation>(new RefreshMessageToPresentation(true));
+                Messenger.Default.Send<RefreshMessageToFiltering>(new RefreshMessageToFiltering(true));
+                ProgressBarVisibility = false;
+                ViewModelLocator.Instance.Main.IsDataBaseEmpty = true;
+            }
         }
         #endregion
     }

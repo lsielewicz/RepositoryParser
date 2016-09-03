@@ -17,6 +17,10 @@
     <UserControl.Resources>
         <conventers:InverseBoolConventer x:Key="InverseBoolConventer"/>
         <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <conventers:IntegerToVisibilityConventer x:Key="IntegerToVisibilityConventer"/>
+        <conventers:InverseIntegerToVisibilityConventer x:Key="InverseIntegerToVisibilityConventer"/>
+        <conventers:MultiBooleanAndIntegerToVisibilityConvnenter x:Key="MultiBooleanAndIntegerToVisibilityConvnenter"/>
+        <conventers:InverseBoolToVisibiliyConventer x:Key="InverseBoolToVisibiliyConventer"/>
     </UserControl.Resources>
     
     <Grid x:Name="RootGrid">
@@ -39,7 +43,6 @@
 
 
         <TextBlock 
-            Visibility="{Binding IsDocked, Converter={StaticResource InverseBoolConventer}}"
             HorizontalAlignment="Center"
             Grid.Row="2"
             Grid.Column="1"
@@ -49,10 +52,24 @@
             Foreground="#666666"
             TextWrapping="Wrap"
             VerticalAlignment="Center"
-            TextAlignment="Center"/>
-
+            TextAlignment="Center"
+            Visibility="{Binding Path=IsDocked, Converter={StaticResource InverseBoolToVisibiliyConventer}}">
+        </TextBlock>
+        <Grid Grid.Row="2" Grid.Column="1" x:Name="PresentationGrid">
+        <TextBlock
+            x:Name="EmptyCollectionTextBox"
+            Grid.Row="2"
+            Grid.Column="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="28" 
+            FontWeight="Light"
+            Foreground="#666666"
+            TextWrapping="Wrap"
+            Text="{x:Static resw:Resources.NoDataToDisplay}"
+            Visibility="{Binding CommitsColection.Count, Converter={StaticResource InverseIntegerToVisibilityConventer}}"/>
+        
         <DataGrid 
-            x:Name="PresentationGrid"
             Grid.Row="2" 
             Grid.Column="1"
             ItemsSource="{Binding CommitsColection}"
@@ -63,6 +80,7 @@
             VerticalScrollBarVisibility="Auto"
             Style="{StaticResource AzureDataGrid}"
             extensions:DataGridExtensions.LastColumnFill="True"
+            Visibility="{Binding CommitsColection.Count, Converter={StaticResource IntegerToVisibilityConventer}}"
             >
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding ID}" Header="{x:Static resw:Resources.CommitsList_ID}"/>
@@ -72,7 +90,7 @@
                 <DataGridTextColumn Binding="{Binding Email}" Header="{x:Static resw:Resources.CommitsList_Email}"/>
             </DataGrid.Columns>
         </DataGrid>
-
+        </Grid>
         <StackPanel  Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,1" Orientation="Horizontal">
             <circleHeaderButton:CircleHeaderButton 
                 Command="{Binding ExportFileCommand}"

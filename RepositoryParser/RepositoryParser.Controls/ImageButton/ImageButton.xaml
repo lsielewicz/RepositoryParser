@@ -44,7 +44,7 @@
                                 <ContentPresenter.Content>
                                     <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Orientation="{TemplateBinding IsTile, Converter={StaticResource BoolToOrientationConventer}}">
                                         <Image
-                                           Margin="10,0"
+                                           Margin="{TemplateBinding Margin}"
                                            DockPanel.Dock="Left"
                                            Source="{TemplateBinding ImageSource}" 
                                            Width="{TemplateBinding ImageWidth}" 
@@ -76,6 +76,11 @@
                                 </Trigger.EnterActions>
                             </Trigger>
 
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.9"/>
+                                <Setter Property="Background" Value="#666666" TargetName="Border"/>
+                            </Trigger>
+                            
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter 
                                     TargetName="ControlImage" 

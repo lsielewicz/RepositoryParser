@@ -205,6 +205,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear filter.
+        /// </summary>
+        public static string ClearFilter {
+            get {
+                return ResourceManager.GetString("ClearFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear all filters.
         /// </summary>
         public static string ClearFiltersBtn {
@@ -876,6 +885,15 @@ namespace RepositoryParser.Properties {
         public static string myTitle {
             get {
                 return ResourceManager.GetString("myTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No data to display.
+        /// </summary>
+        public static string NoDataToDisplay {
+            get {
+                return ResourceManager.GetString("NoDataToDisplay", resourceCulture);
             }
         }
         

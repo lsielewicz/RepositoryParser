@@ -1,26 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Resources;
-using System.Text.RegularExpressions;
-using System.Windows.Data;
-using System.Windows.Forms;
-using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
-using MahApps.Metro.Controls.Dialogs;
+using RepositoryParser.Core.Helpers;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
-using RepositoryParser.Helpers;
-using RepositoryParser.View;
-using MessageBox = System.Windows.MessageBox;
-using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 
 namespace RepositoryParser.ViewModel
 {
@@ -36,7 +23,7 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _goToStartScreenCommand;
         private List<string> _authorsList;
         private string _filteringQuery;
-        private RelayCommand _onClosingCommand;
+        private bool _isDataBaseEmpty;
 
         public MainViewModel()
         {
@@ -50,6 +37,21 @@ namespace RepositoryParser.ViewModel
         }
 
         #region Getters setters
+
+        public bool IsDataBaseEmpty
+        {
+            get
+            {
+                return _isDataBaseEmpty;
+            }
+            set
+            {
+                if (_isDataBaseEmpty == value)
+                    return;
+                _isDataBaseEmpty = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public ViewModelBase CurrentViewModel
         {
@@ -123,14 +125,14 @@ namespace RepositoryParser.ViewModel
 
         private void OpenAnalysis()
         {
-            CurrentViewModel = (new ViewModelLocator()).Analysis;
+            CurrentViewModel = ViewModelLocator.Instance.Analysis;
             Messenger.Default.Send<ChartMessageLevel1>(new ChartMessageLevel1(_authorsList,_filteringQuery));
         }
 
         private void OpenFiltering()
         {
-            CurrentViewModel = (new ViewModelLocator()).Filtering;
-            Messenger.Default.Send<RefreshMessageToFiltering>(new RefreshMessageToFiltering(true));
+            CurrentViewModel = ViewModelLocator.Instance.Filtering;
+           // Messenger.Default.Send<RefreshMessageToFiltering>(new RefreshMessageToFiltering(true));
         }
 
         private void OnLoad()
@@ -143,6 +145,8 @@ namespace RepositoryParser.ViewModel
                     gitRepoService.ConnectRepositoryToDataBase(true);
                 else
                     gitRepoService.ConnectRepositoryToDataBase();
+
+                IsDataBaseEmpty = new DataBaseHelper().IsDataBaseEmpty(SqLiteService.GetInstance().Connection);
             }
             catch (Exception ex)
             {
@@ -152,15 +156,13 @@ namespace RepositoryParser.ViewModel
 
         private void OpenDataBaseManagement()
         {
-            CurrentViewModel = (new ViewModelLocator()).DataBaseManagement;
+            CurrentViewModel = ViewModelLocator.Instance.DataBaseManagement;
         }
 
         private void OpenPresentation()
         {
-            CurrentViewModel = (new ViewModelLocator()).Presentation;
-           
+            CurrentViewModel = ViewModelLocator.Instance.Presentation;  
         }
-
 
         private void HandleDataMessage(List<string> authors, string filternigQuery)
         {
