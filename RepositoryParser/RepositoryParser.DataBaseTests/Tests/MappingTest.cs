@@ -29,12 +29,42 @@ namespace RepositoryParser.DataBaseTests.Tests
         }
 
         [Test]
-        public void RepositoryEntityMappingTest()
+        public void RepositoryEntityPropertiesMappingTest()
         {
-            new PersistenceSpecification<Repository>(_session)
+            new PersistenceSpecification<Repository>(_session, new CustomEqualityComparer())
                 .CheckProperty(p => p.Name, "SampleName")
                 .CheckProperty(p => p.Type, "SampleType")
                 .CheckProperty(p => p.Url, "Sample Url")
+                .VerifyTheMappings();
+        }
+
+        [Test]
+        public void BranchEnityPropertiesMappingTest()
+        {
+            new PersistenceSpecification<Branch>(_session)
+                .CheckProperty(p => p.Name, "SampleName")
+                .VerifyTheMappings();
+        }
+
+        [Test]
+        public void CommitEnityPropertiesMappingTest()
+        {
+            new PersistenceSpecification<Commit>(_session)
+                .CheckProperty(p => p.Author, "SampleAuthor")
+                .CheckProperty(p => p.Date, DateTime.Now.Date)
+                .CheckProperty(p => p.Email, "sampleemail@o2.pl")
+                .CheckProperty(p => p.Message, "SampleMessage")
+                .CheckProperty(p => p.Revision, Guid.NewGuid().ToString())
+                .VerifyTheMappings();
+        }
+
+        [Test]
+        public void ChangesEnityPropertiesMappingTest()
+        {
+            new PersistenceSpecification<Changes>(_session)
+                .CheckProperty(p => p.ChangeContent, new string('S', 100000))
+                .CheckProperty(p => p.Path, Environment.CurrentDirectory)
+                .CheckProperty(p => p.Type, "Modified")
                 .VerifyTheMappings();
         }
     }
