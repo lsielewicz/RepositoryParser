@@ -76,40 +76,44 @@ namespace RepositoryParser.DataBaseTests.Tests
                 }
             }
 
-
+            Repository persistedRepository;
             using (var session = DbService.Instance.SessionFactory.OpenSession())
             {
 
-                    var persistedRepository =
+                     persistedRepository =
                         session.QueryOver<Repository>()
                             .Where(r => r.Name == "SampleRepository")
                             .SingleOrDefault<Repository>();
 
+
+            }
+
+            using (var session = DbService.Instance.SessionFactory.OpenSession())
+            {
                 Assert.AreEqual(persistedRepository.Name, repository.Name);
                 Assert.AreEqual(persistedRepository.Type, repository.Type);
                 Assert.AreEqual(persistedRepository.Url, repository.Url);
                 Assert.AreEqual(persistedRepository.Branches.Count, repository.Branches.Count);
                 for (int i = 0; i < repository.Branches.Count; i++)
                 {
-                    Assert.AreEqual(persistedRepository.Branches[i].Name,repository.Branches[i].Name);
-                    Assert.AreEqual(persistedRepository.Branches[i].Commits.Count,repository.Branches[i].Commits.Count);
+                    Assert.AreEqual(persistedRepository.Branches[i].Name, repository.Branches[i].Name);
+                    Assert.AreEqual(persistedRepository.Branches[i].Commits.Count, repository.Branches[i].Commits.Count);
                     for (int j = 0; j < repository.Branches[i].Commits.Count; j++)
                     {
-                        Assert.AreEqual(repository.Branches[i].Commits[j].Author,persistedRepository.Branches[i].Commits[j].Author);
-                        Assert.AreEqual(repository.Branches[i].Commits[j].Date,persistedRepository.Branches[i].Commits[j].Date);
-                        Assert.AreEqual(repository.Branches[i].Commits[j].Email,persistedRepository.Branches[i].Commits[j].Email);
-                        Assert.AreEqual(repository.Branches[i].Commits[j].Message,persistedRepository.Branches[i].Commits[j].Message);
-                        Assert.AreEqual(repository.Branches[i].Commits[j].Revision,persistedRepository.Branches[i].Commits[j].Revision);
-                        Assert.AreEqual(repository.Branches[i].Commits[j].Changes.Count,persistedRepository.Branches[i].Commits[j].Changes.Count);
+                        Assert.AreEqual(repository.Branches[i].Commits[j].Author, persistedRepository.Branches[i].Commits[j].Author);
+                        Assert.AreEqual(repository.Branches[i].Commits[j].Date, persistedRepository.Branches[i].Commits[j].Date);
+                        Assert.AreEqual(repository.Branches[i].Commits[j].Email, persistedRepository.Branches[i].Commits[j].Email);
+                        Assert.AreEqual(repository.Branches[i].Commits[j].Message, persistedRepository.Branches[i].Commits[j].Message);
+                        Assert.AreEqual(repository.Branches[i].Commits[j].Revision, persistedRepository.Branches[i].Commits[j].Revision);
+                        Assert.AreEqual(repository.Branches[i].Commits[j].Changes.Count, persistedRepository.Branches[i].Commits[j].Changes.Count);
                         for (int k = 0; k < repository.Branches[i].Commits[j].Changes.Count; k++)
                         {
                             Assert.AreEqual(repository.Branches[i].Commits[j].Changes[k].ChangeContent, persistedRepository.Branches[i].Commits[j].Changes[k].ChangeContent);
                             Assert.AreEqual(repository.Branches[i].Commits[j].Changes[k].Path, persistedRepository.Branches[i].Commits[j].Changes[k].Path);
-                            Assert.AreEqual(repository.Branches[i].Commits[j].Changes[k].Type,persistedRepository.Branches[i].Commits[j].Changes[k].Type);
+                            Assert.AreEqual(repository.Branches[i].Commits[j].Changes[k].Type, persistedRepository.Branches[i].Commits[j].Changes[k].Type);
                         }
                     }
                 }
-
             }
     
         }
