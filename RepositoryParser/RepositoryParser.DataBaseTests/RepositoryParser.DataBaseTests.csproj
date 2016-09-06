@@ -84,10 +84,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\LocalizationConstants.cs" />
-    <Compile Include="CustomEqualityComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\ConnectionTest.cs" />
     <Compile Include="Tests\MappingTest.cs" />
+    <Compile Include="Tests\PersistingTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RepositoryParser.DataBaseManagementCore\RepositoryParser.DataBaseManagementCore.csproj">

@@ -31,7 +31,7 @@ namespace RepositoryParser.DataBaseTests.Tests
         [Test]
         public void RepositoryEntityPropertiesMappingTest()
         {
-            new PersistenceSpecification<Repository>(_session, new CustomEqualityComparer())
+            new PersistenceSpecification<Repository>(_session)
                 .CheckProperty(p => p.Name, "SampleName")
                 .CheckProperty(p => p.Type, "SampleType")
                 .CheckProperty(p => p.Url, "Sample Url")

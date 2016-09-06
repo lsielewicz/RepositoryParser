@@ -84,6 +84,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\ChangeType.cs" />
     <Compile Include="Configuration\HibernateConfigurationHelper.cs" />
     <Compile Include="Configuration\LocalizationConstants.cs" />
     <Compile Include="Configuration\RepositoryType.cs" />
