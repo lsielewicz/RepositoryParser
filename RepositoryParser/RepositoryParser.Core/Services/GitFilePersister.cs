@@ -51,69 +51,14 @@ namespace RepositoryParser.Core.Services
             }
         }
 
-        private void InitializeConnection()
-        {
-            if (!IsCloned && !string.IsNullOrEmpty(UrlPath))
-            {
-                CloneRepository();
-            }
-            
 
-        }
-
-        private void CloneRepository()
-        {
-            string urlPath = Regex.Replace(UrlPath, @"https?", "git");
-            UrlPath = urlPath;
-            GitCloneService cloneService = new GitCloneService(urlPath);
-            cloneService.CloneRepository(true);
-            IsCloned = true;
-            DirectoryPath = cloneService.DirectoryPath;
-        }
 
         public void AddRepositoryToDataBase(ISessionFactory sessionFactory,string repositoryPath="")
         {
             if (string.IsNullOrEmpty(repositoryPath))
                 repositoryPath = DirectoryPath;
-            Repository repository = GetRepositoryWithBranches(repositoryPath);
+            Repository repository = GetRepository(repositoryPath);
             FillDataBase(sessionFactory,repository);
-        }
-
-        public Repository GetRepository(string repositoryPath)
-        {
-            Repository repository = new Repository();
-            using (GitRepository gitRepositoryInfo = new GitRepository(repositoryPath))
-            {
-                List<Branch> branches = GetBranches(repositoryPath);
-
-                repository.Type = RepositoryType.Git;
-                repository.Name = GetNameFromPath(gitRepositoryInfo.Info.Path);
-                repository.Url = DirectoryPath;
-
-                branches.ForEach(branch=>repository.AddBranch(branch));
-            }
-            return repository;
-        }
-
-        public List<Branch> GetBranches(string repositoryPath)
-        {
-            List<Branch> branches = new List<Branch>();
-            using (GitRepository gitRepositoryInfo = new GitRepository(repositoryPath))
-            {
-                foreach (var gitBranchInfo in gitRepositoryInfo.Branches)
-                {
-                    if (!gitBranchInfo.IsRemote)
-                    {
-                        List<Commit> commits = GetCommits(gitBranchInfo, repositoryPath);
-
-                        Branch branch = new Branch() { Name = gitBranchInfo.FriendlyName };
-                        commits.ForEach(commit=> branch.AddCommit(commit));
-                        branches.Add(branch);
-                    }
-                        
-                }
-            }
-            return branches;
         }
 
         public List<Commit> GetCommits(GitBranch branch, string repositoryPath)
@@ -205,24 +150,12 @@ namespace RepositoryParser.Core.Services
             }
         }
 
-        private string ConvertChangeKindToChangeType(ChangeKind changeKind)
-        {
-            if (changeKind == ChangeKind.Modified)
-                return ChangeType.Modified;
-            if (changeKind == ChangeKind.Added)
-                return ChangeType.Added;
-            if (changeKind == ChangeKind.Deleted)
-                return ChangeType.Deleted;
-
-            return ChangeType.Unodified;
-        }
-
-        public Repository GetRepositoryWithBranches(string repositoryPath)
+        public Repository GetRepository(string repositoryPath)
         {
             Repository repository = new Repository();
             using (GitRepository gitRepositoryInfo = new GitRepository(repositoryPath))
             {
-                List<Branch> branches = GetBranchesWithCommits(repositoryPath);
+                List<Branch> branches = GetBranches(repositoryPath);
 
                 repository.Type = RepositoryType.Git;
                 repository.Name = GetNameFromPath(gitRepositoryInfo.Info.Path);
@@ -233,7 +166,7 @@ namespace RepositoryParser.Core.Services
             return repository;
         }
 
-        private List<Branch> GetBranchesWithCommits(string repositoryPath)
+        public List<Branch> GetBranches(string repositoryPath)
         {
             List<Branch> branches = new List<Branch>();
             using (GitRepository gitRepositoryInfo = new GitRepository(repositoryPath))
@@ -261,16 +194,7 @@ namespace RepositoryParser.Core.Services
                     {
                         enumerable.ForEach(uCommit =>
                         {
-                            List<Changes> changes = GetChanges(uCommit, repositoryPath);
-                            Commit newCommit = new Commit()
-                            {
-                                Revision = uCommit.Sha,
-                                Author = uCommit.Author.Name,
-                                Date = uCommit.Author.When.DateTime,
-                                Email = uCommit.Author.Email,
-                                Message = uCommit.MessageShort
-                            };
-                            changes.ForEach(change => newCommit.AddChanges(change));
+                            var newCommit = GetCommitFromGitCommit(uCommit, repositoryPath);
                             branchInstance.AddCommit(newCommit);
                         });
                         
@@ -289,7 +213,52 @@ namespace RepositoryParser.Core.Services
             return branches;
         }
 
+        private Commit GetCommitFromGitCommit(GitCommit gitCommit, string repositoryPath)
+        {
+            List<Changes> changes = GetChanges(gitCommit, repositoryPath);
+            Commit newCommit = new Commit()
+            {
+                Revision = gitCommit.Sha,
+                Author = gitCommit.Author.Name,
+                Date = gitCommit.Author.When.DateTime,
+                Email = gitCommit.Author.Email,
+                Message = gitCommit.MessageShort
+            };
+            changes.ForEach(change => newCommit.AddChanges(change));
+            return newCommit;
+        }
 
+        private string ConvertChangeKindToChangeType(ChangeKind changeKind)
+        {
+            if (changeKind == ChangeKind.Modified)
+                return ChangeType.Modified;
+            if (changeKind == ChangeKind.Added)
+                return ChangeType.Added;
+            if (changeKind == ChangeKind.Deleted)
+                return ChangeType.Deleted;
+
+            return ChangeType.Unodified;
+        }
+
+        private void InitializeConnection()
+        {
+            if (!IsCloned && !string.IsNullOrEmpty(UrlPath))
+            {
+                CloneRepository();
+            }
+
+
+        }
+
+        private void CloneRepository()
+        {
+            string urlPath = Regex.Replace(UrlPath, @"https?", "git");
+            UrlPath = urlPath;
+            GitCloneService cloneService = new GitCloneService(urlPath);
+            cloneService.CloneRepository(true);
+            IsCloned = true;
+            DirectoryPath = cloneService.DirectoryPath;
+        }
 
     }
 
