@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using LibGit2Sharp;
 using NHibernate;
 using NHibernate.Util;
 using RepositoryParser.Core.Interfaces;
-using RepositoryParser.Core.Models;
 using RepositoryParser.DataBaseManagementCore.Configuration;
 using RepositoryParser.DataBaseManagementCore.Entities;
 using Branch = RepositoryParser.DataBaseManagementCore.Entities.Branch;
 using Commit = RepositoryParser.DataBaseManagementCore.Entities.Commit;
-using GitRepository = LibGit2Sharp.Repository; 
+using GitRepository = LibGit2Sharp.Repository;
 using GitBranch = LibGit2Sharp.Branch;
 using GitCommit = LibGit2Sharp.Commit;
 using Repository = RepositoryParser.DataBaseManagementCore.Entities.Repository;
@@ -51,8 +45,6 @@ namespace RepositoryParser.Core.Services
             }
         }
 
-
-
         public void AddRepositoryToDataBase(ISessionFactory sessionFactory,string repositoryPath="")
         {
             if (string.IsNullOrEmpty(repositoryPath))
@@ -66,16 +58,7 @@ namespace RepositoryParser.Core.Services
             List<Commit> commits = new List<Commit>();
             foreach (GitCommit gitCommitInfo in branch.Commits)
             {
-                List<Changes> changes = GetChanges(gitCommitInfo, repositoryPath);
-                Commit commit = new Commit()
-                {
-                    Revision = gitCommitInfo.Sha,
-                    Author = gitCommitInfo.Author.Name,
-                    Date = gitCommitInfo.Author.When.DateTime,
-                    Email = gitCommitInfo.Author.Email,
-                    Message = gitCommitInfo.MessageShort 
-                };
-                changes.ForEach(change=> commit.AddChanges(change));
+                Commit commit = GetCommitFromGitCommit(gitCommitInfo, repositoryPath);
                 commits.Add(commit);
             }
             return commits;
@@ -246,8 +229,6 @@ namespace RepositoryParser.Core.Services
             {
                 CloneRepository();
             }
-
-
         }
 
         private void CloneRepository()
@@ -262,5 +243,4 @@ namespace RepositoryParser.Core.Services
 
     }
 
-    
 }
