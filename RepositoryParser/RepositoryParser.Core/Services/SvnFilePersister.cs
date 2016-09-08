@@ -20,7 +20,7 @@ using Repository = RepositoryParser.DataBaseManagementCore.Entities.Repository;
 
 namespace RepositoryParser.Core.Services
 {
-    public class SvnFilePersister
+    public class SvnFilePersister : ISvnFilePersister
     {
         public string DirectoryPath { get; set; }
         public string UrlPath { get; }

@@ -16,7 +16,7 @@ using Repository = RepositoryParser.DataBaseManagementCore.Entities.Repository;
 
 namespace RepositoryParser.Core.Services
 {
-    public class GitFilePersister : IVersionControlFilePersister
+    public class GitFilePersister : IGitFilePersister
     {
         public string DirectoryPath { get; set; }
         public string UrlPath { get; private set; }
@@ -40,11 +40,9 @@ namespace RepositoryParser.Core.Services
             }
         }
 
-        public void AddRepositoryToDataBase(ISessionFactory sessionFactory,string repositoryPath="")
+        public void AddRepositoryToDataBase(ISessionFactory sessionFactory)
         {
-            if (string.IsNullOrEmpty(repositoryPath))
-                repositoryPath = DirectoryPath;
-            Repository repository = GetRepository(repositoryPath);
+            Repository repository = GetRepository();
             FillDataBase(sessionFactory,repository);
         }
 
@@ -128,12 +126,12 @@ namespace RepositoryParser.Core.Services
             }
         }
 
-        public Repository GetRepository(string repositoryPath)
+        public Repository GetRepository()
         {
             Repository repository = new Repository();
-            using (GitRepository gitRepositoryInfo = new GitRepository(repositoryPath))
+            using (GitRepository gitRepositoryInfo = new GitRepository(DirectoryPath))
             {
-                List<Branch> branches = GetBranches(repositoryPath);
+                List<Branch> branches = GetBranches(DirectoryPath);
 
                 repository.Type = RepositoryType.Git;
                 repository.Name = GetNameFromPath(gitRepositoryInfo.Info.Path);

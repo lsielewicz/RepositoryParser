@@ -167,8 +167,10 @@
     <Compile Include="Enums\ChangeType.cs" />
     <Compile Include="Helpers\DataBaseHelper.cs" />
     <Compile Include="Interfaces\IDifferencesColoringService.cs" />
+    <Compile Include="Interfaces\IGitFilePersister.cs" />
     <Compile Include="Interfaces\IGitService.cs" />
     <Compile Include="Interfaces\ISqLiteService.cs" />
+    <Compile Include="Interfaces\ISvnFilePersister.cs" />
     <Compile Include="Interfaces\ISvnService.cs" />
     <Compile Include="Interfaces\IVersionControlFilePersister.cs" />
     <Compile Include="Interfaces\IWindowService.cs" />
