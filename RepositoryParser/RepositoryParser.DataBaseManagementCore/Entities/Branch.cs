@@ -5,6 +5,7 @@ namespace RepositoryParser.DataBaseManagementCore.Entities
     public class Branch : EntityBase
     {
         public virtual string Name { get; set; }
+        public virtual string Path { get; set; }
         public virtual IList<Commit> Commits { get; set; }
         public virtual Repository Repository { get; set; }
 

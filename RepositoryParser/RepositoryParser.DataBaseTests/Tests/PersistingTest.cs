@@ -36,7 +36,7 @@ namespace RepositoryParser.DataBaseTests.Tests
                 Url = "http://github.com/lsielewicz/SampleRepository"
             };
 
-            repository.AddBranch(new Branch(){Name = "First Branch"});
+            repository.AddBranch(new Branch(){Name = "First Branch", Path = "asd"});
             repository.AddBranch(new Branch() {Name = "SecondBranch"});
 
             repository.Branches.ForEach(branch =>
@@ -85,11 +85,6 @@ namespace RepositoryParser.DataBaseTests.Tests
                             .Where(r => r.Name == "SampleRepository")
                             .SingleOrDefault<Repository>();
 
-
-            }
-
-            using (var session = DbService.Instance.SessionFactory.OpenSession())
-            {
                 Assert.AreEqual(persistedRepository.Name, repository.Name);
                 Assert.AreEqual(persistedRepository.Type, repository.Type);
                 Assert.AreEqual(persistedRepository.Url, repository.Url);

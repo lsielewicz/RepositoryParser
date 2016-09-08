@@ -10,8 +10,8 @@ namespace RepositoryParser.Core.Interfaces
     public interface IVersionControlFilePersister
     {
         string DirectoryPath { get; set; }
-        string UrlPath { get; set; }
-        bool IsCloned { get; set; }
+        string UrlPath { get; }
+        bool IsCloned { get; }
         Repository GetRepository(string repositoryPath);
         List<Branch> GetBranches(string repositoryPath);
         List<Commit> GetCommits(GitBranch branch, string repositoryPath);

@@ -19,13 +19,8 @@ namespace RepositoryParser.Core.Services
     public class GitFilePersister : IVersionControlFilePersister
     {
         public string DirectoryPath { get; set; }
-        public string UrlPath { get; set; }
-        public bool IsCloned { get; set; }
-
-        public GitFilePersister()
-        {
-            DirectoryPath = string.Empty;
-        }
+        public string UrlPath { get; private set; }
+        public bool IsCloned { get; private set; }
 
         public GitFilePersister(string path)
         {
