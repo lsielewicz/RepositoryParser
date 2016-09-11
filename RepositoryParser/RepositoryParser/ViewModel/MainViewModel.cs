@@ -24,17 +24,15 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _openFilteringCommand;
         private RelayCommand _openAnalysisCommand;
         private RelayCommand _goToStartScreenCommand;
-        private List<string> _authorsList;
-        private IQueryOver<Commit> _filteringQuery;
         private bool _isDataBaseEmpty;
 
         public MainViewModel()
         {
             FilteringHelper.Instance.Initialize();
-            CurrentViewModel = (new ViewModelLocator()).DataBaseManagement;
-            CurrentViewModel = (new ViewModelLocator()).Filtering;
-            CurrentViewModel = (new ViewModelLocator()).Presentation;
-            CurrentViewModel = (new ViewModelLocator()).Analysis;
+            CurrentViewModel = ViewModelLocator.Instance.Presentation;
+            CurrentViewModel = ViewModelLocator.Instance.Filtering;
+            CurrentViewModel = ViewModelLocator.Instance.DataBaseManagement;
+            CurrentViewModel = ViewModelLocator.Instance.Analysis;
             CurrentViewModel = null;
         }
 
@@ -61,7 +59,7 @@ namespace RepositoryParser.ViewModel
             set
             {
                 _currentViewModel = value;
-                RaisePropertyChanged("CurrentViewModel");
+                RaisePropertyChanged();
             }
         }
 
@@ -124,7 +122,6 @@ namespace RepositoryParser.ViewModel
         #endregion
 
         #region Methods
-
         private void OpenAnalysis()
         {
             CurrentViewModel = ViewModelLocator.Instance.Analysis;
@@ -134,21 +131,13 @@ namespace RepositoryParser.ViewModel
         private void OpenFiltering()
         {
             CurrentViewModel = ViewModelLocator.Instance.Filtering;
-           // Messenger.Default.Send<RefreshMessageToFiltering>(new RefreshMessageToFiltering(true));
         }
 
         private void OnLoad()
         {
             try
             {
-                GitService gitRepoService = new GitService();
-                string repoPath = "./DataBases/CommonRepositoryDataBase.sqlite";
-                if (!File.Exists(repoPath))
-                    gitRepoService.ConnectRepositoryToDataBase(true);
-                else
-                    gitRepoService.ConnectRepositoryToDataBase();
 
-                IsDataBaseEmpty = new DataBaseHelper().IsDataBaseEmpty(SqLiteService.GetInstance().Connection);
             }
             catch (Exception ex)
             {
@@ -164,12 +153,6 @@ namespace RepositoryParser.ViewModel
         private void OpenPresentation()
         {
             CurrentViewModel = ViewModelLocator.Instance.Presentation;  
-        }
-
-        private void HandleDataMessage(List<string> authors, IQueryOver<Commit> filternigQuery)
-        {
-            _authorsList = authors;
-            _filteringQuery = filternigQuery;
         }
 
         private void ClosedEvent()

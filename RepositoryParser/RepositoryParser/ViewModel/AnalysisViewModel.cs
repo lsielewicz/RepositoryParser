@@ -103,7 +103,8 @@ namespace RepositoryParser.ViewModel
 
         private void OpenDayActivity()
         {
-            CurrentViewModel = new ViewModelLocator().DayActivityContentProvider;
+            CurrentViewModel = ViewModelLocator.Instance.DayActivityContentProvider;
+            ViewModelLocator.Instance.DayActivityContentProvider.OnLoad();
         }
 
         private void OpenHourActivity()
@@ -124,14 +125,6 @@ namespace RepositoryParser.ViewModel
         private void OpenUserActivity()
         {
             CurrentViewModel = new ViewModelLocator().UsersActivityContentProvider;
-        }
-        #endregion
-
-
-        #region Messages
-        private void HandleDataMessage(List<string> authors, string filternigQuery)
-        {
-                CurrentViewModel = null;
         }
         #endregion
     }

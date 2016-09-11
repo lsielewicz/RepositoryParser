@@ -10,27 +10,22 @@ using RepositoryParser.Core.Messages;
 
 namespace RepositoryParser.ViewModel.DayActivityViewModels
 {
-    public class DayActivityContentProviderViewModel : ViewModelBase
+    public class DayActivityContentProviderViewModel : RepositoryAnalyserViewModelBase
     {
-        private ViewModelBase _currentViewModel;
         private RelayCommand _openChartViewCommand;
         private RelayCommand _closedEventCommand;
-        private List<string> _authorsList;
-        private string _filteringQuery;
+
 
         public DayActivityContentProviderViewModel()
         {
         }
 
         #region Getters setters
-        public ViewModelBase CurrentViewModel
+
+
+        public override void OnLoad()
         {
-            get { return _currentViewModel; }
-            set
-            {
-                _currentViewModel = value;
-                RaisePropertyChanged("CurrentViewModel");
-            }
+            CurrentViewModel = null;
         }
 
         public RelayCommand OpenChartViewCommand
@@ -55,15 +50,10 @@ namespace RepositoryParser.ViewModel.DayActivityViewModels
 
         private void OpenChartView()
         {
-            CurrentViewModel = (new ViewModelLocator()).DayActivity;
+            CurrentViewModel = ViewModelLocator.Instance.DayActivity;
+            ViewModelLocator.Instance.DayActivity.OnLoad();
         }
 
-        private void HandleDataMessage(List<string> authors, string filternigQuery)
-        {
-            CurrentViewModel = null;
-            _authorsList = authors;
-            _filteringQuery = filternigQuery;
-        }
 
         private void ClosedEvent()
         {

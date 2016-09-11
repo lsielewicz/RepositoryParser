@@ -11,16 +11,19 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Win32;
+using NHibernate.Criterion;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
+using RepositoryParser.DataBaseManagementCore.Entities;
+using RepositoryParser.DataBaseManagementCore.Services;
+using RepositoryParser.Helpers;
 
-namespace RepositoryParser.ViewModel
+namespace RepositoryParser.ViewModel.DayActivityViewModels
 {
-    public class DayActivityViewModel : ViewModelBase
+    public class DayActivityViewModel : RepositoryAnalyserViewModelBase
     {
         #region Fields
-        private string _filteringQuery;
         private ObservableCollection<KeyValuePair<int, int>> _keyCollection;
         private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
         private RelayCommand _exportFileCommand;
@@ -45,26 +48,32 @@ namespace RepositoryParser.ViewModel
                 if (_keyCollection != value)
                 {
                     _keyCollection = value;
-                    RaisePropertyChanged("KeyCollection");
+                    RaisePropertyChanged();
                 }
             }
-        }
-        #endregion
-
-        #region Messages
-        private void HandleDataMessage(string query)
-        {
-            this._filteringQuery = query;
-            FillDataCollection();
         }
         #endregion
 
         #region Methodds
         private void FillDataCollection()
         {
-            if (KeyCollection.Count > 0)
+            if (KeyCollection != null && KeyCollection.Any())
                 KeyCollection.Clear();
-            for (int i = 1; i <= 31; i++)
+           
+
+                for (int i = 1; i <= 31; i++)
+                {
+                    using (var session = DbService.Instance.SessionFactory.OpenSession())
+                    {
+                        var query = FilteringHelper.Instance.GenerateQuery(session);
+                        var commitsCount =
+                            query.Where(c => c.Date.Day == i).Select(Projections.RowCount()).FutureValue<int>().Value;
+
+                        KeyCollection.Add(new KeyValuePair<int, int>(i, commitsCount));
+
+                    }
+                }
+            /*for (int i = 1; i <= 31; i++)
             {
 
                 string dateString = "";
@@ -92,20 +101,10 @@ namespace RepositoryParser.ViewModel
                     int count = Convert.ToInt32(reader["DayCommits"]);
                     KeyValuePair<int, int> temp = new KeyValuePair<int, int>(i, count);
                     KeyCollection.Add(temp);
-                }
-            }
+                }*/
+            
         }
-        private string MatchQuery(string query)
-        {
-            Regex r = new Regex(@"(select \* from Commits)(.*)", RegexOptions.IgnoreCase);
-            Match m = r.Match(query);
-            if (m.Success)
-            {
-                if (m.Groups.Count >= 3)
-                    query = m.Groups[2].Value;
-            }
-            return query;
-        }
+
         #endregion
 
         #region Buttons getters
@@ -136,5 +135,9 @@ namespace RepositoryParser.ViewModel
         }
         #endregion
 
+        public override void OnLoad()
+        {
+            FillDataCollection();
+        }
     }
 }
