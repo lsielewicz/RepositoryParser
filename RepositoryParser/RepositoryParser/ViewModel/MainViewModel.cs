@@ -10,6 +10,7 @@ using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
 using RepositoryParser.DataBaseManagementCore.Entities;
+using RepositoryParser.Helpers;
 
 namespace RepositoryParser.ViewModel
 {
@@ -29,6 +30,7 @@ namespace RepositoryParser.ViewModel
 
         public MainViewModel()
         {
+            FilteringHelper.Instance.Initialize();
             CurrentViewModel = (new ViewModelLocator()).DataBaseManagement;
             CurrentViewModel = (new ViewModelLocator()).Filtering;
             CurrentViewModel = (new ViewModelLocator()).Presentation;

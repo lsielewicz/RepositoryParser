@@ -15,6 +15,7 @@ using RepositoryParser.Core.Messages;
 using RepositoryParser.DataBaseManagementCore.Configuration;
 using RepositoryParser.DataBaseManagementCore.Entities;
 using RepositoryParser.DataBaseManagementCore.Services;
+using RepositoryParser.Helpers;
 using RepositoryParser.Helpers.Enums;
 
 namespace RepositoryParser.ViewModel
@@ -25,24 +26,14 @@ namespace RepositoryParser.ViewModel
         private ObservableCollection<string> _authorsCollection;
         private ObservableCollection<string> _branchCollection;
         private ObservableCollection<string> _repositoryCollection;
-        private Dictionary<string, string> _repositoryTypeDictionary;
+        private readonly Dictionary<string, string> _repositoryTypeDictionary;
         private readonly List<Commit> _commitsList;
-        private string _fromDate;
-        private string _toDate;
-        private string _messageTextBox;
-        private string _branchSelectedItem;
-        private string _repositorySelectedItem;
-        private string _authorsSelectedItem;
-        private string _repoType;
-        private bool _branchEnabled;
-
+        private bool _branchesEnabled;
+        private string _repositoryType;
         private RelayCommand _clearFiltersCommand;
         private RelayCommand _sendDataCommand;
         private RelayCommand _onLoadCommand;
         private RelayCommand<object> _clearSpecifiedFilterCommand;
-
-        public static string SelectedBranch { get; private set; }
-        public static string SelectedRepo { get; private set; }
         #endregion
 
         public FilteringViewModel()
@@ -50,11 +41,11 @@ namespace RepositoryParser.ViewModel
             Messenger.Default.Register<RefreshMessageToFiltering>(this, x=>HandleRefreshMessage(x.Refresh));
             _commitsList = new List<Commit>();
             _repositoryTypeDictionary = new Dictionary<string, string>();
+
             AuthorsCollection = new ObservableCollection<string>();
             BranchCollection = new ObservableCollection<string>();
             RepositoryCollection = new ObservableCollection<string>();
             OnLoad();
-            ClearFilters();
         }
 
         #region Buttons getters
@@ -65,7 +56,7 @@ namespace RepositoryParser.ViewModel
 
         public RelayCommand SendDataCommand
         {
-            get { return _sendDataCommand ?? (_sendDataCommand = new RelayCommand(SendFilteredData)); }
+            get { return _sendDataCommand ?? (_sendDataCommand = new RelayCommand(SendMessageToDisplay)); }
         }
 
         public RelayCommand ClearFiltersCommand
@@ -102,28 +93,27 @@ namespace RepositoryParser.ViewModel
         #endregion
 
         #region Getters/Setters
-
-        public string RepoType
+        public string RepositoryType
         {
-            get { return _repoType; }
+            get { return _repositoryType; }
             set
             {
-                if (_repoType != value)
+                if (_repositoryType != value)
                 {
-                    _repoType = value;
-                    RaisePropertyChanged("RepoType");
+                    _repositoryType = value;
+                    RaisePropertyChanged();
                 }
             }
         }
-        public bool BranchEnabled
+        public bool BranchesEnabled
         {
-            get { return _branchEnabled; }
+            get { return _branchesEnabled; }
             set
             {
-                if (_branchEnabled != value)
+                if (_branchesEnabled != value)
                 {
-                    _branchEnabled = value;
-                    RaisePropertyChanged("BranchEnabled");
+                    _branchesEnabled = value;
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -139,7 +129,7 @@ namespace RepositoryParser.ViewModel
                 if (_branchCollection != value)
                 {
                     _branchCollection = value;
-                    RaisePropertyChanged("BranchCollection");
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -152,49 +142,49 @@ namespace RepositoryParser.ViewModel
                 if (_repositoryCollection != value)
                 {
                     _repositoryCollection = value;
-                    RaisePropertyChanged("RepositoryCollection");
+                    RaisePropertyChanged();
                 }
             }
         }
 
         public string MessageTextBox
         {
-            get { return _messageTextBox; }
+            get { return FilteringHelper.Instance.MessageCriteria; }
             set
             {
-                if (_messageTextBox != value)
+                if (FilteringHelper.Instance.MessageCriteria != value)
                 {
-                    _messageTextBox = value;
-                    this.SendFilteredData();
-                    RaisePropertyChanged("MessageTextBox");
+                    FilteringHelper.Instance.MessageCriteria = value;
+                    this.SendMessageToDisplay();
+                    RaisePropertyChanged();
                 }
             }
         }
 
         public string FromDate
         {
-            get { return _fromDate; }
+            get { return FilteringHelper.Instance.DateFrom; }
             set
             {
-                if (_fromDate != value)
+                if (FilteringHelper.Instance.DateFrom != value)
                 {
-                    _fromDate = value;
-                    this.SendFilteredData();
-                    RaisePropertyChanged("FromDate");
+                    FilteringHelper.Instance.DateFrom = value;
+                    this.SendMessageToDisplay();
+                    RaisePropertyChanged();
                 }
             }
         }
 
         public string ToDate
         {
-            get { return _toDate; }
+            get { return FilteringHelper.Instance.DateTo; }
             set
             {
-                if (_toDate != value)
+                if (FilteringHelper.Instance.DateTo != value)
                 {
-                    _toDate = value;
-                    this.SendFilteredData();
-                    RaisePropertyChanged("ToDate");
+                    FilteringHelper.Instance.DateTo = value;
+                    this.SendMessageToDisplay();
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -207,65 +197,62 @@ namespace RepositoryParser.ViewModel
                 if (_authorsCollection != value)
                 {
                     _authorsCollection = value;
-                    RaisePropertyChanged("AuthorsCollection");
+                    RaisePropertyChanged();
                 }
             }
         }
 
         public string AuthorsSelectedItem
         {
-            get { return _authorsSelectedItem; }
+            get { return FilteringHelper.Instance.SelectedAuthor; }
             set
             {
-                if (_authorsSelectedItem != value)
+                if (FilteringHelper.Instance.SelectedAuthor != value)
                 {
-                    _authorsSelectedItem = value;
-                    this.SendFilteredData();
-                    RaisePropertyChanged("AuthorsSelectedItem");
+                    FilteringHelper.Instance.SelectedAuthor = value;
+                    this.SendMessageToDisplay();
+                    RaisePropertyChanged();
                 }
             }
         }
 
         public string BranchSelectedItem
         {
-            get { return _branchSelectedItem; }
+            get { return FilteringHelper.Instance.SelectedBranch; }
             set
             {
-                if (_branchSelectedItem != value)
+                if (FilteringHelper.Instance.SelectedBranch != value)
                 {
-                    _branchSelectedItem = value;
-                    if (_branchSelectedItem != null)
+                    FilteringHelper.Instance.SelectedBranch = value;
+                    if (FilteringHelper.Instance.SelectedBranch != null)
                     {
-                        FilteringViewModel.SelectedBranch = _branchSelectedItem;
-                        this.SendFilteredData();
+                        this.SendMessageToDisplay();
                     }
-                    RaisePropertyChanged("BranchSelectedItem");
+                    RaisePropertyChanged();
                 }
             }
         }
 
         public string RepositorySelectedItem
         {
-            get { return _repositorySelectedItem; }
+            get { return FilteringHelper.Instance.SelectedRepository; }
             set
             {
-                _repositorySelectedItem = value;
-                if (_repositorySelectedItem != null)
+                FilteringHelper.Instance.SelectedRepository = value;
+                if (FilteringHelper.Instance.SelectedRepository != null)
                 {
-                    SelectedRepo = _repositorySelectedItem;
-                    BranchEnabled = true;
-                    var firstOrDefault = RepositoryCollection.FirstOrDefault(x => x == _repositorySelectedItem);
+                    BranchesEnabled = true;
+                    var firstOrDefault = RepositoryCollection.FirstOrDefault(x => x == FilteringHelper.Instance.SelectedRepository);
                     if (firstOrDefault != null)
                     {
-                        RepoType = _repositoryTypeDictionary[RepositorySelectedItem];
+                        RepositoryType = _repositoryTypeDictionary[RepositorySelectedItem];
                     }
-
 
                     GetBranches();
                     GetAuthors();
                     BranchSelectedItem = BranchCollection.FirstOrDefault() ?? string.Empty;
                 }
-                RaisePropertyChanged("RepositorySelectedItem");
+                RaisePropertyChanged();
             }
         }
 
@@ -283,14 +270,16 @@ namespace RepositoryParser.ViewModel
 
         private void GetBranches()
         {
-            BranchCollection.Clear();
+            if(BranchCollection != null && BranchCollection.Any())
+                BranchCollection.Clear();
+
             using (var session = DbService.Instance.SessionFactory.OpenSession())
             {
                 Repository repository = null;
                 if (BranchCollection != null && BranchCollection.Any())
                     BranchCollection.Clear();
 
-                if (string.IsNullOrEmpty(SelectedRepo))
+                if (string.IsNullOrEmpty(FilteringHelper.Instance.SelectedRepository))
                 {
                     var branches =
                         session.QueryOver<Branch>().List<Branch>();
@@ -300,8 +289,8 @@ namespace RepositoryParser.ViewModel
                 {
                     var branches =
                         session.QueryOver<Branch>()
-                            .JoinQueryOver(branch => branch.Repository, () => repository)
-                            .Where(() => repository.Name == SelectedRepo)
+                            .JoinAlias(branch => branch.Repository, () => repository, JoinType.LeftOuterJoin)
+                            .Where(() => repository.Name == FilteringHelper.Instance.SelectedRepository)
                             .TransformUsing(Transformers.DistinctRootEntity)
                             .List<Branch>();
                     branches.ForEach(branch => BranchCollection.Add(branch.Name));
@@ -334,7 +323,7 @@ namespace RepositoryParser.ViewModel
             AuthorsCollection.Clear();
             using (var session = DbService.Instance.SessionFactory.OpenSession())
             {
-                if (string.IsNullOrEmpty(SelectedRepo))
+                if (string.IsNullOrEmpty(FilteringHelper.Instance.SelectedRepository))
                 {
                     var authors =
                         session.QueryOver<Commit>()
@@ -349,9 +338,9 @@ namespace RepositoryParser.ViewModel
                     var authors =
                         session.QueryOver<Commit>()
                             .SelectList(list => list.SelectGroup(commit => commit.Author))
-                            .JoinQueryOver(commit => commit.Branches, () => branch)
-                            .JoinQueryOver(() => branch.Repository, () => repository)
-                            .Where(() => repository.Name == SelectedRepo).List<string>();
+                            .JoinAlias(commit => commit.Branches, () => branch, JoinType.LeftOuterJoin)
+                            .JoinAlias(() => branch.Repository, () => repository, JoinType.LeftOuterJoin)
+                            .Where(() => repository.Name == FilteringHelper.Instance.SelectedRepository).List<string>();
                     authors.ForEach(author => AuthorsCollection.Add(author));
                 }
                 
@@ -360,150 +349,11 @@ namespace RepositoryParser.ViewModel
 
         private void OnLoad()
         {
-
             GetRepositories();
             GetBranches();
             GetAuthors();
             ClearFilters();
         }
-
-        private void SendFilteredData()
-        {
-            IQueryOver<Commit> query = GenerateQuery(DbService.Instance.SessionFactory.OpenSession());
-            ExecuteRefresh(query);
-        }
-
-
-        private IQueryOver<Commit,Commit> GenerateQuery(ISession session)
-        {
-            bool isCountiuned = false;
-
-            Repository repository = null;
-            Branch branch = null;
-
-            var query = session.QueryOver<Commit>();
-            if (!String.IsNullOrEmpty(SelectedRepo) && !String.IsNullOrEmpty(SelectedBranch))
-            {
-                query =
-                    query.JoinAlias(commit => commit.Branches, () => branch, JoinType.LeftOuterJoin)
-                            .JoinAlias(() => branch.Repository, () => repository, JoinType.LeftOuterJoin)
-                            .Where(() => branch.Name == SelectedBranch && repository.Name == SelectedRepo)
-                            .TransformUsing(Transformers.DistinctRootEntity).Clone();
-
-                isCountiuned = true;
-            }
-            else if (!String.IsNullOrEmpty(SelectedRepo) &&
-                        String.IsNullOrEmpty(SelectedBranch))
-            {
-                query =
-                    query.JoinAlias(commit => commit.Branches, () => branch, JoinType.LeftOuterJoin)
-                        .JoinAlias(() => branch.Repository, () => repository, JoinType.LeftOuterJoin)
-                        .Where(() => repository.Name == SelectedRepo)
-                        .TransformUsing(Transformers.DistinctRootEntity)
-                        .Clone();
-                isCountiuned = true;
-            }
-
-            bool isAuthor = !String.IsNullOrEmpty(AuthorsSelectedItem);
-            bool isFromDate = !String.IsNullOrEmpty(_fromDate);
-            bool isToDate = !String.IsNullOrEmpty(_toDate);
-            bool isMessage = !String.IsNullOrEmpty(MessageTextBox);
-
-            if (isAuthor == false && isFromDate == false && isToDate == false && isMessage == false &&
-                isCountiuned == false)
-                return session.QueryOver<Commit>();
-            if (isAuthor == false && isFromDate == false && isToDate == false && isMessage == false && isCountiuned)
-            {
-                string selectedBranch = SelectedBranch;
-                if (String.IsNullOrEmpty(SelectedBranch))
-                    selectedBranch = "master";
-                query =
-                    query.Where(() => branch.Name == SelectedBranch || branch.Name == "trunk" && repository.Name == SelectedRepo)
-                            .TransformUsing(Transformers.DistinctRootEntity)
-                            .Clone();
-                return query;
-            }
-            else if (isAuthor == false && isFromDate == false && isToDate == false && isMessage == true)
-            {
-                query = query.Where(Restrictions.On<Commit>(c => c.Message).IsLike(MessageTextBox, MatchMode.Anywhere));
-                return query;
-            }
-
-            if (isAuthor == true && isFromDate == false && isToDate == false)
-            {
-                query = query.Where(commit => commit.Author == AuthorsSelectedItem);
-            }
-            else if (isAuthor == true && isFromDate == true && isToDate == true)
-            {
-                query =
-                    query.Where(
-                        commit =>
-                            commit.Author == AuthorsSelectedItem && commit.Date >= DateTime.Parse(_fromDate) &&
-                            commit.Date <= DateTime.Parse(_toDate));
-            }
-            else if (isAuthor == true && isFromDate == true && isToDate == false)
-            {
-/*                    query += "Author='" + AuthorsSelectedItem + "'" +
-                            " AND " +
-                            "Date >= " + "'" + _fromDate + "'" +
-                            " AND " +
-                            "Date <= " + "'" + "2150-01-01" + "'";*/
-                query =
-                    query.Where(
-                        commit => commit.Author == AuthorsSelectedItem && commit.Date >= DateTime.Parse(_fromDate)); //todo check
-            }
-            else if (isAuthor == true && isFromDate == false && isToDate == true)
-            {
-/*                    query += "Author='" + AuthorsSelectedItem + "'" +
-                            " AND " +
-                            "Date >= " + "'" + "1950-01-01" + "'" +
-                            " AND " +
-                            "Date <= " + "'" + _toDate + "'";*/
-                query =
-                    query.Where(
-                        commit => commit.Author == AuthorsSelectedItem && commit.Date <= DateTime.Parse(_toDate));
-                ;
-            }
-            else if (isAuthor == false && isFromDate == true && isToDate == true)
-            {
-                query =
-                    query.Where(
-                        commit => commit.Date >= DateTime.Parse(_fromDate) && commit.Date <= DateTime.Parse(_toDate));
-            }
-            else if (isAuthor == false && isFromDate == true && isToDate == false)
-            {
-            /*    query += "Date >= " + "'" + _fromDate + "'" +
-                            " AND " +
-                            "Date <= " + "'" + "2150-01-01" + "'";*/
-                query = query.Where(commit => commit.Date >= DateTime.Parse(_fromDate));
-            }
-            else if (isAuthor == false && isFromDate == false && isToDate == true)
-            {
-/*                    query += "Date >= " + "'" + "1950-01-01" + "'" +
-                            " AND " +
-                            "Date <= " + "'" + _toDate + "'";*/
-                query = query.Where(commit => commit.Date <= DateTime.Parse(_toDate));
-            }
-
-            if (isMessage)
-            {
-                query = query.Where(Restrictions.On<Commit>(c=>c.Message).IsLike(MessageTextBox, MatchMode.Anywhere));
-            }
-
-            return query;
-            
-        }
-
-
-        private void ExecuteRefresh(IQueryOver<Commit> query)
-        {
-            if(_commitsList != null && _commitsList.Any())
-                _commitsList.Clear();
-
-            SendMessageToDisplay();
-        }
-
-
 
         private void ClearFilters()
         {
@@ -524,12 +374,11 @@ namespace RepositoryParser.ViewModel
                 if (_commitsList != null && _commitsList.Any())
                     _commitsList.Clear();
 
-                var commits = GenerateQuery(session).List();
+                var commits = FilteringHelper.Instance.GenerateQuery(session).List();
                 commits.ForEach(commit=>_commitsList.Add(commit));
             }
             Messenger.Default.Send<DataMessageToDisplay>(new DataMessageToDisplay(this._commitsList));
         }
-
         #endregion
     }
 }

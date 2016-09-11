@@ -231,6 +231,7 @@
     <Compile Include="Conventers\ViewModelBaseToVisibilityConventer.cs" />
     <Compile Include="Helpers\CustomInputDialog.cs" />
     <Compile Include="Helpers\Enums\FilteringColumn.cs" />
+    <Compile Include="Helpers\FilteringHelper.cs" />
     <Compile Include="Helpers\StaticServiceProvider.cs" />
     <Compile Include="Properties\Resources.pl-PL.Designer.cs">
       <DependentUpon>Resources.pl-PL.resx</DependentUpon>
