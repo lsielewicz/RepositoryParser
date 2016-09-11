@@ -4,10 +4,12 @@ using System.IO;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using NHibernate;
 using RepositoryParser.Core.Helpers;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
+using RepositoryParser.DataBaseManagementCore.Entities;
 
 namespace RepositoryParser.ViewModel
 {
@@ -22,13 +24,11 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _openAnalysisCommand;
         private RelayCommand _goToStartScreenCommand;
         private List<string> _authorsList;
-        private string _filteringQuery;
+        private IQueryOver<Commit> _filteringQuery;
         private bool _isDataBaseEmpty;
 
         public MainViewModel()
         {
-            Messenger.Default.Register<ChartMessageLevel0>(this, x => HandleDataMessage(x.AuthorsList, x.FilteringQuery));
-
             CurrentViewModel = (new ViewModelLocator()).DataBaseManagement;
             CurrentViewModel = (new ViewModelLocator()).Filtering;
             CurrentViewModel = (new ViewModelLocator()).Presentation;
@@ -126,7 +126,6 @@ namespace RepositoryParser.ViewModel
         private void OpenAnalysis()
         {
             CurrentViewModel = ViewModelLocator.Instance.Analysis;
-            Messenger.Default.Send<ChartMessageLevel1>(new ChartMessageLevel1(_authorsList,_filteringQuery));
         }
 
         private void OpenFiltering()
@@ -164,7 +163,7 @@ namespace RepositoryParser.ViewModel
             CurrentViewModel = ViewModelLocator.Instance.Presentation;  
         }
 
-        private void HandleDataMessage(List<string> authors, string filternigQuery)
+        private void HandleDataMessage(List<string> authors, IQueryOver<Commit> filternigQuery)
         {
             _authorsList = authors;
             _filteringQuery = filternigQuery;

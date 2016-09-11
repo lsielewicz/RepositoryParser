@@ -46,7 +46,6 @@ namespace RepositoryParser.ViewModel
 
         public DifferenceWindowViewModel()
         {
-            Messenger.Default.Register<ChartMessageLevel2>(this, x => HandleChartMessage(x.FilteringQuery));
             ChangesCollection = new ObservableCollection<KeyValuePair<string, string>>();
 
             this._showDifferencesWorker = new BackgroundWorker();

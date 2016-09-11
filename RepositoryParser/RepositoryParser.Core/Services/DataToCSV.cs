@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using RepositoryParser.Core.Models;
+using RepositoryParser.DataBaseManagementCore.Entities;
 
 namespace RepositoryParser.Core.Services
 {
@@ -25,11 +26,11 @@ namespace RepositoryParser.Core.Services
                  );
             File.WriteAllText(csvPath, csv, Encoding.UTF8);
         }
-        public static void CreateCSVFromGitCommitsList(List<CommitTable> data, string csvPath)
+        public static void CreateCSVFromGitCommitsList(List<Commit> data, string csvPath)
         {
             String csv = String.Join(
             Environment.NewLine,
-            data.Select(d => d.ID + ";" + d.Message + ";" + d.Author + ";" + d.Date + ";" + d.Email)
+            data.Select(d => d.Id + ";" + d.Message + ";" + d.Author + ";" + d.Date + ";" + d.Email)
                  );
             File.WriteAllText(csvPath, csv, Encoding.UTF8);
         }

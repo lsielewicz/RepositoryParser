@@ -21,7 +21,6 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
 
         public MonthActivityContentProviderViewModel()
         {
-            Messenger.Default.Register<ChartMessageLevel2>(this, x => HandleDataMessage(x.AuthorsList, x.FilteringQuery));
             CurrentViewModel = new ViewModelLocator().MonthActivity;
             CurrentViewModel = null;
         }
@@ -60,7 +59,6 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
         private void OpenChartView()
         {
             CurrentViewModel = (new ViewModelLocator()).MonthActivity;
-            Messenger.Default.Send<ChartMessageLevel3MonthActivity>(new ChartMessageLevel3MonthActivity(_filteringQuery));
         }
 
         private void HandleDataMessage(List<string> authors, string filternigQuery)

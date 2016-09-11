@@ -28,8 +28,6 @@ namespace RepositoryParser.ViewModel
 
         public HourActivityViewModel()
         {
-            Messenger.Default.Register<ChartMessageLevel3HourActivity>(this,
-                x => HandleDataMessage(x.FilteringQuery));
             KeyCollection = new ObservableCollection<KeyValuePair<string, int>>();
         }
 

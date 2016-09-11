@@ -29,8 +29,6 @@ namespace RepositoryParser.ViewModel
 
         public MonthActivityChartViewModel()
         {
-            Messenger.Default.Register<ChartMessageLevel3MonthActivity>(this,
-                x => HandleDataMessage(x.FilteringQuery));
 
             KeyCollection = new ObservableCollection<KeyValuePair<string, int>>();
         }

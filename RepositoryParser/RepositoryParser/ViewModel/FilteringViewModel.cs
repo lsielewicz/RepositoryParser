@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data.SQLite;
 using System.Linq;
-using System.Reflection;
-using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using NHibernate;
+using NHibernate.Criterion;
+using NHibernate.Linq;
+using NHibernate.SqlCommand;
+using NHibernate.Transform;
+using NHibernate.Util;
 using RepositoryParser.Core.Messages;
-using RepositoryParser.Core.Models;
+using RepositoryParser.DataBaseManagementCore.Configuration;
+using RepositoryParser.DataBaseManagementCore.Entities;
+using RepositoryParser.DataBaseManagementCore.Services;
 using RepositoryParser.Helpers.Enums;
 
 namespace RepositoryParser.ViewModel
@@ -19,14 +22,11 @@ namespace RepositoryParser.ViewModel
     public class FilteringViewModel : ViewModelBase
     {
         #region private fields
-        private SqLiteService _localSqliteService;
         private ObservableCollection<string> _authorsCollection;
         private ObservableCollection<string> _branchCollection;
-        private ObservableCollection<string> _repositoryCcollection;
-        private readonly List<CommitTable> _commitsList;
-        private readonly List<string> _authorsList;
-        private List<BranchTable> _branchList;
-        private List<RepositoryTable> _repoList;
+        private ObservableCollection<string> _repositoryCollection;
+        private Dictionary<string, string> _repositoryTypeDictionary;
+        private readonly List<Commit> _commitsList;
         private string _fromDate;
         private string _toDate;
         private string _messageTextBox;
@@ -48,8 +48,8 @@ namespace RepositoryParser.ViewModel
         public FilteringViewModel()
         {
             Messenger.Default.Register<RefreshMessageToFiltering>(this, x=>HandleRefreshMessage(x.Refresh));
-            _authorsList = new List<string>();
-            _commitsList = new List<CommitTable>();
+            _commitsList = new List<Commit>();
+            _repositoryTypeDictionary = new Dictionary<string, string>();
             AuthorsCollection = new ObservableCollection<string>();
             BranchCollection = new ObservableCollection<string>();
             RepositoryCollection = new ObservableCollection<string>();
@@ -130,7 +130,10 @@ namespace RepositoryParser.ViewModel
 
         public ObservableCollection<string> BranchCollection
         {
-            get { return _branchCollection; }
+            get
+            {
+                return _branchCollection;
+            }
             set
             {
                 if (_branchCollection != value)
@@ -143,12 +146,12 @@ namespace RepositoryParser.ViewModel
 
         public ObservableCollection<string> RepositoryCollection
         {
-            get { return _repositoryCcollection; }
+            get { return _repositoryCollection; }
             set
             {
-                if (_repositoryCcollection != value)
+                if (_repositoryCollection != value)
                 {
-                    _repositoryCcollection = value;
+                    _repositoryCollection = value;
                     RaisePropertyChanged("RepositoryCollection");
                 }
             }
@@ -251,9 +254,12 @@ namespace RepositoryParser.ViewModel
                 {
                     SelectedRepo = _repositorySelectedItem;
                     BranchEnabled = true;
-                    var firstOrDefault = _repoList.FirstOrDefault(x => x.Name == _repositorySelectedItem);
+                    var firstOrDefault = RepositoryCollection.FirstOrDefault(x => x == _repositorySelectedItem);
                     if (firstOrDefault != null)
-                        RepoType = firstOrDefault.Type;
+                    {
+                        RepoType = _repositoryTypeDictionary[RepositorySelectedItem];
+                    }
+
 
                     GetBranches();
                     GetAuthors();
@@ -278,104 +284,123 @@ namespace RepositoryParser.ViewModel
         private void GetBranches()
         {
             BranchCollection.Clear();
-            if (String.IsNullOrEmpty(SelectedRepo))
+            using (var session = DbService.Instance.SessionFactory.OpenSession())
             {
-                BranchCollection.Clear();
-                BranchTable temp = new BranchTable();
-                _branchList = temp.GetDataFromBase(SqLiteService.GetInstance().Connection);
-                _branchList.ForEach(x => BranchCollection.Add(x.Name));
-            }
-            else
-            {
-                string query = "select * from Branch " +
-                               "inner join BranchForRepo on Branch.ID = BranchForRepo.NR_GitBranch " +
-                               "inner join Repository on BranchForRepo.NR_GitRepository=Repository.ID " +
-                               "where Repository.Name='" + SelectedRepo + "'";
-                BranchTable temp = new BranchTable();
-                _branchList = temp.GetDataFromBase(SqLiteService.GetInstance().Connection, query);
-                _branchList.ForEach(x => BranchCollection.Add(x.Name));
+                Repository repository = null;
+                if (BranchCollection != null && BranchCollection.Any())
+                    BranchCollection.Clear();
+
+                if (string.IsNullOrEmpty(SelectedRepo))
+                {
+                    var branches =
+                        session.QueryOver<Branch>().List<Branch>();
+                    branches.ForEach(branch => BranchCollection.Add(branch.Name));
+                }
+                else
+                {
+                    var branches =
+                        session.QueryOver<Branch>()
+                            .JoinQueryOver(branch => branch.Repository, () => repository)
+                            .Where(() => repository.Name == SelectedRepo)
+                            .TransformUsing(Transformers.DistinctRootEntity)
+                            .List<Branch>();
+                    branches.ForEach(branch => BranchCollection.Add(branch.Name));
+                }
             }
         }
 
         private void GetRepositories()
         {
-            RepositoryCollection.Clear();
-            RepositoryTable temp = new RepositoryTable();
-            _repoList = temp.GetDataFromBase(SqLiteService.GetInstance().Connection);
-            _repoList.ForEach(x => RepositoryCollection.Add(x.Name));
+            if(RepositoryCollection != null && RepositoryCollection.Any())
+                RepositoryCollection.Clear();
+            if(_repositoryTypeDictionary != null && _repositoryTypeDictionary.Any())
+                _repositoryTypeDictionary.Clear();
+
+            using (var session = DbService.Instance.SessionFactory.OpenSession())
+            {
+                var repositories =
+                    session.QueryOver<Repository>().List<Repository>();
+                repositories.ForEach(repository =>
+                {
+                    RepositoryCollection.Add(repository.Name);
+                    _repositoryTypeDictionary.Add(repository.Name,repository.Type);
+                });
+                
+            }
         }
 
         private void GetAuthors()
         {
-            _authorsList.Clear();
             AuthorsCollection.Clear();
-            string query = "SELECT Author FROM Commits GROUP BY Author";
-            if (!String.IsNullOrEmpty(SelectedRepo))
+            using (var session = DbService.Instance.SessionFactory.OpenSession())
             {
-                query = "select Author from Commits " +
-                        "inner join CommitForBranch on Commits.ID=CommitForBranch.NR_Commit " +
-                        "inner join BranchForRepo on CommitForBranch.NR_Branch=BranchForRepo.NR_GitBranch " +
-                        "inner join Repository on BranchForRepo.NR_GitRepository=Repository.ID " +
-                        "where " +
-                        "Repository.Name='" + SelectedRepo + "' " +
-                        "group by Author ";
+                if (string.IsNullOrEmpty(SelectedRepo))
+                {
+                    var authors =
+                        session.QueryOver<Commit>()
+                            .SelectList(list => list.SelectGroup(commit => commit.Author))
+                            .List<string>();
+                    authors.ForEach(author => AuthorsCollection.Add(author));
+                }
+                else
+                {
+                    Branch branch=null;
+                    Repository repository=null;
+                    var authors =
+                        session.QueryOver<Commit>()
+                            .SelectList(list => list.SelectGroup(commit => commit.Author))
+                            .JoinQueryOver(commit => commit.Branches, () => branch)
+                            .JoinQueryOver(() => branch.Repository, () => repository)
+                            .Where(() => repository.Name == SelectedRepo).List<string>();
+                    authors.ForEach(author => AuthorsCollection.Add(author));
+                }
+                
             }
-
-            SQLiteCommand command = new SQLiteCommand(query, _localSqliteService.Connection);
-            SQLiteDataReader reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                string author = Convert.ToString(reader["Author"]);
-                _authorsList.Add(author);
-            }
-            _authorsList.ForEach(x => AuthorsCollection.Add(x));
         }
 
         private void OnLoad()
         {
-            _localSqliteService = SqLiteService.GetInstance();
-            GetAuthors();
-            GetBranches();
+
             GetRepositories();
+            GetBranches();
+            GetAuthors();
             ClearFilters();
         }
 
         private void SendFilteredData()
         {
-            string query = GenerateQuery();
+            IQueryOver<Commit> query = GenerateQuery(DbService.Instance.SessionFactory.OpenSession());
             ExecuteRefresh(query);
         }
 
 
-        private string GenerateQuery()
+        private IQueryOver<Commit,Commit> GenerateQuery(ISession session)
         {
             bool isCountiuned = false;
-            string query = "SELECT * FROM Commits WHERE ";
+
+            Repository repository = null;
+            Branch branch = null;
+
+            var query = session.QueryOver<Commit>();
             if (!String.IsNullOrEmpty(SelectedRepo) && !String.IsNullOrEmpty(SelectedBranch))
             {
-                query = "select * from Commits " +
-                        "inner join CommitForBranch on Commits.ID=CommitForBranch.NR_Commit " +
-                        "inner join BranchForRepo on CommitForBranch.NR_Branch=BranchForRepo.NR_GitBranch " +
-                        "inner join Branch on CommitForBranch.NR_Branch=Branch.ID " +
-                        "inner join Repository on BranchForRepo.NR_GitRepository=Repository.ID " +
-                        "where " +
-                        "Branch.Name='" + SelectedBranch + "' " +
-                        "and Repository.Name='" + SelectedRepo + "' " +
-                        "and ";
+                query =
+                    query.JoinAlias(commit => commit.Branches, () => branch, JoinType.LeftOuterJoin)
+                            .JoinAlias(() => branch.Repository, () => repository, JoinType.LeftOuterJoin)
+                            .Where(() => branch.Name == SelectedBranch && repository.Name == SelectedRepo)
+                            .TransformUsing(Transformers.DistinctRootEntity).Clone();
+
                 isCountiuned = true;
             }
             else if (!String.IsNullOrEmpty(SelectedRepo) &&
-                     String.IsNullOrEmpty(SelectedBranch))
+                        String.IsNullOrEmpty(SelectedBranch))
             {
-                query = "select * from Commits " +
-                        "inner join CommitForBranch on Commits.ID=CommitForBranch.NR_Commit " +
-                        "inner join BranchForRepo on CommitForBranch.NR_Branch=BranchForRepo.NR_GitBranch " +
-                        "inner join Branch on CommitForBranch.NR_Branch=Branch.ID " +
-                        "inner join Repository on BranchForRepo.NR_GitRepository=Repository.ID " +
-                        "where " +
-                        "Branch.Name='master' " +
-                        "and Repository.Name='" + SelectedRepo + "' " +
-                        "and ";
+                query =
+                    query.JoinAlias(commit => commit.Branches, () => branch, JoinType.LeftOuterJoin)
+                        .JoinAlias(() => branch.Repository, () => repository, JoinType.LeftOuterJoin)
+                        .Where(() => repository.Name == SelectedRepo)
+                        .TransformUsing(Transformers.DistinctRootEntity)
+                        .Clone();
                 isCountiuned = true;
             }
 
@@ -384,100 +409,98 @@ namespace RepositoryParser.ViewModel
             bool isToDate = !String.IsNullOrEmpty(_toDate);
             bool isMessage = !String.IsNullOrEmpty(MessageTextBox);
 
-            if (isAuthor == false && isFromDate == false && isToDate == false && isMessage == false && isCountiuned == false)
-                return "SELECT * FROM Commits";
-            else if (isAuthor == false && isFromDate == false && isToDate == false && isMessage == false && isCountiuned == true)
+            if (isAuthor == false && isFromDate == false && isToDate == false && isMessage == false &&
+                isCountiuned == false)
+                return session.QueryOver<Commit>();
+            if (isAuthor == false && isFromDate == false && isToDate == false && isMessage == false && isCountiuned)
             {
                 string selectedBranch = SelectedBranch;
                 if (String.IsNullOrEmpty(SelectedBranch))
                     selectedBranch = "master";
-                query = "select * from Commits " +
-                        "inner join CommitForBranch on Commits.ID=CommitForBranch.NR_Commit " +
-                        "inner join BranchForRepo on CommitForBranch.NR_Branch=BranchForRepo.NR_GitBranch " +
-                        "inner join Branch on CommitForBranch.NR_Branch=Branch.ID " +
-                        "inner join Repository on BranchForRepo.NR_GitRepository=Repository.ID " +
-                        "where " +
-                        "Branch.Name='" + selectedBranch + "' " +
-                        "and Repository.Name='" + SelectedRepo + "' ";
+                query =
+                    query.Where(() => branch.Name == SelectedBranch || branch.Name == "trunk" && repository.Name == SelectedRepo)
+                            .TransformUsing(Transformers.DistinctRootEntity)
+                            .Clone();
                 return query;
             }
             else if (isAuthor == false && isFromDate == false && isToDate == false && isMessage == true)
             {
-                query += "Message LIKE '%" +
-                        MessageTextBox + "%'";
+                query = query.Where(Restrictions.On<Commit>(c => c.Message).IsLike(MessageTextBox, MatchMode.Anywhere));
                 return query;
             }
 
             if (isAuthor == true && isFromDate == false && isToDate == false)
-                query += "Author='" + AuthorsSelectedItem + "'";
+            {
+                query = query.Where(commit => commit.Author == AuthorsSelectedItem);
+            }
             else if (isAuthor == true && isFromDate == true && isToDate == true)
             {
-                query += "Author='" + AuthorsSelectedItem + "'" +
-                " AND " +
-                "Date >= " + "'" + _fromDate + "'" +
-                " AND " +
-                "Date <= " + "'" + _toDate + "'";
+                query =
+                    query.Where(
+                        commit =>
+                            commit.Author == AuthorsSelectedItem && commit.Date >= DateTime.Parse(_fromDate) &&
+                            commit.Date <= DateTime.Parse(_toDate));
             }
             else if (isAuthor == true && isFromDate == true && isToDate == false)
             {
-                query += "Author='" + AuthorsSelectedItem + "'" +
-                " AND " +
-                "Date >= " + "'" + _fromDate + "'" +
-                " AND " +
-                "Date <= " + "'" + "2150-01-01" + "'";
+/*                    query += "Author='" + AuthorsSelectedItem + "'" +
+                            " AND " +
+                            "Date >= " + "'" + _fromDate + "'" +
+                            " AND " +
+                            "Date <= " + "'" + "2150-01-01" + "'";*/
+                query =
+                    query.Where(
+                        commit => commit.Author == AuthorsSelectedItem && commit.Date >= DateTime.Parse(_fromDate)); //todo check
             }
             else if (isAuthor == true && isFromDate == false && isToDate == true)
             {
-                query += "Author='" + AuthorsSelectedItem + "'" +
-                " AND " +
-                "Date >= " + "'" + "1950-01-01" + "'" +
-                " AND " +
-                "Date <= " + "'" + _toDate + "'"; ;
+/*                    query += "Author='" + AuthorsSelectedItem + "'" +
+                            " AND " +
+                            "Date >= " + "'" + "1950-01-01" + "'" +
+                            " AND " +
+                            "Date <= " + "'" + _toDate + "'";*/
+                query =
+                    query.Where(
+                        commit => commit.Author == AuthorsSelectedItem && commit.Date <= DateTime.Parse(_toDate));
+                ;
             }
             else if (isAuthor == false && isFromDate == true && isToDate == true)
             {
-                query += "Date >= " + "'" + _fromDate + "'" +
-                        " AND " +
-                        "Date <= " + "'" + _toDate + "'";
+                query =
+                    query.Where(
+                        commit => commit.Date >= DateTime.Parse(_fromDate) && commit.Date <= DateTime.Parse(_toDate));
             }
             else if (isAuthor == false && isFromDate == true && isToDate == false)
             {
-                query += "Date >= " + "'" + _fromDate + "'" +
-                        " AND " +
-                        "Date <= " + "'" + "2150-01-01" + "'";
+            /*    query += "Date >= " + "'" + _fromDate + "'" +
+                            " AND " +
+                            "Date <= " + "'" + "2150-01-01" + "'";*/
+                query = query.Where(commit => commit.Date >= DateTime.Parse(_fromDate));
             }
             else if (isAuthor == false && isFromDate == false && isToDate == true)
             {
-                query += "Date >= " + "'" + "1950-01-01" + "'" +
-                        " AND " +
-                        "Date <= " + "'" + _toDate + "'";
+/*                    query += "Date >= " + "'" + "1950-01-01" + "'" +
+                            " AND " +
+                            "Date <= " + "'" + _toDate + "'";*/
+                query = query.Where(commit => commit.Date <= DateTime.Parse(_toDate));
             }
 
             if (isMessage)
-                query += " AND Message LIKE '%" +
-                           MessageTextBox + "%'";
+            {
+                query = query.Where(Restrictions.On<Commit>(c=>c.Message).IsLike(MessageTextBox, MatchMode.Anywhere));
+            }
 
             return query;
+            
         }
 
 
-        private void ExecuteRefresh(string query)
+        private void ExecuteRefresh(IQueryOver<Commit> query)
         {
-            _commitsList.Clear();
-            SQLiteCommand command = new SQLiteCommand(query, _localSqliteService.Connection);
-            SQLiteDataReader reader = command.ExecuteReader();
-            int id = 1;
-            while (reader.Read())
-            {
-                string message = Convert.ToString(reader["Message"]);
-                string author = Convert.ToString(reader["Author"]);
-                string date = Convert.ToString(reader["Date"]);
-                string email = Convert.ToString(reader["Email"]);
-                _commitsList.Add(new CommitTable(id, message, author, date, email));
-                id++;
-            }
+            if(_commitsList != null && _commitsList.Any())
+                _commitsList.Clear();
+
             SendMessageToDisplay();
-            SendMessageToDrawChart(query);
         }
 
 
@@ -496,13 +519,17 @@ namespace RepositoryParser.ViewModel
         #region Messages
         private void SendMessageToDisplay()
         {
+            using (var session = DbService.Instance.SessionFactory.OpenSession())
+            {
+                if (_commitsList != null && _commitsList.Any())
+                    _commitsList.Clear();
+
+                var commits = GenerateQuery(session).List();
+                commits.ForEach(commit=>_commitsList.Add(commit));
+            }
             Messenger.Default.Send<DataMessageToDisplay>(new DataMessageToDisplay(this._commitsList));
         }
 
-        private void SendMessageToDrawChart(string queryToSend)
-        {
-            Messenger.Default.Send<ChartMessageLevel0>(new ChartMessageLevel0(_authorsList,queryToSend));
-        }
         #endregion
     }
 }

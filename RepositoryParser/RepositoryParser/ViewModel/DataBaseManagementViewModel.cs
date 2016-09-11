@@ -12,9 +12,11 @@ using System.Windows.Forms;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using RepositoryParser.Core.Interfaces;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
+using RepositoryParser.DataBaseManagementCore.Services;
 using MessageBox = System.Windows.MessageBox;
 
 namespace RepositoryParser.ViewModel
@@ -22,8 +24,8 @@ namespace RepositoryParser.ViewModel
     public class DataBaseManagementViewModel : ViewModelBase
     {
         #region private variables
-        private GitService _gitRepoService;
-        private SvnService _svnRepoService;
+
+        private IVersionControlFilePersister _repositoryFilePersister;
         private string _urlTextBox = "";
         private bool _isCloneButtonEnabled = true;
         private bool _progressBarVisibility = false;
@@ -219,26 +221,17 @@ namespace RepositoryParser.ViewModel
 
                     if (IsGitRepositoryPicked == false)
                     {
-                        _svnRepoService = new SvnService(UrlTextBox);
-                        _svnRepoService.FillDataBase();
+                        _repositoryFilePersister = new SvnFilePersister(UrlTextBox);
                     }
                     else
                     {
-                        if (!_isLocal)
-                        {
-                            _gitRepoService = new GitService(UrlTextBox, true);
-                            _gitRepoService.FillDataBase();
-                        }
-                        else
-                        {
-                            _gitRepoService = new GitService(UrlTextBox, false);
-                            _gitRepoService.FillDataBase();
-                        }
+                        _repositoryFilePersister = new GitFilePersister(UrlTextBox,!_isLocal);
                     }
+                    _repositoryFilePersister.AddRepositoryToDataBase(DbService.Instance.SessionFactory);
                 }
                 catch (Exception ex)
                 {
-                    System.Windows.MessageBox.Show(ex.Message);
+                    System.Windows.MessageBox.Show(ex.Message); //todo message
                 }
                 finally
                 {
@@ -256,12 +249,7 @@ namespace RepositoryParser.ViewModel
         {
             try
             {
-                _gitRepoService = new GitService();
-                string repoPath = "./DataBases/CommonRepositoryDataBase.sqlite";
-                if (!File.Exists(repoPath))
-                    _gitRepoService.ConnectRepositoryToDataBase(true);
-                else
-                    _gitRepoService.ConnectRepositoryToDataBase();
+
             }
             catch (Exception ex)
             {
@@ -271,38 +259,9 @@ namespace RepositoryParser.ViewModel
 
         private void ClearDataBase()
         {
-            List<string> Transactions = new List<string>();
-            Transactions.Add(CommitTable.deleteAllQuery);
-            Transactions.Add(RepositoryTable.deleteAllQuery);
-            Transactions.Add(BranchTable.deleteAllQuery);
-            Transactions.Add(CommitForBranchTable.deleteAllQuery);
-            Transactions.Add(BranchForRepoTable.deleteAllQuery);
-            Transactions.Add(ChangesForCommitTable.deleteAllQuery);
-            Transactions.Add(ChangesTable.deleteAllQuery);
-            string[] TableName = new string[]
-            {
-                    "Commits",
-                    "Repository",
-                    "Branch",
-                    "CommitForBranch",
-                    "BranchForRepo",
-                    "Changes",
-                    "ChangesForCommit"
-            };
-            foreach (string name in TableName)
-            {
-                string delete = "delete from sqlite_sequence where name = '" + name + "'";
-                Transactions.Add(delete);
-            }
-            SqLiteService.GetInstance().ExecuteTransaction(Transactions);
-
-
+            DbService.Instance.CreateDataBase();
             Messenger.Default.Send<RefreshMessageToPresentation>(new RefreshMessageToPresentation(true));
         }
-        #endregion
-
-        #region Messaging
-
         #endregion
 
         #region BackgroundWorker

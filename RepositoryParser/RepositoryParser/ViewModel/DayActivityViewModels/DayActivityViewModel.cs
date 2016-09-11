@@ -29,7 +29,6 @@ namespace RepositoryParser.ViewModel
         #region Constructor
         public DayActivityViewModel()
         {
-            Messenger.Default.Register<ChartMessageLevel3DayActivity>(this, x => HandleDataMessage(x.FilteringQuery));
             KeyCollection = new ObservableCollection<KeyValuePair<int, int>>();
         }
         #endregion

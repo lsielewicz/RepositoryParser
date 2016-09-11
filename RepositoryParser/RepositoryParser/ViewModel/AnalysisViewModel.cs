@@ -27,7 +27,6 @@ namespace RepositoryParser.ViewModel
 
         public AnalysisViewModel()
         {
-            Messenger.Default.Register<ChartMessageLevel1>(this, x=> HandleDataMessage(x.AuthorsList,x.FilteringQuery));
             _authorsList = new List<string>();
 
             CurrentViewModel = new ViewModelLocator().MonthActivityContentProvider;
@@ -104,37 +103,31 @@ namespace RepositoryParser.ViewModel
         private void OpenDifferences()
         {
             CurrentViewModel = new ViewModelLocator().Difference;
-            Messenger.Default.Send<ChartMessageLevel2>(new ChartMessageLevel2(_filteringQuery));
         }
 
         private void OpenDayActivity()
         {
             CurrentViewModel = new ViewModelLocator().DayActivityContentProvider;
-            Messenger.Default.Send<ChartMessageLevel2>(new ChartMessageLevel2(_authorsList, _filteringQuery));
         }
 
         private void OpenHourActivity()
         {
             CurrentViewModel = new ViewModelLocator().HourActivityContentProvider;
-            Messenger.Default.Send<ChartMessageLevel2>(new ChartMessageLevel2(_authorsList, _filteringQuery));
         }
 
         private void OpenWeekdayActivity()
         {
             CurrentViewModel = new ViewModelLocator().WeekdayActivityContentProvider;
-            Messenger.Default.Send<ChartMessageLevel2>(new ChartMessageLevel2(_authorsList, _filteringQuery));
         }
 
         private void OpenMonthActivity()
         {
             CurrentViewModel = new ViewModelLocator().MonthActivityContentProvider;
-            Messenger.Default.Send<ChartMessageLevel2>(new ChartMessageLevel2(_authorsList,_filteringQuery));
         }
 
         private void OpenUserActivity()
         {
             CurrentViewModel = new ViewModelLocator().UsersActivityContentProvider;
-            Messenger.Default.Send<ChartMessageLevel2>(new ChartMessageLevel2(_authorsList, _filteringQuery));
         }
         #endregion
 

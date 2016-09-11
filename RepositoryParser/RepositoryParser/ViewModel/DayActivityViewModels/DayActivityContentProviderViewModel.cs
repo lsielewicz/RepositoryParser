@@ -20,7 +20,6 @@ namespace RepositoryParser.ViewModel.DayActivityViewModels
 
         public DayActivityContentProviderViewModel()
         {
-            Messenger.Default.Register<ChartMessageLevel2>(this, x => HandleDataMessage(x.AuthorsList, x.FilteringQuery));
         }
 
         #region Getters setters
@@ -57,7 +56,6 @@ namespace RepositoryParser.ViewModel.DayActivityViewModels
         private void OpenChartView()
         {
             CurrentViewModel = (new ViewModelLocator()).DayActivity;
-            Messenger.Default.Send<ChartMessageLevel3DayActivity>(new ChartMessageLevel3DayActivity(_authorsList, _filteringQuery));
         }
 
         private void HandleDataMessage(List<string> authors, string filternigQuery)

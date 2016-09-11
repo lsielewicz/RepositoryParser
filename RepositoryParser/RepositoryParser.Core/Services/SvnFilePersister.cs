@@ -23,7 +23,6 @@ namespace RepositoryParser.Core.Services
     public class SvnFilePersister : ISvnFilePersister
     {
         public string DirectoryPath { get; set; }
-        public string UrlPath { get; }
         public Repository GetRepository()
         {
             Repository repository = new Repository()

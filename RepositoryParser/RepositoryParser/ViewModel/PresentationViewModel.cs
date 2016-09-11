@@ -12,9 +12,13 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Win32;
+using NHibernate;
+using NHibernate.Util;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
+using RepositoryParser.DataBaseManagementCore.Entities;
+using RepositoryParser.DataBaseManagementCore.Services;
 using RepositoryParser.View;
 
 namespace RepositoryParser.ViewModel
@@ -22,21 +26,19 @@ namespace RepositoryParser.ViewModel
     public class PresentationViewModel : ViewModelBase  
     {
         #region private variables
-
-        private bool isUndocked;
-        private UndockedPresentationWindowView undockedWindow;
-        private ObservableCollection<CommitTable> _commitsCollection;
-        private GitService _gitRepoService;
+        private bool _isUndocked;
+        private UndockedPresentationWindowView _undockedWindow;
+        private ObservableCollection<Commit> _commitsCollection;
         private RelayCommand _refreshCommand;
         private RelayCommand _exportFileCommand;
         private RelayCommand<object> _dockUndockPageCommand;
-        private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
+        private readonly ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
         public PresentationView ViewInstance { get; set; }
         #endregion
 
-
         public PresentationViewModel()
         {
+            CommitsColection = new ObservableCollection<Commit>();
             Messenger.Default.Register<RefreshMessageToPresentation>(this, x=> HandleRefreshMessage(x.Refresh));
             OnLoad();
             Messenger.Default.Register<DataMessageToDisplay>(this, x => HandleDataMessage(x.CommitList));
@@ -47,10 +49,10 @@ namespace RepositoryParser.ViewModel
 
         public bool IsDocked
         {
-            get { return !isUndocked; }
+            get { return !_isUndocked; }
         }
 
-        public ObservableCollection<CommitTable> CommitsColection
+        public ObservableCollection<Commit> CommitsColection
         {
             get
             {
@@ -85,23 +87,23 @@ namespace RepositoryParser.ViewModel
             {
                 return _dockUndockPageCommand ?? (_dockUndockPageCommand = new RelayCommand<object>((obj) =>
                 {
-                    if (!isUndocked)
+                    if (!_isUndocked)
                     {
                         PresentationView presentationView = obj as PresentationView;
-                        undockedWindow = new UndockedPresentationWindowView();
+                        _undockedWindow = new UndockedPresentationWindowView();
                         if (presentationView != null)
                         {
                             presentationView.RootGrid.Children.Remove(presentationView.PresentationGrid);
-                            undockedWindow.PresentationGrid.Children.Add(presentationView.PresentationGrid);
+                            _undockedWindow.PresentationGrid.Children.Add(presentationView.PresentationGrid);
                         }
 
-                        undockedWindow.Show();
-                        isUndocked = true;
+                        _undockedWindow.Show();
+                        _isUndocked = true;
                         RaisePropertyChanged("IsDocked");
                     }
                     else
                     {
-                        isUndocked = false;
+                        _isUndocked = false;
                         RaisePropertyChanged("IsDocked");
                         UndockedPresentationWindowView undockedView = obj as UndockedPresentationWindowView;
                         if (undockedView != null && ViewInstance != null)
@@ -118,12 +120,8 @@ namespace RepositoryParser.ViewModel
         }
         #endregion
 
-        #region Buttons actions
-
-        #endregion
-
         #region Messages
-        private void HandleDataMessage(List<CommitTable> list)
+        private void HandleDataMessage(List<Commit> list)
         {
             CommitsColection.Clear();
             list.ForEach(x => CommitsColection.Add(x));
@@ -136,7 +134,12 @@ namespace RepositoryParser.ViewModel
         {
             if(CommitsColection != null && CommitsColection.Any())
                 CommitsColection.Clear();
-            _gitRepoService.GetDataFromBase().ForEach(x => CommitsColection.Add(x));
+
+            using (var session = DbService.Instance.SessionFactory.OpenSession())
+            {
+                var commits = session.QueryOver<Commit>().List<Commit>();
+                commits.ForEach(commit=>CommitsColection.Add(commit));
+            }
         }
 
         public void ExportFile()
@@ -152,7 +155,7 @@ namespace RepositoryParser.ViewModel
             {
                 // Save document
                 string filename = dlg.FileName;
-                List<CommitTable> tempList = CommitsColection.ToList();
+                List<Commit> tempList = CommitsColection.ToList();
                 DataToCsv.CreateCSVFromGitCommitsList(tempList, filename);
                 MessageBox.Show(_resourceManager.GetString("ExportMessage"), _resourceManager.GetString("ExportTitle"));
             }
@@ -162,15 +165,8 @@ namespace RepositoryParser.ViewModel
         {
             try
             {
-                //_gitRepoInstance = new GitRepositoryService();
-                _gitRepoService = new GitService();
-                string repoPath = "./DataBases/CommonRepositoryDataBase.sqlite";
-                if (!File.Exists(repoPath))
-                    _gitRepoService.ConnectRepositoryToDataBase(true);
-                else
-                    _gitRepoService.ConnectRepositoryToDataBase();
-                CommitsColection = new ObservableCollection<CommitTable>();
-                _gitRepoService.GetDataFromBase().ForEach(x => CommitsColection.Add(x));
+                RefreshList();
+                CommitsColection = new ObservableCollection<Commit>();
             }
             catch (Exception ex)
             {

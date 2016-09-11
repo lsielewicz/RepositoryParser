@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
+using RepositoryParser.DataBaseManagementCore.Configuration;
 
 namespace RepositoryParser.Conventers
 {
@@ -10,9 +11,9 @@ namespace RepositoryParser.Conventers
         {
             if (value != null)
             {
-                if((string)value == "GIT")
+                if((string)value == RepositoryType.Git)
                     return new Uri("../Assets/Images/git_logo_grey.png", UriKind.Relative);
-                else if ((string) value == "SVN")
+                else if ((string) value == RepositoryType.Svn)
                     return new Uri("../Assets/Images/svn_logo_grey.png",UriKind.Relative);
             }
             return new Uri("../Assets/Images/transparent", UriKind.Relative);
