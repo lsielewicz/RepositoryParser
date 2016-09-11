@@ -13,9 +13,8 @@ namespace RepositoryParser.ViewModel
         private bool _isLoading;
         private ViewModelBase _currentViewModel;
 
-        protected RepositoryAnalyserViewModelBase(ViewModelBase currentViewModel)
+        protected RepositoryAnalyserViewModelBase()
         {
-            _currentViewModel = currentViewModel;
         }
 
         public ViewModelBase CurrentViewModel
@@ -44,7 +43,8 @@ namespace RepositoryParser.ViewModel
                 RaisePropertyChanged();
             }
         }
-        public void OnLoad() { }
+
+        public abstract void OnLoad();
 
     }
 }

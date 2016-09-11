@@ -222,7 +222,7 @@
     <Compile Include="Conventers\InverseBoolConventer.cs" />
     <Compile Include="Conventers\InverseBoolToVisibiliyConventer.cs" />
     <Compile Include="Conventers\InverseIntegerToVisibilityConventer.cs" />
-    <Compile Include="Conventers\KeyValuePairToVisibilityConventer.cs" />
+    <Compile Include="Conventers\ChangesToVisibilityConventer.cs" />
     <Compile Include="Conventers\MultiBooleanAndIntegerToVisibilityConvnenter.cs" />
     <Compile Include="Conventers\NegativeBoolConventer.cs" />
     <Compile Include="Conventers\NegativeBoolToVisibilityConventer.cs" />

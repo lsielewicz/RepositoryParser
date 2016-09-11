@@ -128,6 +128,7 @@ namespace RepositoryParser.ViewModel
         private void OpenAnalysis()
         {
             CurrentViewModel = ViewModelLocator.Instance.Analysis;
+            ViewModelLocator.Instance.Analysis.CurrentViewModel = null;
         }
 
         private void OpenFiltering()

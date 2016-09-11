@@ -13,9 +13,6 @@ namespace RepositoryParser.ViewModel
     public class AnalysisViewModel : ViewModelBase
     {
         #region private fields
-
-        private List<string> _authorsList;
-        private string _filteringQuery;
         private RelayCommand _openMonthActivityCommand;
         private RelayCommand _openUserActivityCommand;
         private RelayCommand _openWeekdayActivityCommand;
@@ -27,8 +24,6 @@ namespace RepositoryParser.ViewModel
 
         public AnalysisViewModel()
         {
-            _authorsList = new List<string>();
-
             CurrentViewModel = new ViewModelLocator().MonthActivityContentProvider;
             CurrentViewModel = new ViewModelLocator().UsersActivityContentProvider;
             CurrentViewModel = new ViewModelLocator().WeekdayActivityContentProvider;
@@ -102,7 +97,8 @@ namespace RepositoryParser.ViewModel
 
         private void OpenDifferences()
         {
-            CurrentViewModel = new ViewModelLocator().Difference;
+            CurrentViewModel = ViewModelLocator.Instance.Difference;
+            (CurrentViewModel as DifferenceWindowViewModel).OnLoad();
         }
 
         private void OpenDayActivity()
@@ -136,8 +132,6 @@ namespace RepositoryParser.ViewModel
         private void HandleDataMessage(List<string> authors, string filternigQuery)
         {
                 CurrentViewModel = null;
-                _authorsList = authors;
-                _filteringQuery = filternigQuery;
         }
         #endregion
     }

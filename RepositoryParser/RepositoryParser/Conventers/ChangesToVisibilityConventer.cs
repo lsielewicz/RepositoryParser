@@ -6,14 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using RepositoryParser.DataBaseManagementCore.Entities;
 
 namespace RepositoryParser.Conventers
 {
-    public class KeyValuePairToVisibilityConventer : IValueConverter
+    public class ChangesToVisibilityConventer : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null || String.IsNullOrEmpty(((KeyValuePair<string, string>) value).Key))
+            if (value == null || String.IsNullOrEmpty(((Changes)value).Path))
                 return Visibility.Visible;
 
             return Visibility.Collapsed;

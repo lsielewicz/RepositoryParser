@@ -12,30 +12,33 @@ using System.Windows.Threading;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using NHibernate.SqlCommand;
+using NHibernate.Util;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
+using RepositoryParser.DataBaseManagementCore.Entities;
+using RepositoryParser.DataBaseManagementCore.Services;
+using RepositoryParser.Helpers;
 using RepositoryParser.View;
 
 namespace RepositoryParser.ViewModel
 {
-    public class DifferenceWindowViewModel : ViewModelBase
+    public class DifferenceWindowViewModel : RepositoryAnalyserViewModelBase
     {
         #region Variables
         private ObservableCollection<KeyValuePair<int, string>> _commitsCollection;
-        private KeyValuePair<int, string> _selectedItem;
-        private KeyValuePair<string, string> _changeSelectedItem;
-        private ObservableCollection<KeyValuePair<string, string>> _changesCollection;
-        private string _textA;
-        private string _textB;
+        private KeyValuePair<int, string> _commitSelectedItem;
+        private Changes _changeSelectedItem;
+        private ObservableCollection<Changes> _changesCollection;
+        private string _changePatch;
         private string _changeQuery;
         private string _filteringQuery;
-        private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
+        private ResourceManager _resourceManager;
         private DifferencesColoringService _colorService;
-        private ObservableCollection<ChangesColorModel> _listTextA;
+        private ObservableCollection<ChangesColorModel> _changePatchcollection;
         private RelayCommand _goToChartOfChangesCommand;
         private RelayCommand _closedEventCommand;
-        private bool _progressBarVisibility;
 
 
         private BackgroundWorker _showDifferencesWorker;
@@ -46,7 +49,9 @@ namespace RepositoryParser.ViewModel
 
         public DifferenceWindowViewModel()
         {
-            ChangesCollection = new ObservableCollection<KeyValuePair<string, string>>();
+            _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
+
+            ChangesCollection = new ObservableCollection<Changes>();
 
             this._showDifferencesWorker = new BackgroundWorker();
             this._showDifferencesWorker.DoWork += this.ShowDifferencesWork;
@@ -57,89 +62,65 @@ namespace RepositoryParser.ViewModel
             this._onLoadWorker.RunWorkerCompleted += this.OnLoadWorkCompleted;
 
         }
+
         #endregion
 
         #region Methods
-        private void ClosedEvent()
+        private void ClearViewModel()
         {
-            if (CommitsCollection != null)
+            if (CommitsCollection != null && CommitsCollection.Any())
                 CommitsCollection.Clear();
-            if (ChangesCollection != null)
+            if (ChangesCollection != null && ChangesCollection.Any())
                 ChangesCollection.Clear();
-            if (ListTextA != null)
-                ListTextA.Clear();
+            if (ChangePatchCollection != null && ChangePatchCollection.Any())
+                ChangePatchCollection.Clear();
 
-            SelectedItem = new KeyValuePair<int, string>();
-            ChangeSelectedItem = new KeyValuePair<string, string>();
+            CommitSelectedItem = new KeyValuePair<int, string>();
+            ChangeSelectedItem = new Changes();
 
         }
-        private void HandleChartMessage(string query)
-        {
-            ClosedEvent();
 
-            this._filteringQuery = query;
-            if(!_onLoadWorker.IsBusy)
-                _onLoadWorker.RunWorkerAsync();
-        }
-
-        private void ChangeSelection(KeyValuePair<string, string> dic)
+        private void ChangeSelection(Changes changes)
         {
-            if (!string.IsNullOrEmpty(_changeQuery))
+            if (changes == null)
+                return;
+            ChangePatch = string.Empty;
+
+            _colorService = new DifferencesColoringService(changes.ChangeContent, string.Empty);
+            _colorService.FillColorDifferences();
+
+            ChangePatchCollection = new ObservableCollection<ChangesColorModel>();
+            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
             {
-                TextA = "";
-                TextB = "";
-                string query = _changeQuery + " and Changes.Type ='" + dic.Key + "' and Changes.Path='" + dic.Value + "'";
-                SQLiteCommand command = new SQLiteCommand(query, SqLiteService.GetInstance().Connection);
-                SQLiteDataReader reader = command.ExecuteReader();
-                string texta = "";
-                string textb = "";
-                while (reader.Read())
-                {
-                    texta = Convert.ToString(reader["TextA"]);
-                    textb = Convert.ToString(reader["TextB"]);
-                }
-                TextA = texta;
-                TextB = textb;
+                int startedIndex = 0;
+                if (_colorService != null && _colorService.TextAList.Count > 3 && Regex.IsMatch(_colorService.TextAList.First().Line, "diff --git") && Regex.IsMatch(_colorService.TextAList[3].Line,"Binary files"))
+                    startedIndex = 3;
+                else if (_colorService != null && _colorService.TextAList.Count > 3 && Regex.IsMatch(_colorService.TextAList.First().Line, "diff --git") && !Regex.IsMatch(_colorService.TextAList[3].Line, "Binary files"))
+                    startedIndex = 5;
 
-                _colorService = new DifferencesColoringService(TextA, TextB);
-                _colorService.FillColorDifferences();
-
-                ListTextA = new ObservableCollection<ChangesColorModel>();
-                Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    int startedIndex = 0;
-                    if (_colorService != null && _colorService.TextAList.Count > 3 && Regex.IsMatch(_colorService.TextAList.First().Line, "diff --git") && Regex.IsMatch(_colorService.TextAList[3].Line,"Binary files"))
-                        startedIndex = 3;
-                    else if (_colorService != null && _colorService.TextAList.Count > 3 && Regex.IsMatch(_colorService.TextAList.First().Line, "diff --git") && !Regex.IsMatch(_colorService.TextAList[3].Line, "Binary files"))
-                        startedIndex = 5;
-
-                    //  _colorService.TextAList.ForEach(x => ListTextA.Add(x));
-                    foreach (var item in _colorService.TextAList.Skip(startedIndex))
-                        ListTextA.Add(item);
-                }));
+                foreach (var item in _colorService.TextAList.Skip(startedIndex))
+                    ChangePatchCollection.Add(item);
+            }));
 
 
-                Messenger.Default.Send<DataMessageToChartOfChanges>(new DataMessageToChartOfChanges(_colorService.TextAList));
-            }
+            Messenger.Default.Send<DataMessageToChartOfChanges>(new DataMessageToChartOfChanges(_colorService.TextAList));
+
         }
-        private void selection(KeyValuePair<int, string> dictionary)
+        private void CommitSelection(KeyValuePair<int, string> dictionary)
         {
             if (ChangesCollection != null && ChangesCollection.Count > 0)
                 ChangesCollection.Clear();
-            string query =
-                "Select * from Changes inner join ChangesForCommit on Changes.ID=ChangesForCommit.NR_Change where " +
-                "ChangesForCommit.NR_Commit=" + dictionary.Key;
-            _changeQuery = query;
-            SQLiteCommand command = new SQLiteCommand(query, SqLiteService.GetInstance().Connection);
-            SQLiteDataReader reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                string type = Convert.ToString(reader["Type"]);
-                string path = Convert.ToString(reader["Path"]);
-                KeyValuePair<string, string> values = new KeyValuePair<string, string>(type, path);
-                ChangesCollection.Add(values);
-            }
+            if (ChangePatchCollection != null && ChangePatchCollection.Any())
+                ChangePatchCollection.Clear();
 
+            using (var session = DbService.Instance.SessionFactory.OpenSession())
+            {
+                var changes = session.QueryOver<Changes>().Where(change => change.Commit.Id == dictionary.Key).List<Changes>();
+                changes.ForEach(change =>
+                {
+                    ChangesCollection.Add(change);
+                });
+            }
         }
 
         private void GoToChartOfChanges()
@@ -153,62 +134,33 @@ namespace RepositoryParser.ViewModel
         #endregion
 
         #region Getters/Setters
-        public bool ProgressBarVisibility
+
+        public ObservableCollection<ChangesColorModel> ChangePatchCollection
         {
-            get
-            {
-                return _progressBarVisibility;
-            }
+            get { return _changePatchcollection;}
             set
             {
-                if (_progressBarVisibility != value)
-                    _progressBarVisibility = value;
-                RaisePropertyChanged("ProgressBarVisibility");
-            }
-        }
-        public ObservableCollection<ChangesColorModel> ListTextA
-        {
-            get { return _listTextA;}
-            set
-            {
-                if (_listTextA != value)
+                if (_changePatchcollection != value)
                 {
-                    _listTextA = value;
-                    RaisePropertyChanged("ListTextA");
+                    _changePatchcollection = value;
+                    RaisePropertyChanged();
                 }
             }
         }
 
-        public string TextA
+        public string ChangePatch
         {
             get
             {
-                return _textA;
+                return _changePatch;
 
             }
             set
             {
-                if (_textA != value)
+                if (_changePatch != value)
                 {
-                    _textA = value;
-                    RaisePropertyChanged("TextA");
-                }
-            }
-        }
-
-        public string TextB
-        {
-            get
-            {
-                return _textB;
-
-            }
-            set
-            {
-                if (_textB != value)
-                {
-                    _textB = value;
-                    RaisePropertyChanged("TextB");
+                    _changePatch = value;
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -225,11 +177,11 @@ namespace RepositoryParser.ViewModel
                 if (_commitsCollection != value)
                 {
                     _commitsCollection = value;
-                    RaisePropertyChanged("CommitsCollection");
+                    RaisePropertyChanged();
                 }
             }
         }
-        public ObservableCollection<KeyValuePair<string, string>> ChangesCollection
+        public ObservableCollection<Changes> ChangesCollection
         {
             get
             {
@@ -241,30 +193,30 @@ namespace RepositoryParser.ViewModel
                 if (_changesCollection != value)
                 {
                     _changesCollection = value;
-                    RaisePropertyChanged("ChangesCollection");
+                    RaisePropertyChanged();
                 }
             }
         }
 
-        public KeyValuePair<int, string> SelectedItem
+        public KeyValuePair<int, string> CommitSelectedItem
         {
             get
             {
-                return _selectedItem;
+                return _commitSelectedItem;
             }
             set
             {
-                if (_selectedItem.Key != value.Key && _selectedItem.Value != value.Value)
+                if (_commitSelectedItem.Key != value.Key && _commitSelectedItem.Value != value.Value)
                 {
-                    _selectedItem = new KeyValuePair<int, string>(value.Key,value.Value);
-                    selection(_selectedItem);
-                    RaisePropertyChanged("SelectedItem");
+                    _commitSelectedItem = new KeyValuePair<int, string>(value.Key,value.Value);
+                    CommitSelection(_commitSelectedItem);
+                    RaisePropertyChanged();
                 }
                 
             }
         }
 
-        public KeyValuePair<string, string> ChangeSelectedItem
+        public Changes ChangeSelectedItem
         {
             get
             {
@@ -273,22 +225,17 @@ namespace RepositoryParser.ViewModel
             set
             {
                 _changeSelectedItem = value;
-                //ChangeSelection(changeSelectedItem);
                 if(!_showDifferencesWorker.IsBusy)
                     _showDifferencesWorker.RunWorkerAsync(_changeSelectedItem);
-                RaisePropertyChanged("ChangeSelectedItem");
+                RaisePropertyChanged();
             }
         }
-
-
-
-
         #endregion
 
         #region Buttons
         public RelayCommand ClosedEventCommand
         {
-            get { return _closedEventCommand ?? (_closedEventCommand = new RelayCommand(ClosedEvent)); }
+            get { return _closedEventCommand ?? (_closedEventCommand = new RelayCommand(ClearViewModel)); }
         }
 
         public RelayCommand GoToChartOfChangesCommand
@@ -303,54 +250,47 @@ namespace RepositoryParser.ViewModel
         #region backgroundworker
         private void ShowDifferencesWork(object sender, DoWorkEventArgs e)
         {
-            Application.Current.Dispatcher.InvokeAsync(new Action(() => { ProgressBarVisibility = true; }), DispatcherPriority.Send);
-            KeyValuePair<string, string> arg = (KeyValuePair<string, string>) e.Argument;
+            Application.Current.Dispatcher.InvokeAsync(new Action(() => { IsLoading = true; }), DispatcherPriority.Send);
+            Changes arg = (Changes) e.Argument;
             ChangeSelection(arg);
         }
 
         private void ShowDifferencesCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            ProgressBarVisibility = false;
+            IsLoading = false;
         }
 
 
         private void OnLoadWork(object sender, DoWorkEventArgs e)
         {
-            Application.Current.Dispatcher.InvokeAsync(new Action(() => { ProgressBarVisibility = true; }),DispatcherPriority.Send);
+            Application.Current.Dispatcher.InvokeAsync(new Action(() => { IsLoading = true; }),DispatcherPriority.Send);
             CommitsCollection=new ObservableCollection<KeyValuePair<int, string>>();
-            
-            string query;
-            if (string.IsNullOrEmpty(_filteringQuery))
+
+            using (var session = DbService.Instance.SessionFactory.OpenSession())
             {
-                query = "SELECT * From Commits";
-            }
-            else
-            {
-                query = _filteringQuery;
-            }
-            SQLiteCommand command = new SQLiteCommand(query, SqLiteService.GetInstance().Connection);
-                SQLiteDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    int id = Convert.ToInt32(reader["ID"]);
-                    string message = Convert.ToString(reader["Message"]);
-                    KeyValuePair<int, string> dictionary = new KeyValuePair<int, string>(id, message);
-                    Application.Current.Dispatcher.Invoke(() =>
+                var commits = FilteringHelper.Instance.GenerateQuery(session).List<Commit>();
+                commits.ForEach(
+                    commit =>
                     {
-                        CommitsCollection.Add(dictionary);
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            CommitsCollection.Add(new KeyValuePair<int, string>(commit.Id, commit.Message));
+                        });
                     });
-                    
-                 }
-            ProgressBarVisibility = false;
+            }
         }
 
         private void OnLoadWorkCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            
+            IsLoading = false;
         }
 
-
-
+        public override void OnLoad()
+        {
+            ClearViewModel();
+            if (!_onLoadWorker.IsBusy)
+                _onLoadWorker.RunWorkerAsync();
+        }
         #endregion
 
        
