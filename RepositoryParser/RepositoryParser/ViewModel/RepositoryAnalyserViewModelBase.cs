@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
@@ -12,9 +14,10 @@ namespace RepositoryParser.ViewModel
     {
         private bool _isLoading;
         private ViewModelBase _currentViewModel;
-
+        protected readonly ResourceManager ResourceManager;
         protected RepositoryAnalyserViewModelBase()
         {
+            ResourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
         }
 
         public ViewModelBase CurrentViewModel

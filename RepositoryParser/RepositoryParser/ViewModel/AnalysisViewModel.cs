@@ -96,7 +96,7 @@ namespace RepositoryParser.ViewModel
 
         private void OpenHourActivity()
         {
-            CurrentViewModel = new ViewModelLocator().HourActivityContentProvider;
+            this.NavigateTo(ViewModelLocator.Instance.HourActivityContentProvider);
         }
 
         private void OpenWeekdayActivity()
