@@ -44,7 +44,19 @@ namespace RepositoryParser.ViewModel
             }
         }
 
-        public abstract void OnLoad();
+        public virtual void OnLoad()
+        {
+            CurrentViewModel = null;
+        }
 
+        public virtual void NavigateTo(ViewModelBase viewModel)
+        {
+            this.CurrentViewModel = viewModel;
+            var repositoryAnalyserViewModel = viewModel as RepositoryAnalyserViewModelBase;
+            if (repositoryAnalyserViewModel != null)
+            {
+                repositoryAnalyserViewModel.OnLoad();
+            }
+        }
     }
 }

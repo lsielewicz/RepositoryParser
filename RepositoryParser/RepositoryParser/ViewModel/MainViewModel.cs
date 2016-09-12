@@ -14,7 +14,7 @@ using RepositoryParser.Helpers;
 
 namespace RepositoryParser.ViewModel
 {
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : RepositoryAnalyserViewModelBase
     {
         private ViewModelBase _currentViewModel;
         private RelayCommand _openDataBaseManagementCommand;
@@ -49,16 +49,6 @@ namespace RepositoryParser.ViewModel
                 if (_isDataBaseEmpty == value)
                     return;
                 _isDataBaseEmpty = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public ViewModelBase CurrentViewModel
-        {
-            get { return _currentViewModel; }
-            set
-            {
-                _currentViewModel = value;
                 RaisePropertyChanged();
             }
         }
@@ -124,25 +114,12 @@ namespace RepositoryParser.ViewModel
         #region Methods
         private void OpenAnalysis()
         {
-            CurrentViewModel = ViewModelLocator.Instance.Analysis;
-            ViewModelLocator.Instance.Analysis.CurrentViewModel = null;
+            this.NavigateTo(ViewModelLocator.Instance.Analysis);
         }
 
         private void OpenFiltering()
         {
             CurrentViewModel = ViewModelLocator.Instance.Filtering;
-        }
-
-        private void OnLoad()
-        {
-            try
-            {
-
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show(ex.Message);
-            }
         }
 
         private void OpenDataBaseManagement()
@@ -158,6 +135,11 @@ namespace RepositoryParser.ViewModel
         private void ClosedEvent()
         {
             CurrentViewModel = null;
+        }
+
+        public override void OnLoad()
+        {
+            
         }
         #endregion
     }

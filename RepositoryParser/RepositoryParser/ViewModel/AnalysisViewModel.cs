@@ -10,7 +10,7 @@ using RepositoryParser.Core.Messages;
 
 namespace RepositoryParser.ViewModel
 {
-    public class AnalysisViewModel : ViewModelBase
+    public class AnalysisViewModel : RepositoryAnalyserViewModelBase
     {
         #region private fields
         private RelayCommand _openMonthActivityCommand;
@@ -19,7 +19,6 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _openDayActivityCommand;
         private RelayCommand _openHourActivityCommand;
         private RelayCommand _openDifferencesCommand;
-        private ViewModelBase _currentViewModel;
         #endregion
 
         public AnalysisViewModel()
@@ -34,16 +33,6 @@ namespace RepositoryParser.ViewModel
         }
 
         #region Getters/Setters
-        public ViewModelBase CurrentViewModel
-        {
-            get { return _currentViewModel; }
-            set
-            {
-                _currentViewModel = value;
-                RaisePropertyChanged("CurrentViewModel");
-            }
-        }
-
         public RelayCommand OpenDifferenesCommand
         {
             get
@@ -97,14 +86,12 @@ namespace RepositoryParser.ViewModel
 
         private void OpenDifferences()
         {
-            CurrentViewModel = ViewModelLocator.Instance.Difference;
-            (CurrentViewModel as DifferenceWindowViewModel).OnLoad();
+            this.NavigateTo(ViewModelLocator.Instance.Difference);
         }
 
         private void OpenDayActivity()
         {
-            CurrentViewModel = ViewModelLocator.Instance.DayActivityContentProvider;
-            ViewModelLocator.Instance.DayActivityContentProvider.OnLoad();
+            this.NavigateTo(ViewModelLocator.Instance.DayActivityContentProvider);
         }
 
         private void OpenHourActivity()
