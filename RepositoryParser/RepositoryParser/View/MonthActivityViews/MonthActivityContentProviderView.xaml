@@ -9,22 +9,17 @@
              xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
+             xmlns:monthActivityViewModels="clr-namespace:RepositoryParser.ViewModel.MonthActivityViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600">
     <UserControl.Resources>
-        <DataTemplate DataType="{x:Type viewModel:MonthActivityChartViewModel}">
+        <DataTemplate DataType="{x:Type monthActivityViewModels:MonthActivityChartViewModel}">
             <local:MonthActivityChartView/>
         </DataTemplate>
 
         <conventers:ViewModelBaseToVisibilityConventer x:Key="ViewModelBaseToVisibilityConventer"/>
     </UserControl.Resources>
-
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Closed">
-            <i:InvokeCommandAction Command="{Binding ClosedEventCommand}"/>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
-
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*" MinWidth="300"/>

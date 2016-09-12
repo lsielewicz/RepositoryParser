@@ -106,7 +106,7 @@ namespace RepositoryParser.ViewModel
 
         private void OpenMonthActivity()
         {
-            CurrentViewModel = new ViewModelLocator().MonthActivityContentProvider;
+            this.NavigateTo(ViewModelLocator.Instance.MonthActivityContentProvider);
         }
 
         private void OpenUserActivity()

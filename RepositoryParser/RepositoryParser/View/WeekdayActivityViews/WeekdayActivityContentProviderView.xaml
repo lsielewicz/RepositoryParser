@@ -8,12 +8,13 @@
              xmlns:viewModel="clr-namespace:RepositoryParser.ViewModel"
              xmlns:resw="clr-namespace:RepositoryParser.Properties"
              xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
+             xmlns:weekdayActivityViewModels="clr-namespace:RepositoryParser.ViewModel.WeekdayActivityViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator}, Path=WeekdayActivityContentProvider}"
              >
     <UserControl.Resources>
-        <DataTemplate DataType="{x:Type viewModel:WeekDayActivityViewModel}">
+        <DataTemplate DataType="{x:Type weekdayActivityViewModels:WeekDayActivityViewModel}">
             <local:WeekdayActivityChartView/>
         </DataTemplate>
 
