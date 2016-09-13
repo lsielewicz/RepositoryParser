@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.SQLite;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using System.Resources;
 using System.Text.RegularExpressions;
@@ -13,70 +14,60 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Win32;
+using NHibernate;
+using NHibernate.Criterion;
+using NHibernate.SqlCommand;
+using NHibernate.Util;
 using RepositoryParser.Core.Enums;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
+using RepositoryParser.DataBaseManagementCore.Entities;
+using RepositoryParser.DataBaseManagementCore.Services;
+using RepositoryParser.Helpers;
 
-namespace RepositoryParser.ViewModel
+namespace RepositoryParser.ViewModel.UserActivityViewModels
 {
-    public class UsersCodeFrequencyViewModel : ViewModelBase
-    {   
+    public class UsersCodeFrequencyViewModel : RepositoryAnalyserViewModelBase
+    {
         #region Fields
-        private string _filteringQuery;
-        private SqLiteService _sqLiteService;
+
         private DifferencesColoringService _colorService;
-        private List<UserCodeFrequency> _userCodeFreqList;
-        private BackgroundWorker _dataCalcWorker;
-        private bool _progressBarVisibility;
+        private readonly BackgroundWorker _dataCalcWorker;
         private ObservableCollection<KeyValuePair<string, int>> _addedLinesCollection;
         private ObservableCollection<KeyValuePair<string, int>> _deletedLinesCollection;
         private ObservableCollection<KeyValuePair<string, int>> _summaryLinesCollection;
-        private ObservableCollection<UserCodeFrequency> _codeFreqCollection; 
+        private ObservableCollection<UserCodeFrequency> _codeFreqCollection;
+        private List<UserCodeFrequency> _userCodeFreqList;
         private List<KeyValuePair<string, int>> _summaryList;
-        private ResourceManager _resourceManager;
         private string _summaryString;
         private RelayCommand _exportFileCommand;
         private RelayCommand _closedEventCommand;
+
         #endregion
 
         public UsersCodeFrequencyViewModel()
         {
-            _sqLiteService=SqLiteService.GetInstance();
-            _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
-            _dataCalcWorker =new BackgroundWorker();
+            _dataCalcWorker = new BackgroundWorker();
             _dataCalcWorker.DoWork += DoDataCalcWork;
             _dataCalcWorker.RunWorkerCompleted += DoDataCalcCompleted;
         }
 
         #region Getters/Setters
+
         public string SummaryString
         {
             get { return _summaryString; }
             set
             {
                 _summaryString = value;
-                RaisePropertyChanged("SummaryString");
+                RaisePropertyChanged();
             }
         }
-        public bool ProgressBarVisibility
-        {
-            get { return _progressBarVisibility; }
-            set
-            {
-                if (_progressBarVisibility != value)
-                {
-                    _progressBarVisibility = value;
-                    RaisePropertyChanged("ProgressBarVisibility");
-                }
-            }
-        }
+
         public ObservableCollection<UserCodeFrequency> CodeFreqCollection
         {
-            get
-            {
-                return _codeFreqCollection;
-            }
+            get { return _codeFreqCollection; }
             set
             {
                 if (_codeFreqCollection != value)
@@ -86,12 +77,10 @@ namespace RepositoryParser.ViewModel
                 }
             }
         }
+
         public ObservableCollection<KeyValuePair<string, int>> AddedLinesCollection
         {
-            get
-            {
-                return _addedLinesCollection; 
-            }
+            get { return _addedLinesCollection; }
             set
             {
                 if (_addedLinesCollection != value)
@@ -101,12 +90,10 @@ namespace RepositoryParser.ViewModel
                 }
             }
         }
+
         public ObservableCollection<KeyValuePair<string, int>> DeletedLinesCollection
         {
-            get
-            {
-                return _deletedLinesCollection;
-            }
+            get { return _deletedLinesCollection; }
             set
             {
                 if (_deletedLinesCollection != value)
@@ -119,10 +106,7 @@ namespace RepositoryParser.ViewModel
 
         public ObservableCollection<KeyValuePair<string, int>> SummaryLinesCollection
         {
-            get
-            {
-                return _summaryLinesCollection;
-            }
+            get { return _summaryLinesCollection; }
             set
             {
                 if (_summaryLinesCollection != value)
@@ -132,26 +116,107 @@ namespace RepositoryParser.ViewModel
                 }
             }
         }
+
         #endregion
 
         #region Messages
-        private void HandleDataMessage(string filteringQuery)
+
+        public override void OnLoad()
         {
-            this._filteringQuery = filteringQuery;       
-            if(!_dataCalcWorker.IsBusy)
+            if (!_dataCalcWorker.IsBusy)
                 _dataCalcWorker.RunWorkerAsync();
         }
+
         #endregion
 
         #region Methods
+
         private void FillData()
         {
-            _userCodeFreqList=new List<UserCodeFrequency>();
-            List<string> authorsList = GetAuthors(_filteringQuery);
+            _userCodeFreqList = new List<UserCodeFrequency>();
+            List<string> authors = GetAuthors();
             int added, deleted;
             int sumAdded, sumDeleted;
-            sumAdded = sumDeleted = added = deleted = 0; ;
-            for (int i = 0; i < authorsList.Count; i++)
+            sumAdded = sumDeleted = added = deleted = 0;
+
+            using (var session = DbService.Instance.SessionFactory.OpenSession())
+            {
+                session.FlushMode = FlushMode.Never;
+                var query1 = FilteringHelper.Instance.GenerateQuery(session);
+                foreach (var author in authors)
+                {
+                    var query = query1.Clone();
+                    added = deleted = 0;
+                    if (author == string.Empty)
+                        continue;
+
+                    /*var commits =
+                    FilteringHelper.Instance.GenerateQuery(session)
+                        .Where(commit => commit.Author == author).List<Commit>();
+
+                commits.ForEach(commit =>
+                {
+                    commit.Changes.ForEach(change =>
+                    {
+                        _colorService = new DifferencesColoringService(change.ChangeContent, string.Empty);
+                        _colorService.FillColorDifferences();
+
+                        _colorService.TextAList.ForEach(x =>
+                        {
+                            if (x.Color == ChangeType.Added)
+                                added++;
+                            else if (x.Color == ChangeType.Deleted)
+                                deleted++;
+                        });
+                    });
+                });*/
+                    var commitsIds =
+                        query
+                            .Where(commit => commit.Author == author)
+                            .SelectList(list => list.Select(c => c.Id)).List<int>();
+
+                    foreach (var id in commitsIds)
+                    {
+                        var changes = session
+                            .QueryOver<Changes>()
+                            .JoinQueryOver(c => c.Commit)
+                            .Where(commit => commit.Id == id)
+                            .List<Changes>();
+                        changes.ForEach(change =>
+                        {
+                            _colorService = new DifferencesColoringService(change.ChangeContent, string.Empty);
+                            _colorService.FillColorDifferences();
+
+                            _colorService.TextAList.ForEach(x =>
+                            {
+                                if (x.Color == ChangeType.Added)
+                                    added++;
+                                else if (x.Color == ChangeType.Deleted)
+                                    deleted++;
+                            });
+                        });
+
+                    }
+
+
+
+
+                    sumAdded += added;
+                    sumDeleted += deleted;
+                    _userCodeFreqList.Add(new UserCodeFrequency(author, added, deleted));
+
+                    _summaryList = new List<KeyValuePair<string, int>>()
+                    {
+                        new KeyValuePair<string, int>(ResourceManager.GetString("Added"), sumAdded),
+                        new KeyValuePair<string, int>(ResourceManager.GetString("Deleted"), sumDeleted)
+                    };
+                    SummaryString = ResourceManager.GetString("Added") + ": " + sumAdded + " " +
+                                    ResourceManager.GetString("Lines") + "\n" +
+                                    ResourceManager.GetString("Deleted") + ": " + sumDeleted + " " +
+                                    ResourceManager.GetString("Lines");
+                }
+
+                /* for (int i = 0; i < authorsList.Count; i++)
             {
                 added = deleted = 0;
 
@@ -226,22 +291,24 @@ namespace RepositoryParser.ViewModel
                 sumAdded += added;
                 sumDeleted += deleted;
                 _userCodeFreqList.Add(new UserCodeFrequency(authorsList[i],added,deleted));
-            }
-            _summaryList = new List<KeyValuePair<string, int>>()
-            {
-                new KeyValuePair<string, int>(_resourceManager.GetString("Added"), sumAdded),
-                new KeyValuePair<string, int>(_resourceManager.GetString("Deleted"), sumDeleted),
-            };
-            SummaryString = _resourceManager.GetString("Added") + ": " + sumAdded + " " +
-                            _resourceManager.GetString("Lines") + "\n" +
-                            _resourceManager.GetString("Deleted") + ": " + sumDeleted + " " +
-                            _resourceManager.GetString("Lines");
+            }*/
+                _summaryList = new List<KeyValuePair<string, int>>()
+                {
+                    new KeyValuePair<string, int>(ResourceManager.GetString("Added"), sumAdded),
+                    new KeyValuePair<string, int>(ResourceManager.GetString("Deleted"), sumDeleted),
+                };
+                SummaryString = ResourceManager.GetString("Added") + ": " + sumAdded + " " +
+                                ResourceManager.GetString("Lines") + "\n" +
+                                ResourceManager.GetString("Deleted") + ": " + sumDeleted + " " +
+                                ResourceManager.GetString("Lines");
 
+            }
         }
+
 
         private void FillCollections()
         {
-            AddedLinesCollection=new ObservableCollection<KeyValuePair<string, int>>();
+            AddedLinesCollection= new ObservableCollection<KeyValuePair<string, int>>();
             DeletedLinesCollection = new ObservableCollection<KeyValuePair<string, int>>();
             SummaryLinesCollection = new ObservableCollection<KeyValuePair<string, int>>();
             CodeFreqCollection = new ObservableCollection<UserCodeFrequency>();
@@ -254,47 +321,30 @@ namespace RepositoryParser.ViewModel
             _summaryList.ForEach(x=> SummaryLinesCollection.Add(x));
         }
 
-        private string MatchQuery(string query)
+        private List<string> GetAuthors()
         {
-            Regex r = new Regex(@"(select \* from Commits)(.*)", RegexOptions.IgnoreCase);
-
-            Match m = r.Match(query);
-            if (m.Success)
+            List<string> authors = new List<string>();
+            using (var session = DbService.Instance.SessionFactory.OpenSession())
             {
-                if (m.Groups.Count >= 3)
-                {
-                    query = m.Groups[2].Value;
-                }
+                var query = FilteringHelper.Instance.GenerateQuery(session);
+                var authorsIds = query.SelectList(list => list.SelectGroup(c => c.Author)).List<string>();
+                authorsIds.ForEach(author => authors.Add(author));
             }
-            return query;
-        }
-
-        private List<string> GetAuthors(string query)
-        {
-            List<string> newAuthorsList = new List<string>();
-            query = "SELECT Author FROM Commits " + MatchQuery(query) + "Group by Author";
-
-            SQLiteCommand command = new SQLiteCommand(query, _sqLiteService.Connection);
-            SQLiteDataReader reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                newAuthorsList.Add(Convert.ToString(reader["Author"]));
-            }
-            return newAuthorsList;
+            return authors;
         }
         #endregion
 
         #region BackgroundWorker
         private void DoDataCalcWork(object sender, DoWorkEventArgs e)
         {
-            ProgressBarVisibility = true;
+            IsLoading = true;
             FillData();
         }
 
         private void DoDataCalcCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             FillCollections();
-            ProgressBarVisibility = false;
+            IsLoading = false;
         }
         #endregion
 
@@ -322,7 +372,7 @@ namespace RepositoryParser.ViewModel
                 this.CodeFreqCollection.Clear();
             if(SummaryLinesCollection!=null)
                 this.SummaryLinesCollection.Clear();
-            this.SummaryString = String.Empty;
+            this.SummaryString = string.Empty;
         }
 
         private void ExportFile()
@@ -336,17 +386,18 @@ namespace RepositoryParser.ViewModel
             // Process save file dialog box results
             if (result == true)
             {
-                if (_userCodeFreqList != null && !String.IsNullOrEmpty(_summaryString))
+                var userCodeFreqList = CodeFreqCollection.ToList();
+                if (!String.IsNullOrEmpty(_summaryString))
                 {
                     // Save document
                     string filename = dlg.FileName;
-                    DataToCsv.CreateSummaryChartCSV(_userCodeFreqList, _summaryString, filename);
-                    MessageBox.Show(_resourceManager.GetString("ExportMessage"),
-                        _resourceManager.GetString("ExportTitle"));
+                    DataToCsv.CreateSummaryChartCSV(userCodeFreqList, _summaryString, filename);
+                    MessageBox.Show(ResourceManager.GetString("ExportMessage"),
+                        ResourceManager.GetString("ExportTitle"));
                 }
                 else
                 {
-                    MessageBox.Show(_resourceManager.GetString("ExportFailed"), _resourceManager.GetString("ExportTitle"));
+                    MessageBox.Show(ResourceManager.GetString("ExportFailed"), ResourceManager.GetString("ExportTitle"));
                 }
             }
         }

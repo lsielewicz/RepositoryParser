@@ -11,19 +11,20 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Win32;
+using NHibernate.Criterion;
+using NHibernate.Util;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
+using RepositoryParser.DataBaseManagementCore.Services;
+using RepositoryParser.Helpers;
 
-namespace RepositoryParser.ViewModel
+namespace RepositoryParser.ViewModel.UserActivityViewModels
 {
-    public class ChartWindowViewModel : ViewModelBase
+    public class ChartWindowViewModel : RepositoryAnalyserViewModelBase
     {
         #region Fields
         private ObservableCollection<KeyValuePair<string, int>> _keyCollection;
-        private List<string> _authorsList;
-        private string _filteringQuery;
-        private readonly ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources",Assembly.GetExecutingAssembly());
         private RelayCommand _exportFileCommand;
         #endregion
 
@@ -46,7 +47,7 @@ namespace RepositoryParser.ViewModel
                 if (_keyCollection != value)
                 {
                     _keyCollection = value;
-                    RaisePropertyChanged("KeyCollection");
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -75,7 +76,7 @@ namespace RepositoryParser.ViewModel
                 string filename = dlg.FileName;
                 Dictionary<string, int> tempDictionary = KeyCollection.ToDictionary(a => a.Key, a => a.Value);
                 DataToCsv.CreateCSVFromDictionary(tempDictionary, filename);
-                MessageBox.Show(_resourceManager.GetString("ExportMessage"), _resourceManager.GetString("ExportTitle"));
+                MessageBox.Show(ResourceManager.GetString("ExportMessage"), ResourceManager.GetString("ExportTitle"));
             }
         }
         #endregion
@@ -83,81 +84,38 @@ namespace RepositoryParser.ViewModel
         #region Methods
         private void FillCollection()
         {
-            if (KeyCollection.Count > 0)
+            if (KeyCollection!= null && KeyCollection.Any())
                 KeyCollection.Clear();
-            for (int i = 0; i < _authorsList.Count; i++)
+
+            var authors = GetAuthors();
+            authors.ForEach(author =>
             {
-                if (_authorsList[i] == "")
-                    continue;
-                string query = "select count(Commits.ID) AS \"AuthorCommits\" from Commits ";
-                if (string.IsNullOrEmpty(MatchQuery(_filteringQuery)))
+                using (var session = DbService.Instance.SessionFactory.OpenSession())
                 {
-                    query += "where Commits.Author='" + _authorsList[i] + "' ";
+                    var query = FilteringHelper.Instance.GenerateQuery(session);
+                    var commitCount =
+                        query.Where(c => c.Author == author).Select(Projections.RowCount()).FutureValue<int>().Value;
+                    KeyCollection.Add(new KeyValuePair<string, int>(author,commitCount));
                 }
-                else
-                {
-                    if (_authorsList.Count == 1)
-                        query += MatchQuery(_filteringQuery);
-                    else
-                        query += MatchQuery(_filteringQuery) + "and Commits.Author='" + _authorsList[i] + "' ";
-                }
-
-
-
-                SQLiteCommand command = new SQLiteCommand(query, SqLiteService.GetInstance().Connection);
-                SQLiteDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                {
-                    int count = Convert.ToInt32(reader["AuthorCommits"]);
-                    KeyValuePair<string, int> temp = new KeyValuePair<string, int>(_authorsList[i], count);
-                    KeyCollection.Add(temp);
-                }
-            }
-
+            });
         }
 
-        private string MatchQuery(string query)
+        private List<string> GetAuthors()
         {
-            Regex r = new Regex(@"(select \* from Commits)(.*)", RegexOptions.IgnoreCase);
-
-            Match m = r.Match(query);
-            if (m.Success)
+            List<string> authors = new List<string>();
+            using (var session = DbService.Instance.SessionFactory.OpenSession())
             {
-                if (m.Groups.Count >= 3)
-                {
-                    query = m.Groups[2].Value;
-                }
+                var query = FilteringHelper.Instance.GenerateQuery(session);
+                var authorsIds = query.SelectList(list => list.SelectGroup(c => c.Author)).List<string>();
+                authorsIds.ForEach(author=>authors.Add(author));
             }
-            return query;
+            return authors;
         }
-
-        private List<string> GetAuthors(string query)
-        {
-            List<string> newAuthorsList = new List<string>();
-            query = "SELECT Author FROM Commits " + MatchQuery(query) + "Group by Author";
-
-            SQLiteCommand command = new SQLiteCommand(query, SqLiteService.GetInstance().Connection);
-            SQLiteDataReader reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                newAuthorsList.Add(Convert.ToString(reader["Author"]));
-            }
-            return newAuthorsList;
-        }
-
         #endregion
 
-        #region Messsages
-        private void HandleDataMessage(List<string> authorsList, string filteringQuery)
+        public override void OnLoad()
         {
-            this._filteringQuery = filteringQuery;
-            if (this._authorsList != null && authorsList.Count > 0)
-                this._authorsList.Clear();
-            this._authorsList = GetAuthors(filteringQuery);
-
             FillCollection();
         }
-        #endregion
-
     }
 }

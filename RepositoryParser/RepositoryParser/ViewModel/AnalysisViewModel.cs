@@ -101,7 +101,7 @@ namespace RepositoryParser.ViewModel
 
         private void OpenWeekdayActivity()
         {
-            CurrentViewModel = new ViewModelLocator().WeekdayActivityContentProvider;
+           this.NavigateTo(ViewModelLocator.Instance.WeekdayActivityContentProvider);
         }
 
         private void OpenMonthActivity()
@@ -111,7 +111,7 @@ namespace RepositoryParser.ViewModel
 
         private void OpenUserActivity()
         {
-            CurrentViewModel = new ViewModelLocator().UsersActivityContentProvider;
+            this.NavigateTo(ViewModelLocator.Instance.UsersActivityContentProvider);
         }
         #endregion
     }

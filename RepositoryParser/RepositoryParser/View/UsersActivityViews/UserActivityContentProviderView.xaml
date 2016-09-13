@@ -8,17 +8,18 @@
              xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
              xmlns:resw="clr-namespace:RepositoryParser.Properties"
              xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
+             xmlns:userActivityViewModels="clr-namespace:RepositoryParser.ViewModel.UserActivityViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator}, Path=UsersActivityContentProvider}"
              
              >
     <UserControl.Resources>
-        <DataTemplate DataType="{x:Type viewModel:ChartWindowViewModel}">
+        <DataTemplate DataType="{x:Type userActivityViewModels:ChartWindowViewModel}">
             <local:UserActivityChartView/>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type viewModel:UsersCodeFrequencyViewModel}">
+        <DataTemplate DataType="{x:Type userActivityViewModels:UsersCodeFrequencyViewModel}">
             <local:UserActivityCodeFrequencyView/>
         </DataTemplate>
 
