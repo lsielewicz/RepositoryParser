@@ -53,9 +53,9 @@ namespace RepositoryParser.Helpers
             {
                 query =
                     query.JoinAlias(commit => commit.Branches, () => branch, JoinType.LeftOuterJoin)
-                            .JoinAlias(() => branch.Repository, () => repository, JoinType.LeftOuterJoin)
-                            .Where(() => branch.Name == SelectedBranch && repository.Name == SelectedRepository)
-                            .TransformUsing(Transformers.DistinctRootEntity).Clone();
+                        .JoinAlias(() => branch.Repository, () => repository, JoinType.LeftOuterJoin)
+                        .Where(() => branch.Name == SelectedBranch && repository.Name == SelectedRepository)
+                        .TransformUsing(Transformers.DistinctRootEntity);
 
                 isCountiuned = true;
             }
@@ -66,8 +66,7 @@ namespace RepositoryParser.Helpers
                     query.JoinAlias(commit => commit.Branches, () => branch, JoinType.LeftOuterJoin)
                         .JoinAlias(() => branch.Repository, () => repository, JoinType.LeftOuterJoin)
                         .Where(() => repository.Name == SelectedRepository)
-                        .TransformUsing(Transformers.DistinctRootEntity)
-                        .Clone();
+                        .TransformUsing(Transformers.DistinctRootEntity);
                 isCountiuned = true;
             }
 
@@ -82,9 +81,11 @@ namespace RepositoryParser.Helpers
             if (!isAuthor && !isFromDate && !isToDate && !isMessage)
             {
                 query =
-                    query.Where(() => branch.Name == SelectedBranch || branch.Name == "trunk" && repository.Name == SelectedRepository)
-                            .TransformUsing(Transformers.DistinctRootEntity)
-                            .Clone();
+                    query.Where(
+                            () =>
+                                branch.Name == SelectedBranch ||
+                                branch.Name == "trunk" && repository.Name == SelectedRepository)
+                        .TransformUsing(Transformers.DistinctRootEntity);
                 return query;
             }
             if (!isAuthor && !isFromDate && !isToDate)
