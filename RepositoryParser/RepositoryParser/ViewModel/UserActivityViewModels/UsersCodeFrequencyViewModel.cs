@@ -10,6 +10,7 @@ using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
 using NHibernate;
 using NHibernate.Criterion;
+using NHibernate.SqlCommand;
 using NHibernate.Util;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
@@ -134,30 +135,33 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
             {
                 session.FlushMode = FlushMode.Never;
                 var query1 = FilteringHelper.Instance.GenerateQuery(session);
+
                 foreach (var author in authors)
                 {
-                    var query = query1.Clone();
                     added = deleted = 0;
                     if (author == string.Empty)
                         continue;
 
-                    var commits = query.Where(commit => commit.Author == author).List<Commit>();
-                    foreach (var commit in commits)
+                    Changes changezzz = null;
+                    var query = query1.Clone();
+                    var changeContents =
+                        query.JoinAlias(c => c.Changes, () => changezzz, JoinType.LeftOuterJoin)
+                            .Where(c => c.Author == author)
+                            .SelectList(list => list.Select(() => changezzz.ChangeContent))
+                            .List<string>();
+                    changeContents.ForEach(changeContent =>
                     {
-                        commit.Changes.ForEach(change =>
-                        {
-                            _colorService = new DifferencesColoringService(change.ChangeContent, string.Empty);
-                            _colorService.FillColorDifferences();
+                        _colorService = new DifferencesColoringService(changeContent, string.Empty);
+                        _colorService.FillColorDifferences();
 
-                            added += _colorService.TextAList.Count(x => x.Color == ChangeType.Added);
-                            deleted += _colorService.TextAList.Count(x => x.Color == ChangeType.Deleted);
-                        });
-                    }
-
+                        added += _colorService.TextAList.Count(x => x.Color == ChangeType.Added);
+                        deleted += _colorService.TextAList.Count(x => x.Color == ChangeType.Deleted);
+                    });
                     sumAdded += added;
                     sumDeleted += deleted;
                     _userCodeFreqList.Add(new UserCodeFrequency(author, added, deleted));
                 }
+
 
                 _summaryList = new List<KeyValuePair<string, int>>()
                     {

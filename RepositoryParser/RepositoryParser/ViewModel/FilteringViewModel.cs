@@ -34,6 +34,7 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _sendDataCommand;
         private RelayCommand _onLoadCommand;
         private RelayCommand<object> _clearSpecifiedFilterCommand;
+        private bool _isInitialized;
         #endregion
 
         public FilteringViewModel()
@@ -348,10 +349,15 @@ namespace RepositoryParser.ViewModel
 
         public override void OnLoad()
         {
-            GetRepositories();
-            GetBranches();
-            GetAuthors();
-            ClearFilters();
+            if (!_isInitialized)
+            {
+                GetRepositories();
+                GetBranches();
+                GetAuthors();
+                ClearFilters();
+                _isInitialized = true;
+            }
+          
         }
 
         private void ClearFilters()

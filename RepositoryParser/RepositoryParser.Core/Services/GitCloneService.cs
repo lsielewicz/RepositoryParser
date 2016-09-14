@@ -140,6 +140,8 @@ namespace RepositoryParser.Core.Services
 
         public void CloneRepository(bool cloneWithAllBranches = false)
         {
+            if (!UrlAdress.EndsWith(".git"))
+                UrlAdress += ".git";
             string repositoryPath = "./" + GetRepositoryNameFromUrl(UrlAdress);
 
             if (!Directory.Exists(repositoryPath))
