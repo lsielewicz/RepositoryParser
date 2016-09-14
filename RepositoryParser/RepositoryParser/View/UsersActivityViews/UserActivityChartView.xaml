@@ -10,7 +10,7 @@
                 xmlns:extensions="clr-namespace:RepositoryParser.Controls.Extensions;assembly=RepositoryParser.Controls"
                 mc:Ignorable="d" 
                 d:DesignHeight="600" d:DesignWidth="600"
-                DataContext="{Binding Source={StaticResource Locator}, Path=Chart}"
+                DataContext="{Binding Source={StaticResource Locator}, Path=UsersActivity}"
                 >
     <Grid>
         <Grid.RowDefinitions>

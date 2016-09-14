@@ -21,7 +21,7 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
         public UsersActivityContentProverViewModel()
         {
             CurrentViewModel = new ViewModelLocator().UsersCodeFrequency;
-            CurrentViewModel = new ViewModelLocator().Chart;
+            CurrentViewModel = new ViewModelLocator().UsersActivity;
             CurrentViewModel = null;
         }
 
@@ -33,7 +33,7 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
                 return _openChartViewCommand ??
                        (_openChartViewCommand = new RelayCommand(() =>
                        {
-                           this.NavigateTo(ViewModelLocator.Instance.Chart);
+                           this.NavigateTo(ViewModelLocator.Instance.UsersActivity);
                        }));
             }
         }

@@ -14,8 +14,6 @@
 
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
-using RepositoryParser.View.DayActivityViews;
-using RepositoryParser.View.WeekdayActivityViews;
 using RepositoryParser.ViewModel.DayActivityViewModels;
 using RepositoryParser.ViewModel.HourActivityViewModels;
 using RepositoryParser.ViewModel.MonthActivityViewModels;
@@ -155,7 +153,6 @@ namespace RepositoryParser.ViewModel
             }
         }
 
-
         public MainViewModel Main
         {
             get
@@ -164,7 +161,7 @@ namespace RepositoryParser.ViewModel
             }
         }
 
-        public ChartWindowViewModel Chart
+        public ChartWindowViewModel UsersActivity
         {
             get
             {

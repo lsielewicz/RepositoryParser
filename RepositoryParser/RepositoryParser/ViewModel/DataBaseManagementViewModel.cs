@@ -283,7 +283,7 @@ namespace RepositoryParser.ViewModel
                 this.UrlTextBox = string.Empty;
                 Messenger.Default.Send<RefreshMessageToPresentation>(new RefreshMessageToPresentation(true));
                 Messenger.Default.Send<RefreshMessageToFiltering>(new RefreshMessageToFiltering(true));
-                ViewModelLocator.Instance.Main.IsDataBaseEmpty = false;
+                ViewModelLocator.Instance.Main.OnLoad();
             }
         }
 
@@ -306,7 +306,7 @@ namespace RepositoryParser.ViewModel
                 Messenger.Default.Send<RefreshMessageToPresentation>(new RefreshMessageToPresentation(true));
                 Messenger.Default.Send<RefreshMessageToFiltering>(new RefreshMessageToFiltering(true));
                 ProgressBarVisibility = false;
-                ViewModelLocator.Instance.Main.IsDataBaseEmpty = true;
+                ViewModelLocator.Instance.Main.OnLoad();
             }
         }
         #endregion

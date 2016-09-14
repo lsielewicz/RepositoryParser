@@ -5,21 +5,21 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using NHibernate;
+using NHibernate.Criterion;
 using RepositoryParser.Core.Helpers;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
 using RepositoryParser.DataBaseManagementCore.Entities;
+using RepositoryParser.DataBaseManagementCore.Services;
 using RepositoryParser.Helpers;
 
 namespace RepositoryParser.ViewModel
 {
     public class MainViewModel : RepositoryAnalyserViewModelBase
     {
-        private ViewModelBase _currentViewModel;
         private RelayCommand _openDataBaseManagementCommand;
         private RelayCommand _openPresentationCommand;
-        private RelayCommand _closedEventCommand;
         private RelayCommand _openEventCommand;
         private RelayCommand _openFilteringCommand;
         private RelayCommand _openAnalysisCommand;
@@ -65,7 +65,10 @@ namespace RepositoryParser.ViewModel
         {
             get
             {
-                return _openAnalysisCommand ?? (_openAnalysisCommand = new RelayCommand(OpenAnalysis));
+                return _openAnalysisCommand ?? (_openAnalysisCommand = new RelayCommand(() =>
+                       {
+                           this.NavigateTo(ViewModelLocator.Instance.Analysis);
+                       }));
             }
         }
 
@@ -74,7 +77,10 @@ namespace RepositoryParser.ViewModel
             get
             {
                 return _openDataBaseManagementCommand ??
-                       (_openDataBaseManagementCommand = new RelayCommand(OpenDataBaseManagement));
+                       (_openDataBaseManagementCommand = new RelayCommand(() =>
+                       {
+                           this.NavigateTo(ViewModelLocator.Instance.DataBaseManagement);
+                       }));
             }
         }
 
@@ -92,55 +98,32 @@ namespace RepositoryParser.ViewModel
             get
             {
                 return _openPresentationCommand ??
-                       (_openPresentationCommand = new RelayCommand(OpenPresentation));
-            }
-        }
-
-        public RelayCommand ClosedEventCommand
-        {
-            get
-            {
-                return _closedEventCommand ?? (_closedEventCommand = new RelayCommand(ClosedEvent));
+                       (_openPresentationCommand = new RelayCommand(() =>
+                       {
+                           this.NavigateTo(ViewModelLocator.Instance.Presentation);
+                       }));
             }
         }
 
         public RelayCommand OpenFilteringCommand
         {
-            get { return _openFilteringCommand ?? (_openFilteringCommand = new RelayCommand(OpenFiltering)); }
+            get { return _openFilteringCommand ?? (_openFilteringCommand = new RelayCommand(() =>
+                         {
+                             this.NavigateTo(ViewModelLocator.Instance.Filtering);
+                         })); }
         }
 
         #endregion
-
-        #region Methods
-        private void OpenAnalysis()
-        {
-            this.NavigateTo(ViewModelLocator.Instance.Analysis);
-        }
-
-        private void OpenFiltering()
-        {
-            CurrentViewModel = ViewModelLocator.Instance.Filtering;
-        }
-
-        private void OpenDataBaseManagement()
-        {
-            CurrentViewModel = ViewModelLocator.Instance.DataBaseManagement;
-        }
-
-        private void OpenPresentation()
-        {
-            CurrentViewModel = ViewModelLocator.Instance.Presentation;  
-        }
-
-        private void ClosedEvent()
-        {
-            CurrentViewModel = null;
-        }
 
         public override void OnLoad()
         {
-            
+            using (var session = DbService.Instance.SessionFactory.OpenSession())
+            {
+                var repositoriesCount =
+                    session.QueryOver<Repository>().Select(Projections.RowCount()).FutureValue<int>().Value;
+                this.IsDataBaseEmpty = repositoriesCount == 0;
+            }
         }
-        #endregion
+
     }
 }
