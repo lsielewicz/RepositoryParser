@@ -7,48 +7,34 @@ using System.Reflection;
 using System.Resources;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Win32;
+using NHibernate.Criterion;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
+using RepositoryParser.DataBaseManagementCore.Services;
+using RepositoryParser.Helpers;
 
-namespace RepositoryParser.ViewModel
+namespace RepositoryParser.ViewModel.MonthActivityViewModels
 {
-    public class MonthActivityChartViewModel : ViewModelBase
+    public class MonthActivityChartViewModel : RepositoryAnalyserViewModelBase
     {
         #region Fields
-        private string _authorTextBox;
         private ObservableCollection<KeyValuePair<string, int>> _keyCollection;
-        private string _filteringQuery;
-        private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
         private RelayCommand _exportFileCommand;
         #endregion
 
         public MonthActivityChartViewModel()
         {
-            Messenger.Default.Register<ChartMessageLevel3MonthActivity>(this,
-                x => HandleDataMessage(x.FilteringQuery));
 
             KeyCollection = new ObservableCollection<KeyValuePair<string, int>>();
         }
 
         #region Getters/Setters
-        public string AuthorTextBox
-        {
-            get { return _authorTextBox; }
-            set
-            {
-                if (_authorTextBox != value)
-                {
-                    _authorTextBox = value;
-                    RaisePropertyChanged("AuthorTextBox");
-                }
-            }
-        }
-
         public ObservableCollection<KeyValuePair<string, int>> KeyCollection
         {
             get { return _keyCollection; }
@@ -64,9 +50,9 @@ namespace RepositoryParser.ViewModel
         #endregion
 
         #region Messages
-        private void HandleDataMessage(string filteringQuery)
+
+        public override void OnLoad()
         {
-            this._filteringQuery = filteringQuery;
             FillCollection();
         }
         #endregion
@@ -78,7 +64,14 @@ namespace RepositoryParser.ViewModel
                 KeyCollection.Clear();
             for (int i = 1; i <= 12; i++)
             {
-                string dateString = "";
+                using (var session = DbService.Instance.SessionFactory.OpenSession())
+                {
+                    var query = FilteringHelper.Instance.GenerateQuery(session);
+                    var commitsCount =
+                        query.Where(c => c.Date.Month == i).Select(Projections.RowCount()).FutureValue<int>().Value;
+                    KeyCollection.Add(new KeyValuePair<string, int>(GetMonth(i),commitsCount));
+                }
+               /* string dateString = "";
                 if (i < 10)
                     dateString = "0" + i;
                 else
@@ -103,54 +96,17 @@ namespace RepositoryParser.ViewModel
                     int count = Convert.ToInt32(reader["MonthCommits"]);
                     KeyValuePair<string, int> temp = new KeyValuePair<string, int>(GetMonth(i), count);
                     KeyCollection.Add(temp);
-                }
+                }*/
             }
 
         }
 
         private string GetMonth(int number)
         {
-            string Month = "";
-            if (number == 1)
-                Month = _resourceManager.GetString("Month1");
-            else if (number == 2)
-                Month = _resourceManager.GetString("Month2");
-            else if (number == 3)
-                Month = _resourceManager.GetString("Month3");
-            else if (number == 4)
-                Month = _resourceManager.GetString("Month4");
-            else if (number == 5)
-                Month = _resourceManager.GetString("Month5");
-            else if (number == 6)
-                Month = _resourceManager.GetString("Month6");
-            else if (number == 7)
-                Month = _resourceManager.GetString("Month7");
-            else if (number == 8)
-                Month = _resourceManager.GetString("Month8");
-            else if (number == 9)
-                Month = _resourceManager.GetString("Month9");
-            else if (number == 10)
-                Month = _resourceManager.GetString("Month10");
-            else if (number == 11)
-                Month = _resourceManager.GetString("Month11");
-            else if (number == 12)
-                Month = _resourceManager.GetString("Month12");
-            return Month;
+            string month = $"Month{number}";
+            return ResourceManager.GetString(month); 
         }
 
-        private string MatchQuery(string query)
-        {
-            if (String.IsNullOrEmpty(query))
-                return String.Empty;
-            Regex r = new Regex(@"(select \* from Commits)(.*)", RegexOptions.IgnoreCase);
-            Match m = r.Match(query);
-            if (m.Success)
-            {
-                if (m.Groups.Count >= 3)
-                    query = m.Groups[2].Value;
-            }
-            return query;
-        }
         #endregion
 
         #region Buttons getters
@@ -176,7 +132,7 @@ namespace RepositoryParser.ViewModel
                 string filename = dlg.FileName;
                 Dictionary<string, int> tempDictionary = KeyCollection.ToDictionary(a => a.Key, a => a.Value);
                 DataToCsv.CreateCSVFromDictionary(tempDictionary, filename);
-                MessageBox.Show(_resourceManager.GetString("ExportMessage"), _resourceManager.GetString("ExportTitle"));
+                MessageBox.Show(ResourceManager.GetString("ExportMessage"), ResourceManager.GetString("ExportTitle"));
             }
         }
         #endregion

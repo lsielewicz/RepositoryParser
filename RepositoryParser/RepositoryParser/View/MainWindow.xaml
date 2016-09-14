@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:RepositoryParser"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
         xmlns:resw="clr-namespace:RepositoryParser.Properties"
@@ -11,10 +10,8 @@
         Title="{x:Static resw:Resources.MainWindowView}" Height="720" Width="1200"
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:viewModel="clr-namespace:RepositoryParser.ViewModel"
-        xmlns:usersActivityViews="clr-namespace:RepositoryParser.View.UsersActivityViews"
         xmlns:view="clr-namespace:RepositoryParser.View"
         xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
-        xmlns:command="http://www.galasoft.ch/mvvmlight"
         DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
         MinHeight="600" MinWidth="800"
         ShowIconOnTitleBar="True"
@@ -27,8 +24,7 @@
         WindowStartupLocation="CenterScreen"  
         OverrideDefaultWindowCommandsBrush="Black"
         TitlebarHeight="40"
-        Closing="MainWindow_OnClosing"
-        >
+        Closing="MainWindow_OnClosing">
 
     <Controls:MetroWindow.TitleTemplate>
         <DataTemplate>
@@ -83,11 +79,7 @@
 
 
     <Window.Resources>
-        <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-        <conventers:NegativeBoolToVisibilityConventer x:Key="NegativeBoolToVisibilityConventer"/>
-        <conventers:BoolToBackgroundColorConventer x:Key="BoolToBackgroundColorConventer"/>
         <conventers:ViewModelBaseToVisibilityConventer x:Key="ViewModelBaseToVisibilityConventer"/>
-        <conventers:NegativeViewModelBaseToVisibilityConventer x:Key="NegativeViewModelBaseToVisibilityConventer"/>
         <conventers:NegativeBoolConventer x:Key="NegativeBoolConventer"/>
         
         <DataTemplate DataType="{x:Type viewModel:PresentationViewModel}">

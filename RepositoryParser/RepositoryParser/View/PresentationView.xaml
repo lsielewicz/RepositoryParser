@@ -83,7 +83,7 @@
             Visibility="{Binding CommitsColection.Count, Converter={StaticResource IntegerToVisibilityConventer}}"
             >
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding ID}" Header="{x:Static resw:Resources.CommitsList_ID}"/>
+                <DataGridTextColumn Binding="{Binding Id}" Header="{x:Static resw:Resources.CommitsList_ID}"/>
                 <DataGridTextColumn Binding="{Binding Message}" Header="{x:Static resw:Resources.CommitsList_Message}" Width="380"/>
                 <DataGridTextColumn Binding="{Binding Author}" Header="{x:Static resw:Resources.CommitsList_Author}" Width="120"/>
                 <DataGridTextColumn Binding="{Binding Date}" Header="{x:Static resw:Resources.CommitsList_Date}" SortMemberPath="Date"/>

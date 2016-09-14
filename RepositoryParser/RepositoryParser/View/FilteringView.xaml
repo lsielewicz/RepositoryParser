@@ -98,7 +98,7 @@
                       Margin="5,0"
                       ItemsSource="{Binding AuthorsCollection}" 
                       SelectedItem="{Binding AuthorsSelectedItem}"
-                      IsSynchronizedWithCurrentItem="True" 
+                      IsSynchronizedWithCurrentItem="False" 
                       BorderThickness="0"
                       ItemContainerStyle="{StaticResource RepositoryAnalyserListViewItem}"
                       Foreground="Black"
@@ -195,7 +195,7 @@
                         VerticalAlignment="Top"
                         HorizontalAlignment="Stretch"/>
                     <Image 
-                        Source="{Binding RepoType, Converter={StaticResource StringToImageConventer}}"
+                        Source="{Binding RepositoryType, Converter={StaticResource StringToImageConventer}}"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"/>
                 </StackPanel>
@@ -252,7 +252,7 @@
                       ItemsSource="{Binding BranchCollection}"
                       SelectedItem="{Binding BranchSelectedItem}"
                       IsSynchronizedWithCurrentItem="True"
-                      IsEnabled="{Binding BranchEnabled, UpdateSourceTrigger=PropertyChanged}"
+                      IsEnabled="{Binding BranchesEnabled, UpdateSourceTrigger=PropertyChanged}"
                       BorderThickness="0"
                       ItemContainerStyle="{StaticResource RepositoryAnalyserListViewItem}"
                       Foreground="Black"

@@ -18,7 +18,7 @@
         <conventers:ChangeTypeToBackgroundColorConventer x:Key="ChangeTypeToBackgroundColorConventer"/>
         <conventers:EnumToColorConventer x:Key="EnumToColorConventer"/>
         <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-        <conventers:KeyValuePairToVisibilityConventer x:Key="KeyValuePairToVisibilityConventer"/>
+        <conventers:ChangesToVisibilityConventer x:Key="ChangesToVisibilityConventer"/>
     </UserControl.Resources>
 
     <Grid>
@@ -46,7 +46,7 @@
         
         <DataGrid Grid.Row="1" Grid.Column="0" Grid.RowSpan="3"
                     ItemsSource="{Binding CommitsCollection, Mode=OneWay}"
-                    SelectedItem="{Binding SelectedItem, Mode=Default}"
+                    SelectedItem="{Binding CommitSelectedItem, Mode=Default}"
                     CanUserSortColumns="True"
                     AutoGenerateColumns="False"
                     ColumnWidth="auto"
@@ -76,13 +76,13 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock x:Name="ChangeType"
-                                       Text="{Binding Path=Key}"
+                                       Text="{Binding Type}"
                                        Background="{Binding ElementName=ChangeType, Path=Text, Converter={StaticResource ChangeTypeToBackgroundColorConventer} }"
                                        />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Binding="{Binding Value}" Header="{x:Static resw:Resources.FileName}"/>
+                <DataGridTextColumn Binding="{Binding Path}" Header="{x:Static resw:Resources.FileName}"/>
             </DataGrid.Columns>
 
         </DataGrid>
@@ -97,7 +97,7 @@
                    FontWeight="Light" 
                    FontSize="13" 
                    VerticalAlignment="Center"
-                   Visibility="{Binding ChangeSelectedItem, Converter={StaticResource KeyValuePairToVisibilityConventer}}"
+                   Visibility="{Binding ChangeSelectedItem, Converter={StaticResource ChangesToVisibilityConventer}}"
                    />
         <ScrollViewer x:Name="CommitScrollViewer" 
                       Grid.Row="2" 
@@ -108,7 +108,7 @@
                       HorizontalScrollBarVisibility="Auto"
                       >
             <StackPanel x:Name="TextAPanel" Margin="5,10,5,10">
-                <ListBox Margin="0,10,0,10" ItemsSource="{Binding ListTextA}" IsEnabled="False">
+                <ListBox Margin="0,10,0,10" ItemsSource="{Binding ChangePatchCollection}" IsEnabled="False">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -142,7 +142,7 @@
         <StatusBar Grid.Row="1" Grid.Column="0" 
                    Grid.RowSpan="3"
                    Grid.ColumnSpan="3"
-                   Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}}" 
+                   Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}" 
                    Style="{StaticResource AppStatusBar}"
                    >
         </StatusBar>
@@ -150,16 +150,16 @@
                     Grid.Column="0" Grid.RowSpan="5"
                     Grid.ColumnSpan="3" 
                     VerticalAlignment="Center" HorizontalAlignment="Center"
-                    Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
+                    Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
                     >
-            <controls:ProgressRing  IsActive="{Binding ProgressBarVisibility}"
+            <controls:ProgressRing  IsActive="{Binding IsLoading}"
                                     Style="{StaticResource AppProgressRing}"
                                     />
             <Separator/>
             <TextBlock Text="{x:Static resw:Resources.DataLoadingStatus}" 
                        Foreground="{StaticResource Graphite}" 
                        FontSize="14" 
-                       Visibility="{Binding IsOpening, Converter={StaticResource BoolToVisibilityConverter}}"
+                       Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"
                        VerticalAlignment="Center"
                        />
         </StackPanel>

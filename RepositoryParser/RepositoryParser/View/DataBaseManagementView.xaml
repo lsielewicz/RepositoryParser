@@ -128,7 +128,7 @@
             <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Margin="0,10,0,5">
                 <imageButton:ImageButton x:Name="ClearDataBase" 
                     VerticalAlignment="Top" 
-                    Command="{Binding AsyncClearDBCommand}"
+                    Command="{Binding AsyncClearDbCommand}"
                     ImageSource="../Assets/Icons/PNG_Gray/Delete File-100.png"
                     Text="{x:Static resw:Resources.ClearDBButton}"  
                     Height="45"
@@ -144,7 +144,7 @@
             <StatusBar Grid.Row="0" Grid.Column="0" 
                    Grid.RowSpan="4"
                    Grid.ColumnSpan="2"
-                   Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"  
+                   Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"  
                    Style="{StaticResource AppStatusBar}"
                    >
             </StatusBar>
@@ -152,9 +152,9 @@
                     Grid.Column="0" Grid.RowSpan="5"
                     Grid.ColumnSpan="3" 
                     VerticalAlignment="Center" HorizontalAlignment="Center"
-                    Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
+                    Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
                     >
-                <controls:ProgressRing IsActive="{Binding ProgressBarVisibility}"
+                <controls:ProgressRing IsActive="{Binding IsLoading}"
                                        Style="{StaticResource AppProgressRing}"
                                        />
                 <Separator/>

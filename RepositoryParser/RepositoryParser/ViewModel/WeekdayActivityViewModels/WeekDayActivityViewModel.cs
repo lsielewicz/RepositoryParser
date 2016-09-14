@@ -11,25 +11,25 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Win32;
+using NHibernate.Criterion;
+using NHibernate.Util;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
+using RepositoryParser.DataBaseManagementCore.Services;
+using RepositoryParser.Helpers;
 
-namespace RepositoryParser.ViewModel
+namespace RepositoryParser.ViewModel.WeekdayActivityViewModels
 {
-    public class WeekDayActivityViewModel : ViewModelBase
+    public class WeekDayActivityViewModel : RepositoryAnalyserViewModelBase
     {
         #region Fields
         private ObservableCollection<KeyValuePair<string, int>> _keyCollection;
-        private string _filteringQuery;
-        private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
         private RelayCommand _exportFileCommand;
         #endregion
 
         public WeekDayActivityViewModel()
         {
-            Messenger.Default.Register<ChartMessageLevel3WeekdayActivity>(this,
-                x => HandleDataMessage(x.FilteringQuery));
             KeyCollection = new ObservableCollection<KeyValuePair<string, int>>();
         }
 
@@ -42,16 +42,16 @@ namespace RepositoryParser.ViewModel
                 if (_keyCollection != value)
                 {
                     _keyCollection = value;
-                    RaisePropertyChanged("KeyCollection");
+                    RaisePropertyChanged();
                 }
             }
         }
         #endregion
 
         #region Messages
-        private void HandleDataMessage(string query)
+
+        public override void OnLoad()
         {
-            this._filteringQuery = query;
             FillCollection();
         }
         #endregion
@@ -61,65 +61,23 @@ namespace RepositoryParser.ViewModel
         {
             if (KeyCollection.Count > 0)
                 KeyCollection.Clear();
-            for (int i = 0; i <= 6; i++)
-            {
-                string dateString = "";
-                dateString = Convert.ToString(i);
 
-                string query = "SELECT COUNT(Commits.ID) AS \"WeekdayCommits\" FROM Commits";
-                if (string.IsNullOrEmpty(MatchQuery(_filteringQuery)))
+            using (var session = DbService.Instance.SessionFactory.OpenSession())
+            {
+                var query = FilteringHelper.Instance.GenerateQuery(session);
+                var commitsDates = query.Select(c => c.Date).List<DateTime>();
+                for (int i = 0; i <= 6; i++)
                 {
-                    query += " where strftime('%w', Date) = " +
-                             "'" + dateString + "'";
-                }
-                else
-                {
-                    query += MatchQuery(_filteringQuery) +
-                             "and strftime('%w', Date) =" +
-                             "'" + dateString + "'";
-                }
-                SQLiteCommand command = new SQLiteCommand(query, SqLiteService.GetInstance().Connection);
-                SQLiteDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                {
-                    int count = Convert.ToInt32(reader["WeekdayCommits"]);
-                    KeyValuePair<string, int> temp = new KeyValuePair<string, int>(GetWeekday(i), count);
-                    KeyCollection.Add(temp);
+                    int commitsCount = commitsDates.Count(date => (int) date.DayOfWeek == i);
+                    KeyCollection.Add(new KeyValuePair<string, int>(GetWeekday(i), commitsCount));
                 }
             }
-
         }
 
         private string GetWeekday(int number)
         {
-            string Weekday = "";
-            if (number == 1)
-                Weekday = _resourceManager.GetString("Weekday1");
-            else if (number == 2)
-                Weekday = _resourceManager.GetString("Weekday2");
-            else if (number == 3)
-                Weekday = _resourceManager.GetString("Weekday3");
-            else if (number == 4)
-                Weekday = _resourceManager.GetString("Weekday4");
-            else if (number == 5)
-                Weekday = _resourceManager.GetString("Weekday5");
-            else if (number == 6)
-                Weekday = _resourceManager.GetString("Weekday6");
-            else if (number == 0)
-                Weekday = _resourceManager.GetString("Weekday7");
-            return Weekday;
-        }
-
-        private string MatchQuery(string query)
-        {
-            Regex r = new Regex(@"(select \* from Commits)(.*)", RegexOptions.IgnoreCase);
-            Match m = r.Match(query);
-            if (m.Success)
-            {
-                if (m.Groups.Count >= 3)
-                    query = m.Groups[2].Value;
-            }
-            return query;
+            string weekday = $"Weekday{number+1}";
+            return ResourceManager.GetString(weekday);
         }
         #endregion
 
@@ -146,7 +104,7 @@ namespace RepositoryParser.ViewModel
                 string filename = dlg.FileName;
                 Dictionary<string, int> tempDictionary = KeyCollection.ToDictionary(a => a.Key, a => a.Value);
                 DataToCsv.CreateCSVFromDictionary(tempDictionary, filename);
-                MessageBox.Show(_resourceManager.GetString("ExportMessage"), _resourceManager.GetString("ExportTitle"));
+                MessageBox.Show(ResourceManager.GetString("ExportMessage"), ResourceManager.GetString("ExportTitle"));
             }
         }
         #endregion

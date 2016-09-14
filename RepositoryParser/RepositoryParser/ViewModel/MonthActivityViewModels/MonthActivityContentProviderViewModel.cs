@@ -11,69 +11,29 @@ using RepositoryParser.Core.Messages;
 
 namespace RepositoryParser.ViewModel.MonthActivityViewModels
 {
-    public class MonthActivityContentProviderViewModel : ViewModelBase
+    public class MonthActivityContentProviderViewModel : RepositoryAnalyserViewModelBase
     {
-        private ViewModelBase _currentViewModel;
         private RelayCommand _openChartViewCommand;
-        private RelayCommand _closedEventCommand;
-        private List<string> _authorsList;
-        private string _filteringQuery;
 
         public MonthActivityContentProviderViewModel()
         {
-            Messenger.Default.Register<ChartMessageLevel2>(this, x => HandleDataMessage(x.AuthorsList, x.FilteringQuery));
-            CurrentViewModel = new ViewModelLocator().MonthActivity;
+            CurrentViewModel = ViewModelLocator.Instance.MonthActivity;
             CurrentViewModel = null;
         }
 
-        #region Getters setters
-        public ViewModelBase CurrentViewModel
-        {
-            get { return _currentViewModel; }
-            set
-            {
-                _currentViewModel = value;
-                RaisePropertyChanged("CurrentViewModel");
-            }
-        }
 
         public RelayCommand OpenChartViewCommand
         {
             get
             {
                 return _openChartViewCommand ??
-                       (_openChartViewCommand = new RelayCommand(OpenChartView));
+                       (_openChartViewCommand = new RelayCommand(() =>
+                       {
+                           this.NavigateTo(ViewModelLocator.Instance.MonthActivity);
+                       }));
             }
         }
 
-        public RelayCommand ClosedEventCommand
-        {
-            get
-            {
-                return _closedEventCommand ?? (_closedEventCommand = new RelayCommand(ClosedEvent));
-            }
-        }
-        #endregion
 
-        #region Methods
-
-        private void OpenChartView()
-        {
-            CurrentViewModel = (new ViewModelLocator()).MonthActivity;
-            Messenger.Default.Send<ChartMessageLevel3MonthActivity>(new ChartMessageLevel3MonthActivity(_filteringQuery));
-        }
-
-        private void HandleDataMessage(List<string> authors, string filternigQuery)
-        {
-            CurrentViewModel = null;
-            _authorsList = authors;
-            _filteringQuery = filternigQuery;
-        }
-
-        private void ClosedEvent()
-        {
-            CurrentViewModel = null;
-        }
-        #endregion
     }
 }

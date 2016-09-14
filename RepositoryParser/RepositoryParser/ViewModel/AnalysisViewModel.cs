@@ -10,26 +10,19 @@ using RepositoryParser.Core.Messages;
 
 namespace RepositoryParser.ViewModel
 {
-    public class AnalysisViewModel : ViewModelBase
+    public class AnalysisViewModel : RepositoryAnalyserViewModelBase
     {
         #region private fields
-
-        private List<string> _authorsList;
-        private string _filteringQuery;
         private RelayCommand _openMonthActivityCommand;
         private RelayCommand _openUserActivityCommand;
         private RelayCommand _openWeekdayActivityCommand;
         private RelayCommand _openDayActivityCommand;
         private RelayCommand _openHourActivityCommand;
         private RelayCommand _openDifferencesCommand;
-        private ViewModelBase _currentViewModel;
         #endregion
 
         public AnalysisViewModel()
         {
-            Messenger.Default.Register<ChartMessageLevel1>(this, x=> HandleDataMessage(x.AuthorsList,x.FilteringQuery));
-            _authorsList = new List<string>();
-
             CurrentViewModel = new ViewModelLocator().MonthActivityContentProvider;
             CurrentViewModel = new ViewModelLocator().UsersActivityContentProvider;
             CurrentViewModel = new ViewModelLocator().WeekdayActivityContentProvider;
@@ -40,16 +33,6 @@ namespace RepositoryParser.ViewModel
         }
 
         #region Getters/Setters
-        public ViewModelBase CurrentViewModel
-        {
-            get { return _currentViewModel; }
-            set
-            {
-                _currentViewModel = value;
-                RaisePropertyChanged("CurrentViewModel");
-            }
-        }
-
         public RelayCommand OpenDifferenesCommand
         {
             get
@@ -103,48 +86,32 @@ namespace RepositoryParser.ViewModel
 
         private void OpenDifferences()
         {
-            CurrentViewModel = new ViewModelLocator().Difference;
-            Messenger.Default.Send<ChartMessageLevel2>(new ChartMessageLevel2(_filteringQuery));
+            this.NavigateTo(ViewModelLocator.Instance.Difference);
         }
 
         private void OpenDayActivity()
         {
-            CurrentViewModel = new ViewModelLocator().DayActivityContentProvider;
-            Messenger.Default.Send<ChartMessageLevel2>(new ChartMessageLevel2(_authorsList, _filteringQuery));
+            this.NavigateTo(ViewModelLocator.Instance.DayActivityContentProvider);
         }
 
         private void OpenHourActivity()
         {
-            CurrentViewModel = new ViewModelLocator().HourActivityContentProvider;
-            Messenger.Default.Send<ChartMessageLevel2>(new ChartMessageLevel2(_authorsList, _filteringQuery));
+            this.NavigateTo(ViewModelLocator.Instance.HourActivityContentProvider);
         }
 
         private void OpenWeekdayActivity()
         {
-            CurrentViewModel = new ViewModelLocator().WeekdayActivityContentProvider;
-            Messenger.Default.Send<ChartMessageLevel2>(new ChartMessageLevel2(_authorsList, _filteringQuery));
+           this.NavigateTo(ViewModelLocator.Instance.WeekdayActivityContentProvider);
         }
 
         private void OpenMonthActivity()
         {
-            CurrentViewModel = new ViewModelLocator().MonthActivityContentProvider;
-            Messenger.Default.Send<ChartMessageLevel2>(new ChartMessageLevel2(_authorsList,_filteringQuery));
+            this.NavigateTo(ViewModelLocator.Instance.MonthActivityContentProvider);
         }
 
         private void OpenUserActivity()
         {
-            CurrentViewModel = new ViewModelLocator().UsersActivityContentProvider;
-            Messenger.Default.Send<ChartMessageLevel2>(new ChartMessageLevel2(_authorsList, _filteringQuery));
-        }
-        #endregion
-
-
-        #region Messages
-        private void HandleDataMessage(List<string> authors, string filternigQuery)
-        {
-                CurrentViewModel = null;
-                _authorsList = authors;
-                _filteringQuery = filternigQuery;
+            this.NavigateTo(ViewModelLocator.Instance.UsersActivityContentProvider);
         }
         #endregion
     }

@@ -105,7 +105,7 @@
 
         <StatusBar Grid.Row="0"
                    Grid.ColumnSpan="2"
-                   Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"  
+                   Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"  
                    Opacity="0.7"
                    Background="White"
                    HorizontalAlignment="Stretch"
@@ -114,11 +114,11 @@
         </StatusBar>
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
                     VerticalAlignment="Center" HorizontalAlignment="Center"
-                    Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
+                    Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
                     >
             <controls:ProgressRing HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
-                                       IsActive="{Binding ProgressBarVisibility}"
+                                       IsActive="{Binding IsLoading}"
                                        Margin="3"
                                        Opacity="1"
                                        Foreground="{StaticResource Graphite}"
@@ -128,7 +128,7 @@
                 Text="{x:Static resw:Resources.DataLoadingStatus}"
                 Foreground="{StaticResource Graphite}"
                 FontSize="14" 
-                Visibility="{Binding ProgressBarVisibility, Converter={StaticResource BoolToVisibilityConverter}}"
+                Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"
                 FontWeight="Light"
                 VerticalAlignment="Center"
                 />

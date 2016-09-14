@@ -8,12 +8,13 @@
              xmlns:viewModel="clr-namespace:RepositoryParser.ViewModel"
              xmlns:resw="clr-namespace:RepositoryParser.Properties"
              xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
+             xmlns:hourActivityViewModels="clr-namespace:RepositoryParser.ViewModel.HourActivityViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator}, Path=HourActivityContentProvider}"
              >
     <UserControl.Resources>
-        <DataTemplate DataType="{x:Type viewModel:HourActivityViewModel}">
+        <DataTemplate DataType="{x:Type hourActivityViewModels:HourActivityViewModel}">
             <local:HourActivityChartView/>
         </DataTemplate>
 

@@ -1,5 +1,5 @@
 ﻿using System;
-using RepositoryParser.Core.Enums;
+using RepositoryParser.DataBaseManagementCore.Configuration;
 
 namespace RepositoryParser.Core.Models
 {
@@ -13,7 +13,7 @@ namespace RepositoryParser.Core.Models
         public ChangesColorModel()
         {
             this.Line = String.Empty;
-            this.Color = ChangeType.Unchanged;
+            this.Color = ChangeType.Unmodified;
         }
 
         public ChangesColorModel(string line, ChangeType color)

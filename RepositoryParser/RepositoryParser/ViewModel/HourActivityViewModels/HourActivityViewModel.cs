@@ -11,26 +11,31 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Win32;
+using NHibernate.Criterion;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
+using RepositoryParser.DataBaseManagementCore.Services;
+using RepositoryParser.Helpers;
 
-namespace RepositoryParser.ViewModel
+namespace RepositoryParser.ViewModel.HourActivityViewModels
 {
-    public class HourActivityViewModel : ViewModelBase
+    public class HourActivityViewModel : RepositoryAnalyserViewModelBase
     {
         #region Variables
         private ObservableCollection<KeyValuePair<string, int>> _keyCollection;
-        private string _filteringQuery;
-        private ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
+
         private RelayCommand _exportFileCommand;
         #endregion
 
         public HourActivityViewModel()
         {
-            Messenger.Default.Register<ChartMessageLevel3HourActivity>(this,
-                x => HandleDataMessage(x.FilteringQuery));
             KeyCollection = new ObservableCollection<KeyValuePair<string, int>>();
+        }
+
+        public override void OnLoad()
+        {
+            FillCollection();
         }
 
         #region Getters/Setters
@@ -42,70 +47,30 @@ namespace RepositoryParser.ViewModel
                 if (_keyCollection != value)
                 {
                     _keyCollection = value;
-                    RaisePropertyChanged("KeyCollection");
+                    RaisePropertyChanged();
                 }
             }
         }
 
-        #endregion
-
-        #region Messages
-        private void HandleDataMessage(string filteringQuery)
-        {
-            this._filteringQuery = filteringQuery;
-            FillCollection();
-        }
         #endregion
 
         #region Methods
         private void FillCollection()
         {
-            if (KeyCollection.Count > 0)
+            if (KeyCollection != null && KeyCollection.Any())
                 KeyCollection.Clear();
+
             for (int i = 0; i <= 23; i++)
             {
-                string dateString = "";
-                if (i < 10)
-                    dateString = "0" + i;
-                else
-                    dateString = Convert.ToString(i);
+                using (var session = DbService.Instance.SessionFactory.OpenSession())
+                {
+                    var query = FilteringHelper.Instance.GenerateQuery(session);
+                    var commitsCount =
+                        query.Where(c => c.Date.Hour == i).Select(Projections.RowCount()).FutureValue<int>().Value;
 
-                string query = "SELECT COUNT(Commits.ID) AS \"CommitsHour\" FROM Commits";
-                if (string.IsNullOrEmpty(MatchQuery(_filteringQuery)))
-                {
-                    query += " where strftime('%H', Date) = " +
-                             "'" + dateString + "'";
-                }
-                else
-                {
-                    query += MatchQuery(_filteringQuery) +
-                             "and strftime('%H', Date) =" +
-                             "'" + dateString + "'";
-                }
-                SQLiteCommand command = new SQLiteCommand(query, SqLiteService.GetInstance().Connection);
-                SQLiteDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                {
-                    int count = Convert.ToInt32(reader["CommitsHour"]);
-                    KeyValuePair<string, int> temp = new KeyValuePair<string, int>(dateString+":00", count);
-                    KeyCollection.Add(temp);
+                    KeyCollection?.Add(new KeyValuePair<string, int>(TimeSpan.FromHours(i).ToString("hh':'mm"),commitsCount));
                 }
             }
-
-        }
-
-
-
-        private string MatchQuery(string query)
-        {
-            Regex r = new Regex(@"(select \* from Commits)(.*)", RegexOptions.IgnoreCase);
-            Match m = r.Match(query);
-            if (m.Success)
-            {
-                if (m.Groups.Count >= 3)
-                    query = m.Groups[2].Value;
-            }
-            return query;
         }
         #endregion
 
@@ -132,7 +97,7 @@ namespace RepositoryParser.ViewModel
                 string filename = dlg.FileName;
                 Dictionary<string, int> tempDictionary = KeyCollection.ToDictionary(a => a.Key, a => a.Value);
                 DataToCsv.CreateCSVFromDictionary(tempDictionary, filename);
-                MessageBox.Show(_resourceManager.GetString("ExportMessage"), _resourceManager.GetString("ExportTitle"));
+                MessageBox.Show(ResourceManager.GetString("ExportMessage"), ResourceManager.GetString("ExportTitle"));
             }
         }
         #endregion
