@@ -1,15 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
-using NHibernate;
+﻿using GalaSoft.MvvmLight.Command;
 using NHibernate.Criterion;
-using RepositoryParser.Core.Helpers;
-using RepositoryParser.Core.Messages;
-using RepositoryParser.Core.Models;
-using RepositoryParser.Core.Services;
 using RepositoryParser.DataBaseManagementCore.Entities;
 using RepositoryParser.DataBaseManagementCore.Services;
 using RepositoryParser.Helpers;

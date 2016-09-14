@@ -2,17 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data.SQLite;
 using System.Linq;
-using System.Reflection;
-using System.Resources;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Threading;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
-using NHibernate.SqlCommand;
 using NHibernate.Util;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
@@ -32,25 +27,18 @@ namespace RepositoryParser.ViewModel
         private Changes _changeSelectedItem;
         private ObservableCollection<Changes> _changesCollection;
         private string _changePatch;
-        private string _changeQuery;
-        private string _filteringQuery;
-        private ResourceManager _resourceManager;
         private DifferencesColoringService _colorService;
         private ObservableCollection<ChangesColorModel> _changePatchcollection;
         private RelayCommand _goToChartOfChangesCommand;
-        private RelayCommand _closedEventCommand;
 
-
-        private BackgroundWorker _showDifferencesWorker;
-        private BackgroundWorker _onLoadWorker;
+        private readonly BackgroundWorker _showDifferencesWorker;
+        private readonly BackgroundWorker _onLoadWorker;
         #endregion
 
         #region Constructors
 
         public DifferenceWindowViewModel()
         {
-            _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
-
             ChangesCollection = new ObservableCollection<Changes>();
 
             this._showDifferencesWorker = new BackgroundWorker();
@@ -233,11 +221,6 @@ namespace RepositoryParser.ViewModel
         #endregion
 
         #region Buttons
-        public RelayCommand ClosedEventCommand
-        {
-            get { return _closedEventCommand ?? (_closedEventCommand = new RelayCommand(ClearViewModel)); }
-        }
-
         public RelayCommand GoToChartOfChangesCommand
         {
             get

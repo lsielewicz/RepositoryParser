@@ -2,26 +2,15 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data.SQLite;
-using System.Globalization;
 using System.Linq;
-using System.Reflection;
-using System.Resources;
-using System.Text.RegularExpressions;
-using System.Threading;
 using System.Windows;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Win32;
 using NHibernate;
-using NHibernate.Criterion;
-using NHibernate.SqlCommand;
 using NHibernate.Util;
-using RepositoryParser.Core.Enums;
-using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
+using RepositoryParser.DataBaseManagementCore.Configuration;
 using RepositoryParser.DataBaseManagementCore.Entities;
 using RepositoryParser.DataBaseManagementCore.Services;
 using RepositoryParser.Helpers;
@@ -31,7 +20,6 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
     public class UsersCodeFrequencyViewModel : RepositoryAnalyserViewModelBase
     {
         #region Fields
-
         private DifferencesColoringService _colorService;
         private readonly BackgroundWorker _dataCalcWorker;
         private ObservableCollection<KeyValuePair<string, int>> _addedLinesCollection;
@@ -150,28 +138,7 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
                     if (author == string.Empty)
                         continue;
 
-                    /*var commits =
-                    FilteringHelper.Instance.GenerateQuery(session)
-                        .Where(commit => commit.Author == author).List<Commit>();
-
-                commits.ForEach(commit =>
-                {
-                    commit.Changes.ForEach(change =>
-                    {
-                        _colorService = new DifferencesColoringService(change.ChangeContent, string.Empty);
-                        _colorService.FillColorDifferences();
-
-                        _colorService.TextAList.ForEach(x =>
-                        {
-                            if (x.Color == ChangeType.Added)
-                                added++;
-                            else if (x.Color == ChangeType.Deleted)
-                                deleted++;
-                        });
-                    });
-                });*/
-                    var commitsIds =
-                        query
+                    var commitsIds = query
                             .Where(commit => commit.Author == author)
                             .SelectList(list => list.Select(c => c.Id)).List<int>();
 
@@ -187,121 +154,25 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
                             _colorService = new DifferencesColoringService(change.ChangeContent, string.Empty);
                             _colorService.FillColorDifferences();
 
-                            _colorService.TextAList.ForEach(x =>
-                            {
-                                if (x.Color == ChangeType.Added)
-                                    added++;
-                                else if (x.Color == ChangeType.Deleted)
-                                    deleted++;
-                            });
+                            added += _colorService.TextAList.Count(x => x.Color == ChangeType.Added);
+                            deleted += _colorService.TextAList.Count(x => x.Color == ChangeType.Deleted);
                         });
 
                     }
 
-
-
-
                     sumAdded += added;
                     sumDeleted += deleted;
                     _userCodeFreqList.Add(new UserCodeFrequency(author, added, deleted));
-
-                    _summaryList = new List<KeyValuePair<string, int>>()
+                }
+                _summaryList = new List<KeyValuePair<string, int>>()
                     {
                         new KeyValuePair<string, int>(ResourceManager.GetString("Added"), sumAdded),
                         new KeyValuePair<string, int>(ResourceManager.GetString("Deleted"), sumDeleted)
                     };
-                    SummaryString = ResourceManager.GetString("Added") + ": " + sumAdded + " " +
-                                    ResourceManager.GetString("Lines") + "\n" +
-                                    ResourceManager.GetString("Deleted") + ": " + sumDeleted + " " +
-                                    ResourceManager.GetString("Lines");
-                }
-
-                /* for (int i = 0; i < authorsList.Count; i++)
-            {
-                added = deleted = 0;
-
-                if (authorsList[i] == String.Empty)
-                    continue;
-
-                string query = "select * from Commits ";
-                 if (string.IsNullOrEmpty(MatchQuery(_filteringQuery)))
-                {
-                    query += "where Commits.Author='" + authorsList[i] + "' ";
-                }
-                else
-                {
-                    if (authorsList.Count == 1)
-                        query += MatchQuery(_filteringQuery);
-                    else
-                        query += MatchQuery(_filteringQuery) + "and Commits.Author='" + authorsList[i] + "' ";
-                }
-
-                SQLiteCommand command = new SQLiteCommand(query, _sqLiteService.Connection);
-                SQLiteDataReader reader = command.ExecuteReader();
-
-                List<int> idCommitList = new List<int>();
-                while (reader.Read())
-                {
-                    idCommitList.Add(Convert.ToInt32(reader["ID"]));
-                }
-
-                foreach (int idCommit in idCommitList)
-                {
-                    string query2 =
-                        String.Format(
-                            "select * from Changes " +
-                            "inner join ChangesForCommit on Changes.ID = ChangesForCommit.NR_Change " +
-                            "inner join Commits on ChangesForCommit.NR_Commit=Commits.ID " +
-                            "where Commits.ID = {0}",
-                            idCommit);
-
-                    SQLiteCommand command2 = new SQLiteCommand(query2, _sqLiteService.Connection);
-                    SQLiteDataReader reader2 = command2.ExecuteReader();
-
-                    List<ChangesTable> changesList = new List<ChangesTable>();
-                    while (reader2.Read())
-                    {
-                        int id = Convert.ToInt32(reader2["ID"]);
-                        string type = Convert.ToString(reader2["Type"]);
-                        string path = Convert.ToString(reader2["Path"]);
-                        string textA = Convert.ToString(reader2["TextA"]);
-                        string textB = Convert.ToString(reader2["TextB"]);
-                        
-                        changesList.Add(new ChangesTable(id,type,path, textA,textB));
-                    }
-
-                    if (changesList.Count > 0)
-                    {
-                        foreach (var change in changesList)
-                        {
-                            _colorService = new DifferencesColoringService(change.TextA,change.TextB);
-                            _colorService.FillColorDifferences();
-
-                            _colorService.TextAList.ForEach(x =>
-                            {
-                                if (x.Color == ChangeType.Added)
-                                    added++;
-                                else if (x.Color == ChangeType.Deleted)
-                                    deleted++;
-                            });
-                        }
-                        
-                    }
-                }
-                sumAdded += added;
-                sumDeleted += deleted;
-                _userCodeFreqList.Add(new UserCodeFrequency(authorsList[i],added,deleted));
-            }*/
-                _summaryList = new List<KeyValuePair<string, int>>()
-                {
-                    new KeyValuePair<string, int>(ResourceManager.GetString("Added"), sumAdded),
-                    new KeyValuePair<string, int>(ResourceManager.GetString("Deleted"), sumDeleted),
-                };
                 SummaryString = ResourceManager.GetString("Added") + ": " + sumAdded + " " +
                                 ResourceManager.GetString("Lines") + "\n" +
                                 ResourceManager.GetString("Deleted") + ": " + sumDeleted + " " +
                                 ResourceManager.GetString("Lines");
-
             }
         }
 

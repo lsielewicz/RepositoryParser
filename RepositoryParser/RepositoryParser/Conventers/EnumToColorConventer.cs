@@ -3,8 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
-using RepositoryParser.Core.Enums;
-using RepositoryParser.Core.Models;
+using RepositoryParser.DataBaseManagementCore.Configuration;
 
 namespace RepositoryParser.Conventers
 {

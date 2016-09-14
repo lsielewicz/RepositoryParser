@@ -5,9 +5,9 @@ using System.Reflection;
 using System.Resources;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
-using RepositoryParser.Core.Enums;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
+using RepositoryParser.DataBaseManagementCore.Configuration;
 
 
 namespace RepositoryParser.ViewModel
