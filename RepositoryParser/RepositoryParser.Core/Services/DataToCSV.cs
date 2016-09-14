@@ -10,6 +10,7 @@ namespace RepositoryParser.Core.Services
 {
     public class DataToCsv
     {
+        //todo GENERIC !!
         public static void CreateCSVFromDictionary(Dictionary<string, int> data, string csvPath)
         {
             String csv = String.Join(

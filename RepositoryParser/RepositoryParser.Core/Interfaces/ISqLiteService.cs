@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace RepositoryParser.Core.Interfaces
 {
+     [Obsolete]
      public interface ISqLiteService
      {
          void OpenConnection(string query);

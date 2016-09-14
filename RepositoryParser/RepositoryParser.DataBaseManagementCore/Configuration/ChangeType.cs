@@ -13,7 +13,7 @@ namespace RepositoryParser.DataBaseManagementCore.Configuration
         public static readonly ChangeType Added = new ChangeType("Added");
         public static readonly ChangeType Deleted = new ChangeType("Deleted");
         public static readonly ChangeType Modified = new ChangeType("Modified");
-        public static readonly ChangeType Unodified = new ChangeType("Unmodified");
+        public static readonly ChangeType Unmodified = new ChangeType("Unmodified");
 
         #region Type-Safe enum pattern
         public string Name { get; private set; }

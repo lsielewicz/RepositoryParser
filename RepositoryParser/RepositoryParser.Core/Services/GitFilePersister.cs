@@ -206,14 +206,14 @@ namespace RepositoryParser.Core.Services
 
         private string ConvertChangeKindToChangeType(ChangeKind changeKind)
         {
-            if (changeKind == ChangeKind.Modified)
-                return ChangeType.Modified;
             if (changeKind == ChangeKind.Added)
                 return ChangeType.Added;
             if (changeKind == ChangeKind.Deleted)
                 return ChangeType.Deleted;
+            if (changeKind == ChangeKind.Unmodified)
+                return ChangeType.Unmodified;
 
-            return ChangeType.Unodified;
+            return ChangeType.Modified;
         }
 
         private void InitializeConnection()

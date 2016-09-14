@@ -7,12 +7,14 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using RepositoryParser.Core.Interfaces;
 
-namespace RepositoryParser.Core.Models
+namespace RepositoryParser.Core.Services
 {
+    [Obsolete]
     public sealed class SqLiteService : ISqLiteService
     {
         private SQLiteConnection _connection;
 
+        [Obsolete]
         public SQLiteConnection Connection
         {
             get
@@ -30,6 +32,7 @@ namespace RepositoryParser.Core.Models
         public string DBName { get; set; }
         private static SqLiteService _singletonInstance=null;
 
+        [Obsolete]
         public static SqLiteService GetInstance()
         {
             if(_singletonInstance==null)
@@ -37,6 +40,7 @@ namespace RepositoryParser.Core.Models
             return _singletonInstance;
         }
 
+        [Obsolete]
         public void OpenConnection(string query = "")
         {
             if (_connection == null || _connection.State == ConnectionState.Closed)
@@ -68,6 +72,7 @@ namespace RepositoryParser.Core.Models
             }
         }
 
+        [Obsolete]
         public void OpenConnection(List<string> transactions)
         {
             try
@@ -93,6 +98,7 @@ namespace RepositoryParser.Core.Models
             }
         }
 
+        [Obsolete]
         public void ExecuteQuery(string query)
         {
             try
@@ -112,6 +118,7 @@ namespace RepositoryParser.Core.Models
             }
         }
 
+        [Obsolete]
         public void ExecuteTransaction(List<string> transactions)
         {
             try
@@ -139,6 +146,7 @@ namespace RepositoryParser.Core.Models
             }
         }
 
+        [Obsolete]
         public void CloseConnection()
         {
             if (_connection.State == ConnectionState.Open)
@@ -147,6 +155,7 @@ namespace RepositoryParser.Core.Models
             }
         }
 
+        [Obsolete]
         public static string getDateTimeFormat(string dateString)
         {
             //example data format :     29.10.2015 18:50:21
@@ -171,6 +180,7 @@ namespace RepositoryParser.Core.Models
 
         }
 
+        [Obsolete]
         public static string StripSlashes(string InputTxt)
         {
             // List of characters handled:

@@ -257,7 +257,7 @@ namespace RepositoryParser.Core.Services
                 return ChangeType.Modified;
             if (changeAction == SvnChangeAction.Delete)
                 return ChangeType.Deleted;
-            return ChangeType.Unodified;
+            return ChangeType.Unmodified;
         }
 
         private string CheckPath(string path)
