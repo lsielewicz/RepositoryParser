@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Documents;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
 using NHibernate;
+using NHibernate.Criterion;
 using NHibernate.Util;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
@@ -138,18 +141,10 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
                     if (author == string.Empty)
                         continue;
 
-                    var commitsIds = query
-                            .Where(commit => commit.Author == author)
-                            .SelectList(list => list.Select(c => c.Id)).List<int>();
-
-                    foreach (var id in commitsIds)
+                    var commits = query.Where(commit => commit.Author == author).List<Commit>();
+                    foreach (var commit in commits)
                     {
-                        var changes = session
-                            .QueryOver<Changes>()
-                            .JoinQueryOver(c => c.Commit)
-                            .Where(commit => commit.Id == id)
-                            .List<Changes>();
-                        changes.ForEach(change =>
+                        commit.Changes.ForEach(change =>
                         {
                             _colorService = new DifferencesColoringService(change.ChangeContent, string.Empty);
                             _colorService.FillColorDifferences();
@@ -157,13 +152,13 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
                             added += _colorService.TextAList.Count(x => x.Color == ChangeType.Added);
                             deleted += _colorService.TextAList.Count(x => x.Color == ChangeType.Deleted);
                         });
-
                     }
 
                     sumAdded += added;
                     sumDeleted += deleted;
                     _userCodeFreqList.Add(new UserCodeFrequency(author, added, deleted));
                 }
+
                 _summaryList = new List<KeyValuePair<string, int>>()
                     {
                         new KeyValuePair<string, int>(ResourceManager.GetString("Added"), sumAdded),

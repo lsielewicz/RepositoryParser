@@ -21,22 +21,20 @@ using MessageBox = System.Windows.MessageBox;
 
 namespace RepositoryParser.ViewModel
 {
-    public class DataBaseManagementViewModel : ViewModelBase
+    public class DataBaseManagementViewModel : RepositoryAnalyserViewModelBase
     {
         #region private variables
 
         private IVersionControlFilePersister _repositoryFilePersister;
-        private string _urlTextBox = "";
+        private string _urlTextBox;
         private bool _isCloneButtonEnabled = true;
-        private bool _progressBarVisibility = false;
-        private bool _isLocal = false;
+        private bool _isLocal;
         private bool _isOpening;
         private bool _isGitRepositoryPicked;
-        private readonly ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
-        private BackgroundWorker _worker;
-        private BackgroundWorker clearDBWorker;
+        private readonly BackgroundWorker _worker;
+        private readonly BackgroundWorker _clearDbWorker;
         private RelayCommand _startWorkCommand;
-        private RelayCommand _asyncClearDBCommand;
+        private RelayCommand _asyncClearDbCommand;
         private RelayCommand _pickFileCommand;
         private RelayCommand _pickGitRepositoryCommand;
         private RelayCommand _pickSvnRepositoryCommand;
@@ -48,9 +46,9 @@ namespace RepositoryParser.ViewModel
             this._worker.DoWork += this.DoWork;
             this._worker.RunWorkerCompleted += this.RunWorkerCompleted;
 
-            this.clearDBWorker = new BackgroundWorker();
-            this.clearDBWorker.DoWork += this.DoClearWork;
-            this.clearDBWorker.RunWorkerCompleted += this.DoClearWorkCompleted;
+            this._clearDbWorker = new BackgroundWorker();
+            this._clearDbWorker.DoWork += this.DoClearWork;
+            this._clearDbWorker.RunWorkerCompleted += this.DoClearWorkCompleted;
 
             OnLoad();
         }
@@ -113,20 +111,6 @@ namespace RepositoryParser.ViewModel
                 RaisePropertyChanged("IsCloneButtonEnabled");
             }
         }
-
-        public bool ProgressBarVisibility
-        {
-            get
-            {
-                return _progressBarVisibility;
-            }
-            set
-            {
-                _progressBarVisibility = value;
-                RaisePropertyChanged("ProgressBarVisibility");
-            }
-        }
-
         #endregion
 
         #region Buttons getters
@@ -163,13 +147,13 @@ namespace RepositoryParser.ViewModel
         }
 
 
-        public RelayCommand AsyncClearDBCommand
+        public RelayCommand AsyncClearDbCommand
         {
             get
             {
-                return _asyncClearDBCommand ??
-                       (_asyncClearDBCommand =
-                           new RelayCommand(clearDBWorker.RunWorkerAsync, () => !clearDBWorker.IsBusy));
+                return _asyncClearDbCommand ??
+                       (_asyncClearDbCommand =
+                           new RelayCommand(_clearDbWorker.RunWorkerAsync, () => !_clearDbWorker.IsBusy));
             }
         }
         #endregion
@@ -202,7 +186,7 @@ namespace RepositoryParser.ViewModel
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             fbd.SelectedPath = System.AppDomain.CurrentDomain.BaseDirectory;
-            fbd.Description = _resourceManager.GetString("PickFolderWithRepo");
+            fbd.Description = ResourceManager.GetString("PickFolderWithRepo");
 
             if (fbd.ShowDialog() == DialogResult.OK)
             {
@@ -217,7 +201,7 @@ namespace RepositoryParser.ViewModel
                 _isLocal = SetIsLocal();
                 try
                 {
-                    ProgressBarVisibility = true;
+                    IsLoading = true;
 
                     if (IsGitRepositoryPicked == false)
                     {
@@ -235,17 +219,17 @@ namespace RepositoryParser.ViewModel
                 }
                 finally
                 {
-                    ProgressBarVisibility = false;
+                    IsLoading = false;
                 }
             }
             else
             {
-                System.Windows.MessageBox.Show(_resourceManager.GetString("NoRepositoryPathError"), _resourceManager.GetString("Error"));
+                System.Windows.MessageBox.Show(ResourceManager.GetString("NoRepositoryPathError"), ResourceManager.GetString("Error"));
             }
 
         }
 
-        private void OnLoad()
+        public override void OnLoad()
         {
             try
             {
@@ -291,7 +275,7 @@ namespace RepositoryParser.ViewModel
         private void DoClearWork(object sender, DoWorkEventArgs e)
         {
             IsOpening = false;
-            ProgressBarVisibility = true;
+            IsLoading = true;
             ClearDataBase();
         }
 
@@ -305,7 +289,7 @@ namespace RepositoryParser.ViewModel
             {
                 Messenger.Default.Send<RefreshMessageToPresentation>(new RefreshMessageToPresentation(true));
                 Messenger.Default.Send<RefreshMessageToFiltering>(new RefreshMessageToFiltering(true));
-                ProgressBarVisibility = false;
+                IsLoading = false;
                 ViewModelLocator.Instance.Main.OnLoad();
             }
         }

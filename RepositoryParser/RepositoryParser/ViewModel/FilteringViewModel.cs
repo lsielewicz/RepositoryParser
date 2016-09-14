@@ -20,7 +20,7 @@ using RepositoryParser.Helpers.Enums;
 
 namespace RepositoryParser.ViewModel
 {
-    public class FilteringViewModel : ViewModelBase
+    public class FilteringViewModel : RepositoryAnalyserViewModelBase
     {
         #region private fields
         private ObservableCollection<string> _authorsCollection;
@@ -45,7 +45,6 @@ namespace RepositoryParser.ViewModel
             AuthorsCollection = new ObservableCollection<string>();
             BranchCollection = new ObservableCollection<string>();
             RepositoryCollection = new ObservableCollection<string>();
-            OnLoad();
         }
 
         #region Buttons getters
@@ -347,7 +346,7 @@ namespace RepositoryParser.ViewModel
             }
         }
 
-        private void OnLoad()
+        public override void OnLoad()
         {
             GetRepositories();
             GetBranches();
