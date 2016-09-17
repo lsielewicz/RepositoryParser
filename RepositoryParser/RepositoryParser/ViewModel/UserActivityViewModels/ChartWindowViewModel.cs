@@ -1,20 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data.SQLite;
 using System.Linq;
-using System.Reflection;
-using System.Resources;
-using System.Text.RegularExpressions;
 using System.Windows;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Win32;
 using NHibernate.Criterion;
 using NHibernate.Util;
-using RepositoryParser.Core.Messages;
-using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
 using RepositoryParser.DataBaseManagementCore.Services;
 using RepositoryParser.Helpers;
@@ -84,8 +76,11 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
         #region Methods
         private void FillCollection()
         {
-            if (KeyCollection!= null && KeyCollection.Any())
-                KeyCollection.Clear();
+            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                if (KeyCollection != null && KeyCollection.Any())
+                    KeyCollection.Clear();
+            }));
 
             var authors = GetAuthors();
             authors.ForEach(author =>
@@ -95,7 +90,11 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
                     var query = FilteringHelper.Instance.GenerateQuery(session);
                     var commitCount =
                         query.Where(c => c.Author == author).Select(Projections.RowCount()).FutureValue<int>().Value;
-                    KeyCollection.Add(new KeyValuePair<string, int>(author,commitCount));
+
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        KeyCollection.Add(new KeyValuePair<string, int>(author, commitCount));
+                    }));
                 }
             });
         }
@@ -115,7 +114,15 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
 
         public override void OnLoad()
         {
-            FillCollection();
+            this.RunAsyncOperation(() =>
+            {
+                this.IsLoading = true;
+                this.FillCollection();
+            }, executeUponFinish =>
+            {
+                IsLoading = false;
+            });
+            
         }
     }
 }

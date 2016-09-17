@@ -8,6 +8,7 @@
                 xmlns:resw="clr-namespace:RepositoryParser.Properties"
                 xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
                 xmlns:extensions="clr-namespace:RepositoryParser.Controls.Extensions;assembly=RepositoryParser.Controls"
+                xmlns:circleHeaderButton="clr-namespace:RepositoryParser.Controls.CircleHeaderButton;assembly=RepositoryParser.Controls"
                 mc:Ignorable="d" 
                 d:DesignHeight="600" d:DesignWidth="600"
                 DataContext="{Binding Source={StaticResource Locator}, Path=UsersActivity}"
@@ -59,16 +60,17 @@
             </TabItem>
         </TabControl>
 
-        <DockPanel Grid.Column="0" Grid.Row="1">
-            <imageButton:ImageButton 
+        <DockPanel Grid.Row="1" HorizontalAlignment="Left" Margin="0">
+            <circleHeaderButton:CircleHeaderButton 
                 Command="{Binding ExportFileCommand}"
-                ImageSource="../../Assets/Icons/Export_grey.png"
-                Text="{x:Static resw:Resources.ExportToFileButton}"
-                Height="40"
-                ImageHeight="24" 
-                ImageWidth="24"
-                Background="{StaticResource Graphite}"
-                Width="180"/>
+                ImageSource="../../Assets/Icons/PNG_DarkGray/Export-100.png"
+                ToolTip="{x:Static resw:Resources.ExportToFileButton}"
+                Height="56"
+                Width="56"
+                ImageHeight="28" 
+                ImageWidth="28"
+                BorderBrush="{StaticResource Graphite}"
+                />
         </DockPanel>
 
     </Grid>

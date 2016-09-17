@@ -23,24 +23,22 @@ using RepositoryParser.View;
 
 namespace RepositoryParser.ViewModel
 {
-    public class PresentationViewModel : ViewModelBase  
+    public class PresentationViewModel : RepositoryAnalyserViewModelBase  
     {
         #region private variables
+        private bool _isInitiaized;
         private bool _isUndocked;
         private UndockedPresentationWindowView _undockedWindow;
         private ObservableCollection<Commit> _commitsCollection;
         private RelayCommand _refreshCommand;
         private RelayCommand _exportFileCommand;
         private RelayCommand<object> _dockUndockPageCommand;
-        private readonly ResourceManager _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
         public PresentationView ViewInstance { get; set; }
         #endregion
 
         public PresentationViewModel()
         {
-            CommitsColection = new ObservableCollection<Commit>();
-            Messenger.Default.Register<RefreshMessageToPresentation>(this, x=> HandleRefreshMessage(x.Refresh));
-            OnLoad();
+            CommitsCollection = new ObservableCollection<Commit>();
             Messenger.Default.Register<DataMessageToDisplay>(this, x => HandleDataMessage(x.CommitList));
             RefreshList();
         }
@@ -52,7 +50,7 @@ namespace RepositoryParser.ViewModel
             get { return !_isUndocked; }
         }
 
-        public ObservableCollection<Commit> CommitsColection
+        public ObservableCollection<Commit> CommitsCollection
         {
             get
             {
@@ -123,8 +121,8 @@ namespace RepositoryParser.ViewModel
         #region Messages
         private void HandleDataMessage(List<Commit> list)
         {
-            CommitsColection.Clear();
-            list.ForEach(x => CommitsColection.Add(x));
+            CommitsCollection.Clear();
+            list.ForEach(x => CommitsCollection.Add(x));
         }
         #endregion
 
@@ -132,13 +130,13 @@ namespace RepositoryParser.ViewModel
         #region Methods
         private void RefreshList()
         {
-            if(CommitsColection != null && CommitsColection.Any())
-                CommitsColection.Clear();
+            if(CommitsCollection != null && CommitsCollection.Any())
+                CommitsCollection.Clear();
 
             using (var session = DbService.Instance.SessionFactory.OpenSession())
             {
                 var commits = session.QueryOver<Commit>().List<Commit>();
-                commits.ForEach(commit=>CommitsColection.Add(commit));
+                commits.ForEach(commit=>CommitsCollection.Add(commit));
             }
         }
 
@@ -155,31 +153,26 @@ namespace RepositoryParser.ViewModel
             {
                 // Save document
                 string filename = dlg.FileName;
-                List<Commit> tempList = CommitsColection.ToList();
+                List<Commit> tempList = CommitsCollection.ToList();
                 DataToCsv.CreateCSVFromGitCommitsList(tempList, filename);
-                MessageBox.Show(_resourceManager.GetString("ExportMessage"), _resourceManager.GetString("ExportTitle"));
+                MessageBox.Show(ResourceManager.GetString("ExportMessage"), ResourceManager.GetString("ExportTitle"));
             }
         }
 
-        private void OnLoad()
+        public override void OnLoad()
         {
             try
             {
-                RefreshList();
-                CommitsColection = new ObservableCollection<Commit>();
+                if (!_isInitiaized)
+                {
+                    _isInitiaized = true;
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
-
-        private void HandleRefreshMessage(bool refresh)
-        {
-           // if(refresh)
-               // RefreshList();
-        }
         #endregion
-
     }
 }

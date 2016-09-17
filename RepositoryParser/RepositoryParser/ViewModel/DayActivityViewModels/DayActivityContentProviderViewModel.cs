@@ -15,14 +15,7 @@ namespace RepositoryParser.ViewModel.DayActivityViewModels
         private RelayCommand _openChartViewCommand;
         private RelayCommand _closedEventCommand;
 
-
-        public DayActivityContentProviderViewModel()
-        {
-        }
-
         #region Getters setters
-
-
         public override void OnLoad()
         {
             CurrentViewModel = null;
@@ -33,32 +26,13 @@ namespace RepositoryParser.ViewModel.DayActivityViewModels
             get
             {
                 return _openChartViewCommand ??
-                       (_openChartViewCommand = new RelayCommand(OpenChartView));
-            }
-        }
-
-        public RelayCommand ClosedEventCommand
-        {
-            get
-            {
-                return _closedEventCommand ?? (_closedEventCommand = new RelayCommand(ClosedEvent));
+                       (_openChartViewCommand = new RelayCommand(() =>
+                       {
+                           this.NavigateTo(ViewModelLocator.Instance.DayActivity);
+                       }));
             }
         }
         #endregion
 
-        #region Methods
-
-        private void OpenChartView()
-        {
-            CurrentViewModel = ViewModelLocator.Instance.DayActivity;
-            ViewModelLocator.Instance.DayActivity.OnLoad();
-        }
-
-
-        private void ClosedEvent()
-        {
-            CurrentViewModel = null;
-        }
-        #endregion
     }
 }

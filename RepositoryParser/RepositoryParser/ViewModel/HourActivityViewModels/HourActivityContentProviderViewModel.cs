@@ -14,10 +14,6 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels
     {
         private RelayCommand _openChartViewCommand;
 
-        public HourActivityContentProviderViewModel()
-        {
-        }
-
         #region Getters setters
         public RelayCommand OpenChartViewCommand
         {

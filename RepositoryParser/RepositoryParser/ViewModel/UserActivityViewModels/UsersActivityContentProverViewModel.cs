@@ -18,13 +18,6 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
         private RelayCommand _openChartViewCommand;
         private RelayCommand _openCodeFrequencyCommand;
 
-        public UsersActivityContentProverViewModel()
-        {
-            CurrentViewModel = new ViewModelLocator().UsersCodeFrequency;
-            CurrentViewModel = new ViewModelLocator().UsersActivity;
-            CurrentViewModel = null;
-        }
-
         #region Getters setters
         public RelayCommand OpenChartViewCommand
         {

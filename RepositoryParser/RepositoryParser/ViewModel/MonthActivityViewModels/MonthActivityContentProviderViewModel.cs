@@ -15,13 +15,6 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
     {
         private RelayCommand _openChartViewCommand;
 
-        public MonthActivityContentProviderViewModel()
-        {
-            CurrentViewModel = ViewModelLocator.Instance.MonthActivity;
-            CurrentViewModel = null;
-        }
-
-
         public RelayCommand OpenChartViewCommand
         {
             get

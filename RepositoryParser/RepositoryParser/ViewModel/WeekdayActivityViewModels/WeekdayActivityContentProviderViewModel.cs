@@ -14,10 +14,6 @@ namespace RepositoryParser.ViewModel.WeekdayActivityViewModels
     {
         private RelayCommand _openChartViewCommand;
 
-        public WeekdayActivityContentProviderViewModel()
-        {
-        }
-
         public RelayCommand OpenChartViewCommand
         {
             get
