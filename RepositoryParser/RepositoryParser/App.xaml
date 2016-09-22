@@ -14,6 +14,7 @@
         <!--Internal Libraries-->
         <ResourceDictionary Source="Resources/Themes/Brushes.xaml" />
         <ResourceDictionary Source="Resources/Themes/Colors.xaml" />
+        <ResourceDictionary Source="Resources/Themes/ChartColorPalette.xaml"/>
         <ResourceDictionary Source="../Resources/ButtonStyles.xaml" />
         <ResourceDictionary Source="../Resources/AppStyles.xaml" />
         <!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->

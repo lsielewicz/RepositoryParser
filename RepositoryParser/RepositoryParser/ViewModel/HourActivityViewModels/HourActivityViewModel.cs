@@ -7,24 +7,27 @@ using System.Reflection;
 using System.Resources;
 using System.Text.RegularExpressions;
 using System.Windows;
+using De.TorstenMandelkow.MetroChart;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Win32;
 using NHibernate.Criterion;
+using NHibernate.Util;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
 using RepositoryParser.DataBaseManagementCore.Services;
 using RepositoryParser.Helpers;
 
+
 namespace RepositoryParser.ViewModel.HourActivityViewModels
 {
-    public class HourActivityViewModel : RepositoryAnalyserViewModelBase
+    public class HourActivityViewModel : ChartViewModelBase
     {
         #region Variables
         private ObservableCollection<KeyValuePair<string, int>> _keyCollection;
-
+        private ObservableCollection<ChartSeries> _chartSeriesCollection;
         private RelayCommand _exportFileCommand;
         #endregion
 
@@ -35,7 +38,7 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels
 
         public override void OnLoad()
         {
-            FillCollection();
+            base.OnLoad();
         }
 
         #region Getters/Setters
@@ -51,15 +54,16 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels
                 }
             }
         }
-
         #endregion
 
         #region Methods
-        private void FillCollection()
-        {
-            if (KeyCollection != null && KeyCollection.Any())
-                KeyCollection.Clear();
 
+        public override void FillChartData()
+        {
+            base.FillChartData();
+
+            //todo loop around multiple repositories
+            var itemSource = new List<ChartData>();
             for (int i = 0; i <= 23; i++)
             {
                 using (var session = DbService.Instance.SessionFactory.OpenSession())
@@ -68,14 +72,25 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels
                     var commitsCount =
                         query.Where(c => c.Date.Hour == i).Select(Projections.RowCount()).FutureValue<int>().Value;
 
-                    KeyCollection?.Add(new KeyValuePair<string, int>(TimeSpan.FromHours(i).ToString("hh':'mm"),commitsCount));
+                   itemSource.Add(new ChartData()
+                   {
+                       RepositoryValue = FilteringHelper.Instance.SelectedRepository,
+                       ChartKey = TimeSpan.FromHours(i).ToString("hh':'mm"),
+                       ChartValue = commitsCount
+                   });
                 }
             }
+
+            this.AddSeriesToChartInstance(FilteringHelper.Instance.SelectedRepository,itemSource);
+            this.DrawChart();
+            this.FillDataCollection();
         }
+
         #endregion
 
-        #region Buttons getters
-        public RelayCommand ExportFileCommand
+                #region Buttons getters
+            public
+            RelayCommand ExportFileCommand
         {
             get { return _exportFileCommand ?? (_exportFileCommand = new RelayCommand(ExportFile)); }
         }

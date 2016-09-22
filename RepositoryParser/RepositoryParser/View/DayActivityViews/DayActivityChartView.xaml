@@ -39,6 +39,7 @@
                             />
                     </chartingToolkit:Chart.Series>
                 </chartingToolkit:Chart>
+                
             </TabItem>
             <TabItem Header="{x:Static resw:Resources.List}">
                 <DataGrid

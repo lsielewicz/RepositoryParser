@@ -94,6 +94,10 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="De.TorstenMandelkow.MetroChart, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ModernUICharts.1.0.2\lib\De.TorstenMandelkow.MetroChart.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -229,6 +233,7 @@
     <Compile Include="Conventers\NegativeViewModelBaseToVisibilityConventer.cs" />
     <Compile Include="Conventers\StringToImageConventer.cs" />
     <Compile Include="Conventers\ViewModelBaseToVisibilityConventer.cs" />
+    <Compile Include="Helpers\ChartingHelper.cs" />
     <Compile Include="Helpers\CustomInputDialog.cs" />
     <Compile Include="Helpers\Enums\FilteringColumn.cs" />
     <Compile Include="Helpers\FilteringHelper.cs" />
@@ -241,6 +246,7 @@
     </Compile>
     <Compile Include="ViewModel\AnalysisViewModel.cs" />
     <Compile Include="ViewModel\ChartOfChangesViewModel.cs" />
+    <Compile Include="ViewModel\ChartViewModelBase.cs" />
     <Compile Include="ViewModel\DataBaseManagementViewModel.cs" />
     <Compile Include="ViewModel\DayActivityViewModels\DayActivityContentProviderViewModel.cs" />
     <Compile Include="ViewModel\FilteringViewModel.cs" />
@@ -321,6 +327,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Themes\Brushes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Themes\ChartColorPalette.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
