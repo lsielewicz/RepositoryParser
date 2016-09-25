@@ -62,28 +62,31 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels
         {
             base.FillChartData();
 
-            //todo loop around multiple repositories
-            var itemSource = new List<ChartData>();
-            for (int i = 0; i <= 23; i++)
+            FilteringHelper.Instance.SelectedRepositories.ForEach(selectedRepository =>
             {
-                using (var session = DbService.Instance.SessionFactory.OpenSession())
+                var itemSource = new List<ChartData>();
+                for (int i = 0; i <= 23; i++)
                 {
-                    var query = FilteringHelper.Instance.GenerateQuery(session);
-                    var commitsCount =
-                        query.Where(c => c.Date.Hour == i).Select(Projections.RowCount()).FutureValue<int>().Value;
+                    using (var session = DbService.Instance.SessionFactory.OpenSession())
+                    {
+                        var query = FilteringHelper.Instance.GenerateQuery(session,selectedRepository);
+                        var commitsCount =
+                            query.Where(c => c.Date.Hour == i).Select(Projections.RowCount()).FutureValue<int>().Value;
 
-                   itemSource.Add(new ChartData()
-                   {
-                       RepositoryValue = FilteringHelper.Instance.SelectedRepository,
-                       ChartKey = TimeSpan.FromHours(i).ToString("hh':'mm"),
-                       ChartValue = commitsCount
-                   });
+                        itemSource.Add(new ChartData()
+                        {
+                            RepositoryValue = selectedRepository,
+                            ChartKey = TimeSpan.FromHours(i).ToString("hh':'mm"),
+                            ChartValue = commitsCount
+                        });
+                    }
                 }
-            }
 
-            this.AddSeriesToChartInstance(FilteringHelper.Instance.SelectedRepository,itemSource);
+                this.AddSeriesToChartInstance(selectedRepository, itemSource);
+            });
             this.DrawChart();
             this.FillDataCollection();
+
         }
 
         #endregion

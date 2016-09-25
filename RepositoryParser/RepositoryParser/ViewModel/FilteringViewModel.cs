@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -11,6 +13,7 @@ using NHibernate.Linq;
 using NHibernate.SqlCommand;
 using NHibernate.Transform;
 using NHibernate.Util;
+using RepositoryParser.Controls.Common;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.DataBaseManagementCore.Configuration;
 using RepositoryParser.DataBaseManagementCore.Entities;
@@ -35,10 +38,84 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _onLoadCommand;
         private RelayCommand<object> _clearSpecifiedFilterCommand;
         private bool _isInitialized;
+
+        public List<string> SelectedRepositories
+        {
+            get { return FilteringHelper.Instance.SelectedRepositories; }
+            set
+            {
+                FilteringHelper.Instance.SelectedRepositories = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public List<string> SelectedAuthors
+        {
+            get { return FilteringHelper.Instance.SelectedAuthors; }
+            set
+            {
+                FilteringHelper.Instance.SelectedAuthors = value;
+                RaisePropertyChanged();
+            }
+        }
+        private RelayCommand _selectedRepositoriesItemChanged;
+
+        public RelayCommand SelectedRepositoriesItemChanged
+        {
+            get
+            {
+                return _selectedRepositoriesItemChanged ?? (_selectedRepositoriesItemChanged = new RelayCommand(() =>
+                {
+                    if (this.SelectedRepositories != null && this.SelectedRepositories.Count == 0)
+                    {
+                        this.SendEmptyMessageToDisplay();
+                        this.BranchCollection.Clear();
+                        this.AuthorsCollection.Clear();
+                        this.RepositoryType = null;
+                        return;
+                    }
+                    if(this.SelectedRepositories != null && this.SelectedRepositories.Count == 1)
+                    {
+                        this.BranchesEnabled = true;
+                        GetBranches();
+                        var repositoryType = RepositoryCollection.FirstOrDefault(x => x == SelectedRepositories.First());
+                        if (repositoryType != null)
+                        {
+                            this.RepositoryType = _repositoryTypeDictionary[SelectedRepositories.First()];
+                        }
+                        BranchSelectedItem = BranchCollection.FirstOrDefault() ?? string.Empty;
+                    }
+                    else
+                    {
+                        this.BranchSelectedItem = null;
+                        this.BranchesEnabled = false;
+                        this.RepositoryType = null;
+                    }
+                    this.GetAuthors();
+                    this.SendMessageToDisplay();
+                    this.RaisePropertyChanged("SelectedRepositories");
+                }));
+            }
+        }
+
+        private RelayCommand _selectedAuthorsItemChanged;
+
+        public RelayCommand SelectedAuthorsItemChanged
+        {
+            get
+            {
+                return _selectedAuthorsItemChanged ?? (_selectedAuthorsItemChanged = new RelayCommand(() =>
+                {
+                    this.SendMessageToDisplay();
+                    this.RaisePropertyChanged("SelectedAuthors");
+                }));
+            }
+        }
         #endregion
 
         public FilteringViewModel()
         {
+            FilteringHelper.Instance.SelectedRepositories = new List<string>();
             Messenger.Default.Register<RefreshMessageToFiltering>(this, x=>HandleRefreshMessage(x.Refresh));
             _commitsList = new List<Commit>();
             _repositoryTypeDictionary = new Dictionary<string, string>();
@@ -75,7 +152,8 @@ namespace RepositoryParser.ViewModel
                         {
                             if ((FilteringColumn) param == FilteringColumn.AuthorsColumn)
                             {
-                                this.AuthorsSelectedItem = null;
+                                this.SelectedAuthors = new List<string>();
+                                this.SelectedAuthorsItemChanged.Execute(this);
                             }
                             else if ((FilteringColumn) param == FilteringColumn.DateColumn)
                             {
@@ -202,19 +280,7 @@ namespace RepositoryParser.ViewModel
             }
         }
 
-        public string AuthorsSelectedItem
-        {
-            get { return FilteringHelper.Instance.SelectedAuthor; }
-            set
-            {
-                if (FilteringHelper.Instance.SelectedAuthor != value)
-                {
-                    FilteringHelper.Instance.SelectedAuthor = value;
-                    this.SendMessageToDisplay();
-                    RaisePropertyChanged();
-                }
-            }
-        }
+
 
         public string BranchSelectedItem
         {
@@ -232,30 +298,6 @@ namespace RepositoryParser.ViewModel
                 }
             }
         }
-
-        public string RepositorySelectedItem
-        {
-            get { return FilteringHelper.Instance.SelectedRepository; }
-            set
-            {
-                FilteringHelper.Instance.SelectedRepository = value;
-                if (FilteringHelper.Instance.SelectedRepository != null)
-                {
-                    BranchesEnabled = true;
-                    var firstOrDefault = RepositoryCollection.FirstOrDefault(x => x == FilteringHelper.Instance.SelectedRepository);
-                    if (firstOrDefault != null)
-                    {
-                        RepositoryType = _repositoryTypeDictionary[RepositorySelectedItem];
-                    }
-
-                    GetBranches();
-                    GetAuthors();
-                    BranchSelectedItem = BranchCollection.FirstOrDefault() ?? string.Empty;
-                }
-                RaisePropertyChanged();
-            }
-        }
-
         #endregion
 
         #region Methods
@@ -270,6 +312,10 @@ namespace RepositoryParser.ViewModel
 
         private void GetBranches()
         {
+            if (FilteringHelper.Instance.SelectedRepositories == null || !FilteringHelper.Instance.SelectedRepositories.Any() ||
+                FilteringHelper.Instance.SelectedRepositories.First() == null)
+                return;
+
             if(BranchCollection != null && BranchCollection.Any())
                 BranchCollection.Clear();
 
@@ -279,7 +325,7 @@ namespace RepositoryParser.ViewModel
                 if (BranchCollection != null && BranchCollection.Any())
                     BranchCollection.Clear();
 
-                if (string.IsNullOrEmpty(FilteringHelper.Instance.SelectedRepository))
+                if (string.IsNullOrEmpty(FilteringHelper.Instance.SelectedRepositories.First()))
                 {
                     var branches =
                         session.QueryOver<Branch>().List<Branch>();
@@ -290,7 +336,7 @@ namespace RepositoryParser.ViewModel
                     var branches =
                         session.QueryOver<Branch>()
                             .JoinAlias(branch => branch.Repository, () => repository, JoinType.LeftOuterJoin)
-                            .Where(() => repository.Name == FilteringHelper.Instance.SelectedRepository)
+                            .Where(() => repository.Name == FilteringHelper.Instance.SelectedRepositories.First())
                             .TransformUsing(Transformers.DistinctRootEntity)
                             .List<Branch>();
                     branches.ForEach(branch => BranchCollection.Add(branch.Name));
@@ -321,30 +367,33 @@ namespace RepositoryParser.ViewModel
         private void GetAuthors()
         {
             AuthorsCollection.Clear();
-            using (var session = DbService.Instance.SessionFactory.OpenSession())
+            this.SelectedRepositories.ForEach(selectedRepository =>
             {
-                if (string.IsNullOrEmpty(FilteringHelper.Instance.SelectedRepository))
+                using (var session = DbService.Instance.SessionFactory.OpenSession())
                 {
-                    var authors =
-                        session.QueryOver<Commit>()
-                            .SelectList(list => list.SelectGroup(commit => commit.Author))
-                            .List<string>();
-                    authors.ForEach(author => AuthorsCollection.Add(author));
+                    if (string.IsNullOrEmpty(selectedRepository))
+                    {
+                        var authors =
+                            session.QueryOver<Commit>()
+                                .SelectList(list => list.SelectGroup(commit => commit.Author))
+                                .List<string>();
+                        authors.ForEach(author => AuthorsCollection.Add(author));
+                    }
+                    else
+                    {
+                        Branch branch = null;
+                        Repository repository = null;
+                        var authors =
+                            session.QueryOver<Commit>()
+                                .SelectList(list => list.SelectGroup(commit => commit.Author))
+                                .JoinAlias(commit => commit.Branches, () => branch, JoinType.LeftOuterJoin)
+                                .JoinAlias(() => branch.Repository, () => repository, JoinType.LeftOuterJoin)
+                                .Where(() => repository.Name == selectedRepository).List<string>();
+                        authors.ForEach(author => AuthorsCollection.Add(author));
+                    }
+
                 }
-                else
-                {
-                    Branch branch=null;
-                    Repository repository=null;
-                    var authors =
-                        session.QueryOver<Commit>()
-                            .SelectList(list => list.SelectGroup(commit => commit.Author))
-                            .JoinAlias(commit => commit.Branches, () => branch, JoinType.LeftOuterJoin)
-                            .JoinAlias(() => branch.Repository, () => repository, JoinType.LeftOuterJoin)
-                            .Where(() => repository.Name == FilteringHelper.Instance.SelectedRepository).List<string>();
-                    authors.ForEach(author => AuthorsCollection.Add(author));
-                }
-                
-            }
+            });
         }
 
         public override void OnLoad()
@@ -362,9 +411,11 @@ namespace RepositoryParser.ViewModel
 
         private void ClearFilters()
         {
-            RepositorySelectedItem = RepositoryCollection.FirstOrDefault() ?? string.Empty;
+            SelectedRepositories = new List<string>();
+            this.SelectedRepositoriesItemChanged.Execute(this);
             BranchSelectedItem = BranchCollection.FirstOrDefault() ?? string.Empty;
-            AuthorsSelectedItem = null;
+            SelectedAuthors = new List<string>();
+            this.SelectedAuthorsItemChanged.Execute(this);
             MessageTextBox = String.Empty;
             FromDate = String.Empty;
             ToDate = String.Empty;
@@ -383,6 +434,11 @@ namespace RepositoryParser.ViewModel
                 commits.ForEach(commit=>_commitsList.Add(commit));
             }
             Messenger.Default.Send<DataMessageToDisplay>(new DataMessageToDisplay(this._commitsList));
+        }
+
+        private void SendEmptyMessageToDisplay()
+        {
+            Messenger.Default.Send<DataMessageToDisplay>(new DataMessageToDisplay(new List<Commit>()));
         }
         #endregion
     }

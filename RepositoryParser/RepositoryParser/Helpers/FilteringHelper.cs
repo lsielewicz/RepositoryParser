@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,16 +25,15 @@ namespace RepositoryParser.Helpers
         }
         private FilteringHelper()
         {
-            
         }
         #endregion
 
-        public string SelectedRepository { get; set; }
+        public List<string> SelectedAuthors { get; set; }
+        public List<string> SelectedRepositories { get; set; }
         public string SelectedBranch { get; set; }
         public string DateFrom { get; set; }
         public string DateTo { get; set; }
         public string MessageCriteria { get; set; }
-        public string SelectedAuthor { get; set; }
 
         public void Initialize()
         {
@@ -41,100 +41,48 @@ namespace RepositoryParser.Helpers
                 _instance = new FilteringHelper();
         }
 
-        public IQueryOver<Commit, Commit> GenerateQuery(ISession session)
+        public IQueryOver<Commit, Commit> GenerateQuery(ISession session, string selectedRepository = "")
         {
-            bool isCountiuned = false;
+            if(!string.IsNullOrEmpty(selectedRepository))
+                return GenerateQueryForSingleRepository(session,selectedRepository);
+            return GenerateQueryForMultipleRepositories(session);   
+        }
 
+        private IQueryOver<Commit, Commit> GenerateQueryForMultipleRepositories(ISession session)
+        {
             Repository repository = null;
             Branch branch = null;
-
             var query = session.QueryOver<Commit>();
-            if (!string.IsNullOrEmpty(SelectedRepository) && !string.IsNullOrEmpty(SelectedBranch))
+
+            if (this.SelectedRepositories != null && this.SelectedRepositories.Any())
             {
                 query =
-                    query.JoinAlias(commit => commit.Branches, () => branch, JoinType.LeftOuterJoin)
+                    query.JoinAlias(c => c.Branches, () => branch, JoinType.LeftOuterJoin)
                         .JoinAlias(() => branch.Repository, () => repository, JoinType.LeftOuterJoin)
-                        .Where(() => branch.Name == SelectedBranch && repository.Name == SelectedRepository)
-                        .TransformUsing(Transformers.DistinctRootEntity);
-
-                isCountiuned = true;
+                        .WhereRestrictionOn(() => repository.Name)
+                        .IsIn(this.SelectedRepositories);
             }
-            else if (!string.IsNullOrEmpty(SelectedRepository) &&
-                        string.IsNullOrEmpty(SelectedBranch))
+            if (this.SelectedRepositories != null && this.SelectedRepositories.Count == 1)
             {
-                query =
-                    query.JoinAlias(commit => commit.Branches, () => branch, JoinType.LeftOuterJoin)
-                        .JoinAlias(() => branch.Repository, () => repository, JoinType.LeftOuterJoin)
-                        .Where(() => repository.Name == SelectedRepository)
-                        .TransformUsing(Transformers.DistinctRootEntity);
-                isCountiuned = true;
+                query = query.Where(() => branch.Name == SelectedBranch);
             }
 
-            bool isAuthor = !string.IsNullOrEmpty(SelectedAuthor);
-            bool isFromDate = !string.IsNullOrEmpty(DateFrom);
-            bool isToDate = !string.IsNullOrEmpty(DateTo);
-            bool isMessage = !string.IsNullOrEmpty(MessageCriteria);
-
-            if (!isAuthor && !isFromDate && !isToDate && !isMessage&&
-                !isCountiuned)
-                return session.QueryOver<Commit>();
-            if (!isAuthor && !isFromDate && !isToDate && !isMessage)
+            if (this.SelectedAuthors != null && this.SelectedAuthors.Any())
             {
-                query =
-                    query.Where(
-                            () =>
-                                branch.Name == SelectedBranch ||
-                                branch.Name == "trunk" && repository.Name == SelectedRepository)
-                        .TransformUsing(Transformers.DistinctRootEntity);
-                return query;
-            }
-            if (!isAuthor && !isFromDate && !isToDate)
-            {
-                query = query.Where(Restrictions.On<Commit>(c => c.Message).IsLike(MessageCriteria, MatchMode.Anywhere));
-                return query;
+                query = query.WhereRestrictionOn(c => c.Author).IsIn(this.SelectedAuthors);
             }
 
-            if (isAuthor && !isFromDate && !isToDate)
-            {
-                query = query.Where(commit => commit.Author == SelectedAuthor);
-            }
-            else if (isAuthor && isFromDate && isToDate)
-            {
-                query =
-                    query.Where(
-                        commit =>
-                            commit.Author == SelectedAuthor && commit.Date >= DateTime.Parse(DateFrom) &&
-                            commit.Date <= DateTime.Parse(DateTo));
-            }
-            else if (isAuthor && isFromDate)
-            {
-                query =
-                    query.Where(
-                        commit => commit.Author == SelectedAuthor && commit.Date >= DateTime.Parse(DateFrom)); //todo check
-            }
-            else if (isAuthor)
-            {
-                query =
-                    query.Where(
-                        commit => commit.Author == SelectedAuthor && commit.Date <= DateTime.Parse(DateTo));
-                ;
-            }
-            else if (isFromDate && isToDate)
-            {
-                query =
-                    query.Where(
-                        commit => commit.Date >= DateTime.Parse(DateFrom) && commit.Date <= DateTime.Parse(DateTo));
-            }
-            else if (isFromDate)
+            if (!string.IsNullOrEmpty(this.DateFrom))
             {
                 query = query.Where(commit => commit.Date >= DateTime.Parse(DateFrom));
             }
-            else
+
+            if (!string.IsNullOrEmpty(this.DateTo))
             {
                 query = query.Where(commit => commit.Date <= DateTime.Parse(DateTo));
             }
 
-            if (isMessage)
+            if (!string.IsNullOrEmpty(this.MessageCriteria))
             {
                 query = query.Where(Restrictions.On<Commit>(c => c.Message).IsLike(MessageCriteria, MatchMode.Anywhere));
             }
@@ -142,5 +90,45 @@ namespace RepositoryParser.Helpers
             return query;
         }
 
+        private IQueryOver<Commit, Commit> GenerateQueryForSingleRepository(ISession session,string selectedRepository)
+        {
+            Repository repository = null;
+            Branch branch = null;
+            var query = session.QueryOver<Commit>();
+
+            if (this.SelectedRepositories != null && this.SelectedRepositories.Any())
+            {
+                query =
+                    query.JoinAlias(c => c.Branches, () => branch, JoinType.LeftOuterJoin)
+                        .JoinAlias(() => branch.Repository, () => repository, JoinType.LeftOuterJoin)
+                        .Where(() => repository.Name == selectedRepository);
+            }
+            if (this.SelectedRepositories != null && this.SelectedRepositories.Count == 1)
+            {
+                query = query.Where(() => branch.Name == SelectedBranch);
+            }
+
+            if (this.SelectedAuthors != null && this.SelectedAuthors.Any())
+            {
+                query = query.WhereRestrictionOn(c => c.Author).IsIn(this.SelectedAuthors);
+            }
+
+            if (!string.IsNullOrEmpty(this.DateFrom))
+            {
+                query = query.Where(commit => commit.Date >= DateTime.Parse(DateFrom));
+            }
+
+            if (!string.IsNullOrEmpty(this.DateTo))
+            {
+                query = query.Where(commit => commit.Date <= DateTime.Parse(DateTo));
+            }
+
+            if (!string.IsNullOrEmpty(this.MessageCriteria))
+            {
+                query = query.Where(Restrictions.On<Commit>(c => c.Message).IsLike(MessageCriteria, MatchMode.Anywhere));
+            }
+
+            return query;
+        }
     }
 }
