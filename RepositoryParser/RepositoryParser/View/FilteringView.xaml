@@ -12,6 +12,7 @@
              xmlns:enums="clr-namespace:RepositoryParser.Helpers.Enums"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:extensions="clr-namespace:RepositoryParser.Controls.Extensions;assembly=RepositoryParser.Controls"
+             xmlns:helpers="clr-namespace:RepositoryParser.Helpers"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator}, Path=Filtering}"
@@ -20,6 +21,7 @@
         <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <conventers:DateFormat x:Key="DateFormat"/>
         <conventers:StringToImageConventer x:Key="StringToImageConventer"/>
+        <conventers:CountOfRepositoriesToVisibilityConventer x:Key="CountOfRepositoriesToVisibilityConventer"/>
         <Style TargetType="Border" x:Key="AttributeBorderStyle">
             <Setter Property="Background" Value="{StaticResource MyGreen}"/>
             <Setter Property="BorderThickness" Value="0,0,0,1"/>
@@ -307,5 +309,21 @@
                 
             </StackPanel>
         </Grid>
+
+        <TextBlock
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            Visibility="{Binding Path=SelectedRepositories.Count, 
+                                 ConverterParameter={x:Static enums:VisibilityConventerEnumDirection.Inverse},
+                                 Converter={StaticResource CountOfRepositoriesToVisibilityConventer}}"
+            Text="{x:Static resw:Resources.NoSelectedRepositoriesMessage}"
+            Foreground="#666666"
+            FontSize="24"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            Margin="0,0,0,140"
+            FontWeight="Light"
+            TextWrapping="WrapWithOverflow"/>
     </Grid>
 </UserControl>

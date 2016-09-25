@@ -20,7 +20,7 @@ using RepositoryParser.DataBaseManagementCore.Entities;
 using RepositoryParser.DataBaseManagementCore.Services;
 using RepositoryParser.Helpers;
 using RepositoryParser.Helpers.Enums;
-
+using RepositoryTypeEnum = RepositoryParser.DataBaseManagementCore.Configuration.RepositoryType;
 namespace RepositoryParser.ViewModel
 {
     public class FilteringViewModel : RepositoryAnalyserViewModelBase
@@ -36,6 +36,8 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _clearFiltersCommand;
         private RelayCommand _sendDataCommand;
         private RelayCommand _onLoadCommand;
+        private RelayCommand _selectedRepositoriesItemChanged;
+        private RelayCommand _selectedAuthorsItemChanged;
         private RelayCommand<object> _clearSpecifiedFilterCommand;
         private bool _isInitialized;
 
@@ -58,7 +60,7 @@ namespace RepositoryParser.ViewModel
                 RaisePropertyChanged();
             }
         }
-        private RelayCommand _selectedRepositoriesItemChanged;
+
 
         public RelayCommand SelectedRepositoriesItemChanged
         {
@@ -66,12 +68,15 @@ namespace RepositoryParser.ViewModel
             {
                 return _selectedRepositoriesItemChanged ?? (_selectedRepositoriesItemChanged = new RelayCommand(() =>
                 {
+                    if (SelectedRepositories == null)
+                        return;
                     if (this.SelectedRepositories != null && this.SelectedRepositories.Count == 0)
                     {
                         this.SendEmptyMessageToDisplay();
                         this.BranchCollection.Clear();
                         this.AuthorsCollection.Clear();
                         this.RepositoryType = null;
+                        this.RaisePropertyChanged("SelectedRepositories");
                         return;
                     }
                     if(this.SelectedRepositories != null && this.SelectedRepositories.Count == 1)
@@ -87,9 +92,16 @@ namespace RepositoryParser.ViewModel
                     }
                     else
                     {
+                        if (SelectedRepositories.All(r => _repositoryTypeDictionary[r] == RepositoryTypeEnum.Git))
+                            RepositoryType = RepositoryTypeEnum.Git;
+                        else if (SelectedRepositories.All(r => _repositoryTypeDictionary[r] == RepositoryTypeEnum.Svn))
+                            RepositoryType = RepositoryTypeEnum.Svn;
+                        else
+                            RepositoryType = "Mixed";
+                           
                         this.BranchSelectedItem = null;
+                        this.BranchCollection.Clear();
                         this.BranchesEnabled = false;
-                        this.RepositoryType = null;
                     }
                     this.GetAuthors();
                     this.SendMessageToDisplay();
@@ -98,7 +110,7 @@ namespace RepositoryParser.ViewModel
             }
         }
 
-        private RelayCommand _selectedAuthorsItemChanged;
+
 
         public RelayCommand SelectedAuthorsItemChanged
         {

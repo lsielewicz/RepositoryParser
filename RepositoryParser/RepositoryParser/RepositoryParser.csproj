@@ -220,6 +220,7 @@
     <Compile Include="Conventers\BoolToImageConventer.cs" />
     <Compile Include="Conventers\BoolToVisibilityConventer.cs" />
     <Compile Include="Conventers\ChangeTypeToBackgroundColorConventer.cs" />
+    <Compile Include="Conventers\CountOfRepositoriesToVisibilityConventer.cs" />
     <Compile Include="Conventers\DateFormat.cs" />
     <Compile Include="Conventers\EnumToColorConventer.cs" />
     <Compile Include="Conventers\IntegerToVisibilityConventer.cs" />
@@ -236,6 +237,7 @@
     <Compile Include="Helpers\ChartingHelper.cs" />
     <Compile Include="Helpers\CustomInputDialog.cs" />
     <Compile Include="Helpers\Enums\FilteringColumn.cs" />
+    <Compile Include="Helpers\Enums\VisibilityConventerEnumDirection.cs" />
     <Compile Include="Helpers\FilteringHelper.cs" />
     <Compile Include="Helpers\SplashScreenHelper.cs" />
     <Compile Include="Helpers\StaticServiceProvider.cs" />

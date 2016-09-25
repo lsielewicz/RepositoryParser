@@ -9,6 +9,7 @@ using NHibernate.Criterion;
 using NHibernate.SqlCommand;
 using NHibernate.Transform;
 using RepositoryParser.DataBaseManagementCore.Entities;
+using Xceed.Wpf.DataGrid.Converters;
 
 namespace RepositoryParser.Helpers
 {
@@ -34,6 +35,14 @@ namespace RepositoryParser.Helpers
         public string DateFrom { get; set; }
         public string DateTo { get; set; }
         public string MessageCriteria { get; set; }
+
+        public static int CountOfRepositories
+        {
+            get
+            {
+                return Instance.SelectedRepositories?.Count ?? 0;
+            }
+        }
 
         public void Initialize()
         {

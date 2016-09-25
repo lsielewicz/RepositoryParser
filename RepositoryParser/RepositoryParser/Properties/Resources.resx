@@ -219,11 +219,11 @@
     <comment>AnalysisPage</comment>
   </data>
   <data name="FilteringAuthor" xml:space="preserve">
-    <value>Author:</value>
+    <value>Authors:</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="FilteringDate" xml:space="preserve">
-    <value>Date</value>
+    <value>Date:</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="FilteringMessage" xml:space="preserve">
@@ -231,11 +231,11 @@
     <comment>AnalysisPage</comment>
   </data>
   <data name="FilteringPickBranch" xml:space="preserve">
-    <value>Pick Branch:</value>
+    <value>Branches:</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="FilteringPickRepository" xml:space="preserve">
-    <value>Pick Repository</value>
+    <value>Repositories:</value>
     <comment>AnalysisPage</comment>
   </data>
   <data name="Hour" xml:space="preserve">
@@ -560,5 +560,9 @@
   </data>
   <data name="ClearFilter" xml:space="preserve">
     <value>Clear filter</value>
+  </data>
+  <data name="NoSelectedRepositoriesMessage" xml:space="preserve">
+    <value>&gt; Select repository to enable all the filtering operations.</value>
+    <comment>Filtering</comment>
   </data>
 </root>
