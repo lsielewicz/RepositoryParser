@@ -79,7 +79,7 @@
                                 </Style>
                             </DataGridTextColumn.CellStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Binding="{Binding RepositoryValue}" Header="{x:Static resw:Resources.GitRepository}"/>
+                        <DataGridTextColumn Binding="{Binding RepositoryValue}" Header="{x:Static resw:Resources.Repository}"/>
                     </DataGrid.Columns>
 
                 </DataGrid>

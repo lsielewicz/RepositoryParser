@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RepositoryParser.Helpers;
+using RepositoryParser.ViewModel.DayActivityViewModels;
 
 namespace RepositoryParser.View.DayActivityViews
 {
@@ -23,6 +25,7 @@ namespace RepositoryParser.View.DayActivityViews
         public DayActivityChartView()
         {
             InitializeComponent();
+            ChartingHelper.Instance.DrawChart<DayActivityViewModel>(this, this.StackedColumnChartInstance);
         }
     }
 }

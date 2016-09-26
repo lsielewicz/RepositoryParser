@@ -565,4 +565,7 @@
     <value>&gt; Select repository to enable all the filtering operations.</value>
     <comment>Filtering</comment>
   </data>
+  <data name="Repository" xml:space="preserve">
+    <value>Repository</value>
+  </data>
 </root>

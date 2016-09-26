@@ -38,7 +38,7 @@ namespace RepositoryParser.ViewModel
                     Caption = chartTitle,
                     DisplayMember = "ChartKey",
                     ValueMember = "ChartValue",
-                    ItemsSource = null
+                    ItemsSource = null,
                 },
                 ItemsSource = itemsSource
             });

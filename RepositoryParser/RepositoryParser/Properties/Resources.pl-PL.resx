@@ -558,4 +558,7 @@
   <data name="ClearFilter" xml:space="preserve">
     <value>Wyczysc filtr</value>
   </data>
+  <data name="Repository" xml:space="preserve">
+    <value>Repozytorium</value>
+  </data>
 </root>
