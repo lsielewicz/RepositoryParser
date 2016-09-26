@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RepositoryParser.Helpers;
+using RepositoryParser.ViewModel.WeekdayActivityViewModels;
 
 namespace RepositoryParser.View.WeekdayActivityViews
 {
@@ -23,6 +25,7 @@ namespace RepositoryParser.View.WeekdayActivityViews
         public WeekdayActivityChartView()
         {
             InitializeComponent();
+            ChartingHelper.Instance.DrawChart<WeekDayActivityViewModel>(this, this.StackedColumnChartInstance);
         }
     }
 }

@@ -18,32 +18,6 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
 {
     public class UsersActivityViewModel : ChartViewModelBase
     {
-
-/*        private void FillCollection()
-        {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                if (KeyCollection != null && KeyCollection.Any())
-                    KeyCollection.Clear();
-            }));
-
-            var authors = GetAuthors();
-            authors.ForEach(author =>
-            {
-                using (var session = DbService.Instance.SessionFactory.OpenSession())
-                {
-                    var query = FilteringHelper.Instance.GenerateQuery(session);
-                    var commitCount =
-                        query.Where(c => c.Author == author).Select(Projections.RowCount()).FutureValue<int>().Value;
-
-                    Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-                    {
-                        KeyCollection.Add(new KeyValuePair<string, int>(author, commitCount));
-                    }));
-                }
-            });
-        }*/
-
         public override void FillChartData()
         {
             base.FillChartData();
@@ -83,19 +57,6 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
             }
             return authors;
         }
-
-/*        public override void OnLoad()
-        {
-            this.RunAsyncOperation(() =>
-            {
-                this.IsLoading = true;
-                this.FillCollection();
-            }, executeUponFinish =>
-            {
-                IsLoading = false;
-            });
-            
-        }*/
 
         public int CountOfAuthors
         {
