@@ -16,6 +16,7 @@ using NHibernate.Criterion;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
+using RepositoryParser.DataBaseManagementCore.Entities;
 using RepositoryParser.DataBaseManagementCore.Services;
 using RepositoryParser.Helpers;
 
@@ -57,7 +58,7 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
                     {
                         var query = FilteringHelper.Instance.GenerateQuery(session,selectedRepository);
                         var commitsCount =
-                            query.Where(c => c.Date.Month == i).Select(Projections.RowCount()).FutureValue<int>().Value;
+                            query.Where(c => c.Date.Month == i).Select(Projections.CountDistinct<Commit>(x => x.Revision)).FutureValue<int>().Value;
 
                         itemSource.Add(new ChartData()
                         {

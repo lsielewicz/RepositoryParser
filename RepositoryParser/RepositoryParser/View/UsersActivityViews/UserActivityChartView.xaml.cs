@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RepositoryParser.Helpers;
+using RepositoryParser.ViewModel.UserActivityViewModels;
 
 namespace RepositoryParser.View.UsersActivityViews
 {
@@ -23,6 +25,7 @@ namespace RepositoryParser.View.UsersActivityViews
         public UserActivityChartView()
         {
             InitializeComponent();
+            ChartingHelper.Instance.DrawChart<UsersActivityViewModel>(this, this.StackedColumnChartInstance);
         }
     }
 }

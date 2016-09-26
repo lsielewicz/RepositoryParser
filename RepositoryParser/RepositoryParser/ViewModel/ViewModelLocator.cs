@@ -62,7 +62,7 @@ namespace RepositoryParser.ViewModel
             ////}
 
             SimpleIoc.Default.Register<MainViewModel>();
-            SimpleIoc.Default.Register<ChartWindowViewModel>();
+            SimpleIoc.Default.Register<UsersActivityViewModel>();
             SimpleIoc.Default.Register<MonthActivityChartViewModel>();
             SimpleIoc.Default.Register<DifferenceWindowViewModel>();
             SimpleIoc.Default.Register<DayActivityViewModel>();
@@ -161,11 +161,11 @@ namespace RepositoryParser.ViewModel
             }
         }
 
-        public ChartWindowViewModel UsersActivity
+        public UsersActivityViewModel UsersActivity
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<ChartWindowViewModel>();
+                return ServiceLocator.Current.GetInstance<UsersActivityViewModel>();
             }
         }
 

@@ -15,7 +15,7 @@
              
              >
     <UserControl.Resources>
-        <DataTemplate DataType="{x:Type userActivityViewModels:ChartWindowViewModel}">
+        <DataTemplate DataType="{x:Type userActivityViewModels:UsersActivityViewModel}">
             <local:UserActivityChartView/>
         </DataTemplate>
 

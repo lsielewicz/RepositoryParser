@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.SqlCommand;
 using NHibernate.Transform;
+using NHibernate.Util;
 using RepositoryParser.DataBaseManagementCore.Entities;
 using Xceed.Wpf.DataGrid.Converters;
 
@@ -69,31 +71,31 @@ namespace RepositoryParser.Helpers
                     query.JoinAlias(c => c.Branches, () => branch, JoinType.LeftOuterJoin)
                         .JoinAlias(() => branch.Repository, () => repository, JoinType.LeftOuterJoin)
                         .WhereRestrictionOn(() => repository.Name)
-                        .IsIn(this.SelectedRepositories);
+                        .IsIn(this.SelectedRepositories).TransformUsing(Transformers.DistinctRootEntity);
             }
             if (this.SelectedRepositories != null && this.SelectedRepositories.Count == 1)
             {
-                query = query.Where(() => branch.Name == SelectedBranch);
+                query = query.Where(() => branch.Name == SelectedBranch).TransformUsing(Transformers.DistinctRootEntity);
             }
 
             if (this.SelectedAuthors != null && this.SelectedAuthors.Any())
             {
-                query = query.WhereRestrictionOn(c => c.Author).IsIn(this.SelectedAuthors);
+                query = query.WhereRestrictionOn(c => c.Author).IsIn(this.SelectedAuthors).TransformUsing(Transformers.DistinctRootEntity);
             }
 
             if (!string.IsNullOrEmpty(this.DateFrom))
             {
-                query = query.Where(commit => commit.Date >= DateTime.Parse(DateFrom));
+                query = query.Where(commit => commit.Date >= DateTime.Parse(DateFrom)).TransformUsing(Transformers.DistinctRootEntity);
             }
 
             if (!string.IsNullOrEmpty(this.DateTo))
             {
-                query = query.Where(commit => commit.Date <= DateTime.Parse(DateTo));
+                query = query.Where(commit => commit.Date <= DateTime.Parse(DateTo)).TransformUsing(Transformers.DistinctRootEntity);
             }
 
             if (!string.IsNullOrEmpty(this.MessageCriteria))
             {
-                query = query.Where(Restrictions.On<Commit>(c => c.Message).IsLike(MessageCriteria, MatchMode.Anywhere));
+                query = query.Where(Restrictions.On<Commit>(c => c.Message).IsLike(MessageCriteria, MatchMode.Anywhere)).TransformUsing(Transformers.DistinctRootEntity);
             }
 
             return query;
@@ -110,31 +112,31 @@ namespace RepositoryParser.Helpers
                 query =
                     query.JoinAlias(c => c.Branches, () => branch, JoinType.LeftOuterJoin)
                         .JoinAlias(() => branch.Repository, () => repository, JoinType.LeftOuterJoin)
-                        .Where(() => repository.Name == selectedRepository);
+                        .Where(() => repository.Name == selectedRepository).TransformUsing(Transformers.DistinctRootEntity);
             }
             if (this.SelectedRepositories != null && this.SelectedRepositories.Count == 1)
             {
-                query = query.Where(() => branch.Name == SelectedBranch);
+                query = query.Where(() => branch.Name == SelectedBranch).TransformUsing(Transformers.DistinctRootEntity);
             }
 
             if (this.SelectedAuthors != null && this.SelectedAuthors.Any())
             {
-                query = query.WhereRestrictionOn(c => c.Author).IsIn(this.SelectedAuthors);
+                query = query.WhereRestrictionOn(c => c.Author).IsIn(this.SelectedAuthors).TransformUsing(Transformers.DistinctRootEntity);
             }
 
             if (!string.IsNullOrEmpty(this.DateFrom))
             {
-                query = query.Where(commit => commit.Date >= DateTime.Parse(DateFrom));
+                query = query.Where(commit => commit.Date >= DateTime.Parse(DateFrom)).TransformUsing(Transformers.DistinctRootEntity);
             }
 
             if (!string.IsNullOrEmpty(this.DateTo))
             {
-                query = query.Where(commit => commit.Date <= DateTime.Parse(DateTo));
+                query = query.Where(commit => commit.Date <= DateTime.Parse(DateTo)).TransformUsing(Transformers.DistinctRootEntity);
             }
 
             if (!string.IsNullOrEmpty(this.MessageCriteria))
             {
-                query = query.Where(Restrictions.On<Commit>(c => c.Message).IsLike(MessageCriteria, MatchMode.Anywhere));
+                query = query.Where(Restrictions.On<Commit>(c => c.Message).IsLike(MessageCriteria, MatchMode.Anywhere)).TransformUsing(Transformers.DistinctRootEntity);
             }
 
             return query;

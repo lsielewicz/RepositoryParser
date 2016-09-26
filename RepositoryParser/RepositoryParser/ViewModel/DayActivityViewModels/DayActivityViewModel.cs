@@ -46,7 +46,7 @@ namespace RepositoryParser.ViewModel.DayActivityViewModels
                     {
                         var query = FilteringHelper.Instance.GenerateQuery(session,selectedRepository);
                         var commitsCount =
-                            query.Where(c => c.Date.Day == i).Select(Projections.RowCount()).FutureValue<int>().Value;
+                            query.Where(c => c.Date.Day == i).Select(Projections.CountDistinct<Commit>(x => x.Revision)).FutureValue<int>().Value;
 
                         itemSource.Add(new ChartData()
                         {

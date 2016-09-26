@@ -224,6 +224,7 @@
     <Compile Include="Conventers\DateFormat.cs" />
     <Compile Include="Conventers\EnumToColorConventer.cs" />
     <Compile Include="Conventers\IntegerToVisibilityConventer.cs" />
+    <Compile Include="Conventers\IntToLenghtConventer.cs" />
     <Compile Include="Conventers\InverseBoolConventer.cs" />
     <Compile Include="Conventers\InverseBoolToVisibiliyConventer.cs" />
     <Compile Include="Conventers\InverseIntegerToVisibilityConventer.cs" />
@@ -256,7 +257,7 @@
     <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityContentProviderViewModel.cs" />
     <Compile Include="ViewModel\PresentationViewModel.cs" />
     <Compile Include="ViewModel\RepositoryAnalyserViewModelBase.cs" />
-    <Compile Include="ViewModel\UserActivityViewModels\ChartWindowViewModel.cs" />
+    <Compile Include="ViewModel\UserActivityViewModels\UsersActivityViewModel.cs" />
     <Compile Include="ViewModel\DayActivityViewModels\DayActivityViewModel.cs" />
     <Compile Include="ViewModel\DifferenceWindowViewModel.cs" />
     <Compile Include="ViewModel\HourActivityViewModels\HourActivityViewModel.cs" />
