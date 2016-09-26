@@ -10,9 +10,16 @@
              xmlns:extensions="clr-namespace:RepositoryParser.Controls.Extensions;assembly=RepositoryParser.Controls"
              xmlns:circleHeaderButton="clr-namespace:RepositoryParser.Controls.CircleHeaderButton;assembly=RepositoryParser.Controls"
              xmlns:metroChart="clr-namespace:De.TorstenMandelkow.MetroChart;assembly=De.TorstenMandelkow.MetroChart"
+             xmlns:enums="clr-namespace:RepositoryParser.Helpers.Enums"
+             xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
-             DataContext="{Binding Source={StaticResource Locator}, Path=HourActivity}">
+             DataContext="{Binding Source={StaticResource Locator}, Path=HourActivity}"
+             x:Name="Root">
+    <UserControl.Resources>
+        <conventers:CountOfRepositoriesToVisibilityConventer x:Key="CountOfRepositoriesToVisibilityConventer"/>
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -22,7 +29,23 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TabControl Grid.Row="0">
+        <TextBlock
+            Grid.Row="0"
+            Visibility="{Binding Path=CountOfSelectedRepositories, 
+                                 ConverterParameter={x:Static enums:VisibilityConventerEnumDirection.Inverse},
+                                 Converter={StaticResource CountOfRepositoriesToVisibilityConventer}}"
+            Text="{x:Static resw:Resources.NoDataToDisplay}"
+            Foreground="#666666"
+            FontSize="28"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontWeight="Light"
+            TextWrapping="WrapWithOverflow"/>
+        <TabControl 
+            Grid.Row="0"
+            Visibility="{Binding Path=CountOfSelectedRepositories, 
+                                 ConverterParameter={x:Static enums:VisibilityConventerEnumDirection.Normal},
+                                 Converter={StaticResource CountOfRepositoriesToVisibilityConventer}}">
             <TabItem Header="{x:Static resw:Resources.Chart}">
                 <metroChart:StackedColumnChart
                     x:Name="StackedColumnChartInstance"
@@ -65,6 +88,7 @@
 
         <DockPanel Grid.Row="1" HorizontalAlignment="Left" Margin="0">
             <circleHeaderButton:CircleHeaderButton 
+                CommandParameter="{Binding ElementName=Root, Path=DataContext}"
                 Command="{Binding ExportFileCommand}"
                 ImageSource="../../Assets/Icons/PNG_DarkGray/Export-100.png"
                 ToolTip="{x:Static resw:Resources.ExportToFileButton}"

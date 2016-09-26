@@ -555,7 +555,7 @@
     <value>Close the new presentation window to restore the old presentation view</value>
   </data>
   <data name="NoDataToDisplay" xml:space="preserve">
-    <value>No data to display</value>
+    <value>No data to display, check filtering criteria</value>
     <comment>Presentation</comment>
   </data>
   <data name="ClearFilter" xml:space="preserve">

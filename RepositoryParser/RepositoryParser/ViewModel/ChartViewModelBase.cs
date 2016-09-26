@@ -4,8 +4,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using De.TorstenMandelkow.MetroChart;
+using GalaSoft.MvvmLight.Command;
+using Microsoft.Win32;
 using RepositoryParser.Core.Models;
+using RepositoryParser.Core.Services;
 using RepositoryParser.Helpers;
 using EnumerableExtensions = NHibernate.Util.EnumerableExtensions;
 
@@ -21,6 +25,7 @@ namespace RepositoryParser.ViewModel
         {
             ExtendedChartSeries = new List<ExtendedChartSeries>();
             DataCollection = new ObservableCollection<ChartData>();
+            this.RaisePropertyChanged("DataCollection");
         }
 
         public void AddSeriesToChartInstance(string chartTitle, IEnumerable<ChartData> itemsSource)
@@ -65,7 +70,54 @@ namespace RepositoryParser.ViewModel
                 });
                 RaisePropertyChanged("DataCollection");
             }
-        
+        }
+
+        public int CountOfSelectedRepositories
+        {
+            get
+            {
+                return FilteringHelper.Instance.SelectedRepositories.Count;
+            }
+        }
+
+        public void ExportFile(string name) 
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            string newName = string.Empty;
+            if (name.EndsWith("ViewModel",StringComparison.OrdinalIgnoreCase))
+            {
+               newName = name.Remove(name.Length - 9, 9);
+            }
+            if (string.IsNullOrEmpty(newName))
+                newName = name;
+
+            dlg.FileName = $"{newName}Chart_{DateTime.Now.ToShortDateString()}";
+            dlg.DefaultExt = ".csv";
+            dlg.Filter = "Csv documents (.csv)|*.csv";
+            bool? result = dlg.ShowDialog();
+            if (result == true)
+            {
+                DataToCsv.SaveChartReportToCsv(DataCollection,dlg.FileName);
+                MessageBox.Show(ResourceManager.GetString("ExportMessage"), ResourceManager.GetString("ExportTitle"));
+            }
+        }
+
+        private RelayCommand<object> _exportFileCommand;
+
+        public RelayCommand<object> ExportFileCommand
+        {
+            get
+            {
+                return _exportFileCommand ?? (_exportFileCommand = new RelayCommand<object>((param) =>
+                {
+                    if (param == null)
+                    {
+                        this.ExportFile(this.GetType().Name);
+                        return;
+                    }
+                    this.ExportFile(param.GetType().Name);
+                }));
+            }
         }
     }
 }

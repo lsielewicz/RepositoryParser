@@ -13,8 +13,10 @@ namespace RepositoryParser.Conventers
             {
                 if((string)value == RepositoryType.Git)
                     return new Uri("../Assets/Images/git_logo_grey.png", UriKind.Relative);
-                else if ((string) value == RepositoryType.Svn)
+                if ((string) value == RepositoryType.Svn)
                     return new Uri("../Assets/Images/svn_logo_grey.png",UriKind.Relative);
+                if ((string) value == "Mixed")
+                    return new Uri("../Assets/Images/version_control.png", UriKind.Relative);
             }
             return new Uri("../Assets/Images/transparent", UriKind.Relative);
         }

@@ -889,7 +889,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No data to display.
+        ///   Looks up a localized string similar to No data to display, check filtering criteria.
         /// </summary>
         public static string NoDataToDisplay {
             get {

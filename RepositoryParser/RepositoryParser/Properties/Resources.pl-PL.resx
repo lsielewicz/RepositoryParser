@@ -552,7 +552,7 @@
     <value>Zamknij okno prezenctacji, aby przywrócić pozycje tabeli.</value>
   </data>
   <data name="NoDataToDisplay" xml:space="preserve">
-    <value>Brak danych do wyświetlenia</value>
+    <value>Brak danych do wyświetlenia, sprawdz kryteria filtrowania</value>
     <comment>Presentation</comment>
   </data>
   <data name="ClearFilter" xml:space="preserve">
