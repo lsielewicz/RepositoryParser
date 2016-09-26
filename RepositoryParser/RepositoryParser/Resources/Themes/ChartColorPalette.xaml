@@ -5,16 +5,16 @@
 
     <metroChart:ResourceDictionaryCollection x:Key="RepositoryAnalyserChartPalette">
         <ResourceDictionary>
-            <SolidColorBrush x:Key="Brush1" Color="#e67e22" />
+            <SolidColorBrush x:Key="Brush1" Color="#2a623d" />
         </ResourceDictionary>
         <ResourceDictionary>
-            <SolidColorBrush x:Key="Brush2" Color="#2a623d" />
+            <SolidColorBrush x:Key="Brush2" Color="#aaaaaa" />
         </ResourceDictionary>
         <ResourceDictionary>
-            <SolidColorBrush x:Key="Brush3" Color="#aaaaaa" />
+            <SolidColorBrush x:Key="Brush3" Color="#666666" />
         </ResourceDictionary>
         <ResourceDictionary>
-            <SolidColorBrush x:Key="Brush4" Color="#1a472a" />
+            <SolidColorBrush x:Key="Brush4" Color="#115aef" />
         </ResourceDictionary>
         <ResourceDictionary>
             <SolidColorBrush x:Key="Brush5" Color="#34495e" />

@@ -33,26 +33,6 @@ namespace RepositoryParser.ViewModel.DayActivityViewModels
 
 
         #region Methodds
-/*        private void FillDataCollection()
-        {
-            if (KeyCollection != null && KeyCollection.Any())
-                KeyCollection.Clear();
-           
-
-                for (int i = 1; i <= 31; i++)
-                {
-                    using (var session = DbService.Instance.SessionFactory.OpenSession())
-                    {
-                        var query = FilteringHelper.Instance.GenerateQuery(session);
-                        var commitsCount =
-                            query.Where(c => c.Date.Day == i).Select(Projections.RowCount()).FutureValue<int>().Value;
-
-                        KeyCollection.Add(new KeyValuePair<int, int>(i, commitsCount));
-
-                    }
-                }            
-        }*/
-
         public override void FillChartData()
         {
             base.FillChartData();

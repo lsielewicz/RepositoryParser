@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RepositoryParser.Helpers;
+using RepositoryParser.ViewModel.HourActivityViewModels;
+using RepositoryParser.ViewModel.MonthActivityViewModels;
 
 namespace RepositoryParser.View.MonthActivityViews
 {
@@ -23,6 +26,7 @@ namespace RepositoryParser.View.MonthActivityViews
         public MonthActivityChartView()
         {
             InitializeComponent();
+            ChartingHelper.Instance.DrawChart<MonthActivityChartViewModel>(this, this.StackedColumnChartInstance);
         }
     }
 }
