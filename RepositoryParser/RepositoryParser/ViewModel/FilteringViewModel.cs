@@ -408,6 +408,11 @@ namespace RepositoryParser.ViewModel
             });
         }
 
+        public void ResetInitialization()
+        {
+            _isInitialized = false;
+        }
+
         public override void OnLoad()
         {
             if (!_isInitialized)

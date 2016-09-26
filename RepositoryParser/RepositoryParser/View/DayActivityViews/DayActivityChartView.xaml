@@ -55,7 +55,7 @@
                     ChartMargin="0"
                     Background="Transparent"
                     ChartLegendVisibility="Collapsed"
-                    Palette="{StaticResource RepositoryAnalyserChartPalette}"
+                    Palette="{StaticResource RepositoryAnalyserGradientPalette}"
                     />
             </TabItem>
             <TabItem Header="{x:Static resw:Resources.List}">

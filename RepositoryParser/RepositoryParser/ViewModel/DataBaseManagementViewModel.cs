@@ -266,6 +266,7 @@ namespace RepositoryParser.ViewModel
             {
                 this.UrlTextBox = string.Empty;
                 Messenger.Default.Send<RefreshMessageToPresentation>(new RefreshMessageToPresentation(true));
+                ViewModelLocator.Instance.Filtering.ResetInitialization();
                 Messenger.Default.Send<RefreshMessageToFiltering>(new RefreshMessageToFiltering(true));
                 ViewModelLocator.Instance.Main.OnLoad();
             }

@@ -48,7 +48,7 @@
                     Converter={StaticResource CountOfRepositoriesToVisibilityConventer}}">
             <TabItem Header="{x:Static resw:Resources.Chart}">
                 <ScrollViewer CanContentScroll="True">
-                    <metroChart:ClusteredBarChart
+                    <metroChart:StackedBar100Chart
                             x:Name="StackedColumnChartInstance"
                             ChartTitle=""
                             ChartSubTitle=""
@@ -57,7 +57,7 @@
                             ChartMargin="0"
                             Background="Transparent"
                             ChartLegendVisibility="Collapsed"
-                            Palette="{StaticResource RepositoryAnalyserChartPalette}"
+                            Palette="{StaticResource RepositoryAnalyserGradientPalette}"
                             ClipToBounds="False"
                             Height="{Binding CountOfAuthors, Converter={StaticResource IntToLenghtConventer}}"
                             />
@@ -74,7 +74,7 @@
                     Style="{StaticResource AzureDataGrid}"
                     extensions:DataGridExtensions.LastColumnFill="True">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding ChartKey}" Header="{x:Static resw:Resources.CommitsList_Author}"/>
+                        <DataGridTextColumn Binding="{Binding ChartKey}" Header="{x:Static resw:Resources.CommitsList_Author}" MinWidth="150"/>
                         <DataGridTextColumn Binding="{Binding ChartValue}" Header="{x:Static resw:Resources.CountOfCommits}">
                             <DataGridTextColumn.CellStyle>
                                 <Style>
