@@ -12,11 +12,6 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
 {
     public class MonthActivityChartViewModel : ChartViewModelBase
     {
-        public MonthActivityChartViewModel()
-        {
-        }
-
-        #region Methods
         public override async void FillChartData()
         {
             base.FillChartData();
@@ -61,8 +56,6 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
             string month = $"Month{number}";
             return ResourceManager.GetString(month); 
         }
-
-        #endregion
 
     }
 }

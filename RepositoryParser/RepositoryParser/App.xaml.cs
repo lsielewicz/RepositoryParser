@@ -1,11 +1,4 @@
-﻿
-using System;
-using System.Globalization;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Markup;
-using RepositoryParser.Controls.SplashScreen;
+﻿using System.Windows;
 using RepositoryParser.Helpers;
 
 namespace RepositoryParser

@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Documents;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
 using NHibernate;
-using NHibernate.Criterion;
 using NHibernate.SqlCommand;
 using NHibernate.Util;
 using RepositoryParser.Core.Models;

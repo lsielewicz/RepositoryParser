@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.SqlCommand;
 using NHibernate.Transform;
-using NHibernate.Util;
 using RepositoryParser.DataBaseManagementCore.Entities;
-using Xceed.Wpf.DataGrid.Converters;
 
 namespace RepositoryParser.Helpers
 {

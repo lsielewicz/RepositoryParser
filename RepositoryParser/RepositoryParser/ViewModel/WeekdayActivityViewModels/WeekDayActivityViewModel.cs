@@ -12,7 +12,6 @@ namespace RepositoryParser.ViewModel.WeekdayActivityViewModels
 {
     public class WeekDayActivityViewModel : ChartViewModelBase
     {
-
         public override async void FillChartData()
         {
             base.FillChartData();

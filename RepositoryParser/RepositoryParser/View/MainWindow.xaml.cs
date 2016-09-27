@@ -1,9 +1,7 @@
 ﻿using System.ComponentModel;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Markup;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using RepositoryParser.Helpers;

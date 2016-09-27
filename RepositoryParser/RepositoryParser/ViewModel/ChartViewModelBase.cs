@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using De.TorstenMandelkow.MetroChart;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
-using NHibernate.Util;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
 using RepositoryParser.Helpers;
-using EnumerableExtensions = NHibernate.Util.EnumerableExtensions;
 
 namespace RepositoryParser.ViewModel
 {

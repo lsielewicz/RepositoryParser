@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using GalaSoft.MvvmLight.Command;
-using Microsoft.Win32;
 using NHibernate.Criterion;
-using NHibernate.Transform;
 using NHibernate.Util;
 using RepositoryParser.Core.Models;
-using RepositoryParser.Core.Services;
 using RepositoryParser.DataBaseManagementCore.Entities;
 using RepositoryParser.DataBaseManagementCore.Services;
 using RepositoryParser.Helpers;

@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using FluentNHibernate.Conventions;
-
-namespace RepositoryParser.DataBaseManagementCore.Configuration
+﻿namespace RepositoryParser.DataBaseManagementCore.Configuration
 {
     public sealed class ChangeType
     {

@@ -13,16 +13,6 @@ namespace RepositoryParser.ViewModel.DayActivityViewModels
 {
     public class DayActivityViewModel : ChartViewModelBase
     {
-        #region Constructor
-
-        public DayActivityViewModel()
-        {
-        }
-
-        #endregion
-
-
-        #region Methodds
         public override async void FillChartData()
         {
             base.FillChartData();
@@ -60,12 +50,6 @@ namespace RepositoryParser.ViewModel.DayActivityViewModels
             this.IsLoading = false;
         }
 
-        #endregion
-
-
-        public override void OnLoad()
-        {
-            //FillDataCollection();
-        }
+ 
     }
 }
