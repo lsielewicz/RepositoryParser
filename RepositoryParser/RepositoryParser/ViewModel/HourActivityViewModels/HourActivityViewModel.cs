@@ -46,7 +46,7 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels
                     }));
 
                 });
-            }, CancellationToken.None);
+            });
 
             this.DrawChart();
             this.FillDataCollection();

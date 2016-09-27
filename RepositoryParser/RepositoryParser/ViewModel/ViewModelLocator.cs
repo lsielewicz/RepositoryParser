@@ -79,6 +79,15 @@ namespace RepositoryParser.ViewModel
             SimpleIoc.Default.Register<DataBaseManagementViewModel>();
             SimpleIoc.Default.Register<FilteringViewModel>();
             SimpleIoc.Default.Register<AnalysisViewModel>();
+            SimpleIoc.Default.Register<HourActivityFilesAnalyseViewModel>();
+        }
+
+        public HourActivityFilesAnalyseViewModel HourActivityFilesAnalyseViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<HourActivityFilesAnalyseViewModel>();
+            }
         }
 
         public AnalysisViewModel Analysis

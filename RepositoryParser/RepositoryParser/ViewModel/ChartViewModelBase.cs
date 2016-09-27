@@ -48,6 +48,7 @@ namespace RepositoryParser.ViewModel
         public void DrawChart()
         {
             ChartInstance.Series.Clear();
+            ChartInstance.UpdateLayout();
             ExtendedChartSeries.ForEach(c =>
             {
                 ChartInstance.Series.Add(c.ChartSeries);
@@ -69,7 +70,8 @@ namespace RepositoryParser.ViewModel
 
                     foreach (var item in c.ItemsSource)
                     {
-                        DataCollection.Add(item);
+                        if(item.ChartValue != 0)
+                            DataCollection.Add(item);
                     }
                 });
                 RaisePropertyChanged("DataCollection");
@@ -95,7 +97,7 @@ namespace RepositoryParser.ViewModel
             if (string.IsNullOrEmpty(newName))
                 newName = name;
 
-            dlg.FileName = $"{newName}Chart_{DateTime.Now.ToShortDateString()}";
+            dlg.FileName = $"{newName}Chart_{DateTime.Now.ToString("yyyy_dd_MM_HH_mm_ss")}";
             dlg.DefaultExt = ".csv";
             dlg.Filter = "Csv documents (.csv)|*.csv";
             bool? result = dlg.ShowDialog();

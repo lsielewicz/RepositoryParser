@@ -561,4 +561,10 @@
   <data name="Repository" xml:space="preserve">
     <value>Repozytorium</value>
   </data>
+  <data name="Files" xml:space="preserve">
+    <value>Pliki</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>Plik</value>
+  </data>
 </root>

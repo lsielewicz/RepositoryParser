@@ -14,10 +14,15 @@
              DataContext="{Binding Source={StaticResource Locator}, Path=HourActivityContentProvider}"
              >
     <UserControl.Resources>
+        <!--Count of commits-->
         <DataTemplate DataType="{x:Type hourActivityViewModels:HourActivityViewModel}">
             <local:HourActivityChartView/>
         </DataTemplate>
-
+        <!--Files count of commits-->
+        <DataTemplate DataType="{x:Type hourActivityViewModels:HourActivityFilesAnalyseViewModel}">
+           <local:HourActivityFilesAnalyseView/>
+        </DataTemplate>
+        <!--Conventers-->
         <conventers:ViewModelBaseToVisibilityConventer x:Key="ViewModelBaseToVisibilityConventer"/>
     </UserControl.Resources>
     
@@ -50,6 +55,17 @@
                     Foreground="Black"
                     ImageSource="../../Assets/Icons/PNG_Gray/Poll Topic-100.png"
                     Text="{x:Static resw:Resources.CountOfCommits}"
+                    Height="45"/>
+                <imageButton:ImageButton
+                    Command="{Binding OpenFilesAnalyseCommand}" 
+                    BorderBrush="{StaticResource LightGray}"
+                    BorderThickness="0,0,0,0.5"
+                    ImageHeight="32"
+                    ImageWidth="32"
+                    Background="Transparent"
+                    Foreground="Black"
+                    ImageSource="../../Assets/Icons/PNG_DarkGray/File_DarkGray.png"
+                    Text="{x:Static resw:Resources.Files}"
                     Height="45"/>
             </StackPanel>
 

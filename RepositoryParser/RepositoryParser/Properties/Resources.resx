@@ -568,4 +568,10 @@
   <data name="Repository" xml:space="preserve">
     <value>Repository</value>
   </data>
+  <data name="Files" xml:space="preserve">
+    <value>Files</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>File</value>
+  </data>
 </root>

@@ -252,8 +252,10 @@
     <Compile Include="ViewModel\ChartViewModelBase.cs" />
     <Compile Include="ViewModel\DataBaseManagementViewModel.cs" />
     <Compile Include="ViewModel\DayActivityViewModels\DayActivityContentProviderViewModel.cs" />
+    <Compile Include="ViewModel\FilesChartViewModelBase.cs" />
     <Compile Include="ViewModel\FilteringViewModel.cs" />
     <Compile Include="ViewModel\HourActivityViewModels\HourActivityContentProviderViewModel.cs" />
+    <Compile Include="ViewModel\HourActivityViewModels\HourActivityFilesAnalyseViewModel.cs" />
     <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityContentProviderViewModel.cs" />
     <Compile Include="ViewModel\PresentationViewModel.cs" />
     <Compile Include="ViewModel\RepositoryAnalyserViewModelBase.cs" />
@@ -293,6 +295,9 @@
     </Compile>
     <Compile Include="View\HourActivityViews\HourActivityContentProviderView.xaml.cs">
       <DependentUpon>HourActivityContentProviderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HourActivityViews\HourActivityFilesAnalyseView.xaml.cs">
+      <DependentUpon>HourActivityFilesAnalyseView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MonthActivityViews\MonthActivityChartView.xaml.cs">
       <DependentUpon>MonthActivityChartView.xaml</DependentUpon>
@@ -382,6 +387,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\HourActivityViews\HourActivityContentProviderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HourActivityViews\HourActivityFilesAnalyseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -682,6 +691,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\version_control.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\PNG_Gray\File_Gray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\PNG_DarkGray\File_DarkGray.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

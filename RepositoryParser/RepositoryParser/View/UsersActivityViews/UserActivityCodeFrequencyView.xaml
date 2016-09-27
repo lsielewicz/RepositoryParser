@@ -14,7 +14,8 @@
              xmlns:circleHeaderButton="clr-namespace:RepositoryParser.Controls.CircleHeaderButton;assembly=RepositoryParser.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
-             DataContext="{Binding Source={StaticResource Locator},Path=UsersCodeFrequency}">
+             DataContext="{Binding Source={StaticResource Locator},Path=UsersCodeFrequency}"
+             x:Name="Root">
     <UserControl.Resources>
         <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </UserControl.Resources>
