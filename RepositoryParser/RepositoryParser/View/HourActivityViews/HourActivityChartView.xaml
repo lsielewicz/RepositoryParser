@@ -12,12 +12,14 @@
              xmlns:metroChart="clr-namespace:De.TorstenMandelkow.MetroChart;assembly=De.TorstenMandelkow.MetroChart"
              xmlns:enums="clr-namespace:RepositoryParser.Helpers.Enums"
              xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              DataContext="{Binding Source={StaticResource Locator}, Path=HourActivity}"
              x:Name="Root">
     <UserControl.Resources>
         <conventers:CountOfRepositoriesToVisibilityConventer x:Key="CountOfRepositoriesToVisibilityConventer"/>
+        <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </UserControl.Resources>
     
     <Grid>
@@ -47,6 +49,12 @@
                                  ConverterParameter={x:Static enums:VisibilityConventerEnumDirection.Normal},
                                  Converter={StaticResource CountOfRepositoriesToVisibilityConventer}}">
             <TabItem Header="{x:Static resw:Resources.Chart}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
                 <metroChart:StackedColumnChart
                     x:Name="StackedColumnChartInstance"
                     ChartTitle=""
@@ -55,9 +63,17 @@
                     ChartBorderThickness="1"
                     ChartMargin="0"
                     Background="Transparent"
-                    ChartLegendVisibility="Collapsed"
+                    ChartLegendVisibility="Visible"
                     Palette="{StaticResource RepositoryAnalyserGradientPalette}"
                     />
+                    <controls:ProgressRing 
+                        Style="{StaticResource AppProgressRing}"
+                        Grid.Row="0"
+                        IsActive="{Binding IsLoading}"
+                        Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"                      
+                        />
+                <metroChart:Legend Grid.Row="1" ItemsSource="{Binding ChartLegendItems}"/>
+                </Grid>
             </TabItem>
             <TabItem Header="{x:Static resw:Resources.List}">
                 <DataGrid 

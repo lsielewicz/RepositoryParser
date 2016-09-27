@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using System.Windows;
 using De.TorstenMandelkow.MetroChart;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
+using NHibernate.Util;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
 using RepositoryParser.Helpers;
@@ -19,12 +21,15 @@ namespace RepositoryParser.ViewModel
     {
         public List<ExtendedChartSeries> ExtendedChartSeries { get; protected set; }
         public ObservableCollection<ChartData> DataCollection { get; protected set; }
+        public ObservableCollection<ChartLegendItemViewModel> ChartLegendItems { get; protected set; }
         public ChartBase ChartInstance { get; set; }
 
         public virtual void FillChartData()
         {
             ExtendedChartSeries = new List<ExtendedChartSeries>();
             DataCollection = new ObservableCollection<ChartData>();
+            if (ChartLegendItems != null && ChartLegendItems.Any())
+                ChartLegendItems.Clear();
             this.RaisePropertyChanged("DataCollection");
         }
 
@@ -47,11 +52,14 @@ namespace RepositoryParser.ViewModel
 
         public void DrawChart()
         {
+            ChartInstance.Series.Clear();
             ExtendedChartSeries.ForEach(c =>
             {
                 ChartInstance.Series.Add(c.ChartSeries);
                 c.ChartSeries.ItemsSource = c.ItemsSource;
             });
+            this.ChartLegendItems = new ObservableCollection<ChartLegendItemViewModel>(ChartInstance.ChartLegendItems);
+            this.RaisePropertyChanged("ChartLegendItems");
         }
 
         public void FillDataCollection()

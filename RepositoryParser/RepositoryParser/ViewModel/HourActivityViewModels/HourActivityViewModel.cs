@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 using De.TorstenMandelkow.MetroChart;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
@@ -33,34 +37,43 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels
 
         #region Methods
 
-        public override void FillChartData()
+        public override async void FillChartData()
         {
             base.FillChartData();
 
-            FilteringHelper.Instance.SelectedRepositories.ForEach(selectedRepository =>
+            await Task.Run(() =>
             {
-                var itemSource = new List<ChartData>();
-                for (int i = 0; i <= 23; i++)
+                this.IsLoading = true;
+                FilteringHelper.Instance.SelectedRepositories.ForEach(selectedRepository =>
                 {
-                    using (var session = DbService.Instance.SessionFactory.OpenSession())
+                    var itemSource = new List<ChartData>();
+                    for (int i = 0; i <= 23; i++)
                     {
-                        var query = FilteringHelper.Instance.GenerateQuery(session,selectedRepository);
-                        var commitsCount =
-                            query.Where(c => c.Date.Hour == i).Select(Projections.CountDistinct<Commit>(x => x.Revision)).FutureValue<int>().Value;
-
-                        itemSource.Add(new ChartData()
+                        using (var session = DbService.Instance.SessionFactory.OpenSession())
                         {
-                            RepositoryValue = selectedRepository,
-                            ChartKey = TimeSpan.FromHours(i).ToString("hh':'mm"),
-                            ChartValue = commitsCount
-                        });
-                    }
-                }
+                            var query = FilteringHelper.Instance.GenerateQuery(session, selectedRepository);
+                            var commitsCount =
+                                query.Where(c => c.Date.Hour == i).Select(Projections.CountDistinct<Commit>(x => x.Revision)).FutureValue<int>().Value;
 
-                this.AddSeriesToChartInstance(selectedRepository, itemSource);
-            });
+                            itemSource.Add(new ChartData()
+                            {
+                                RepositoryValue = selectedRepository,
+                                ChartKey = TimeSpan.FromHours(i).ToString("hh':'mm"),
+                                ChartValue = commitsCount
+                            });
+                        }
+                    }
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        this.AddSeriesToChartInstance(selectedRepository, itemSource);
+                    }));
+
+                });
+            }, CancellationToken.None);
+
             this.DrawChart();
             this.FillDataCollection();
+            this.IsLoading = false;
         }
 
         #endregion
