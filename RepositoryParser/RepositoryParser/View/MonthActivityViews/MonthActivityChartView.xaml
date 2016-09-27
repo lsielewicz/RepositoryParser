@@ -13,6 +13,7 @@
              xmlns:enums="clr-namespace:RepositoryParser.Helpers.Enums"
              xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:metroLoadingProgressRing="clr-namespace:RepositoryParser.Controls.MetroLoadingProgressRing;assembly=RepositoryParser.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator}, Path=MonthActivity}"
@@ -96,12 +97,11 @@
                 </DataGrid>
             </TabItem>
         </TabControl>
-        <controls:ProgressRing 
-                        Style="{StaticResource AppProgressRing}"
-                        Grid.Row="0"
-                        IsActive="{Binding IsLoading}"
-                        Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"                      
-                        />
+        <metroLoadingProgressRing:MetroLoadingProgressRing
+            Grid.Row="0"
+            Grid.Column="0"
+            Text="{x:Static resw:Resources.AnalysingDataMessage}"
+            IsDataLoadingFlag="{Binding Path=IsLoading, UpdateSourceTrigger=PropertyChanged}"/>
         <DockPanel Grid.Row="1" HorizontalAlignment="Left" Margin="0">
             <circleHeaderButton:CircleHeaderButton
                 CommandParameter="{Binding ElementName=Root, Path=DataContext}"

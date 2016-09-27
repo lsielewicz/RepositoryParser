@@ -115,6 +115,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Analysing collected data. Please wait....
+        /// </summary>
+        public static string AnalysingDataMessage {
+            get {
+                return ResourceManager.GetString("AnalysingDataMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Analysis.
         /// </summary>
         public static string AnalysisButton {

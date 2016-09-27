@@ -574,4 +574,7 @@
   <data name="File" xml:space="preserve">
     <value>File</value>
   </data>
+  <data name="AnalysingDataMessage" xml:space="preserve">
+    <value>Analysing collected data. Please wait...</value>
+  </data>
 </root>

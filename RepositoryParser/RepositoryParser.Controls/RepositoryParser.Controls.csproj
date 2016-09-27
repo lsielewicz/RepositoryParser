@@ -93,6 +93,7 @@
     <Compile Include="CircleHeaderButton\CircleHeaderButton.xaml.cs">
       <DependentUpon>CircleHeaderButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\ConventerDirection.cs" />
     <Compile Include="Common\TrulyObservableCollection.cs" />
     <Compile Include="Extensions\DataGridExtensions.cs" />
     <Compile Include="Extensions\ListViewExtensions.cs" />
@@ -102,6 +103,11 @@
       <DependentUpon>ImageButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="ImageButton\Conventers\LenghtToAnimationLenghtConventer.cs" />
+    <Compile Include="MetroLoadingProgressRing\Conventers\BooleanToVisibilityConventer.cs" />
+    <Compile Include="MetroLoadingProgressRing\MetroLoadingProgressRing.xaml.cs">
+      <DependentUpon>MetroLoadingProgressRing.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -140,6 +146,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ImageButton\ImageButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MetroLoadingProgressRing\MetroLoadingProgressRing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

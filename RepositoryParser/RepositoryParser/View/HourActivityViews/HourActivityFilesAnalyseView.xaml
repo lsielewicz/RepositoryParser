@@ -12,6 +12,7 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:circleHeaderButton="clr-namespace:RepositoryParser.Controls.CircleHeaderButton;assembly=RepositoryParser.Controls"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:metroLoadingProgressRing="clr-namespace:RepositoryParser.Controls.MetroLoadingProgressRing;assembly=RepositoryParser.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              x:Name="Root"
@@ -123,13 +124,12 @@
             </TabItem>
         </TabControl>
         <!--Progress ring-->
-        <controls:ProgressRing 
+        <metroLoadingProgressRing:MetroLoadingProgressRing
+            Grid.Row="0"
             Grid.Column="0"
             Grid.ColumnSpan="2"
-            Grid.Row="0"
-            Style="{StaticResource AppProgressRing}"
-            IsActive="{Binding IsLoading}"
-            Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            Text="{x:Static resw:Resources.AnalysingDataMessage}"
+            IsDataLoadingFlag="{Binding Path=IsLoading, UpdateSourceTrigger=PropertyChanged}"/>
         <!--Export panel-->
         <DockPanel 
             Grid.Column="0"
