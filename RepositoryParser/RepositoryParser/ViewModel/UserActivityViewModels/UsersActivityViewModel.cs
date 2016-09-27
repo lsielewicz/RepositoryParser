@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
@@ -18,32 +19,42 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
 {
     public class UsersActivityViewModel : ChartViewModelBase
     {
-        public override void FillChartData()
+        public override async void FillChartData()
         {
             base.FillChartData();
-            FilteringHelper.Instance.SelectedRepositories.ForEach(selectedRepository =>
+
+            await Task.Run(() =>
             {
-                var itemSource = new List<ChartData>();
-                var authors = GetAuthors(selectedRepository);
-                authors.ForEach(author =>
+                this.IsLoading = true;
+                FilteringHelper.Instance.SelectedRepositories.ForEach(selectedRepository =>
                 {
-                    using (var session = DbService.Instance.SessionFactory.OpenSession())
+                    var itemSource = new List<ChartData>();
+                    var authors = GetAuthors(selectedRepository);
+                    authors.ForEach(author =>
                     {
-                        var query = FilteringHelper.Instance.GenerateQuery(session,selectedRepository);
-                        var commitsCount = query.Where(c => c.Author == author).Select(Projections.CountDistinct<Commit>(x => x.Revision)).FutureValue<int>().Value;
-                        
-                        itemSource.Add(new ChartData()
+                        using (var session = DbService.Instance.SessionFactory.OpenSession())
                         {
-                            RepositoryValue = selectedRepository,
-                            ChartKey = author,
-                            ChartValue = commitsCount
-                        });
-                    }
+                            var query = FilteringHelper.Instance.GenerateQuery(session, selectedRepository);
+                            var commitsCount = query.Where(c => c.Author == author).Select(Projections.CountDistinct<Commit>(x => x.Revision)).FutureValue<int>().Value;
+
+                            itemSource.Add(new ChartData()
+                            {
+                                RepositoryValue = selectedRepository,
+                                ChartKey = author,
+                                ChartValue = commitsCount
+                            });
+                        }
+                    });
+
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        this.AddSeriesToChartInstance(selectedRepository, itemSource);
+                    }));
                 });
-                this.AddSeriesToChartInstance(selectedRepository, itemSource);
             });
             this.DrawChart();
             this.FillDataCollection();
+            this.IsLoading = false;
         }
 
         private List<string> GetAuthors(string selectedRepository)

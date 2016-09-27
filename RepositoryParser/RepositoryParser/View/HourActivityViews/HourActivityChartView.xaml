@@ -54,25 +54,19 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    
-                <metroChart:StackedColumnChart
-                    x:Name="StackedColumnChartInstance"
-                    ChartTitle=""
-                    ChartSubTitle=""
-                    Padding="0"
-                    ChartBorderThickness="1"
-                    ChartMargin="0"
-                    Background="Transparent"
-                    ChartLegendVisibility="Visible"
-                    Palette="{StaticResource RepositoryAnalyserGradientPalette}"
-                    />
-                    <controls:ProgressRing 
-                        Style="{StaticResource AppProgressRing}"
-                        Grid.Row="0"
-                        IsActive="{Binding IsLoading}"
-                        Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"                      
+
+                    <metroChart:StackedColumnChart
+                        x:Name="StackedColumnChartInstance"
+                        ChartTitle=""
+                        ChartSubTitle=""
+                        Padding="0"
+                        ChartBorderThickness="1"
+                        ChartMargin="0"
+                        Background="Transparent"
+                        ChartLegendVisibility="Visible"
+                        Palette="{StaticResource RepositoryAnalyserGradientPalette}"
                         />
-                <metroChart:Legend Grid.Row="1" ItemsSource="{Binding ChartLegendItems}"/>
+                    <metroChart:Legend Grid.Row="1" ItemsSource="{Binding ChartLegendItems}"/>
                 </Grid>
             </TabItem>
             <TabItem Header="{x:Static resw:Resources.List}">
@@ -101,7 +95,14 @@
                 </DataGrid>
             </TabItem>
         </TabControl>
-
+        
+        <controls:ProgressRing 
+                        Style="{StaticResource AppProgressRing}"
+                        Grid.Row="0"
+                        IsActive="{Binding IsLoading}"
+                        Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"                      
+                        />
+        
         <DockPanel Grid.Row="1" HorizontalAlignment="Left" Margin="0">
             <circleHeaderButton:CircleHeaderButton 
                 CommandParameter="{Binding ElementName=Root, Path=DataContext}"

@@ -12,12 +12,14 @@
              xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
              xmlns:enums="clr-namespace:RepositoryParser.Helpers.Enums"
              xmlns:metroChart="clr-namespace:De.TorstenMandelkow.MetroChart;assembly=De.TorstenMandelkow.MetroChart"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator}, Path=WeekdayActivity}"
              >
     <UserControl.Resources>
         <conventers:CountOfRepositoriesToVisibilityConventer x:Key="CountOfRepositoriesToVisibilityConventer"/>
+        <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </UserControl.Resources>
     
     <Grid>
@@ -46,16 +48,25 @@
                         ConverterParameter={x:Static enums:VisibilityConventerEnumDirection.Normal},
                         Converter={StaticResource CountOfRepositoriesToVisibilityConventer}}">
             <TabItem Header="{x:Static resw:Resources.Chart}">
-                <metroChart:StackedBar100Chart
-                            x:Name="StackedColumnChartInstance"
-                            ChartTitle=""
-                            ChartSubTitle=""
-                            Padding="0"
-                            ChartBorderThickness="1"
-                            ChartMargin="0"
-                            Background="Transparent"
-                            ChartLegendVisibility="Collapsed"
-                            Palette="{StaticResource RepositoryAnalyserGradientPalette}"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <metroChart:StackedBar100Chart
+                        x:Name="StackedColumnChartInstance"
+                        ChartTitle=""
+                        ChartSubTitle=""
+                        Padding="0"
+                        ChartBorderThickness="1"
+                        ChartMargin="0"
+                        Background="Transparent"
+                        ChartLegendVisibility="Visible"
+                        Palette="{StaticResource RepositoryAnalyserGradientPalette}"
+                        />
+                    <metroChart:Legend Grid.Row="1" ItemsSource="{Binding ChartLegendItems}"/>
+                </Grid>
             </TabItem>
             <TabItem Header="{x:Static resw:Resources.List}">
                 <DataGrid 
@@ -83,7 +94,12 @@
                 </DataGrid>
             </TabItem>
         </TabControl>
-
+        <controls:ProgressRing 
+                        Style="{StaticResource AppProgressRing}"
+                        Grid.Row="0"
+                        IsActive="{Binding IsLoading}"
+                        Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"                      
+                        />
         <DockPanel Grid.Row="1" HorizontalAlignment="Left" Margin="0">
             <circleHeaderButton:CircleHeaderButton 
                 Command="{Binding ExportFileCommand}"

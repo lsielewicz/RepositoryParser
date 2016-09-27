@@ -1,20 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.SQLite;
-using System.Linq;
-using System.Reflection;
-using System.Resources;
-using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
-using Microsoft.Win32;
 using NHibernate.Criterion;
-using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
-using RepositoryParser.Core.Services;
 using RepositoryParser.DataBaseManagementCore.Entities;
 using RepositoryParser.DataBaseManagementCore.Services;
 using RepositoryParser.Helpers;
@@ -33,33 +23,41 @@ namespace RepositoryParser.ViewModel.DayActivityViewModels
 
 
         #region Methodds
-        public override void FillChartData()
+        public override async void FillChartData()
         {
             base.FillChartData();
-
-            FilteringHelper.Instance.SelectedRepositories.ForEach(selectedRepository =>
+            await Task.Run(() =>
             {
-                var itemSource = new List<ChartData>();
-                for (int i = 1; i <= 31; i++)
+                this.IsLoading = true;
+                FilteringHelper.Instance.SelectedRepositories.ForEach(selectedRepository =>
                 {
-                    using (var session = DbService.Instance.SessionFactory.OpenSession())
+                    var itemSource = new List<ChartData>();
+                    for (int i = 1; i <= 31; i++)
                     {
-                        var query = FilteringHelper.Instance.GenerateQuery(session,selectedRepository);
-                        var commitsCount =
-                            query.Where(c => c.Date.Day == i).Select(Projections.CountDistinct<Commit>(x => x.Revision)).FutureValue<int>().Value;
-
-                        itemSource.Add(new ChartData()
+                        using (var session = DbService.Instance.SessionFactory.OpenSession())
                         {
-                            RepositoryValue = selectedRepository,
-                            ChartKey = i.ToString(),
-                            ChartValue = commitsCount
-                        });
+                            var query = FilteringHelper.Instance.GenerateQuery(session, selectedRepository);
+                            var commitsCount =
+                                query.Where(c => c.Date.Day == i).Select(Projections.CountDistinct<Commit>(x => x.Revision)).FutureValue<int>().Value;
+
+                            itemSource.Add(new ChartData()
+                            {
+                                RepositoryValue = selectedRepository,
+                                ChartKey = i.ToString(),
+                                ChartValue = commitsCount
+                            });
+                        }
                     }
-                }
-                this.AddSeriesToChartInstance(selectedRepository, itemSource);
-            });
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        this.AddSeriesToChartInstance(selectedRepository, itemSource);
+                    }));
+                });
+            },CancellationToken.None);
+           
             this.DrawChart();
             this.FillDataCollection();
+            this.IsLoading = false;
         }
 
         #endregion

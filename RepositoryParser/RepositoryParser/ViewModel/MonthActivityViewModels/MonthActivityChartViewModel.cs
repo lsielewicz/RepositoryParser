@@ -1,21 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.SQLite;
-using System.Linq;
-using System.Reflection;
-using System.Resources;
-using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
-using Microsoft.Win32;
 using NHibernate.Criterion;
-using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
-using RepositoryParser.Core.Services;
 using RepositoryParser.DataBaseManagementCore.Entities;
 using RepositoryParser.DataBaseManagementCore.Services;
 using RepositoryParser.Helpers;
@@ -29,50 +17,43 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
         }
 
         #region Methods
-/*        private void FillCollection()
-        {
-            if (KeyCollection.Count > 0)
-                KeyCollection.Clear();
-            for (int i = 1; i <= 12; i++)
-            {
-                using (var session = DbService.Instance.SessionFactory.OpenSession())
-                {
-                    var query = FilteringHelper.Instance.GenerateQuery(session);
-                    var commitsCount =
-                        query.Where(c => c.Date.Month == i).Select(Projections.RowCount()).FutureValue<int>().Value;
-                    KeyCollection.Add(new KeyValuePair<string, int>(GetMonth(i),commitsCount));
-                }
-            }
-
-        }*/
-
-        public override void FillChartData()
+        public override async void FillChartData()
         {
             base.FillChartData();
-            FilteringHelper.Instance.SelectedRepositories.ForEach(selectedRepository =>
+            await Task.Run(() =>
             {
-                var itemSource = new List<ChartData>();
-                for (int i = 1; i <= 12; i++)
+                this.IsLoading = true;
+                FilteringHelper.Instance.SelectedRepositories.ForEach(selectedRepository =>
                 {
-                    using (var session = DbService.Instance.SessionFactory.OpenSession())
+                    var itemSource = new List<ChartData>();
+                    for (int i = 1; i <= 12; i++)
                     {
-                        var query = FilteringHelper.Instance.GenerateQuery(session,selectedRepository);
-                        var commitsCount =
-                            query.Where(c => c.Date.Month == i).Select(Projections.CountDistinct<Commit>(x => x.Revision)).FutureValue<int>().Value;
-
-                        itemSource.Add(new ChartData()
+                        using (var session = DbService.Instance.SessionFactory.OpenSession())
                         {
-                            RepositoryValue = selectedRepository,
-                            ChartKey = this.GetMonth(i),
-                            ChartValue = commitsCount
-                        });
-                    }
-                }
+                            var query = FilteringHelper.Instance.GenerateQuery(session, selectedRepository);
+                            var commitsCount =
+                                query.Where(c => c.Date.Month == i)
+                                    .Select(Projections.CountDistinct<Commit>(x => x.Revision))
+                                    .FutureValue<int>()
+                                    .Value;
 
-                this.AddSeriesToChartInstance(selectedRepository, itemSource);
+                            itemSource.Add(new ChartData()
+                            {
+                                RepositoryValue = selectedRepository,
+                                ChartKey = this.GetMonth(i),
+                                ChartValue = commitsCount
+                            });
+                        }
+                    }
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        this.AddSeriesToChartInstance(selectedRepository, itemSource);
+                    }));
+                });
             });
             this.DrawChart();
             this.FillDataCollection();
+            this.IsLoading = false;
         }
 
         private string GetMonth(int number)
