@@ -28,6 +28,8 @@ namespace RepositoryParser.Helpers
         }
         private FilteringHelper()
         {
+            SelectedRepositories = new List<string>();
+            SelectedAuthors = new List<string>();
         }
         #endregion
 

@@ -40,7 +40,7 @@ namespace RepositoryParser.ViewModel
         {
             CommitsCollection = new ObservableCollection<Commit>();
             Messenger.Default.Register<DataMessageToDisplay>(this, x => HandleDataMessage(x.CommitList));
-            RefreshList();
+           // RefreshList();
         }
 
         #region Getters/Setters

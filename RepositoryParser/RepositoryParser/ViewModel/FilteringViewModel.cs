@@ -1,26 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Diagnostics;
 using System.Linq;
-using GalaSoft.MvvmLight;
+using System.Threading.Tasks;
+using System.Windows;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
-using NHibernate;
-using NHibernate.Criterion;
-using NHibernate.Linq;
 using NHibernate.SqlCommand;
 using NHibernate.Transform;
 using NHibernate.Util;
-using RepositoryParser.Controls.Common;
 using RepositoryParser.Core.Messages;
-using RepositoryParser.DataBaseManagementCore.Configuration;
 using RepositoryParser.DataBaseManagementCore.Entities;
 using RepositoryParser.DataBaseManagementCore.Services;
 using RepositoryParser.Helpers;
 using RepositoryParser.Helpers.Enums;
 using RepositoryTypeEnum = RepositoryParser.DataBaseManagementCore.Configuration.RepositoryType;
+
 namespace RepositoryParser.ViewModel
 {
     public class FilteringViewModel : RepositoryAnalyserViewModelBase
@@ -72,7 +67,7 @@ namespace RepositoryParser.ViewModel
                         return;
                     if (this.SelectedRepositories != null && this.SelectedRepositories.Count == 0)
                     {
-                        this.SendEmptyMessageToDisplay();
+                        this.SendMessageToDisplay();
                         this.BranchCollection.Clear();
                         this.AuthorsCollection.Clear();
                         this.RepositoryType = null;
@@ -331,29 +326,34 @@ namespace RepositoryParser.ViewModel
             if(BranchCollection != null && BranchCollection.Any())
                 BranchCollection.Clear();
 
-            using (var session = DbService.Instance.SessionFactory.OpenSession())
-            {
-                Repository repository = null;
-                if (BranchCollection != null && BranchCollection.Any())
-                    BranchCollection.Clear();
+                using (var session = DbService.Instance.SessionFactory.OpenSession())
+                {
+                    Repository repository = null;
+                    if (BranchCollection != null && BranchCollection.Any())
+                        BranchCollection.Clear();
 
-                if (string.IsNullOrEmpty(FilteringHelper.Instance.SelectedRepositories.First()))
-                {
-                    var branches =
-                        session.QueryOver<Branch>().List<Branch>();
-                    branches.ForEach(branch => BranchCollection.Add(branch.Name));
+                    if (string.IsNullOrEmpty(FilteringHelper.Instance.SelectedRepositories.First()))
+                    {
+                        var branches =
+                            session.QueryOver<Branch>().List<Branch>();
+                        branches.ForEach(branch => BranchCollection.Add(branch.Name));
+                    }
+                    else
+                    {
+                        var branches =
+                            session.QueryOver<Branch>()
+                                .JoinAlias(branch => branch.Repository, () => repository, JoinType.LeftOuterJoin)
+                                .Where(() => repository.Name == FilteringHelper.Instance.SelectedRepositories.First())
+                                .TransformUsing(Transformers.DistinctRootEntity)
+                                .List<Branch>();
+
+                            branches.ForEach(branch => BranchCollection.Add(branch.Name));
+
+                    }
                 }
-                else
-                {
-                    var branches =
-                        session.QueryOver<Branch>()
-                            .JoinAlias(branch => branch.Repository, () => repository, JoinType.LeftOuterJoin)
-                            .Where(() => repository.Name == FilteringHelper.Instance.SelectedRepositories.First())
-                            .TransformUsing(Transformers.DistinctRootEntity)
-                            .List<Branch>();
-                    branches.ForEach(branch => BranchCollection.Add(branch.Name));
-                }
-            }
+
+
+            
         }
 
         private void GetRepositories()
@@ -376,36 +376,46 @@ namespace RepositoryParser.ViewModel
             }
         }
 
-        private void GetAuthors()
+        private async void GetAuthors()
         {
             AuthorsCollection.Clear();
-            this.SelectedRepositories.ForEach(selectedRepository =>
-            {
-                using (var session = DbService.Instance.SessionFactory.OpenSession())
-                {
-                    if (string.IsNullOrEmpty(selectedRepository))
-                    {
-                        var authors =
-                            session.QueryOver<Commit>()
-                                .SelectList(list => list.SelectGroup(commit => commit.Author))
-                                .List<string>();
-                        authors.ForEach(author => AuthorsCollection.Add(author));
-                    }
-                    else
-                    {
-                        Branch branch = null;
-                        Repository repository = null;
-                        var authors =
-                            session.QueryOver<Commit>()
-                                .SelectList(list => list.SelectGroup(commit => commit.Author))
-                                .JoinAlias(commit => commit.Branches, () => branch, JoinType.LeftOuterJoin)
-                                .JoinAlias(() => branch.Repository, () => repository, JoinType.LeftOuterJoin)
-                                .Where(() => repository.Name == selectedRepository).List<string>();
-                        authors.ForEach(author => AuthorsCollection.Add(author));
-                    }
 
-                }
+            await Task.Run(() =>
+            {
+                this.SelectedRepositories.ForEach(selectedRepository =>
+                {
+                    using (var session = DbService.Instance.SessionFactory.OpenSession())
+                    {
+                        if (string.IsNullOrEmpty(selectedRepository))
+                        {
+                            var authors =
+                                session.QueryOver<Commit>()
+                                    .SelectList(list => list.SelectGroup(commit => commit.Author))
+                                    .List<string>();
+                            authors.ForEach(author => AuthorsCollection.Add(author));
+                        }
+                        else
+                        {
+                            Branch branch = null;
+                            Repository repository = null;
+                            var authors =
+                                session.QueryOver<Commit>()
+                                    .SelectList(list => list.SelectGroup(commit => commit.Author))
+                                    .JoinAlias(commit => commit.Branches, () => branch, JoinType.LeftOuterJoin)
+                                    .JoinAlias(() => branch.Repository, () => repository, JoinType.LeftOuterJoin)
+                                    .Where(() => repository.Name == selectedRepository).List<string>();
+
+                            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                            {
+                                authors.ForEach(author => AuthorsCollection.Add(author));
+                            }));
+                        }
+
+                    }
+                });
             });
+
+          
         }
 
         public void ResetInitialization()
@@ -418,9 +428,6 @@ namespace RepositoryParser.ViewModel
             if (!_isInitialized)
             {
                 GetRepositories();
-                GetBranches();
-                GetAuthors();
-                ClearFilters();
                 _isInitialized = true;
             }
           
@@ -447,15 +454,14 @@ namespace RepositoryParser.ViewModel
                 if (_commitsList != null && _commitsList.Any())
                     _commitsList.Clear();
 
-                var commits = FilteringHelper.Instance.GenerateQuery(session).List();
-                commits.ForEach(commit=>_commitsList.Add(commit));
+                if (this.SelectedRepositories != null && this.SelectedRepositories.Any())
+                {
+                    var commits = FilteringHelper.Instance.GenerateQuery(session).List();
+                    commits.ForEach(commit => _commitsList.Add(commit));
+                }
+
             }
             Messenger.Default.Send<DataMessageToDisplay>(new DataMessageToDisplay(this._commitsList));
-        }
-
-        private void SendEmptyMessageToDisplay()
-        {
-            Messenger.Default.Send<DataMessageToDisplay>(new DataMessageToDisplay(new List<Commit>()));
         }
         #endregion
     }
