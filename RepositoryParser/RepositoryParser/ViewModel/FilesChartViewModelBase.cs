@@ -46,7 +46,7 @@ namespace RepositoryParser.ViewModel
                         Changes changesAlias = null;
                         var changesPaths =
                            FilteringHelper.Instance.GenerateQuery(session, selectedRepository)
-                                .JoinAlias(c => c.Changes, () => changesAlias, JoinType.LeftOuterJoin)
+                                .JoinAlias(c => c.Changes, () => changesAlias, JoinType.InnerJoin)
                                 .SelectList(list => list.Select(() => changesAlias.Path))
                                 .List<string>();
 

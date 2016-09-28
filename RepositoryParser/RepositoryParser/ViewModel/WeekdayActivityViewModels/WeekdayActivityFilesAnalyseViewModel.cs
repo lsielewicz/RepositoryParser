@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using NHibernate.Criterion;
@@ -13,9 +12,9 @@ using RepositoryParser.DataBaseManagementCore.Entities;
 using RepositoryParser.DataBaseManagementCore.Services;
 using RepositoryParser.Helpers;
 
-namespace RepositoryParser.ViewModel.HourActivityViewModels
+namespace RepositoryParser.ViewModel.WeekdayActivityViewModels
 {
-    public class HourActivityFilesAnalyseViewModel : FilesChartViewModelBase
+    public class WeekdayActivityFilesAnalyseViewModel : FilesChartViewModelBase
     {
         public override async void FillChartData()
         {
@@ -24,26 +23,25 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels
             await Task.Run(() =>
             {
                 this.IsLoading = true;
-                Parallel.ForEach(this.SelectedFilePaths,(selectedFilePath)=>
+                Parallel.ForEach(this.SelectedFilePaths, (selectedFilePath) =>
                 {
                     using (var session = DbService.Instance.SessionFactory.OpenSession())
                     {
                         Changes changes = null;
-                        var query =
+                        var commits =
                             FilteringHelper.Instance.GenerateQuery(session)
                                 .JoinAlias(c => c.Changes, () => changes, JoinType.InnerJoin)
-                                .Where(() => changes.Path == selectedFilePath);
+                                .Where(() => changes.Path == selectedFilePath).List<Commit>();
                         var itemSource = new List<ChartData>();
-                        for (int i = 0; i < 23; i++)
+                        //var commits = query
+                        for (int i = 0; i <= 6; i++)
                         {
-                            var commitsCount =
-                                query.Clone()
-                                    .Where((commit) => commit.Date.Hour == i)
-                                    .Select(Projections.CountDistinct<Commit>(x => x.Revision)).FutureValue<int>().Value;
+                            int commitsCount = commits.Distinct().Count(commit => (int)commit.Date.DayOfWeek == i);
+
                             itemSource.Add(new ChartData()
                             {
                                 RepositoryValue = Path.GetFileName(selectedFilePath),
-                                ChartKey = TimeSpan.FromHours(i).ToString("hh':'mm"),
+                                ChartKey = GetWeekday(i),
                                 ChartValue = commitsCount
                             });
                         }
@@ -58,6 +56,12 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels
             this.DrawChart();
             this.FillDataCollection();
             this.IsLoading = false;
+        }
+
+        private string GetWeekday(int number)
+        {
+            string weekday = $"Weekday{number + 1}";
+            return ResourceManager.GetString(weekday);
         }
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using NHibernate.Criterion;
@@ -13,9 +12,9 @@ using RepositoryParser.DataBaseManagementCore.Entities;
 using RepositoryParser.DataBaseManagementCore.Services;
 using RepositoryParser.Helpers;
 
-namespace RepositoryParser.ViewModel.HourActivityViewModels
+namespace RepositoryParser.ViewModel.DayActivityViewModels
 {
-    public class HourActivityFilesAnalyseViewModel : FilesChartViewModelBase
+    public class DayActivityFilesAnalyseViewModel : FilesChartViewModelBase
     {
         public override async void FillChartData()
         {
@@ -24,7 +23,7 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels
             await Task.Run(() =>
             {
                 this.IsLoading = true;
-                Parallel.ForEach(this.SelectedFilePaths,(selectedFilePath)=>
+                Parallel.ForEach(this.SelectedFilePaths, (selectedFilePath) =>
                 {
                     using (var session = DbService.Instance.SessionFactory.OpenSession())
                     {
@@ -34,11 +33,11 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels
                                 .JoinAlias(c => c.Changes, () => changes, JoinType.InnerJoin)
                                 .Where(() => changes.Path == selectedFilePath);
                         var itemSource = new List<ChartData>();
-                        for (int i = 0; i < 23; i++)
+                        for (int i = 1; i <= 31; i++)
                         {
                             var commitsCount =
                                 query.Clone()
-                                    .Where((commit) => commit.Date.Hour == i)
+                                    .Where((commit) => commit.Date.Day == i)
                                     .Select(Projections.CountDistinct<Commit>(x => x.Revision)).FutureValue<int>().Value;
                             itemSource.Add(new ChartData()
                             {

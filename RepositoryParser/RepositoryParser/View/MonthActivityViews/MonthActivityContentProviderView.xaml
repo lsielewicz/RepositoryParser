@@ -13,10 +13,15 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600">
     <UserControl.Resources>
+        <!--Count of commits-->
         <DataTemplate DataType="{x:Type monthActivityViewModels:MonthActivityChartViewModel}">
             <local:MonthActivityChartView/>
         </DataTemplate>
-
+        <!--Files-->
+        <DataTemplate DataType="{x:Type monthActivityViewModels:MonthActivityFilesAnalyseViewModel}">
+            <local:MonthActivityFilesAnalyseView/>
+        </DataTemplate>
+        <!--Conventers-->
         <conventers:ViewModelBaseToVisibilityConventer x:Key="ViewModelBaseToVisibilityConventer"/>
     </UserControl.Resources>
     
@@ -49,6 +54,17 @@
                 Foreground="Black"
                 ImageSource="../../Assets/Icons/PNG_Gray/Poll Topic-100.png"
                 Text="{x:Static resw:Resources.CountOfCommits}"
+                Height="45"/>
+            <imageButton:ImageButton 
+                Command="{Binding OpenFilesAnalyseCommand}" 
+                BorderBrush="{StaticResource LightGray}"
+                BorderThickness="0,0,0,0.5"
+                ImageHeight="32"
+                ImageWidth="32"
+                Background="Transparent"
+                Foreground="Black"
+                ImageSource="../../Assets/Icons/PNG_DarkGray/File_DarkGray.png"
+                Text="{x:Static resw:Resources.Files}"
                 Height="45"/>
         </StackPanel>
 

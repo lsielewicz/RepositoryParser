@@ -64,8 +64,8 @@ namespace RepositoryParser.Helpers
             if (this.SelectedRepositories != null && this.SelectedRepositories.Any())
             {
                 query =
-                    query.JoinAlias(c => c.Branches, () => branch, JoinType.LeftOuterJoin)
-                        .JoinAlias(() => branch.Repository, () => repository, JoinType.LeftOuterJoin)
+                    query.JoinAlias(c => c.Branches, () => branch, JoinType.InnerJoin)
+                        .JoinAlias(() => branch.Repository, () => repository, JoinType.InnerJoin)
                         .WhereRestrictionOn(() => repository.Name)
                         .IsIn(this.SelectedRepositories).TransformUsing(Transformers.DistinctRootEntity);
             }
@@ -106,8 +106,8 @@ namespace RepositoryParser.Helpers
             if (this.SelectedRepositories != null && this.SelectedRepositories.Any())
             {
                 query =
-                    query.JoinAlias(c => c.Branches, () => branch, JoinType.LeftOuterJoin)
-                        .JoinAlias(() => branch.Repository, () => repository, JoinType.LeftOuterJoin)
+                    query.JoinAlias(c => c.Branches, () => branch, JoinType.InnerJoin)
+                        .JoinAlias(() => branch.Repository, () => repository, JoinType.InnerJoin)
                         .Where(() => repository.Name == selectedRepository).TransformUsing(Transformers.DistinctRootEntity);
             }
             if (this.SelectedRepositories != null && this.SelectedRepositories.Count == 1)
