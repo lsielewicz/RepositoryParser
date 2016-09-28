@@ -4,6 +4,15 @@
 
 
 
+    <LinearGradientBrush x:Key="GradientMainColor" StartPoint="0,0" EndPoint="1,1" Opacity="1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Color="#143821" Offset="0" />
+                <GradientStop Color="#1a472a" Offset="1" />
+            </GradientStopCollection>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    
     <SolidColorBrush x:Key="MyGreen" Color="#aaaaaa" />
     <SolidColorBrush x:Key="Graphite" Color="#1a472a" />
     <SolidColorBrush x:Key="DarkGray" Color="#5d5d5d"/>

@@ -342,7 +342,7 @@ namespace RepositoryParser.ViewModel
                     {
                         var branches =
                             session.QueryOver<Branch>()
-                                .JoinAlias(branch => branch.Repository, () => repository, JoinType.LeftOuterJoin)
+                                .JoinAlias(branch => branch.Repository, () => repository, JoinType.InnerJoin)
                                 .Where(() => repository.Name == FilteringHelper.Instance.SelectedRepositories.First())
                                 .TransformUsing(Transformers.DistinctRootEntity)
                                 .List<Branch>();
@@ -401,8 +401,8 @@ namespace RepositoryParser.ViewModel
                             var authors =
                                 session.QueryOver<Commit>()
                                     .SelectList(list => list.SelectGroup(commit => commit.Author))
-                                    .JoinAlias(commit => commit.Branches, () => branch, JoinType.LeftOuterJoin)
-                                    .JoinAlias(() => branch.Repository, () => repository, JoinType.LeftOuterJoin)
+                                    .JoinAlias(commit => commit.Branches, () => branch, JoinType.InnerJoin)
+                                    .JoinAlias(() => branch.Repository, () => repository, JoinType.InnerJoin)
                                     .Where(() => repository.Name == selectedRepository).List<string>();
 
                             Application.Current.Dispatcher.BeginInvoke(new Action(() =>

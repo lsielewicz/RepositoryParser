@@ -40,8 +40,6 @@ namespace RepositoryParser.ViewModel
             this._clearDbWorker = new BackgroundWorker();
             this._clearDbWorker.DoWork += this.DoClearWork;
             this._clearDbWorker.RunWorkerCompleted += this.DoClearWorkCompleted;
-
-            OnLoad();
         }
 
         #region Getters/Setters
@@ -224,7 +222,7 @@ namespace RepositoryParser.ViewModel
         {
             try
             {
-
+        
             }
             catch (Exception ex)
             {

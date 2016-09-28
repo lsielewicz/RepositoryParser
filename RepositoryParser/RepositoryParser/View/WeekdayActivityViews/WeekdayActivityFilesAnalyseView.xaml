@@ -82,7 +82,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <metroChart:StackedColumnChart
+                    <metroChart:StackedBar100Chart
                         x:Name="StackedColumnChartInstance"
                         ChartTitle=""
                         ChartSubTitle=""
