@@ -65,7 +65,11 @@ namespace RepositoryParser.ViewModel
                         {
                             if (string.IsNullOrEmpty(_pathFilteringCriteria) || (o as string) == null)
                                 return true;
-                            return (o as string).IndexOf(PathFilteringCriteria, StringComparison.OrdinalIgnoreCase) >= 0;
+                            var collection =
+                                (o as string).IndexOf(PathFilteringCriteria, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                                SelectedFilePaths.Any(s=> (o as string).IndexOf(s, StringComparison.OrdinalIgnoreCase) >= 0);
+                            
+                            return collection;
                         };
                 }
 
