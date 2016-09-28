@@ -50,26 +50,37 @@
             TextWrapping="WrapWithOverflow"
             Grid.ZIndex="3"/>
         <!--List of files-->
-        <ListView 
-            IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBoolConventer}, UpdateSourceTrigger=PropertyChanged}"
-            Grid.Column="0"
-            Grid.Row="0"
-            VerticalAlignment="Stretch"
-            HorizontalAlignment="Stretch" 
-            Margin="5,0"
-            ItemsSource="{Binding FilesPathsCollection}" 
-            IsSynchronizedWithCurrentItem="False" 
-            BorderThickness="0"
-            ItemContainerStyle="{StaticResource RepositoryAnalyserListViewItem}"
-            Foreground="Black"
-            SelectionMode="Multiple"
-            extensions:ListViewExtensions.SelectedItems="{Binding Path=SelectedFilePaths}">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{Binding SelectedFileItemChanged}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </ListView>
+        <Grid Grid.Column="0" Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBox 
+                Text="{Binding PathFilteringCriteria, UpdateSourceTrigger=PropertyChanged, Delay=750}"
+                Margin="0,5"
+                controls:TextBoxHelper.Watermark="{x:Static resw:Resources.Search}"
+                controls:TextBoxHelper.ClearTextButton="True"
+                />
+            <ListView 
+                Grid.Row="1"
+                IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBoolConventer}, UpdateSourceTrigger=PropertyChanged}"
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch" 
+                Margin="5,0,0,5"
+                ItemsSource="{Binding CollectionView}" 
+                IsSynchronizedWithCurrentItem="False" 
+                BorderThickness="0"
+                ItemContainerStyle="{StaticResource RepositoryAnalyserListViewItem}"
+                Foreground="Black"
+                SelectionMode="Multiple"
+                extensions:ListViewExtensions.SelectedItems="{Binding Path=SelectedFilePaths}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding SelectedFileItemChanged}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ListView>
+        </Grid>
         <!--ChartContent-->
         <TabControl 
             Grid.Row="0"

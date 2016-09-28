@@ -573,4 +573,7 @@
   <data name="ContiniousAnalyse" xml:space="preserve">
     <value>Analiza ciągła</value>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
 </root>

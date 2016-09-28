@@ -580,4 +580,7 @@
   <data name="ContiniousAnalyse" xml:space="preserve">
     <value>Continious analyse</value>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
 </root>

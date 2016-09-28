@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using GalaSoft.MvvmLight.Command;
 using NHibernate.Criterion;
 using NHibernate.SqlCommand;
@@ -22,6 +24,14 @@ namespace RepositoryParser.ViewModel
         public ObservableCollection<string> FilesPathsCollection { get; protected set; }
         public List<string> SelectedFilePaths { get; protected set; }
 
+        private ListCollectionView _collectionView;
+
+        public ICollectionView CollectionView
+        {
+            get { return this._collectionView; }
+        }
+
+        private string _pathFilteringCriteria;
         private RelayCommand _selecteFilePathItemChanged;
         public RelayCommand SelectedFileItemChanged
         {
@@ -31,6 +41,35 @@ namespace RepositoryParser.ViewModel
                 {
                     this.FillChartData();
                 }));
+            }
+        }
+
+        public string PathFilteringCriteria
+        {
+            get
+            {
+                return _pathFilteringCriteria;
+            }
+            set
+            {
+                if (_pathFilteringCriteria == value)
+                    return;
+                _pathFilteringCriteria = value;
+
+                if (String.IsNullOrEmpty(value))
+                    CollectionView.Filter = null;
+                else
+                {
+                    CollectionView.Filter =
+                        o =>
+                        {
+                            if (string.IsNullOrEmpty(_pathFilteringCriteria) || (o as string) == null)
+                                return true;
+                            return (o as string).IndexOf(PathFilteringCriteria, StringComparison.OrdinalIgnoreCase) >= 0;
+                        };
+                }
+
+                this.RaisePropertyChanged();
             }
         }
         private async void FillFilesCollection()
@@ -70,6 +109,7 @@ namespace RepositoryParser.ViewModel
             base.OnLoad();
             this.FillFilesCollection();
             this.SelectedFilePaths = new List<string>();
+            _collectionView = new ListCollectionView(FilesPathsCollection);
         }
 
     }
