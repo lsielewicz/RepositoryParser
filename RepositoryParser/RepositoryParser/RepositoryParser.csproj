@@ -273,6 +273,7 @@
     <Compile Include="ViewModel\UserActivityViewModels\UsersCodeFrequencyViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="ViewModel\WeekdayActivityViewModels\WeekdayActivityContentProviderViewModel.cs" />
+    <Compile Include="ViewModel\WeekdayActivityViewModels\WeekdayActivityContiniousAnalyseViewModel.cs" />
     <Compile Include="ViewModel\WeekdayActivityViewModels\WeekdayActivityFilesAnalyseViewModel.cs" />
     <Compile Include="View\AnalysisView.xaml.cs">
       <DependentUpon>AnalysisView.xaml</DependentUpon>
@@ -342,6 +343,9 @@
     </Compile>
     <Compile Include="View\WeekdayActivityViews\WeekdayActivityContentProviderView.xaml.cs">
       <DependentUpon>WeekdayActivityContentProviderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\WeekdayActivityViews\WeekdayActivityContiniousAnalyseView.xaml.cs">
+      <DependentUpon>WeekdayActivityContiniousAnalyseView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\WeekdayActivityViews\WeekdayActivityFilesAnalyseView.xaml.cs">
       <DependentUpon>WeekdayActivityFilesAnalyseView.xaml</DependentUpon>
@@ -479,6 +483,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\WeekdayActivityViews\WeekdayActivityContentProviderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WeekdayActivityViews\WeekdayActivityContiniousAnalyseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -737,6 +745,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Icons\PNG_DarkGray\File_DarkGray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\PNG_DarkGray\ContiniousAnalyse_DarkGray.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

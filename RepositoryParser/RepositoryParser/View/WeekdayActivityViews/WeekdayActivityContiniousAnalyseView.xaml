@@ -1,0 +1,120 @@
+﻿<UserControl x:Class="RepositoryParser.View.WeekdayActivityViews.WeekdayActivityContiniousAnalyseView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RepositoryParser.View.WeekdayActivityViews"
+             xmlns:resw="clr-namespace:RepositoryParser.Properties"
+             xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
+             xmlns:enums="clr-namespace:RepositoryParser.Helpers.Enums"
+             xmlns:metroChart="clr-namespace:De.TorstenMandelkow.MetroChart;assembly=De.TorstenMandelkow.MetroChart"
+             xmlns:extensions="clr-namespace:RepositoryParser.Controls.Extensions;assembly=RepositoryParser.Controls"
+             xmlns:metroLoadingProgressRing="clr-namespace:RepositoryParser.Controls.MetroLoadingProgressRing;assembly=RepositoryParser.Controls"
+             xmlns:circleHeaderButton="clr-namespace:RepositoryParser.Controls.CircleHeaderButton;assembly=RepositoryParser.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             x:Name="Root"
+             DataContext="{Binding Source={StaticResource Locator}, Path=WeekdayActivityContiniousAnalyseViewModel}">
+    <UserControl.Resources>
+        <conventers:CountOfRepositoriesToVisibilityConventer x:Key="CountOfRepositoriesToVisibilityConventer"/>
+        <conventers:IntToLenghtConventer x:Key="IntToLenghtConventer"/>
+        <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Visibility="{Binding Path=CountOfSelectedRepositories, 
+                                 ConverterParameter={x:Static enums:VisibilityConventerEnumDirection.Inverse},
+                                 Converter={StaticResource CountOfRepositoriesToVisibilityConventer}}"
+            Text="{x:Static resw:Resources.NoDataToDisplay}"
+            Foreground="#666666"
+            FontSize="28"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontWeight="Light"
+            TextWrapping="WrapWithOverflow"/>
+
+        <TabControl Grid.Row="0"
+                    Grid.Column="0"
+                    Visibility="{Binding Path=CountOfSelectedRepositories, 
+                    ConverterParameter={x:Static enums:VisibilityConventerEnumDirection.Normal},
+                    Converter={StaticResource CountOfRepositoriesToVisibilityConventer}}">
+            <TabItem Header="{x:Static resw:Resources.Chart}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <ScrollViewer>
+                        <metroChart:StackedBar100Chart
+                            x:Name="ChartViewInstance"
+                            ChartTitle=""
+                            ChartSubTitle=""
+                            Padding="0"
+                            ChartBorderThickness="1"
+                            ChartMargin="0"
+                            Background="Transparent"
+                            ChartLegendVisibility="Visible"
+                            Palette="{StaticResource RepositoryAnalyserGradientPalette}"
+                            ClipToBounds="False"
+                            Height="{Binding CountOfRows, Converter={StaticResource IntToLenghtConventer}}"
+                            />
+                    </ScrollViewer>
+                    <metroChart:Legend Grid.Row="1" ItemsSource="{Binding ChartLegendItems}"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="{x:Static resw:Resources.List}">
+                <DataGrid Grid.Row="1" Grid.Column="0"
+                    ItemsSource="{Binding DataCollection}"
+                    CanUserSortColumns="True"
+                    AutoGenerateColumns="False"
+                    ColumnWidth="auto"
+                    IsReadOnly="True"
+                    VerticalScrollBarVisibility="Auto"
+                    Style="{StaticResource AzureDataGrid}"
+                    extensions:DataGridExtensions.LastColumnFill="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding ChartKey}" Header="{x:Static resw:Resources.FilteringDate}" MinWidth="150"/>
+                        <DataGridTextColumn Binding="{Binding ChartValue}" Header="{x:Static resw:Resources.CountOfCommits}">
+                            <DataGridTextColumn.CellStyle>
+                                <Style>
+                                    <Setter Property="FrameworkElement.HorizontalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding RepositoryValue}" Header="{x:Static resw:Resources.Repository}"/>
+                    </DataGrid.Columns>
+
+                </DataGrid>
+            </TabItem>
+        </TabControl>
+        <metroLoadingProgressRing:MetroLoadingProgressRing
+            Grid.Row="0"
+            Grid.Column="0"
+            Text="{x:Static resw:Resources.AnalysingDataMessage}"
+            IsDataLoadingFlag="{Binding Path=IsLoading, UpdateSourceTrigger=PropertyChanged}"/>
+        <DockPanel Grid.Row="1" HorizontalAlignment="Left" Margin="0">
+            <circleHeaderButton:CircleHeaderButton
+                CommandParameter="{Binding ElementName=Root, Path=DataContext}"
+                Command="{Binding ExportFileCommand}"
+                ImageSource="../../Assets/Icons/PNG_DarkGray/Export-100.png"
+                ToolTip="{x:Static resw:Resources.ExportToFileButton}"
+                Height="56"
+                Width="56"
+                ImageHeight="28" 
+                ImageWidth="28"
+                BorderBrush="{StaticResource AppMainColor}"
+                />
+        </DockPanel>
+
+    </Grid>
+</UserControl>

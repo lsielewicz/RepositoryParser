@@ -295,6 +295,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Continious analyse.
+        /// </summary>
+        public static string ContiniousAnalyse {
+            get {
+                return ResourceManager.GetString("ContiniousAnalyse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Count of commits.
         /// </summary>
         public static string CountOfCommits {

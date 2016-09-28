@@ -570,4 +570,7 @@
   <data name="AnalysingDataMessage" xml:space="preserve">
     <value>Analizowanie zebranych danych, proszę czekać...</value>
   </data>
+  <data name="ContiniousAnalyse" xml:space="preserve">
+    <value>Analiza ciągła</value>
+  </data>
 </root>

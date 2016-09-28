@@ -1,7 +1,7 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using NHibernate.Criterion;
@@ -10,11 +10,10 @@ using RepositoryParser.DataBaseManagementCore.Entities;
 using RepositoryParser.DataBaseManagementCore.Services;
 using RepositoryParser.Helpers;
 
-namespace RepositoryParser.ViewModel.MonthActivityViewModels
+namespace RepositoryParser.ViewModel.WeekdayActivityViewModels
 {
-    public class MonthActivityContiniousAnalyseViewModel : ChartViewModelBase
+    public class WeekdayActivityContiniousAnalyseViewModel : ChartViewModelBase
     {
-
         public override async void FillChartData()
         {
             base.FillChartData();
@@ -32,7 +31,7 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
                     if (!CheckIfYearsAreAlreadyAdded(alreadyAddedYears, minYear, maxYear))
                     {
                         int countOfYears = Math.Abs(maxYear - minYear) != 0 ? Math.Abs(maxYear - minYear) : 1;
-                        this.CountOfRows += (countOfYears * 12);
+                        this.CountOfRows += (countOfYears * 7 * 12);
                     }
 
                     for (int year = minYear; year <= maxYear; year++)
@@ -42,21 +41,26 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
                         {
                             using (var session = DbService.Instance.SessionFactory.OpenSession())
                             {
-                                var query = FilteringHelper.Instance.GenerateQuery(session, selectedRepository);
-                                var commitsCount =
-                                    query.Where(c => c.Date.Month == month && c.Date.Year == year)
-                                        .Select(Projections.CountDistinct<Commit>(x => x.Revision))
-                                        .FutureValue<int>()
-                                        .Value;
+                                var commitsDates =
+                                    FilteringHelper.Instance.GenerateQuery(session, selectedRepository)
+                                        .Where(c => c.Date.Month == month && c.Date.Year == year)
+                                        .List<Commit>();
 
-                                itemSource.Add(new ChartData()
+                                for (int weekday = 0; weekday <= 6; weekday++)
                                 {
-                                    RepositoryValue = selectedRepository,
-                                    ChartKey = this.GetMonthAndYear(month,year),
-                                    ChartValue = commitsCount
-                                });
+                                    int commitsCount =
+                                        commitsDates.Distinct().Count(commit => (int)commit.Date.DayOfWeek == weekday);
+
+                                    itemSource.Add(new ChartData()
+                                    {
+                                        RepositoryValue = selectedRepository,
+                                        ChartKey = this.GetWeekdayAndYear(weekday,month,year),
+                                        ChartValue = commitsCount
+                                    });
+                                }
                             }
                         }
+                        
                     }
                     Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                     {
@@ -68,6 +72,7 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
             this.FillDataCollection();
             this.IsLoading = false;
         }
+
 
         private bool CheckIfYearsAreAlreadyAdded(List<int> list, int minValue, int maxValue)
         {
@@ -89,7 +94,7 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
                         .List<int>()
                         .First();
                 return maxYear;
-            }    
+            }
         }
 
         private int GetMinYear(string selectedRepository)
@@ -104,12 +109,13 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
                 return maxYear;
             }
         }
-        
 
-        private string GetMonthAndYear(int monthNumber, int yearNumber)
+
+        private string GetWeekdayAndYear(int weekdayNumber, int monthNumber, int yearNumber)
         {
-            string dateString = $"Month{monthNumber}";
-            return $"{ResourceManager.GetString(dateString)} {yearNumber}";
+            string weekdayKey = $"Weekday{weekdayNumber+1}";
+            string monthKey = $"Month{monthNumber}";
+            return $"{ResourceManager.GetString(weekdayKey)} {ResourceManager.GetString(monthKey)} {yearNumber}";
         }
 
         private int _countOfRows;
@@ -126,3 +132,4 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
         }
     }
 }
+

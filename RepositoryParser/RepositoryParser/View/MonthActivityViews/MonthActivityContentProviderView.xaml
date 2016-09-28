@@ -79,8 +79,8 @@
                 ImageWidth="32"
                 Background="Transparent"
                 Foreground="Black"
-                ImageSource="../../Assets/Icons/PNG_Gray/Code-100.png"
-                Text="Continious analyse"
+                ImageSource="../../Assets/Icons/PNG_DarkGray/ContiniousAnalyse_DarkGray.png"
+                Text="{x:Static resw:Resources.ContiniousAnalyse}"
                 Height="45"/>
         </StackPanel>
 
