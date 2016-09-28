@@ -23,9 +23,9 @@
         <conventers:StringToImageConventer x:Key="StringToImageConventer"/>
         <conventers:CountOfRepositoriesToVisibilityConventer x:Key="CountOfRepositoriesToVisibilityConventer"/>
         <Style TargetType="Border" x:Key="AttributeBorderStyle">
-            <Setter Property="Background" Value="{StaticResource MyGreen}"/>
+            <Setter Property="Background" Value="{StaticResource AppSecondMainColor}"/>
             <Setter Property="BorderThickness" Value="0,0,0,1"/>
-            <Setter Property="BorderBrush" Value="{StaticResource Graphite}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource AppMainColor}"/>
         </Style>
     </UserControl.Resources>
     
@@ -41,7 +41,7 @@
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Background="{StaticResource Graphite}">
+        <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Background="{StaticResource AppMainColor}">
             <TextBlock Style="{StaticResource SubTitleTextBlock}">
                 <Run Text="#"/>
                 <Run Text="{x:Static resw:Resources.Filtering}"/>
@@ -68,7 +68,7 @@
                     <RowDefinition Height="10"/>
                 </Grid.RowDefinitions>
 
-                <Border Grid.Row="0" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="{StaticResource MyGreen}" Margin="5,0" Padding="0">
+                <Border Grid.Row="0" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="{StaticResource AppSecondMainColor}" Margin="5,0" Padding="0">
                     <DockPanel LastChildFill="True" Margin="0">
                         <imageButton:ImageButton
                             x:Name="ClearAuthorColumnFilterButton"
@@ -125,7 +125,7 @@
                     <RowDefinition Height="10"/>
                 </Grid.RowDefinitions>
                 <!--Date column-->
-                <Border Grid.Row="0" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="{StaticResource MyGreen}" Margin="5,0">
+                <Border Grid.Row="0" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="{StaticResource AppSecondMainColor}" Margin="5,0">
                     <DockPanel LastChildFill="True" Margin="0">
                         <imageButton:ImageButton
                             x:Name="ClearDateColumnFilterButton"
@@ -172,7 +172,7 @@
                     <Label x:Name="zzlbl" Content="-" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </DockPanel>
 
-                <Border Grid.Row="2" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="{StaticResource MyGreen}" Margin="5,0">
+                <Border Grid.Row="2" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="{StaticResource AppSecondMainColor}" Margin="5,0">
                     <DockPanel LastChildFill="True" Margin="0">
                         <imageButton:ImageButton
                             x:Name="ClearMessageFilterButton"
@@ -221,7 +221,7 @@
                     <RowDefinition Height="10"/>
                 </Grid.RowDefinitions>
 
-                <Border Grid.Row="0" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="{StaticResource MyGreen}" Margin="5,0">
+                <Border Grid.Row="0" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="{StaticResource AppSecondMainColor}" Margin="5,0">
                     <TextBlock
                        Text="{x:Static resw:Resources.FilteringPickRepository}" 
                        Background="Transparent"
@@ -251,7 +251,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ListView>
-                <Border Grid.Row="2" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="{StaticResource MyGreen}" Margin="5,0">
+                <Border Grid.Row="2" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="{StaticResource AppSecondMainColor}" Margin="5,0">
                     <TextBlock
                        Text="{x:Static resw:Resources.FilteringPickBranch}" 
                        Background="Transparent"

@@ -29,7 +29,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Row="0" Grid.Column="1" Background="{StaticResource Graphite}">
+        <Border Grid.Row="0" Grid.Column="1" Background="{StaticResource AppMainColor}">
             <TextBlock Style="{StaticResource SubTitleTextBlock}" >
                 <Run Text="#"/>
                 <Run Text="{x:Static resw:Resources.DataBaseManagement}"/>
@@ -91,7 +91,7 @@
 
                     <StackPanel Grid.Row="0" Grid.Column="0" Margin="5,15">
                       <!--  <TextBlock Text="{x:Static resw:Resources.PickRepositoryType}" HorizontalAlignment="Center" FontSize="16"></TextBlock>-->
-                        <Border BorderBrush="{StaticResource MyGreen}" BorderThickness="0,1">
+                        <Border BorderBrush="{StaticResource AppSecondMainColor}" BorderThickness="0,1">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="2">
                                 <Button Margin="4,0" VerticalAlignment="Center" Background="Transparent" BorderThickness="0" MinWidth="90" Command="{Binding PickGitRepositoryCommand}">
                                     <StackPanel Orientation="Horizontal">
@@ -116,7 +116,7 @@
                 <imageButton:ImageButton x:Name="CloneRepositoryBtn"
                     Command="{Binding StartWorkCommand}" 
                     IsEnabled="{Binding IsCloneButtonEnabled }" 
-                    Background="{StaticResource Graphite}"
+                    Background="{StaticResource AppMainColor}"
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center"  
                     ImageSource="../Assets/Icons/Add Database-5white0.png"
@@ -160,13 +160,13 @@
                 <Separator/>
                 <TextBlock 
                     Text="{x:Static resw:Resources.ProgressBarText}"
-                    Foreground="{StaticResource Graphite}"
+                    Foreground="{StaticResource AppMainColor}"
                     FontSize="14" 
                     Visibility="{Binding IsOpening, Converter={StaticResource BoolToVisibilityConverter}}"
                     VerticalAlignment="Center"/>
                 <TextBlock 
                     Text="{x:Static resw:Resources.ClearingDataBase}"
-                    Foreground="{StaticResource Graphite}"
+                    Foreground="{StaticResource AppMainColor}"
                     FontSize="14" 
                     Visibility="{Binding IsOpening, Converter={StaticResource NegativeBoolToVisibilityConventer}}"
                     VerticalAlignment="Center"/>

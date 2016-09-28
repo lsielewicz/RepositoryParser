@@ -25,7 +25,7 @@ namespace RepositoryParser.View.MonthActivityViews
         public MonthActivityFilesAnalyseView()
         {
             InitializeComponent();
-            ChartingHelper.Instance.DrawChart<MonthActivityFilesAnalyseViewModel>(this,this.StackedColumnChartInstance);
+            ChartingHelper.Instance.DrawChart<MonthActivityFilesAnalyseViewModel>(this,this.ChartViewInstance);
         }
     }
 }

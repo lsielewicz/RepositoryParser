@@ -25,7 +25,7 @@ namespace RepositoryParser.View.DayActivityViews
         public DayActivityFilesAnalyseView()
         {
             InitializeComponent();
-            ChartingHelper.Instance.DrawChart<DayActivityFilesAnalyseViewModel>(this, this.StackedColumnChartInstance);
+            ChartingHelper.Instance.DrawChart<DayActivityFilesAnalyseViewModel>(this, this.ChartViewInstance);
         }
     }
 }

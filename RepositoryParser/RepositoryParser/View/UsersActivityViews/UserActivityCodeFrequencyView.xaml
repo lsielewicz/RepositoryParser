@@ -69,7 +69,7 @@
                     </Grid.RowDefinitions>
 
                     <Border Grid.Row="0" 
-                            Background="{StaticResource Graphite}"
+                            Background="{StaticResource AppMainColor}"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch"
                             >
@@ -123,12 +123,12 @@
                                        IsActive="{Binding IsLoading}"
                                        Margin="3"
                                        Opacity="1"
-                                       Foreground="{StaticResource Graphite}"
+                                       Foreground="{StaticResource AppMainColor}"
                                        />
             <Separator/>
             <TextBlock 
                 Text="{x:Static resw:Resources.DataLoadingStatus}"
-                Foreground="{StaticResource Graphite}"
+                Foreground="{StaticResource AppMainColor}"
                 FontSize="14" 
                 Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"
                 FontWeight="Light"
@@ -145,7 +145,7 @@
                 Width="56"
                 ImageHeight="28" 
                 ImageWidth="28"
-                BorderBrush="{StaticResource Graphite}"
+                BorderBrush="{StaticResource AppMainColor}"
                 />
         </DockPanel>
     </Grid>

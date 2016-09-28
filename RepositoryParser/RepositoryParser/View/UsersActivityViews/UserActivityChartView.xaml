@@ -58,7 +58,7 @@
                     </Grid.RowDefinitions>
                     <ScrollViewer>
                         <metroChart:StackedBar100Chart
-                            x:Name="StackedColumnChartInstance"
+                            x:Name="ChartViewInstance"
                             ChartTitle=""
                             ChartSubTitle=""
                             Padding="0"
@@ -114,7 +114,7 @@
                 Width="56"
                 ImageHeight="28" 
                 ImageWidth="28"
-                BorderBrush="{StaticResource Graphite}"
+                BorderBrush="{StaticResource AppMainColor}"
                 />
         </DockPanel>
 

@@ -26,7 +26,7 @@ namespace RepositoryParser.View.WeekdayActivityViews
         public WeekdayActivityFilesAnalyseView()
         {
             InitializeComponent();
-            ChartingHelper.Instance.DrawChart<WeekdayActivityFilesAnalyseViewModel>(this, this.StackedColumnChartInstance);
+            ChartingHelper.Instance.DrawChart<WeekdayActivityFilesAnalyseViewModel>(this, this.ChartViewInstance);
         }
     }
 }

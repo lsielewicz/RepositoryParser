@@ -25,7 +25,7 @@ namespace RepositoryParser.View.HourActivityViews
         public HourActivityFilesAnalyseView()
         {
             InitializeComponent();
-            ChartingHelper.Instance.DrawChart<HourActivityFilesAnalyseViewModel>(this, this.StackedColumnChartInstance);
+            ChartingHelper.Instance.DrawChart<HourActivityFilesAnalyseViewModel>(this, this.ChartViewInstance);
         }
     }
 }
