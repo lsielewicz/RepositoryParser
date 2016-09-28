@@ -11,7 +11,8 @@
              xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
              xmlns:monthActivityViewModels="clr-namespace:RepositoryParser.ViewModel.MonthActivityViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="600">
+             d:DesignHeight="600" d:DesignWidth="600"
+             DataContext="{Binding Source={StaticResource Locator}, Path=MonthActivityContentProvider}">
     <UserControl.Resources>
         <!--Count of commits-->
         <DataTemplate DataType="{x:Type monthActivityViewModels:MonthActivityChartViewModel}">
@@ -20,6 +21,10 @@
         <!--Files-->
         <DataTemplate DataType="{x:Type monthActivityViewModels:MonthActivityFilesAnalyseViewModel}">
             <local:MonthActivityFilesAnalyseView/>
+        </DataTemplate>
+        <!--Continious commits-->
+        <DataTemplate DataType="{x:Type monthActivityViewModels:MonthActivityContiniousAnalyseViewModel}">
+            <local:MonthActivityContiniousAnalyseView/>
         </DataTemplate>
         <!--Conventers-->
         <conventers:ViewModelBaseToVisibilityConventer x:Key="ViewModelBaseToVisibilityConventer"/>
@@ -65,6 +70,17 @@
                 Foreground="Black"
                 ImageSource="../../Assets/Icons/PNG_DarkGray/File_DarkGray.png"
                 Text="{x:Static resw:Resources.Files}"
+                Height="45"/>
+            <imageButton:ImageButton 
+                Command="{Binding OpenContiniousAnalyseCommand}" 
+                BorderBrush="{StaticResource LightGray}"
+                BorderThickness="0,0,0,0.5"
+                ImageHeight="32"
+                ImageWidth="32"
+                Background="Transparent"
+                Foreground="Black"
+                ImageSource="../../Assets/Icons/PNG_Gray/Code-100.png"
+                Text="Continious analyse"
                 Height="45"/>
         </StackPanel>
 

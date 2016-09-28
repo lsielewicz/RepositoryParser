@@ -258,6 +258,7 @@
     <Compile Include="ViewModel\HourActivityViewModels\HourActivityContentProviderViewModel.cs" />
     <Compile Include="ViewModel\HourActivityViewModels\HourActivityFilesAnalyseViewModel.cs" />
     <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityContentProviderViewModel.cs" />
+    <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityContiniousAnalyseViewModel.cs" />
     <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityFilesAnalyseViewModel.cs" />
     <Compile Include="ViewModel\PresentationViewModel.cs" />
     <Compile Include="ViewModel\RepositoryAnalyserViewModelBase.cs" />
@@ -311,6 +312,9 @@
     </Compile>
     <Compile Include="View\MonthActivityViews\MonthActivityContentProviderView.xaml.cs">
       <DependentUpon>MonthActivityContentProviderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MonthActivityViews\MonthActivityContiniousAnalyseView.xaml.cs">
+      <DependentUpon>MonthActivityContiniousAnalyseView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MonthActivityViews\MonthActivityFilesAnalyseView.xaml.cs">
       <DependentUpon>MonthActivityFilesAnalyseView.xaml</DependentUpon>
@@ -438,6 +442,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\MonthActivityViews\MonthActivityContiniousAnalyseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MonthActivityViews\MonthActivityFilesAnalyseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

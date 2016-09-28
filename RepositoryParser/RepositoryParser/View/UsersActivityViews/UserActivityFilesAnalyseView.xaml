@@ -47,7 +47,8 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             FontWeight="Light"
-            TextWrapping="WrapWithOverflow"/>
+            TextWrapping="WrapWithOverflow"
+            Grid.ZIndex="3"/>
         <!--List of files-->
         <ListView 
             IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBoolConventer}, UpdateSourceTrigger=PropertyChanged}"

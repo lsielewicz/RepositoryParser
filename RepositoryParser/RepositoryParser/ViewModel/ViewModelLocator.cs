@@ -84,6 +84,15 @@ namespace RepositoryParser.ViewModel
             SimpleIoc.Default.Register<MonthActivityFilesAnalyseViewModel>();
             SimpleIoc.Default.Register<UsersActivityFilesAnalyseViewModel>();
             SimpleIoc.Default.Register<WeekdayActivityFilesAnalyseViewModel>();
+            SimpleIoc.Default.Register<MonthActivityContiniousAnalyseViewModel>();
+        }
+
+        public MonthActivityContiniousAnalyseViewModel MonthActivityContiniousAnalyseViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<MonthActivityContiniousAnalyseViewModel>();
+            }
         }
 
         public WeekdayActivityFilesAnalyseViewModel WeekdayActivityFilesAnalyseViewModel
