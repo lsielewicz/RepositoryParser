@@ -7,6 +7,18 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
     {
         private RelayCommand _openChartViewCommand;
         private RelayCommand _openFilesAnalyseCommand;
+        private RelayCommand _openContiniousAnalyseCommand;
+
+        public RelayCommand OpenContiniousAnalyseCommand
+        {
+            get
+            {
+                return this._openContiniousAnalyseCommand ?? (_openContiniousAnalyseCommand = new RelayCommand(() =>
+                {
+                    this.NavigateTo(ViewModelLocator.Instance.MonthActivityContiniousAnalyseViewModel);
+                }));
+            }
+        }
 
         public RelayCommand OpenFilesAnalyseCommand
         {

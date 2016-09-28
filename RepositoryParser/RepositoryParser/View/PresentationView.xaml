@@ -34,7 +34,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Row="0" Grid.Column="1" Background="{StaticResource Graphite}">
+        <Border Grid.Row="0" Grid.Column="1" Background="{StaticResource AppMainColor}">
             <TextBlock Style="{StaticResource SubTitleTextBlock}" >
                 <Run Text="#"/>
                 <Run Text="{x:Static resw:Resources.Presentation}"/>
@@ -100,7 +100,7 @@
                 Width="48"
                 ImageHeight="24" 
                 ImageWidth="24"
-                BorderBrush="{StaticResource Graphite}"/>
+                BorderBrush="{StaticResource AppMainColor}"/>
             <circleHeaderButton:CircleHeaderButton
                 Command="{Binding RefreshCommand}" 
                 Height="48" 
@@ -109,7 +109,7 @@
                 ImageWidth="24"
                 ImageSource="../Assets/Icons/PNG_DarkGray/Refresh-96.png"
                 ToolTip="{x:Static resw:Resources.RefreshButton}"
-                BorderBrush="{StaticResource Graphite}"/>
+                BorderBrush="{StaticResource AppMainColor}"/>
             <circleHeaderButton:CircleHeaderButton
                 Command="{Binding DockUndockPageCommand}" 
                 CommandParameter="{Binding ElementName=PresentationRoot}"
@@ -119,7 +119,7 @@
                 ImageWidth="24"
                 ImageSource="../Assets/Icons/PNG_DarkGray/Maximize Window-100.png"
                 ToolTip="{x:Static resw:Resources.DockUndockButton}"
-                BorderBrush="{StaticResource Graphite}"
+                BorderBrush="{StaticResource AppMainColor}"
                 IsEnabled="{Binding IsDocked}"/>
         </StackPanel>
     </Grid>

@@ -26,7 +26,7 @@ namespace RepositoryParser.View.UsersActivityViews
         public UserActivityFilesAnalyseView()
         {
             InitializeComponent();
-            ChartingHelper.Instance.DrawChart<UsersActivityFilesAnalyseViewModel>(this, this.StackedColumnChartInstance);
+            ChartingHelper.Instance.DrawChart<UsersActivityFilesAnalyseViewModel>(this, this.ChartViewInstance);
         }
     }
 }

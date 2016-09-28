@@ -12,7 +12,7 @@ namespace RepositoryParser.View.HourActivityViews
         public HourActivityChartView()
         {
             InitializeComponent();
-            ChartingHelper.Instance.DrawChart<HourActivityViewModel>(this,this.StackedColumnChartInstance);
+            ChartingHelper.Instance.DrawChart<HourActivityViewModel>(this,this.ChartViewInstance);
         }
     }
 }

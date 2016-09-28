@@ -6,6 +6,18 @@ namespace RepositoryParser.ViewModel.WeekdayActivityViewModels
     {
         private RelayCommand _openChartViewCommand;
         private RelayCommand _openFilesAnalyseCommand;
+        private RelayCommand _openContiniousAnalyseCommand;
+
+        public RelayCommand OpenContiniousAnalyseCommand
+        {
+            get
+            {
+                return _openContiniousAnalyseCommand ?? (_openContiniousAnalyseCommand = new RelayCommand(() =>
+                {
+                    this.NavigateTo(ViewModelLocator.Instance.WeekdayActivityContiniousAnalyseViewModel);
+                }));
+            }
+        }
 
         public RelayCommand OpenFilesAnalyseCommand
         {

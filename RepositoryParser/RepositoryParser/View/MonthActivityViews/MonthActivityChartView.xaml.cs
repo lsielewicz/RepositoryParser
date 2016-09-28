@@ -12,7 +12,7 @@ namespace RepositoryParser.View.MonthActivityViews
         public MonthActivityChartView()
         {
             InitializeComponent();
-            ChartingHelper.Instance.DrawChart<MonthActivityChartViewModel>(this, this.StackedColumnChartInstance);
+            ChartingHelper.Instance.DrawChart<MonthActivityChartViewModel>(this, this.ChartViewInstance);
         }
     }
 }

@@ -157,7 +157,7 @@
                                     />
             <Separator/>
             <TextBlock Text="{x:Static resw:Resources.DataLoadingStatus}" 
-                       Foreground="{StaticResource Graphite}" 
+                       Foreground="{StaticResource AppMainColor}" 
                        FontSize="14" 
                        Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"
                        VerticalAlignment="Center"

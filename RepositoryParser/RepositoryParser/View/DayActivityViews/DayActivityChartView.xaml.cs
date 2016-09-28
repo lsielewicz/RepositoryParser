@@ -12,7 +12,7 @@ namespace RepositoryParser.View.DayActivityViews
         public DayActivityChartView()
         {
             InitializeComponent();
-            ChartingHelper.Instance.DrawChart<DayActivityViewModel>(this, this.StackedColumnChartInstance);
+            ChartingHelper.Instance.DrawChart<DayActivityViewModel>(this, this.ChartViewInstance);
         }
     }
 }

@@ -13,19 +13,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RepositoryParser.Helpers;
-using RepositoryParser.ViewModel.HourActivityViewModels;
+using RepositoryParser.ViewModel.WeekdayActivityViewModels;
 
-namespace RepositoryParser.View.HourActivityViews
+namespace RepositoryParser.View.WeekdayActivityViews
 {
     /// <summary>
-    /// Interaction logic for HourActivityFilesAnalyseView.xaml
+    /// Interaction logic for WeekdayActivityContiniousAnalyseView.xaml
     /// </summary>
-    public partial class HourActivityFilesAnalyseView : UserControl
+    public partial class WeekdayActivityContiniousAnalyseView : UserControl
     {
-        public HourActivityFilesAnalyseView()
+        public WeekdayActivityContiniousAnalyseView()
         {
             InitializeComponent();
-            ChartingHelper.Instance.DrawChart<HourActivityFilesAnalyseViewModel>(this, this.ChartViewInstance);
+            ChartingHelper.Instance.DrawChart<WeekdayActivityContiniousAnalyseViewModel>(this,this.ChartViewInstance);
         }
     }
 }

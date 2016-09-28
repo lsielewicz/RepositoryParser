@@ -258,6 +258,7 @@
     <Compile Include="ViewModel\HourActivityViewModels\HourActivityContentProviderViewModel.cs" />
     <Compile Include="ViewModel\HourActivityViewModels\HourActivityFilesAnalyseViewModel.cs" />
     <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityContentProviderViewModel.cs" />
+    <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityContiniousAnalyseViewModel.cs" />
     <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityFilesAnalyseViewModel.cs" />
     <Compile Include="ViewModel\PresentationViewModel.cs" />
     <Compile Include="ViewModel\RepositoryAnalyserViewModelBase.cs" />
@@ -272,6 +273,7 @@
     <Compile Include="ViewModel\UserActivityViewModels\UsersCodeFrequencyViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="ViewModel\WeekdayActivityViewModels\WeekdayActivityContentProviderViewModel.cs" />
+    <Compile Include="ViewModel\WeekdayActivityViewModels\WeekdayActivityContiniousAnalyseViewModel.cs" />
     <Compile Include="ViewModel\WeekdayActivityViewModels\WeekdayActivityFilesAnalyseViewModel.cs" />
     <Compile Include="View\AnalysisView.xaml.cs">
       <DependentUpon>AnalysisView.xaml</DependentUpon>
@@ -312,6 +314,9 @@
     <Compile Include="View\MonthActivityViews\MonthActivityContentProviderView.xaml.cs">
       <DependentUpon>MonthActivityContentProviderView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MonthActivityViews\MonthActivityContiniousAnalyseView.xaml.cs">
+      <DependentUpon>MonthActivityContiniousAnalyseView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MonthActivityViews\MonthActivityFilesAnalyseView.xaml.cs">
       <DependentUpon>MonthActivityFilesAnalyseView.xaml</DependentUpon>
     </Compile>
@@ -338,6 +343,9 @@
     </Compile>
     <Compile Include="View\WeekdayActivityViews\WeekdayActivityContentProviderView.xaml.cs">
       <DependentUpon>WeekdayActivityContentProviderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\WeekdayActivityViews\WeekdayActivityContiniousAnalyseView.xaml.cs">
+      <DependentUpon>WeekdayActivityContiniousAnalyseView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\WeekdayActivityViews\WeekdayActivityFilesAnalyseView.xaml.cs">
       <DependentUpon>WeekdayActivityFilesAnalyseView.xaml</DependentUpon>
@@ -438,6 +446,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\MonthActivityViews\MonthActivityContiniousAnalyseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MonthActivityViews\MonthActivityFilesAnalyseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -471,6 +483,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\WeekdayActivityViews\WeekdayActivityContentProviderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WeekdayActivityViews\WeekdayActivityContiniousAnalyseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -729,6 +745,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Icons\PNG_DarkGray\File_DarkGray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\PNG_DarkGray\ContiniousAnalyse_DarkGray.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

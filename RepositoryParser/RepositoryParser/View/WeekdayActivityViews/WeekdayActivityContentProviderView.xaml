@@ -22,6 +22,10 @@
         <DataTemplate DataType="{x:Type weekdayActivityViewModels:WeekdayActivityFilesAnalyseViewModel}">
             <local:WeekdayActivityFilesAnalyseView/>
         </DataTemplate>
+        <!--Continious commits-->
+        <DataTemplate DataType="{x:Type weekdayActivityViewModels:WeekdayActivityContiniousAnalyseViewModel}">
+            <local:WeekdayActivityContiniousAnalyseView/>
+        </DataTemplate>
         <!--Conventers-->
         <conventers:ViewModelBaseToVisibilityConventer x:Key="ViewModelBaseToVisibilityConventer"/>
     </UserControl.Resources>
@@ -67,6 +71,17 @@
                     Foreground="Black"
                     ImageSource="../../Assets/Icons/PNG_DarkGray/File_DarkGray.png"
                     Text="{x:Static resw:Resources.Files}"
+                    Height="45"/>
+                <imageButton:ImageButton 
+                    Command="{Binding OpenContiniousAnalyseCommand}" 
+                    BorderBrush="{StaticResource LightGray}"
+                    BorderThickness="0,0,0,0.5"
+                    ImageHeight="32"
+                    ImageWidth="32"
+                    Background="Transparent"
+                    Foreground="Black"
+                    ImageSource="../../Assets/Icons/PNG_DarkGray/ContiniousAnalyse_DarkGray.png"
+                    Text="{x:Static resw:Resources.ContiniousAnalyse}"
                     Height="45"/>
             </StackPanel>
 

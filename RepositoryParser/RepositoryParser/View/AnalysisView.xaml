@@ -62,7 +62,7 @@
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Background="{StaticResource Graphite}">
+        <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Background="{StaticResource AppMainColor}">
             <TextBlock Style="{StaticResource SubTitleTextBlock}" >
                 <Run Text="#"/>
                 <Run Text="{x:Static resw:Resources.AnalysisWindowVie}"/>
