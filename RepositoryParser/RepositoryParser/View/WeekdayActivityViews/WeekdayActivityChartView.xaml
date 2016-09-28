@@ -8,10 +8,21 @@
              xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
              xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
              xmlns:extensions="clr-namespace:RepositoryParser.Controls.Extensions;assembly=RepositoryParser.Controls"
+             xmlns:circleHeaderButton="clr-namespace:RepositoryParser.Controls.CircleHeaderButton;assembly=RepositoryParser.Controls"
+             xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
+             xmlns:enums="clr-namespace:RepositoryParser.Helpers.Enums"
+             xmlns:metroChart="clr-namespace:De.TorstenMandelkow.MetroChart;assembly=De.TorstenMandelkow.MetroChart"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:metroLoadingProgressRing="clr-namespace:RepositoryParser.Controls.MetroLoadingProgressRing;assembly=RepositoryParser.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator}, Path=WeekdayActivity}"
-             >
+             x:Name="Root">
+    <UserControl.Resources>
+        <conventers:CountOfRepositoriesToVisibilityConventer x:Key="CountOfRepositoriesToVisibilityConventer"/>
+        <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -20,28 +31,47 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        <TextBlock
+            Grid.Row="0"
+            Visibility="{Binding Path=CountOfSelectedRepositories, 
+                                 ConverterParameter={x:Static enums:VisibilityConventerEnumDirection.Inverse},
+                                 Converter={StaticResource CountOfRepositoriesToVisibilityConventer}}"
+            Text="{x:Static resw:Resources.NoDataToDisplay}"
+            Foreground="#666666"
+            FontSize="28"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontWeight="Light"
+            TextWrapping="WrapWithOverflow"/>
 
-        <TabControl Grid.Row="0">
+        <TabControl Grid.Row="0"
+                    Visibility="{Binding Path=CountOfSelectedRepositories, 
+                        ConverterParameter={x:Static enums:VisibilityConventerEnumDirection.Normal},
+                        Converter={StaticResource CountOfRepositoriesToVisibilityConventer}}">
             <TabItem Header="{x:Static resw:Resources.Chart}">
-                <chartingToolkit:Chart Title="{x:Static resw:Resources.CountOfCommits}" Background="{StaticResource Grey}" >
-                    <chartingToolkit:Chart.LegendStyle>
-                        <Style TargetType="Control">
-                            <Setter Property="Width" Value="0" />
-                            <Setter Property="Height" Value="0" />
-                        </Style>
-                    </chartingToolkit:Chart.LegendStyle>
-                    <chartingToolkit:Chart.Series>
-                        <chartingToolkit:AreaSeries
-                                    ItemsSource="{Binding KeyCollection, Mode=OneWay}"
-                                    DependentValueBinding="{Binding Path=Value}"
-                                    IndependentValueBinding="{Binding Path=Key}">
-                        </chartingToolkit:AreaSeries>
-                    </chartingToolkit:Chart.Series>
-                </chartingToolkit:Chart>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <metroChart:StackedBar100Chart
+                        x:Name="StackedColumnChartInstance"
+                        ChartTitle=""
+                        ChartSubTitle=""
+                        Padding="0"
+                        ChartBorderThickness="1"
+                        ChartMargin="0"
+                        Background="Transparent"
+                        ChartLegendVisibility="Visible"
+                        Palette="{StaticResource RepositoryAnalyserGradientPalette}"
+                        />
+                    <metroChart:Legend Grid.Row="1" ItemsSource="{Binding ChartLegendItems}"/>
+                </Grid>
             </TabItem>
             <TabItem Header="{x:Static resw:Resources.List}">
                 <DataGrid 
-                    ItemsSource="{Binding KeyCollection}"
+                    ItemsSource="{Binding DataCollection}"
                     CanUserSortColumns="True"
                     AutoGenerateColumns="False"
                     ColumnWidth="auto"
@@ -51,24 +81,39 @@
                     extensions:DataGridExtensions.LastColumnFill="True"
                       >
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Key}" Header="{x:Static resw:Resources.Weekday}"/>
-                        <DataGridTextColumn Binding="{Binding Value}" Header="{x:Static resw:Resources.CountOfCommits}"/>
+                        <DataGridTextColumn Binding="{Binding ChartKey}" Header="{x:Static resw:Resources.Weekday}"/>
+                        <DataGridTextColumn Binding="{Binding ChartValue}" Header="{x:Static resw:Resources.CountOfCommits}">
+                            <DataGridTextColumn.CellStyle>
+                                <Style>
+                                    <Setter Property="FrameworkElement.HorizontalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding RepositoryValue}" Header="{x:Static resw:Resources.Repository}"/>
                     </DataGrid.Columns>
 
                 </DataGrid>
             </TabItem>
         </TabControl>
-
-        <DockPanel Grid.Row="1">
-            <imageButton:ImageButton 
+        
+        <metroLoadingProgressRing:MetroLoadingProgressRing
+            Grid.Row="0"
+            Grid.Column="0"
+            Text="{x:Static resw:Resources.AnalysingDataMessage}"
+            IsDataLoadingFlag="{Binding Path=IsLoading, UpdateSourceTrigger=PropertyChanged}"/>
+        
+        <DockPanel Grid.Row="1" HorizontalAlignment="Left" Margin="0">
+            <circleHeaderButton:CircleHeaderButton 
+                CommandParameter="{Binding ElementName=Root, Path=DataContext}"
                 Command="{Binding ExportFileCommand}"
-                ImageSource="../../Assets/Icons/Export_grey.png"
-                Text="{x:Static resw:Resources.ExportToFileButton}"
-                Height="40"
-                ImageHeight="24" 
-                ImageWidth="24"
-                Background="{StaticResource Graphite}"
-                Width="180"/>
+                ImageSource="../../Assets/Icons/PNG_DarkGray/Export-100.png"
+                ToolTip="{x:Static resw:Resources.ExportToFileButton}"
+                Height="56"
+                Width="56"
+                ImageHeight="28" 
+                ImageWidth="28"
+                BorderBrush="{StaticResource Graphite}"
+                />
         </DockPanel>
 
     </Grid>

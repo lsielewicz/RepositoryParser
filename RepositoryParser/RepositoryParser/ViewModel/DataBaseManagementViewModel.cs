@@ -1,20 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Resources;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using RepositoryParser.Core.Interfaces;
 using RepositoryParser.Core.Messages;
-using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
 using RepositoryParser.DataBaseManagementCore.Services;
 using MessageBox = System.Windows.MessageBox;
@@ -49,8 +40,6 @@ namespace RepositoryParser.ViewModel
             this._clearDbWorker = new BackgroundWorker();
             this._clearDbWorker.DoWork += this.DoClearWork;
             this._clearDbWorker.RunWorkerCompleted += this.DoClearWorkCompleted;
-
-            OnLoad();
         }
 
         #region Getters/Setters
@@ -233,7 +222,7 @@ namespace RepositoryParser.ViewModel
         {
             try
             {
-
+        
             }
             catch (Exception ex)
             {
@@ -266,6 +255,7 @@ namespace RepositoryParser.ViewModel
             {
                 this.UrlTextBox = string.Empty;
                 Messenger.Default.Send<RefreshMessageToPresentation>(new RefreshMessageToPresentation(true));
+                ViewModelLocator.Instance.Filtering.ResetInitialization();
                 Messenger.Default.Send<RefreshMessageToFiltering>(new RefreshMessageToFiltering(true));
                 ViewModelLocator.Instance.Main.OnLoad();
             }

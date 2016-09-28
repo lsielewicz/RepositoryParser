@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Reflection;
-using System.Resources;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
@@ -12,16 +8,14 @@ using RepositoryParser.DataBaseManagementCore.Configuration;
 
 namespace RepositoryParser.ViewModel
 {
-    public class ChartOfChangesViewModel : ViewModelBase
+    public class ChartOfChangesViewModel : RepositoryAnalyserViewModelBase
     {
         #region Fields
         private ObservableCollection<KeyValuePair<string, int>> _childCollection;
-        private ResourceManager _resourceManager;
         #endregion
 
         public ChartOfChangesViewModel()
-        {
-            _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
+        { 
             Messenger.Default.Register<DataMessageToChartOfChanges>(this,x=>HandleDataMessage(x.ChildChangesList));
         }
 
@@ -34,7 +28,7 @@ namespace RepositoryParser.ViewModel
                 if (_childCollection != value)
                 {
                     _childCollection = value;
-                    RaisePropertyChanged("ChildCollection");
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -54,8 +48,8 @@ namespace RepositoryParser.ViewModel
                 else if (x.Color == ChangeType.Deleted)
                     deletedCounter++;
             });
-            ChildCollection.Add(new KeyValuePair<string, int>(_resourceManager.GetString("Added"),addedCounter));
-            ChildCollection.Add(new KeyValuePair<string, int>(_resourceManager.GetString("Deleted"), deletedCounter));
+            ChildCollection.Add(new KeyValuePair<string, int>(ResourceManager.GetString("Added"),addedCounter));
+            ChildCollection.Add(new KeyValuePair<string, int>(ResourceManager.GetString("Deleted"), deletedCounter));
         }
         #endregion
     }

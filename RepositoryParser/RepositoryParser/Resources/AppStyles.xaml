@@ -1,12 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:RepositoryParser.Resources"
                     xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
-                    xmlns:resw="clr-namespace:RepositoryParser.Properties"
                     xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls">
     
-  
-
     <Style x:Key="AppWhiteTextBlock" TargetType="TextBlock">
         <Setter Property="Foreground" Value="{StaticResource Grey}"/>
         <Setter Property="FontWeight" Value="Light"/>

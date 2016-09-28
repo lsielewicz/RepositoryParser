@@ -1,9 +1,5 @@
-﻿
-using System;
-using System.Globalization;
-using System.Threading;
-using System.Windows;
-using System.Windows.Markup;
+﻿using System.Windows;
+using RepositoryParser.Helpers;
 
 namespace RepositoryParser
 {
@@ -12,6 +8,9 @@ namespace RepositoryParser
     /// </summary>
     public partial class App : Application
     {
-
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            SplashScreenHelper.StartApplicationWithSplashScreen(this);
+        }
     }
 }

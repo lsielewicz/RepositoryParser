@@ -62,7 +62,7 @@ namespace RepositoryParser.ViewModel
             ////}
 
             SimpleIoc.Default.Register<MainViewModel>();
-            SimpleIoc.Default.Register<ChartWindowViewModel>();
+            SimpleIoc.Default.Register<UsersActivityViewModel>();
             SimpleIoc.Default.Register<MonthActivityChartViewModel>();
             SimpleIoc.Default.Register<DifferenceWindowViewModel>();
             SimpleIoc.Default.Register<DayActivityViewModel>();
@@ -79,6 +79,50 @@ namespace RepositoryParser.ViewModel
             SimpleIoc.Default.Register<DataBaseManagementViewModel>();
             SimpleIoc.Default.Register<FilteringViewModel>();
             SimpleIoc.Default.Register<AnalysisViewModel>();
+            SimpleIoc.Default.Register<HourActivityFilesAnalyseViewModel>();
+            SimpleIoc.Default.Register<DayActivityFilesAnalyseViewModel>();
+            SimpleIoc.Default.Register<MonthActivityFilesAnalyseViewModel>();
+            SimpleIoc.Default.Register<UsersActivityFilesAnalyseViewModel>();
+            SimpleIoc.Default.Register<WeekdayActivityFilesAnalyseViewModel>();
+        }
+
+        public WeekdayActivityFilesAnalyseViewModel WeekdayActivityFilesAnalyseViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<WeekdayActivityFilesAnalyseViewModel>();
+            }
+        }
+
+        public UsersActivityFilesAnalyseViewModel UsersActivityFilesAnalyseViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<UsersActivityFilesAnalyseViewModel>();
+            }
+        }
+
+        public MonthActivityFilesAnalyseViewModel MonthActivityFilesAnalyseViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<MonthActivityFilesAnalyseViewModel>();
+            }
+        }
+        public DayActivityFilesAnalyseViewModel DayActivityFilesAnalyseViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<DayActivityFilesAnalyseViewModel>();
+            }
+        }
+
+        public HourActivityFilesAnalyseViewModel HourActivityFilesAnalyseViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<HourActivityFilesAnalyseViewModel>();
+            }
         }
 
         public AnalysisViewModel Analysis
@@ -161,11 +205,11 @@ namespace RepositoryParser.ViewModel
             }
         }
 
-        public ChartWindowViewModel UsersActivity
+        public UsersActivityViewModel UsersActivity
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<ChartWindowViewModel>();
+                return ServiceLocator.Current.GetInstance<UsersActivityViewModel>();
             }
         }
 

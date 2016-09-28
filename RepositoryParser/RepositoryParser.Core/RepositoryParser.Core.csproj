@@ -52,6 +52,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="De.TorstenMandelkow.MetroChart, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ModernUICharts.1.0.2\lib\De.TorstenMandelkow.MetroChart.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -174,6 +178,8 @@
     <Compile Include="Messages\RefreshMessageToFiltering.cs" />
     <Compile Include="Messages\RefreshMessageToPresentation.cs" />
     <Compile Include="Models\ChangesColorModel.cs" />
+    <Compile Include="Models\ChartData.cs" />
+    <Compile Include="Models\ExtendedChartSeries.cs" />
     <Compile Include="Models\GitCloneBranch.cs" />
     <Compile Include="Models\UserCodeFrequency.cs" />
     <Compile Include="Services\DifferencesColoringService.cs" />

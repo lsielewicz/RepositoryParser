@@ -115,6 +115,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Analysing collected data. Please wait....
+        /// </summary>
+        public static string AnalysingDataMessage {
+            get {
+                return ResourceManager.GetString("AnalysingDataMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Analysis.
         /// </summary>
         public static string AnalysisButton {
@@ -484,11 +493,29 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File.
+        /// </summary>
+        public static string File {
+            get {
+                return ResourceManager.GetString("File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File name.
         /// </summary>
         public static string FileName {
             get {
                 return ResourceManager.GetString("FileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Files.
+        /// </summary>
+        public static string Files {
+            get {
+                return ResourceManager.GetString("Files", resourceCulture);
             }
         }
         
@@ -502,7 +529,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Author:.
+        ///   Looks up a localized string similar to Authors:.
         /// </summary>
         public static string FilteringAuthor {
             get {
@@ -511,7 +538,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date.
+        ///   Looks up a localized string similar to Date:.
         /// </summary>
         public static string FilteringDate {
             get {
@@ -529,7 +556,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pick Branch:.
+        ///   Looks up a localized string similar to Branches:.
         /// </summary>
         public static string FilteringPickBranch {
             get {
@@ -538,7 +565,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pick Repository.
+        ///   Looks up a localized string similar to Repositories:.
         /// </summary>
         public static string FilteringPickRepository {
             get {
@@ -889,7 +916,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No data to display.
+        ///   Looks up a localized string similar to No data to display, check filtering criteria.
         /// </summary>
         public static string NoDataToDisplay {
             get {
@@ -903,6 +930,15 @@ namespace RepositoryParser.Properties {
         public static string NoRepositoryPathError {
             get {
                 return ResourceManager.GetString("NoRepositoryPathError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &gt; Select repository to enable all the filtering operations..
+        /// </summary>
+        public static string NoSelectedRepositoriesMessage {
+            get {
+                return ResourceManager.GetString("NoSelectedRepositoriesMessage", resourceCulture);
             }
         }
         
@@ -975,6 +1011,15 @@ namespace RepositoryParser.Properties {
         public static string RefreshButton {
             get {
                 return ResourceManager.GetString("RefreshButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Repository.
+        /// </summary>
+        public static string Repository {
+            get {
+                return ResourceManager.GetString("Repository", resourceCulture);
             }
         }
         

@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
-using RepositoryParser.Core.Messages;
+﻿using GalaSoft.MvvmLight.Command;
 
 
 namespace RepositoryParser.ViewModel.MonthActivityViewModels
@@ -14,13 +6,18 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
     public class MonthActivityContentProviderViewModel : RepositoryAnalyserViewModelBase
     {
         private RelayCommand _openChartViewCommand;
+        private RelayCommand _openFilesAnalyseCommand;
 
-        public MonthActivityContentProviderViewModel()
+        public RelayCommand OpenFilesAnalyseCommand
         {
-            CurrentViewModel = ViewModelLocator.Instance.MonthActivity;
-            CurrentViewModel = null;
+            get
+            {
+                return _openFilesAnalyseCommand ?? (_openFilesAnalyseCommand = new RelayCommand(() =>
+                {
+                    this.NavigateTo(ViewModelLocator.Instance.MonthActivityFilesAnalyseViewModel);
+                }));
+            }
         }
-
 
         public RelayCommand OpenChartViewCommand
         {

@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
-using RepositoryParser.Core.Messages;
+﻿using GalaSoft.MvvmLight.Command;
 
 namespace RepositoryParser.ViewModel
 {
@@ -20,17 +12,6 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _openHourActivityCommand;
         private RelayCommand _openDifferencesCommand;
         #endregion
-
-        public AnalysisViewModel()
-        {
-            CurrentViewModel = new ViewModelLocator().MonthActivityContentProvider;
-            CurrentViewModel = new ViewModelLocator().UsersActivityContentProvider;
-            CurrentViewModel = new ViewModelLocator().WeekdayActivityContentProvider;
-            CurrentViewModel = new ViewModelLocator().HourActivityContentProvider;
-            CurrentViewModel = new ViewModelLocator().DayActivityContentProvider;
-            CurrentViewModel = new ViewModelLocator().Difference;
-            CurrentViewModel = null;
-        }
 
         #region Getters/Setters
         public RelayCommand OpenDifferenesCommand

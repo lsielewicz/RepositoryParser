@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RepositoryParser.View.DayActivityViews"
              xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
-             xmlns:viewModel="clr-namespace:RepositoryParser.ViewModel"
              xmlns:resw="clr-namespace:RepositoryParser.Properties"
              xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
              xmlns:dayActivityViewModels="clr-namespace:RepositoryParser.ViewModel.DayActivityViewModels"
@@ -14,8 +13,13 @@
              DataContext="{Binding Source={StaticResource Locator}, Path=DayActivityContentProvider }"
              >
     <UserControl.Resources>
+        <!--Count of commits-->
         <DataTemplate DataType="{x:Type dayActivityViewModels:DayActivityViewModel}">
             <local:DayActivityChartView/>
+        </DataTemplate>
+        <!--Files-->
+        <DataTemplate DataType="{x:Type dayActivityViewModels:DayActivityFilesAnalyseViewModel}">
+            <local:DayActivityFilesAnalyseView/>
         </DataTemplate>
 
         <conventers:ViewModelBaseToVisibilityConventer x:Key="ViewModelBaseToVisibilityConventer"/>
@@ -40,7 +44,6 @@
         <StackPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
             <imageButton:ImageButton 
                 Command="{Binding OpenChartViewCommand}" 
-                x:Name="Btn1" 
                 BorderBrush="{StaticResource LightGray}"
                 BorderThickness="0,0,0,0.5"
                 ImageHeight="32"
@@ -49,6 +52,17 @@
                 Foreground="Black"
                 ImageSource="../../Assets/Icons/PNG_Gray/Poll Topic-100.png"
                 Text="{x:Static resw:Resources.CountOfCommits}"
+                Height="45"/>
+            <imageButton:ImageButton 
+                Command="{Binding OpenFilesAnalyseCommand}" 
+                BorderBrush="{StaticResource LightGray}"
+                BorderThickness="0,0,0,0.5"
+                ImageHeight="32"
+                ImageWidth="32"
+                Background="Transparent"
+                Foreground="Black"
+                ImageSource="../../Assets/Icons/PNG_DarkGray/File_DarkGray.png"
+                Text="{x:Static resw:Resources.Files}"
                 Height="45"/>
         </StackPanel>
 

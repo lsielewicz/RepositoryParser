@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using GalaSoft.MvvmLight.Messaging;
-using RepositoryParser.Core.Models;
 using RepositoryParser.DataBaseManagementCore.Entities;
 
 namespace RepositoryParser.Core.Messages

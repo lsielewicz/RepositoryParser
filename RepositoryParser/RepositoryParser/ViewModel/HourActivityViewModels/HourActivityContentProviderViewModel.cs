@@ -1,23 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
-using RepositoryParser.Core.Messages;
+﻿using GalaSoft.MvvmLight.Command;
 
 namespace RepositoryParser.ViewModel.HourActivityViewModels
 {
     public class HourActivityContentProviderViewModel : RepositoryAnalyserViewModelBase
     {
         private RelayCommand _openChartViewCommand;
-
-        public HourActivityContentProviderViewModel()
-        {
-        }
-
+        private RelayCommand _openFilesAnalyseCommand;
         #region Getters setters
         public RelayCommand OpenChartViewCommand
         {
@@ -31,6 +19,16 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels
             }
         }
 
+        public RelayCommand OpenFilesAnalyseCommand
+        {
+            get
+            {
+                return _openFilesAnalyseCommand ?? (_openFilesAnalyseCommand = new RelayCommand(() =>
+                {
+                    this.NavigateTo(ViewModelLocator.Instance.HourActivityFilesAnalyseViewModel);
+                }));
+            }
+        }
         #endregion
     }
 }

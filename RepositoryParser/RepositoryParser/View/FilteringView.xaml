@@ -10,6 +10,9 @@
              xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:enums="clr-namespace:RepositoryParser.Helpers.Enums"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:extensions="clr-namespace:RepositoryParser.Controls.Extensions;assembly=RepositoryParser.Controls"
+             xmlns:helpers="clr-namespace:RepositoryParser.Helpers"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator}, Path=Filtering}"
@@ -18,6 +21,7 @@
         <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <conventers:DateFormat x:Key="DateFormat"/>
         <conventers:StringToImageConventer x:Key="StringToImageConventer"/>
+        <conventers:CountOfRepositoriesToVisibilityConventer x:Key="CountOfRepositoriesToVisibilityConventer"/>
         <Style TargetType="Border" x:Key="AttributeBorderStyle">
             <Setter Property="Background" Value="{StaticResource MyGreen}"/>
             <Setter Property="BorderThickness" Value="0,0,0,1"/>
@@ -97,12 +101,19 @@
                       HorizontalAlignment="Stretch" 
                       Margin="5,0"
                       ItemsSource="{Binding AuthorsCollection}" 
-                      SelectedItem="{Binding AuthorsSelectedItem}"
                       IsSynchronizedWithCurrentItem="False" 
                       BorderThickness="0"
                       ItemContainerStyle="{StaticResource RepositoryAnalyserListViewItem}"
                       Foreground="Black"
-                      />
+                      SelectionMode="Multiple"
+                      extensions:ListViewExtensions.SelectedItems="{Binding Path=SelectedAuthors, Mode=TwoWay}"
+                      >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectedAuthorsItemChanged}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ListView>
             </Grid>
 
             <Grid x:Name="DateGrid" Grid.Row="0" Grid.Column="1" Margin="2,5">
@@ -228,11 +239,18 @@
                     HorizontalAlignment="Stretch" 
                     VerticalAlignment="Stretch"
                     Margin="5,0"
-                    SelectedItem="{Binding RepositorySelectedItem}"
-                    IsSynchronizedWithCurrentItem="True"
+                    IsSynchronizedWithCurrentItem="False"
                     BorderThickness="0"
                     ItemContainerStyle="{StaticResource RepositoryAnalyserListViewItem}"
-                    Foreground="Black"/>
+                    Foreground="Black"
+                    SelectionMode="Multiple"
+                    extensions:ListViewExtensions.SelectedItems="{Binding SelectedRepositories, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectedRepositoriesItemChanged}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ListView>
                 <Border Grid.Row="2" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="{StaticResource MyGreen}" Margin="5,0">
                     <TextBlock
                        Text="{x:Static resw:Resources.FilteringPickBranch}" 
@@ -291,5 +309,21 @@
                 
             </StackPanel>
         </Grid>
+
+        <TextBlock
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            Visibility="{Binding Path=SelectedRepositories.Count, 
+                                 ConverterParameter={x:Static enums:VisibilityConventerEnumDirection.Inverse},
+                                 Converter={StaticResource CountOfRepositoriesToVisibilityConventer}}"
+            Text="{x:Static resw:Resources.NoSelectedRepositoriesMessage}"
+            Foreground="#666666"
+            FontSize="28"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            Margin="0,0,0,140"
+            FontWeight="Light"
+            TextWrapping="WrapWithOverflow"/>
     </Grid>
 </UserControl>

@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Documents;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
 using NHibernate;
-using NHibernate.Criterion;
 using NHibernate.SqlCommand;
 using NHibernate.Util;
 using RepositoryParser.Core.Models;
@@ -145,7 +143,7 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
                     Changes changezzz = null;
                     var query = query1.Clone();
                     var changeContents =
-                        query.JoinAlias(c => c.Changes, () => changezzz, JoinType.LeftOuterJoin)
+                        query.JoinAlias(c => c.Changes, () => changezzz, JoinType.InnerJoin)
                             .Where(c => c.Author == author)
                             .SelectList(list => list.Select(() => changezzz.ChangeContent))
                             .List<string>();

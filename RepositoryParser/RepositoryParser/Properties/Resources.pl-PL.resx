@@ -552,10 +552,22 @@
     <value>Zamknij okno prezenctacji, aby przywrócić pozycje tabeli.</value>
   </data>
   <data name="NoDataToDisplay" xml:space="preserve">
-    <value>Brak danych do wyświetlenia</value>
+    <value>Brak danych do wyświetlenia, sprawdz kryteria filtrowania</value>
     <comment>Presentation</comment>
   </data>
   <data name="ClearFilter" xml:space="preserve">
     <value>Wyczysc filtr</value>
+  </data>
+  <data name="Repository" xml:space="preserve">
+    <value>Repozytorium</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>Pliki</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>Plik</value>
+  </data>
+  <data name="AnalysingDataMessage" xml:space="preserve">
+    <value>Analizowanie zebranych danych, proszę czekać...</value>
   </data>
 </root>

@@ -1,6 +1,4 @@
-﻿using System;
-using NHibernate;
-using NHibernate.Dialect.Function;
+﻿using NHibernate;
 
 namespace RepositoryParser.DataBaseManagementCore.Interfaces
 {

@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Resources;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Messaging;
 
 namespace RepositoryParser.ViewModel
 {
@@ -60,6 +57,23 @@ namespace RepositoryParser.ViewModel
             {
                 repositoryAnalyserViewModel.OnLoad();
             }
+        }
+
+        public void RunAsyncOperation(Action toExecute, Action<bool> executeUponFinish)
+        {
+            var taskScheduler1 = TaskScheduler.Default;
+
+            var task = Task.Factory.StartNew(toExecute, CancellationToken.None, TaskCreationOptions.LongRunning,
+                taskScheduler1);
+
+            task.ContinueWith(finished =>
+            {
+                if (!finished.IsFaulted)
+                {
+                    executeUponFinish(true);
+                    return;
+                }
+            });
         }
     }
 }

@@ -1,31 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
-using RepositoryParser.Core.Messages;
+﻿using GalaSoft.MvvmLight.Command;
 
 namespace RepositoryParser.ViewModel.DayActivityViewModels
 {
     public class DayActivityContentProviderViewModel : RepositoryAnalyserViewModelBase
     {
         private RelayCommand _openChartViewCommand;
-        private RelayCommand _closedEventCommand;
-
-
-        public DayActivityContentProviderViewModel()
-        {
-        }
+        private RelayCommand _openFilesAnalyseCommand;
 
         #region Getters setters
-
-
         public override void OnLoad()
         {
             CurrentViewModel = null;
+        }
+
+        public RelayCommand OpenFilesAnalyseCommand
+        {
+            get
+            {
+                return _openFilesAnalyseCommand ?? (_openFilesAnalyseCommand = new RelayCommand(() =>
+                {
+                    this.NavigateTo(ViewModelLocator.Instance.DayActivityFilesAnalyseViewModel);
+                }));
+            }
         }
 
         public RelayCommand OpenChartViewCommand
@@ -33,32 +29,13 @@ namespace RepositoryParser.ViewModel.DayActivityViewModels
             get
             {
                 return _openChartViewCommand ??
-                       (_openChartViewCommand = new RelayCommand(OpenChartView));
-            }
-        }
-
-        public RelayCommand ClosedEventCommand
-        {
-            get
-            {
-                return _closedEventCommand ?? (_closedEventCommand = new RelayCommand(ClosedEvent));
+                       (_openChartViewCommand = new RelayCommand(() =>
+                       {
+                           this.NavigateTo(ViewModelLocator.Instance.DayActivity);
+                       }));
             }
         }
         #endregion
 
-        #region Methods
-
-        private void OpenChartView()
-        {
-            CurrentViewModel = ViewModelLocator.Instance.DayActivity;
-            ViewModelLocator.Instance.DayActivity.OnLoad();
-        }
-
-
-        private void ClosedEvent()
-        {
-            CurrentViewModel = null;
-        }
-        #endregion
     }
 }

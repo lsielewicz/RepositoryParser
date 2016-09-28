@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Security.RightsManagement;
-using System.Text;
-using System.Threading.Tasks;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
-using RepositoryParser.Core.Messages;
+﻿using GalaSoft.MvvmLight.Command;
 
 namespace RepositoryParser.ViewModel.UserActivityViewModels
 {
@@ -17,15 +7,19 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
 
         private RelayCommand _openChartViewCommand;
         private RelayCommand _openCodeFrequencyCommand;
+        private RelayCommand _openFilesAnalyseCommand;
 
-        public UsersActivityContentProverViewModel()
+        public RelayCommand OpenFilesAnalyseCommand
         {
-            CurrentViewModel = new ViewModelLocator().UsersCodeFrequency;
-            CurrentViewModel = new ViewModelLocator().UsersActivity;
-            CurrentViewModel = null;
+            get
+            {
+                return _openFilesAnalyseCommand ?? (_openFilesAnalyseCommand = new RelayCommand(() =>
+                {
+                    this.NavigateTo(ViewModelLocator.Instance.UsersActivityFilesAnalyseViewModel);
+                }));
+            }
         }
 
-        #region Getters setters
         public RelayCommand OpenChartViewCommand
         {
             get
@@ -48,6 +42,6 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
                 }));
             }
         }
-        #endregion
+
     }
 }

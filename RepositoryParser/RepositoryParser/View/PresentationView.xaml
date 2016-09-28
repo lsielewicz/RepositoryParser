@@ -67,12 +67,12 @@
             Foreground="#666666"
             TextWrapping="Wrap"
             Text="{x:Static resw:Resources.NoDataToDisplay}"
-            Visibility="{Binding CommitsColection.Count, Converter={StaticResource InverseIntegerToVisibilityConventer}}"/>
+            Visibility="{Binding CommitsCollection.Count, Converter={StaticResource InverseIntegerToVisibilityConventer}}"/>
         
         <DataGrid 
             Grid.Row="2" 
             Grid.Column="1"
-            ItemsSource="{Binding CommitsColection}"
+            ItemsSource="{Binding CommitsCollection}"
             CanUserSortColumns="True"
             AutoGenerateColumns="False"
             ColumnWidth="auto"
@@ -80,7 +80,7 @@
             VerticalScrollBarVisibility="Auto"
             Style="{StaticResource AzureDataGrid}"
             extensions:DataGridExtensions.LastColumnFill="True"
-            Visibility="{Binding CommitsColection.Count, Converter={StaticResource IntegerToVisibilityConventer}}"
+            Visibility="{Binding CommitsCollection.Count, Converter={StaticResource IntegerToVisibilityConventer}}"
             >
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Id}" Header="{x:Static resw:Resources.CommitsList_ID}"/>

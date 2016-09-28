@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -43,6 +44,14 @@ namespace RepositoryParser.Core.Services
             data.Select(d => d.User + ";" + d.AddedLines + ";" + d.DeletedLines)
                  );
             File.WriteAllText(csvPath, csv, Encoding.UTF8);
+        }
+
+        public static void SaveChartReportToCsv(ObservableCollection<ChartData> data, string pathToSave)
+        {
+            string csv = "ChartKey;ChartValue;RepositoryValue" + Environment.NewLine;
+            csv += string.Join(Environment.NewLine,
+                data.Select(d => d.ChartKey + ";" + d.ChartValue + ";" + d.RepositoryValue));
+            File.WriteAllText(pathToSave,csv,Encoding.UTF8);
         }
     }
 }

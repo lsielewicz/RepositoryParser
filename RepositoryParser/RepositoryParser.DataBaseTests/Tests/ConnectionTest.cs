@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NHibernate;
+﻿using System.IO;
 using NUnit.Framework;
 using RepositoryParser.DataBaseManagementCore.Services;
 using RepositoryParser.DataBaseTests.Configuration;

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using NHibernate;
+﻿using NHibernate;
 using RepositoryParser.DataBaseManagementCore.Entities;
 
 namespace RepositoryParser.Core.Interfaces
