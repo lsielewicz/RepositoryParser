@@ -51,7 +51,11 @@
             TextWrapping="WrapWithOverflow"
             Grid.ZIndex="3"/>
         <!--List of files-->
-        <Grid Grid.Column="0" Grid.Row="0">
+        <Grid Grid.Column="0"
+              Grid.Row="0"
+              Visibility="{Binding Path=CountOfSelectedRepositories, 
+                      ConverterParameter={x:Static enums:VisibilityConventerEnumDirection.Normal},
+                      Converter={StaticResource CountOfRepositoriesToVisibilityConventer}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
