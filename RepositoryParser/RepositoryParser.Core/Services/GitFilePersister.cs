@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using LibGit2Sharp;
 using NHibernate;
 using NHibernate.Util;
+using RepositoryParser.Core.Enum;
 using RepositoryParser.Core.Interfaces;
 using RepositoryParser.DataBaseManagementCore.Configuration;
 using RepositoryParser.DataBaseManagementCore.Entities;
@@ -37,6 +38,15 @@ namespace RepositoryParser.Core.Services
 
                 IsCloned = !clone;
                 InitializeConnection();
+            }
+        }
+
+        public GitFilePersister(string path, RepositoryCloneType cloneType, string userName, string passwd)
+        {
+            {
+                UrlPath = path;
+                IsCloned = false;
+                CloneRepository(cloneType, userName, passwd);
             }
         }
 
@@ -224,12 +234,17 @@ namespace RepositoryParser.Core.Services
             }
         }
 
-        private void CloneRepository()
+        private void CloneRepository(RepositoryCloneType cloneType=RepositoryCloneType.Public, string userName="", string passwd="")
         {
-            string urlPath = Regex.Replace(UrlPath, @"https?", "git");
-            UrlPath = urlPath;
-            GitCloneService cloneService = new GitCloneService(urlPath);
-            cloneService.CloneRepository(true);
+            GitCloneService cloneService = new GitCloneService(UrlPath);
+            if (cloneType == RepositoryCloneType.Public)
+            {
+                cloneService.CloneRepository(true);
+            }
+            else
+            {
+                cloneService.CloneRepository(false, cloneType, userName, passwd);
+            }
             IsCloned = true;
             DirectoryPath = cloneService.DirectoryPath;
         }

@@ -22,7 +22,6 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
     public class UsersCodeFrequencyViewModel : RepositoryAnalyserViewModelBase
     {
         #region Fields
-        private DifferencesColoringService _colorService;
         private readonly BackgroundWorker _dataCalcWorker;
         private ObservableCollection<KeyValuePair<string, int>> _addedLinesCollection;
         private ObservableCollection<KeyValuePair<string, int>> _deletedLinesCollection;

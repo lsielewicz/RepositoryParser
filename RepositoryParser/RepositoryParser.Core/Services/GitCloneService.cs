@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 using LibGit2Sharp;
+using LibGit2Sharp.Handlers;
+using RepositoryParser.Core.Enum;
 using RepositoryParser.Core.Models;
 
 namespace RepositoryParser.Core.Services
@@ -138,7 +141,7 @@ namespace RepositoryParser.Core.Services
         }
 
 
-        public void CloneRepository(bool cloneWithAllBranches = false)
+        public void CloneRepository(bool cloneWithAllBranches = false,RepositoryCloneType repositoryCloneType = RepositoryCloneType.Public, string userName="", string passwd = "")
         {
             if (!UrlAdress.EndsWith(".git"))
                 UrlAdress += ".git";
@@ -147,9 +150,23 @@ namespace RepositoryParser.Core.Services
             if (!Directory.Exists(repositoryPath))
                 Directory.CreateDirectory(repositoryPath);
             else
-                DeleteDirectory(repositoryPath,true);
+                DeleteDirectory(repositoryPath, true);
 
-            Repository.Clone(UrlAdress, repositoryPath);
+            if (repositoryCloneType == RepositoryCloneType.Public)
+            {
+                Repository.Clone(UrlAdress, repositoryPath);
+            }
+            else
+            {
+                Repository.Clone(UrlAdress, repositoryPath, new CloneOptions()
+                {
+                    CredentialsProvider = (url, dd, a) => new UsernamePasswordCredentials()
+                    {
+                        Username = userName,
+                        Password = passwd
+                    }
+                });
+            }
 
             DirectoryPath = repositoryPath;
             if (cloneWithAllBranches)
@@ -157,6 +174,23 @@ namespace RepositoryParser.Core.Services
                 FillBranches();
                 CloneAllBranches();
             }
+        }
+
+        public static RepositoryCloneType CheckRepositoryCloneType(string path)
+        {
+            if (!path.EndsWith(".git"))
+                path += ".git";
+            try
+            {
+                IEnumerable<Reference> references = Repository.ListRemoteReferences(path);
+                if (references == null)
+                    return RepositoryCloneType.Private;
+                return RepositoryCloneType.Public;
+            }
+            catch
+            {
+                return RepositoryCloneType.Private;
+            }    
         }
 
         private bool IsAddressCorrect()

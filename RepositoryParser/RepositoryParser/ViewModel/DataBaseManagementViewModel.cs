@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using RepositoryParser.Core.Enum;
 using RepositoryParser.Core.Interfaces;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Services;
@@ -198,7 +199,16 @@ namespace RepositoryParser.ViewModel
                     }
                     else
                     {
-                        _repositoryFilePersister = new GitFilePersister(UrlTextBox,!_isLocal);
+                        switch (GitCloneService.CheckRepositoryCloneType(UrlTextBox))
+                        {
+                            case RepositoryCloneType.Public:
+                                _repositoryFilePersister = new GitFilePersister(UrlTextBox, !_isLocal);
+                                break;
+                            case RepositoryCloneType.Private:
+                                //todo get usename and password from dialog box result
+                                _repositoryFilePersister = new GitFilePersister(UrlTextBox, RepositoryCloneType.Private, "mock", "mock");
+                                break;
+                        }
                     }
                     _repositoryFilePersister.AddRepositoryToDataBase(DbService.Instance.SessionFactory);
                 }
