@@ -86,8 +86,8 @@ namespace RepositoryParser.Core.Services
             }
             catch (Exception ex)
             {
-                //MessageBox.Show(ex.Message);
-                Console.WriteLine(ex.Message);
+                Debug.WriteLine(ex.Message);
+                throw;
             }
         }
 

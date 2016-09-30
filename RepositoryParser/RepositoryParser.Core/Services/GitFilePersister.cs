@@ -243,7 +243,7 @@ namespace RepositoryParser.Core.Services
             }
             else
             {
-                cloneService.CloneRepository(false, cloneType, userName, passwd);
+                cloneService.CloneRepository(true, cloneType, userName, passwd);
             }
             IsCloned = true;
             DirectoryPath = cloneService.DirectoryPath;

@@ -583,4 +583,13 @@
   <data name="Search" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="EnterCredentials" xml:space="preserve">
+    <value>Enter the credentials to access</value>
+  </data>
+  <data name="LoginInformation" xml:space="preserve">
+    <value>Login information</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Information</value>
+  </data>
 </root>

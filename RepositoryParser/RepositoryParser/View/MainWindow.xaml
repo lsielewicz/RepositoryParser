@@ -12,6 +12,7 @@
         xmlns:viewModel="clr-namespace:RepositoryParser.ViewModel"
         xmlns:view="clr-namespace:RepositoryParser.View"
         xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
+        xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
         MinHeight="600" MinWidth="1050"
         ShowIconOnTitleBar="True"
@@ -24,7 +25,8 @@
         WindowStartupLocation="CenterScreen"  
         OverrideDefaultWindowCommandsBrush="Black"
         TitlebarHeight="40"
-        Closing="MainWindow_OnClosing">
+        Closing="MainWindow_OnClosing"
+        dialogs:DialogParticipation.Register="{Binding}">
 
     <Controls:MetroWindow.TitleTemplate>
         <DataTemplate>

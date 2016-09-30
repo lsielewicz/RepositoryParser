@@ -12,7 +12,9 @@
   See http://www.galasoft.ch/mvvm
 */
 
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
+using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Practices.ServiceLocation;
 using RepositoryParser.ViewModel.DayActivityViewModels;
 using RepositoryParser.ViewModel.HourActivityViewModels;
@@ -60,6 +62,7 @@ namespace RepositoryParser.ViewModel
             ////    // Create run time view services and models
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
+            SimpleIoc.Default.Register<IDialogCoordinator, DialogCoordinator>();
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<UsersActivityViewModel>();

@@ -94,6 +94,8 @@
       <DependentUpon>CircleHeaderButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\ConventerDirection.cs" />
+    <Compile Include="Common\NotifyProperyChangeBase.cs" />
+    <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\TrulyObservableCollection.cs" />
     <Compile Include="Extensions\DataGridExtensions.cs" />
     <Compile Include="Extensions\ListViewExtensions.cs" />
@@ -103,6 +105,12 @@
       <DependentUpon>ImageButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="ImageButton\Conventers\LenghtToAnimationLenghtConventer.cs" />
+    <Compile Include="MahAppsDialogOverloadings\CustomDialogEntryData.cs" />
+    <Compile Include="MahAppsDialogOverloadings\InformationDialog\InformationDialog.xaml.cs">
+      <DependentUpon>InformationDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MahAppsDialogOverloadings\InformationDialog\InformationDialogViewModel.cs" />
+    <Compile Include="MahAppsDialogOverloadings\InformationDialog\InformationType.cs" />
     <Compile Include="MetroLoadingProgressRing\Conventers\BooleanToVisibilityConventer.cs" />
     <Compile Include="MetroLoadingProgressRing\MetroLoadingProgressRing.xaml.cs">
       <DependentUpon>MetroLoadingProgressRing.xaml</DependentUpon>
@@ -149,6 +157,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MahAppsDialogOverloadings\InformationDialog\InformationDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MetroLoadingProgressRing\MetroLoadingProgressRing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -171,6 +183,27 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Behaviors\" />
+    <Folder Include="MahAppsDialogOverloadings\LoginDialog\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="MahAppsDialogOverloadings\Icons\Gray\Cancel-500.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="MahAppsDialogOverloadings\Icons\Gray\Checkmark Filled-500.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="MahAppsDialogOverloadings\Icons\Gray\Checkmark Filled-100.png" />
+    <Resource Include="MahAppsDialogOverloadings\Icons\Gray\Delete Filled-100.png" />
+    <Resource Include="MahAppsDialogOverloadings\Icons\Gray\Info-500.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="MahAppsDialogOverloadings\Icons\White\checkmark_white.png" />
+    <Resource Include="MahAppsDialogOverloadings\Icons\White\Info_Whte.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="MahAppsDialogOverloadings\Icons\White\Error_White_100.png" />
+    <Resource Include="MahAppsDialogOverloadings\Icons\White\Info_white_100.png" />
+    <Resource Include="MahAppsDialogOverloadings\Icons\White\Warning_White_100.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

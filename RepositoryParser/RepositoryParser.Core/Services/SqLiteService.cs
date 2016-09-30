@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
+using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -67,7 +68,7 @@ namespace RepositoryParser.Core.Services
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    throw;
                 }
             }
         }
@@ -94,7 +95,7 @@ namespace RepositoryParser.Core.Services
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                throw;
             }
         }
 
@@ -110,7 +111,8 @@ namespace RepositoryParser.Core.Services
             }
             catch
             {
-                MessageBox.Show(query);
+                Debug.WriteLine(query);
+                throw;
             }
             finally
             {
@@ -138,7 +140,8 @@ namespace RepositoryParser.Core.Services
             }
             catch (SQLiteException ex)
             {
-                MessageBox.Show(ex.Message);
+                Debug.WriteLine(ex.Message);
+                throw;
             }
             finally
             {

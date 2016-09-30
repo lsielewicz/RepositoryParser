@@ -576,4 +576,13 @@
   <data name="Search" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="EnterCredentials" xml:space="preserve">
+    <value>Wprowadź uprawnienia, aby uzyskać dostęp</value>
+  </data>
+  <data name="LoginInformation" xml:space="preserve">
+    <value>Logowanie</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Informacja</value>
+  </data>
 </root>

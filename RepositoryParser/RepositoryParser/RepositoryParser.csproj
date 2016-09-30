@@ -237,6 +237,7 @@
     <Compile Include="Conventers\ViewModelBaseToVisibilityConventer.cs" />
     <Compile Include="Helpers\ChartingHelper.cs" />
     <Compile Include="Helpers\CustomInputDialog.cs" />
+    <Compile Include="Helpers\DialogHelper.cs" />
     <Compile Include="Helpers\Enums\FilteringColumn.cs" />
     <Compile Include="Helpers\Enums\VisibilityConventerEnumDirection.cs" />
     <Compile Include="Helpers\FilteringHelper.cs" />

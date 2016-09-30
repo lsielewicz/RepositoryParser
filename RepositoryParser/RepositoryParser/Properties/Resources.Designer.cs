@@ -457,6 +457,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter the credentials to access.
+        /// </summary>
+        public static string EnterCredentials {
+            get {
+                return ResourceManager.GetString("EnterCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string Error {
@@ -664,6 +673,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Information.
+        /// </summary>
+        public static string Information {
+            get {
+                return ResourceManager.GetString("Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Legend.
         /// </summary>
         public static string Legend {
@@ -705,6 +723,15 @@ namespace RepositoryParser.Properties {
         public static string LocalAdress {
             get {
                 return ResourceManager.GetString("LocalAdress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login information.
+        /// </summary>
+        public static string LoginInformation {
+            get {
+                return ResourceManager.GetString("LoginInformation", resourceCulture);
             }
         }
         

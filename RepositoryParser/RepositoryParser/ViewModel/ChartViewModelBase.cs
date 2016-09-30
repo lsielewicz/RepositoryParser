@@ -6,6 +6,8 @@ using System.Windows;
 using De.TorstenMandelkow.MetroChart;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
+using RepositoryParser.Controls.MahAppsDialogOverloadings;
+using RepositoryParser.Controls.MahAppsDialogOverloadings.InformationDialog;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
 using RepositoryParser.Helpers;
@@ -86,7 +88,7 @@ namespace RepositoryParser.ViewModel
             }
         }
 
-        public void ExportFile(string name) 
+        public async void ExportFile(string name) 
         {
             SaveFileDialog dlg = new SaveFileDialog();
             string newName = string.Empty;
@@ -104,7 +106,14 @@ namespace RepositoryParser.ViewModel
             if (result == true)
             {
                 DataToCsv.SaveChartReportToCsv(DataCollection,dlg.FileName);
-                MessageBox.Show(ResourceManager.GetString("ExportMessage"), ResourceManager.GetString("ExportTitle"));
+                await DialogHelper.Instance.ShowDialog(new CustomDialogEntryData()
+                {
+                    MetroWindow = StaticServiceProvider.MetroWindowInstance,
+                    DialogTitle = ResourceManager.GetString("Information"),
+                    DialogMessage = ResourceManager.GetString("ExportMessage"),
+                    OkButtonMessage = "Ok",
+                    InformationType = InformationType.Information
+                });
             }
         }
 

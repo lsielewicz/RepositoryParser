@@ -1,14 +1,21 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using MahApps.Metro.Controls.Dialogs;
+using RepositoryParser.Controls.MahAppsDialogOverloadings;
+using RepositoryParser.Controls.MahAppsDialogOverloadings.InformationDialog;
 using RepositoryParser.Core.Enum;
 using RepositoryParser.Core.Interfaces;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Services;
 using RepositoryParser.DataBaseManagementCore.Services;
+using RepositoryParser.Helpers;
+using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
 
 namespace RepositoryParser.ViewModel
@@ -23,7 +30,6 @@ namespace RepositoryParser.ViewModel
         private bool _isLocal;
         private bool _isOpening;
         private bool _isGitRepositoryPicked;
-        private readonly BackgroundWorker _worker;
         private readonly BackgroundWorker _clearDbWorker;
         private RelayCommand _startWorkCommand;
         private RelayCommand _asyncClearDbCommand;
@@ -32,11 +38,11 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _pickSvnRepositoryCommand;
         #endregion
 
-        public DataBaseManagementViewModel()
+        private readonly IDialogCoordinator _dialogCoordinator;
+/*        private readonly DialogView _dialogView = new DialogView();*/
+        public DataBaseManagementViewModel(IDialogCoordinator dialogCoordinator)
         {
-            this._worker = new BackgroundWorker();
-            this._worker.DoWork += this.DoWork;
-            this._worker.RunWorkerCompleted += this.RunWorkerCompleted;
+            _dialogCoordinator = dialogCoordinator;
 
             this._clearDbWorker = new BackgroundWorker();
             this._clearDbWorker.DoWork += this.DoClearWork;
@@ -132,7 +138,7 @@ namespace RepositoryParser.ViewModel
             get
             {
                 return _startWorkCommand ??
-                       (_startWorkCommand = new RelayCommand(_worker.RunWorkerAsync, () => !_worker.IsBusy));
+                       (_startWorkCommand = new RelayCommand(this.OpenRepository));
             }
         }
 
@@ -184,7 +190,7 @@ namespace RepositoryParser.ViewModel
             }
         }
 
-        public void OpenRepository()
+        public async void OpenRepository()
         {
             if (!string.IsNullOrEmpty(UrlTextBox))
             {
@@ -192,43 +198,76 @@ namespace RepositoryParser.ViewModel
                 try
                 {
                     IsLoading = true;
-
-                    if (IsGitRepositoryPicked == false)
+                    if (IsGitRepositoryPicked)
                     {
-                        _repositoryFilePersister = new SvnFilePersister(UrlTextBox);
+                        RepositoryCloneType currentRepositoryType = RepositoryCloneType.Public;
+                        string username = string.Empty, password = string.Empty;
+                        if (!_isLocal && GitCloneService.CheckRepositoryCloneType(UrlTextBox) == RepositoryCloneType.Private)
+                        {
+                            currentRepositoryType = RepositoryCloneType.Private;
+                             var loginResult =
+                                 await
+                                     _dialogCoordinator.ShowLoginAsync(ViewModelLocator.Instance.Main, 
+                                     this.ResourceManager.GetString("LoginInformation"),
+                                     this.ResourceManager.GetString("EnterCredentials"));
+
+                            if (loginResult != null)
+                            {
+                                username = loginResult.Username;
+                                password = loginResult.Password;
+                            }
+                        }
+
+                        await Task.Run(() =>
+                        {
+                            this.IsOpening = true;
+                            switch (currentRepositoryType)
+                            {
+                                case RepositoryCloneType.Private:
+                                    _repositoryFilePersister = new GitFilePersister(UrlTextBox,
+                                        RepositoryCloneType.Private, username, password);
+                                    break;
+                                case RepositoryCloneType.Public:
+                                    _repositoryFilePersister = new GitFilePersister(this.UrlTextBox, !_isLocal);
+                                    break;
+                            }
+                            _repositoryFilePersister.AddRepositoryToDataBase(DbService.Instance.SessionFactory);
+                        });
                     }
                     else
                     {
-                        switch (GitCloneService.CheckRepositoryCloneType(UrlTextBox))
+                        await Task.Run(() =>
                         {
-                            case RepositoryCloneType.Public:
-                                _repositoryFilePersister = new GitFilePersister(UrlTextBox, !_isLocal);
-                                break;
-                            case RepositoryCloneType.Private:
-                                //todo get usename and password from dialog box result
-                                _repositoryFilePersister = new GitFilePersister(UrlTextBox, RepositoryCloneType.Private, "mock", "mock");
-                                break;
-                        }
+                            _repositoryFilePersister = new SvnFilePersister(UrlTextBox);
+                            _repositoryFilePersister.AddRepositoryToDataBase(DbService.Instance.SessionFactory);
+                        });
                     }
-                    _repositoryFilePersister.AddRepositoryToDataBase(DbService.Instance.SessionFactory);
+
+                    this.UrlTextBox = string.Empty;
+                    Messenger.Default.Send<RefreshMessageToPresentation>(new RefreshMessageToPresentation(true));
+                    ViewModelLocator.Instance.Filtering.ResetInitialization();
+                    Messenger.Default.Send<RefreshMessageToFiltering>(new RefreshMessageToFiltering(true));
+                    ViewModelLocator.Instance.Main.OnLoad();
                 }
                 catch (Exception ex)
                 {
-                    System.Windows.MessageBox.Show(ex.Message); //todo message
+                    await DialogHelper.Instance.ShowDialog(new CustomDialogEntryData()
+                    {
+                        MetroWindow = StaticServiceProvider.MetroWindowInstance,
+                        DialogTitle = ResourceManager.GetString("Error"),
+                        DialogMessage = ex.Message,
+                        OkButtonMessage = "Ok",
+                        InformationType = InformationType.Error
+                    });
                 }
                 finally
                 {
-                    IsLoading = false;
+                    this.IsLoading = false;
                 }
             }
-            else
-            {
-                System.Windows.MessageBox.Show(ResourceManager.GetString("NoRepositoryPathError"), ResourceManager.GetString("Error"));
-            }
-
         }
 
-        public override void OnLoad()
+        public override async void OnLoad()
         {
             try
             {
@@ -236,7 +275,14 @@ namespace RepositoryParser.ViewModel
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show(ex.Message);
+                await DialogHelper.Instance.ShowDialog(new CustomDialogEntryData()
+                {
+                    MetroWindow = StaticServiceProvider.MetroWindowInstance,
+                    DialogTitle = ResourceManager.GetString("Error"),
+                    DialogMessage = ex.Message,
+                    OkButtonMessage = "Ok",
+                    InformationType = InformationType.Error
+                });
             }
         }
 
@@ -248,28 +294,7 @@ namespace RepositoryParser.ViewModel
         #endregion
 
         #region BackgroundWorker
-        private void DoWork(object sender, DoWorkEventArgs e)
-        {
-            IsOpening = true;
-            OpenRepository();
-        }
 
-
-        private void RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (e.Error != null)
-            {
-                MessageBox.Show(e.Error.Message);
-            }
-            else
-            {
-                this.UrlTextBox = string.Empty;
-                Messenger.Default.Send<RefreshMessageToPresentation>(new RefreshMessageToPresentation(true));
-                ViewModelLocator.Instance.Filtering.ResetInitialization();
-                Messenger.Default.Send<RefreshMessageToFiltering>(new RefreshMessageToFiltering(true));
-                ViewModelLocator.Instance.Main.OnLoad();
-            }
-        }
 
 
         private void DoClearWork(object sender, DoWorkEventArgs e)
@@ -279,11 +304,18 @@ namespace RepositoryParser.ViewModel
             ClearDataBase();
         }
 
-        private void DoClearWorkCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private async void DoClearWorkCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                await DialogHelper.Instance.ShowDialog(new CustomDialogEntryData()
+                {
+                    MetroWindow = StaticServiceProvider.MetroWindowInstance,
+                    DialogTitle = ResourceManager.GetString("Error"),
+                    DialogMessage = e.Error.Message,
+                    OkButtonMessage = "Ok",
+                    InformationType = InformationType.Error
+                });
             }
             else
             {

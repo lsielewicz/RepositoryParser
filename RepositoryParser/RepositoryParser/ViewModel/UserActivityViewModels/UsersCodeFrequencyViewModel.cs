@@ -10,6 +10,8 @@ using Microsoft.Win32;
 using NHibernate;
 using NHibernate.SqlCommand;
 using NHibernate.Util;
+using RepositoryParser.Controls.MahAppsDialogOverloadings;
+using RepositoryParser.Controls.MahAppsDialogOverloadings.InformationDialog;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
 using RepositoryParser.DataBaseManagementCore.Configuration;
@@ -240,7 +242,7 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
             this.SummaryString = string.Empty;
         }
 
-        private void ExportFile()
+        private async void ExportFile()
         {
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.FileName = "CodeFrequencyData";
@@ -257,12 +259,26 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
                     // Save document
                     string filename = dlg.FileName;
                     DataToCsv.CreateSummaryChartCSV(userCodeFreqList, _summaryString, filename);
-                    MessageBox.Show(ResourceManager.GetString("ExportMessage"),
-                        ResourceManager.GetString("ExportTitle"));
+
+                    await DialogHelper.Instance.ShowDialog(new CustomDialogEntryData()
+                    {
+                        MetroWindow = StaticServiceProvider.MetroWindowInstance,
+                        DialogTitle = ResourceManager.GetString("Information"),
+                        DialogMessage = ResourceManager.GetString("ExportMessage"),
+                        OkButtonMessage = "Ok",
+                        InformationType = InformationType.Information
+                    });
                 }
                 else
                 {
-                    MessageBox.Show(ResourceManager.GetString("ExportFailed"), ResourceManager.GetString("ExportTitle"));
+                    await DialogHelper.Instance.ShowDialog(new CustomDialogEntryData()
+                    {
+                        MetroWindow = StaticServiceProvider.MetroWindowInstance,
+                        DialogTitle = ResourceManager.GetString("Error"),
+                        DialogMessage = ResourceManager.GetString("ExportFailed"),
+                        OkButtonMessage = "Ok",
+                        InformationType = InformationType.Error
+                    });
                 }
             }
         }

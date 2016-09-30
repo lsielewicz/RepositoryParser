@@ -7,10 +7,13 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Win32;
 using NHibernate.Util;
+using RepositoryParser.Controls.MahAppsDialogOverloadings;
+using RepositoryParser.Controls.MahAppsDialogOverloadings.InformationDialog;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Services;
 using RepositoryParser.DataBaseManagementCore.Entities;
 using RepositoryParser.DataBaseManagementCore.Services;
+using RepositoryParser.Helpers;
 using RepositoryParser.View;
 
 namespace RepositoryParser.ViewModel
@@ -132,7 +135,7 @@ namespace RepositoryParser.ViewModel
             }
         }
 
-        public void ExportFile()
+        public async void ExportFile()
         {
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.FileName = "CommitsFile";
@@ -147,11 +150,19 @@ namespace RepositoryParser.ViewModel
                 string filename = dlg.FileName;
                 List<Commit> tempList = CommitsCollection.ToList();
                 DataToCsv.CreateCSVFromGitCommitsList(tempList, filename);
-                MessageBox.Show(ResourceManager.GetString("ExportMessage"), ResourceManager.GetString("ExportTitle"));
+
+                await DialogHelper.Instance.ShowDialog(new CustomDialogEntryData()
+                {
+                    MetroWindow = StaticServiceProvider.MetroWindowInstance,
+                    DialogTitle = ResourceManager.GetString("Information"),
+                    DialogMessage = ResourceManager.GetString("ExportMessage"),
+                    OkButtonMessage = "Ok",
+                    InformationType = InformationType.Information
+                });
             }
         }
 
-        public override void OnLoad()
+        public async override void OnLoad()
         {
             try
             {
@@ -162,7 +173,14 @@ namespace RepositoryParser.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                await DialogHelper.Instance.ShowDialog(new CustomDialogEntryData()
+                {
+                    MetroWindow = StaticServiceProvider.MetroWindowInstance,
+                    DialogTitle = ResourceManager.GetString("Error"),
+                    DialogMessage = ResourceManager.GetString("ExportMessage"),
+                    OkButtonMessage = "Ok",
+                    InformationType = InformationType.Error
+                });
             }
         }
         #endregion
