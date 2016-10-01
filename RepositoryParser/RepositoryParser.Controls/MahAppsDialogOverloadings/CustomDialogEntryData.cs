@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using MahApps.Metro.Controls;
 using RepositoryParser.Controls.MahAppsDialogOverloadings.InformationDialog;
 
@@ -16,5 +17,6 @@ namespace RepositoryParser.Controls.MahAppsDialogOverloadings
         public string NoButtonMessage { get; set; }
         public MetroWindow MetroWindow { get; set; }
         public InformationType InformationType { get; set; }
+        public ICommand OkCommand { get; set; }
     }
 }

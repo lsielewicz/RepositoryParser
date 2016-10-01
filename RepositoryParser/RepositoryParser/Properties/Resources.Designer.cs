@@ -61,6 +61,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string About {
+            get {
+                return ResourceManager.GetString("About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Activity of users.
         /// </summary>
         public static string ActivityAnalyseButton {
@@ -147,6 +156,15 @@ namespace RepositoryParser.Properties {
         public static string AnalysisWindowVie {
             get {
                 return ResourceManager.GetString("AnalysisWindowVie", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
             }
         }
         
@@ -457,6 +475,24 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you really want to exit?.
+        /// </summary>
+        public static string DoYouReallyWantToExit {
+            get {
+                return ResourceManager.GetString("DoYouReallyWantToExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English.
+        /// </summary>
+        public static string English {
+            get {
+                return ResourceManager.GetString("English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter the credentials to access.
         /// </summary>
         public static string EnterCredentials {
@@ -484,7 +520,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export Succesed!.
+        ///   Looks up a localized string similar to Export Successed!.
         /// </summary>
         public static string ExportMessage {
             get {
@@ -952,6 +988,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No data to display, check filtering criteria.
         /// </summary>
         public static string NoDataToDisplay {
@@ -1024,6 +1069,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Polish.
+        /// </summary>
+        public static string Polish {
+            get {
+                return ResourceManager.GetString("Polish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Presentation.
         /// </summary>
         public static string Presentation {
@@ -1051,11 +1105,29 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Region and language.
+        /// </summary>
+        public static string RegionAndLanguage {
+            get {
+                return ResourceManager.GetString("RegionAndLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Repository.
         /// </summary>
         public static string Repository {
             get {
                 return ResourceManager.GetString("Repository", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The application language will be changed just after reboot.
+        /// </summary>
+        public static string RestartRequired {
+            get {
+                return ResourceManager.GetString("RestartRequired", resourceCulture);
             }
         }
         
@@ -1069,11 +1141,29 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select default language.
+        /// </summary>
+        public static string SelectDefaultLanguage {
+            get {
+                return ResourceManager.GetString("SelectDefaultLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Send data.
         /// </summary>
         public static string SendDataButton {
             get {
                 return ResourceManager.GetString("SendDataButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
             }
         }
         
@@ -1128,6 +1218,15 @@ namespace RepositoryParser.Properties {
         public static string UserActivityView {
             get {
                 return ResourceManager.GetString("UserActivityView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User preferences.
+        /// </summary>
+        public static string UserPreferences {
+            get {
+                return ResourceManager.GetString("UserPreferences", resourceCulture);
             }
         }
         
@@ -1245,6 +1344,15 @@ namespace RepositoryParser.Properties {
         public static string WeekdayActivityWindowTitle {
             get {
                 return ResourceManager.GetString("WeekdayActivityWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

@@ -62,7 +62,7 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
         private string GetMonth(int number)
         {
             string month = $"Month{number}";
-            return ResourceManager.GetString(month);
+            return this.GetLocalizedString(month);
         }
 
     }

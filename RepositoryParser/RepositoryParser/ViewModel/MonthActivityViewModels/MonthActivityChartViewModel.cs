@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows;
 using NHibernate.Criterion;
@@ -54,7 +55,7 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
         private string GetMonth(int number)
         {
             string month = $"Month{number}";
-            return ResourceManager.GetString(month); 
+            return this.GetLocalizedString(month); 
         }
 
     }

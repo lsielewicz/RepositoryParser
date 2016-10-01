@@ -5,6 +5,7 @@ using System.Windows;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using RepositoryParser.Helpers;
+using RepositoryParser.ViewModel;
 
 namespace RepositoryParser
 {
@@ -29,12 +30,12 @@ namespace RepositoryParser
             {
                 MetroDialogSettings settings = new MetroDialogSettings()
                 {
-                    AffirmativeButtonText = "Yes",
-                    NegativeButtonText = "No",
+                    AffirmativeButtonText = (this.DataContext as MainViewModel).GetLocalizedString("Yes"),
+                    NegativeButtonText = (this.DataContext as MainViewModel).GetLocalizedString("No"),
                     AnimateShow = true,
                     ColorScheme = MetroDialogColorScheme.Theme
                 };
-                MessageDialogResult result = await StaticServiceProvider.MetroWindowInstance.ShowMessageAsync(this.Title, "Do you really want to exit?", MessageDialogStyle.AffirmativeAndNegative,settings);
+                MessageDialogResult result = await StaticServiceProvider.MetroWindowInstance.ShowMessageAsync(this.Title, (this.DataContext as MainViewModel).GetLocalizedString("DoYouReallyWantToExit"), MessageDialogStyle.AffirmativeAndNegative,settings);
                 if (result == MessageDialogResult.Negative)
                 {
                     return;

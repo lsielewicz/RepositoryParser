@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Globalization;
 using System.Reflection;
 using System.Resources;
 using System.Threading;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
+using RepositoryParser.Configuration;
 
 namespace RepositoryParser.ViewModel
 {
@@ -11,10 +13,15 @@ namespace RepositoryParser.ViewModel
     {
         private bool _isLoading;
         private ViewModelBase _currentViewModel;
-        protected readonly ResourceManager ResourceManager;
+        private readonly ResourceManager ResourceManager;
         protected RepositoryAnalyserViewModelBase()
         {
             ResourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
+        }
+
+        public string GetLocalizedString(string resourceKey)
+        {
+            return this.ResourceManager.GetString(resourceKey, ConfigurationService.Instance.CultureInfo);
         }
 
         public ViewModelBase CurrentViewModel

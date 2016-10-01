@@ -115,7 +115,7 @@ namespace RepositoryParser.ViewModel.WeekdayActivityViewModels
         {
             string weekdayKey = $"Weekday{weekdayNumber+1}";
             string monthKey = $"Month{monthNumber}";
-            return $"{ResourceManager.GetString(weekdayKey)} {ResourceManager.GetString(monthKey)} {yearNumber}";
+            return $"{this.GetLocalizedString(weekdayKey)} {this.GetLocalizedString(monthKey)} {yearNumber}";
         }
 
         private int _countOfRows;

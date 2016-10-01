@@ -109,8 +109,8 @@ namespace RepositoryParser.ViewModel
                 await DialogHelper.Instance.ShowDialog(new CustomDialogEntryData()
                 {
                     MetroWindow = StaticServiceProvider.MetroWindowInstance,
-                    DialogTitle = ResourceManager.GetString("Information"),
-                    DialogMessage = ResourceManager.GetString("ExportMessage"),
+                    DialogTitle = this.GetLocalizedString("Information"),
+                    DialogMessage = this.GetLocalizedString("ExportMessage"),
                     OkButtonMessage = "Ok",
                     InformationType = InformationType.Information
                 });

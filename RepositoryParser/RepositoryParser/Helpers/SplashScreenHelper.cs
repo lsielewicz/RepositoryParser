@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Threading.Tasks;
+using RepositoryParser.Configuration;
 
 namespace RepositoryParser.Helpers
 {
@@ -16,7 +17,12 @@ namespace RepositoryParser.Helpers
                 splashScreen.Dispatcher.BeginInvoke(
                     (Action)(() => splashScreen.Message = "Loading Data"));
                 //todo load settings
-                Properties.Resources.Culture = new CultureInfo("en-En");
+                if(string.IsNullOrEmpty(ConfigurationService.Instance.Configuration.CurrentLanguage))
+                    Properties.Resources.Culture = new CultureInfo("en-En");
+                else
+                {
+                    Properties.Resources.Culture = new CultureInfo(ConfigurationService.Instance.Configuration.CurrentLanguage);
+                }
             });
 
             startupTask.ContinueWith(t =>

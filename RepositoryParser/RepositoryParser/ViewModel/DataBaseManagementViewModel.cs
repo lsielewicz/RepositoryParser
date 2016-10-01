@@ -182,7 +182,7 @@ namespace RepositoryParser.ViewModel
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             fbd.SelectedPath = System.AppDomain.CurrentDomain.BaseDirectory;
-            fbd.Description = ResourceManager.GetString("PickFolderWithRepo");
+            fbd.Description = this.GetLocalizedString("PickFolderWithRepo");
 
             if (fbd.ShowDialog() == DialogResult.OK)
             {
@@ -208,8 +208,8 @@ namespace RepositoryParser.ViewModel
                              var loginResult =
                                  await
                                      _dialogCoordinator.ShowLoginAsync(ViewModelLocator.Instance.Main, 
-                                     this.ResourceManager.GetString("LoginInformation"),
-                                     this.ResourceManager.GetString("EnterCredentials"));
+                                     this.GetLocalizedString("LoginInformation"),
+                                     this.GetLocalizedString("EnterCredentials"));
 
                             if (loginResult != null)
                             {
@@ -254,7 +254,7 @@ namespace RepositoryParser.ViewModel
                     await DialogHelper.Instance.ShowDialog(new CustomDialogEntryData()
                     {
                         MetroWindow = StaticServiceProvider.MetroWindowInstance,
-                        DialogTitle = ResourceManager.GetString("Error"),
+                        DialogTitle = this.GetLocalizedString("Error"),
                         DialogMessage = ex.Message,
                         OkButtonMessage = "Ok",
                         InformationType = InformationType.Error
@@ -278,7 +278,7 @@ namespace RepositoryParser.ViewModel
                 await DialogHelper.Instance.ShowDialog(new CustomDialogEntryData()
                 {
                     MetroWindow = StaticServiceProvider.MetroWindowInstance,
-                    DialogTitle = ResourceManager.GetString("Error"),
+                    DialogTitle = this.GetLocalizedString("Error"),
                     DialogMessage = ex.Message,
                     OkButtonMessage = "Ok",
                     InformationType = InformationType.Error
@@ -311,7 +311,7 @@ namespace RepositoryParser.ViewModel
                 await DialogHelper.Instance.ShowDialog(new CustomDialogEntryData()
                 {
                     MetroWindow = StaticServiceProvider.MetroWindowInstance,
-                    DialogTitle = ResourceManager.GetString("Error"),
+                    DialogTitle = this.GetLocalizedString("Error"),
                     DialogMessage = e.Error.Message,
                     OkButtonMessage = "Ok",
                     InformationType = InformationType.Error

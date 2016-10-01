@@ -162,13 +162,13 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
 
             _summaryList = new List<KeyValuePair<string, int>>()
                 {
-                    new KeyValuePair<string, int>(ResourceManager.GetString("Added"), sumAdded),
-                    new KeyValuePair<string, int>(ResourceManager.GetString("Deleted"), sumDeleted)
+                    new KeyValuePair<string, int>(this.GetLocalizedString("Added"), sumAdded),
+                    new KeyValuePair<string, int>(this.GetLocalizedString("Deleted"), sumDeleted)
                 };
-            SummaryString = ResourceManager.GetString("Added") + ": " + sumAdded + " " +
-                            ResourceManager.GetString("Lines") + "\n" +
-                            ResourceManager.GetString("Deleted") + ": " + sumDeleted + " " +
-                            ResourceManager.GetString("Lines");
+            SummaryString = this.GetLocalizedString("Added") + ": " + sumAdded + " " +
+                            this.GetLocalizedString("Lines") + "\n" +
+                            this.GetLocalizedString("Deleted") + ": " + sumDeleted + " " +
+                            this.GetLocalizedString("Lines");
             
         }
 
@@ -263,8 +263,8 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
                     await DialogHelper.Instance.ShowDialog(new CustomDialogEntryData()
                     {
                         MetroWindow = StaticServiceProvider.MetroWindowInstance,
-                        DialogTitle = ResourceManager.GetString("Information"),
-                        DialogMessage = ResourceManager.GetString("ExportMessage"),
+                        DialogTitle = this.GetLocalizedString("Information"),
+                        DialogMessage = this.GetLocalizedString("ExportMessage"),
                         OkButtonMessage = "Ok",
                         InformationType = InformationType.Information
                     });
@@ -274,8 +274,8 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
                     await DialogHelper.Instance.ShowDialog(new CustomDialogEntryData()
                     {
                         MetroWindow = StaticServiceProvider.MetroWindowInstance,
-                        DialogTitle = ResourceManager.GetString("Error"),
-                        DialogMessage = ResourceManager.GetString("ExportFailed"),
+                        DialogTitle = this.GetLocalizedString("Error"),
+                        DialogMessage = this.GetLocalizedString("ExportFailed"),
                         OkButtonMessage = "Ok",
                         InformationType = InformationType.Error
                     });

@@ -18,6 +18,7 @@ namespace RepositoryParser.Controls.MahAppsDialogOverloadings.InformationDialog
         private string _dialogMessage;
         private string _buttonText;
         private ICommand _closeWindowCommand;
+        private ICommand _okButtonCommand;
         private MetroWindow _metroWindow;
 
         public InformationDialogViewModel(CustomDialogEntryData data)
@@ -29,6 +30,10 @@ namespace RepositoryParser.Controls.MahAppsDialogOverloadings.InformationDialog
                 this.ButtonText = data.OkButtonMessage;
                 this._metroWindow = data.MetroWindow;
                 this.InformationType = data.InformationType;
+                if (data.OkCommand != null)
+                {
+                    this.OkButtonCommand = data.OkCommand;
+                }
             }
         }
 
@@ -54,6 +59,8 @@ namespace RepositoryParser.Controls.MahAppsDialogOverloadings.InformationDialog
             {
                 return _closeWindowCommand ?? (_closeWindowCommand = new RelayCommand((param) =>
                 {
+                    if(this.OkButtonCommand!= null)
+                        this.OkButtonCommand.Execute(this);
                     if (param != null && param is InformationDialog)
                     {
                         if (this._metroWindow != null)
@@ -65,6 +72,19 @@ namespace RepositoryParser.Controls.MahAppsDialogOverloadings.InformationDialog
                 }));
             }
         }
+
+        public ICommand OkButtonCommand
+        {
+            get
+            {
+                return _okButtonCommand ?? (_okButtonCommand = new RelayCommand((param) =>
+                {
+                    
+                }));
+            }
+            set { _okButtonCommand = value; }
+        }
+
         public string ButtonText
         {
             get

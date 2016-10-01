@@ -109,7 +109,7 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
         private string GetMonthAndYear(int monthNumber, int yearNumber)
         {
             string dateString = $"Month{monthNumber}";
-            return $"{ResourceManager.GetString(dateString)} {yearNumber}";
+            return $"{this.GetLocalizedString(dateString)} {yearNumber}";
         }
 
         private int _countOfRows;

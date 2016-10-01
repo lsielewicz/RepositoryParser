@@ -130,9 +130,11 @@
                 Text="{Binding ButtonText, UpdateSourceTrigger=PropertyChanged}"
                 Margin="5 0 0 0"
                 Foreground="White"
-                FontSize="16"
+                FontSize="18"
+                FontWeight="Light"
                 CommandParameter="{Binding ElementName=Root}"
                 Command="{Binding CloseWindowCommand}"
+                Background="Transparent"
                 />
         </StackPanel>
     </Grid>
