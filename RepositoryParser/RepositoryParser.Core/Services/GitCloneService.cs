@@ -16,15 +16,13 @@ namespace RepositoryParser.Core.Services
         private List<string> _remotes;
         public string UrlAdress { get; set; }
         public string DirectoryPath { get; set; }
+        public string ClonePath { get; set; }
 
-        public GitCloneService()
-        {
-            UrlAdress = String.Empty;
-        }
 
-        public GitCloneService(string url)
+        public GitCloneService(string url, string clonePath="")
         {
             UrlAdress = url;
+            ClonePath = clonePath;
         }
 
         public string GetRepositoryNameFromUrl(string url)
@@ -50,7 +48,10 @@ namespace RepositoryParser.Core.Services
             _remotes = new List<string>();
             try
             {
-                using (Repository repository = new Repository("./" + GetRepositoryNameFromUrl(UrlAdress)))
+                string repositoryPath = string.IsNullOrEmpty(ClonePath)
+                    ? "./" + GetRepositoryNameFromUrl(UrlAdress)
+                    : ZetaLongPaths.ZlpPathHelper.Combine(ClonePath, GetRepositoryNameFromUrl(UrlAdress));
+                using (Repository repository = new Repository(repositoryPath))
                 {
                     List<GitCloneBranch> tempBranches = new List<GitCloneBranch>();
                     foreach (Branch branch in repository.Branches)
@@ -106,7 +107,10 @@ namespace RepositoryParser.Core.Services
             if (_branches == null || _branches.Count == 0)
                 return;
 
-            using (Repository repository = new Repository("./" + GetRepositoryNameFromUrl(UrlAdress)))
+            string repositoryPath = string.IsNullOrEmpty(ClonePath)
+                               ? "./" + GetRepositoryNameFromUrl(UrlAdress)
+                               : ZetaLongPaths.ZlpPathHelper.Combine(ClonePath, GetRepositoryNameFromUrl(UrlAdress));
+            using (Repository repository = new Repository(repositoryPath))
             {
                 foreach (GitCloneBranch branch in _branches)
                 {
@@ -145,7 +149,10 @@ namespace RepositoryParser.Core.Services
         {
             if (!UrlAdress.EndsWith(".git"))
                 UrlAdress += ".git";
-            string repositoryPath = "./" + GetRepositoryNameFromUrl(UrlAdress);
+
+            string repositoryPath = string.IsNullOrEmpty(this.ClonePath)
+                ? "./" + GetRepositoryNameFromUrl(UrlAdress)
+                : ZetaLongPaths.ZlpPathHelper.Combine(this.ClonePath, GetRepositoryNameFromUrl(UrlAdress));
 
             if (!Directory.Exists(repositoryPath))
                 Directory.CreateDirectory(repositoryPath);

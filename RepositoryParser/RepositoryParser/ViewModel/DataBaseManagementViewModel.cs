@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using MahApps.Metro.Controls.Dialogs;
+using RepositoryParser.Configuration;
 using RepositoryParser.Controls.MahAppsDialogOverloadings;
 using RepositoryParser.Controls.MahAppsDialogOverloadings.InformationDialog;
 using RepositoryParser.Core.Enum;
@@ -225,10 +226,10 @@ namespace RepositoryParser.ViewModel
                             {
                                 case RepositoryCloneType.Private:
                                     _repositoryFilePersister = new GitFilePersister(UrlTextBox,
-                                        RepositoryCloneType.Private, username, password);
+                                        RepositoryCloneType.Private, username, password, ConfigurationService.Instance.Configuration.SavingRepositoryPath);
                                     break;
                                 case RepositoryCloneType.Public:
-                                    _repositoryFilePersister = new GitFilePersister(this.UrlTextBox, !_isLocal);
+                                    _repositoryFilePersister = new GitFilePersister(this.UrlTextBox, !_isLocal, ConfigurationService.Instance.Configuration.SavingRepositoryPath);
                                     break;
                             }
                             _repositoryFilePersister.AddRepositoryToDataBase(DbService.Instance.SessionFactory);

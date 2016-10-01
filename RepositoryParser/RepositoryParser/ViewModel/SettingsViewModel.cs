@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using GalaSoft.MvvmLight.Command;
 using RepositoryParser.Configuration;
 using RepositoryParser.Controls.MahAppsDialogOverloadings;
@@ -15,19 +17,42 @@ namespace RepositoryParser.ViewModel
     public class SettingsViewModel : RepositoryAnalyserViewModelBase
     {
 
+        private bool _isInitialized;
+        private string _selectedLangauge;
+        private string _currentRepositorySavingPath;
+        private RelayCommand _restartApplicationCommand;
+        private RelayCommand _openRepositoriesDirectory;
+        private RelayCommand _openDirectoryFilePicker;
+
         public SettingsViewModel()
         {
             if (ConfigurationService.Instance.Configuration.CurrentLanguage == ApplicationLanguage.Polish)
                 SelectedLanguage = this.GetLocalizedString("Polish");
             if (ConfigurationService.Instance.Configuration.CurrentLanguage == ApplicationLanguage.English)
                 SelectedLanguage = this.GetLocalizedString("English");
+
+            CurrentRepositorySavingPath = ConfigurationService.Instance.Configuration.SavingRepositoryPath;
+
             _isInitialized = true;
         }
 
-        private bool _isInitialized;
-        private string _selectedLangauge;
-        private RelayCommand _restartApplicationCommand;
+        public string CurrentRepositorySavingPath
+        {
+            get { return _currentRepositorySavingPath; }
+            set
+            {
+                if (_currentRepositorySavingPath == value)
+                    return;
+                _currentRepositorySavingPath = value;
+                if (_isInitialized && ZetaLongPaths.ZlpIOHelper.DirectoryExists(_currentRepositorySavingPath))
+                {
+                    ConfigurationService.Instance.Configuration.SavingRepositoryPath = _currentRepositorySavingPath;
+                    ConfigurationService.Instance.SaveChanges();
+                }
 
+                RaisePropertyChanged();
+            }
+        }
         public string SelectedLanguage
         {
             get { return _selectedLangauge; }
@@ -60,8 +85,6 @@ namespace RepositoryParser.ViewModel
                 OkButtonMessage = "Restart",
                 OkCommand = this.RestartApplicationCommand
             });
-
-            //this.RestartApplicationCommand.Execute(this);
         }
 
         public RelayCommand RestartApplicationCommand
@@ -75,5 +98,35 @@ namespace RepositoryParser.ViewModel
                 }));
             }
         }
+
+        public RelayCommand OpenRepositoriesDirectoryCommand
+        {
+            get
+            {
+                return _openRepositoriesDirectory ?? (_openRepositoriesDirectory = new RelayCommand(() =>
+                {
+                    Process.Start(ConfigurationService.Instance.Configuration.SavingRepositoryPath);
+                }));
+            }
+        }
+
+        public RelayCommand OpenDirectoryFilePicker
+        {
+            get
+            {
+                return _openDirectoryFilePicker ?? (_openDirectoryFilePicker = new RelayCommand(() =>
+                {
+                    FolderBrowserDialog fbd = new FolderBrowserDialog();
+                    fbd.SelectedPath = AppDomain.CurrentDomain.BaseDirectory;
+                    fbd.Description = this.GetLocalizedString("PickFolderWithRepo");
+
+                    if (fbd.ShowDialog() == DialogResult.OK)
+                    {
+                        this.CurrentRepositorySavingPath = fbd.SelectedPath;
+                    }
+                }));
+            }
+        }
+
     }
 }

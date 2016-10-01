@@ -22,13 +22,9 @@ namespace RepositoryParser.Core.Services
         public string DirectoryPath { get; set; }
         public string UrlPath { get; private set; }
         public bool IsCloned { get; private set; }
+        public string ClonePath { get; set; }
 
-        public GitFilePersister(string path)
-        {
-            DirectoryPath = path;
-        }
-
-        public GitFilePersister(string path, bool clone)
+        public GitFilePersister(string path, bool clone, string clonePath="")
         {
             {
                 if (clone)
@@ -36,18 +32,19 @@ namespace RepositoryParser.Core.Services
                 else
                     DirectoryPath = path;
 
+                ClonePath = clonePath;
                 IsCloned = !clone;
                 InitializeConnection();
             }
         }
 
-        public GitFilePersister(string path, RepositoryCloneType cloneType, string userName, string passwd)
+        public GitFilePersister(string path, RepositoryCloneType cloneType, string userName, string passwd, string clonePath="")
         {
-            {
-                UrlPath = path;
-                IsCloned = false;
-                CloneRepository(cloneType, userName, passwd);
-            }
+            ClonePath = clonePath;
+            UrlPath = path;
+            IsCloned = false;
+            CloneRepository(cloneType, userName, passwd);
+            
         }
 
         public void AddRepositoryToDataBase(ISessionFactory sessionFactory)
@@ -236,7 +233,7 @@ namespace RepositoryParser.Core.Services
 
         private void CloneRepository(RepositoryCloneType cloneType=RepositoryCloneType.Public, string userName="", string passwd="")
         {
-            GitCloneService cloneService = new GitCloneService(UrlPath);
+            GitCloneService cloneService = new GitCloneService(UrlPath,ClonePath);
             if (cloneType == RepositoryCloneType.Public)
             {
                 cloneService.CloneRepository(true);
