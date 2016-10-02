@@ -10,114 +10,144 @@
              d:DesignHeight="300" d:DesignWidth="300"
              DataContext="{Binding Source={StaticResource Locator}, Path=SettingsViewModel}"
              x:Name="Root">
-    <Grid Margin="10,5">
+    <Grid Margin="10,0,0,0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+        <!--Header-->
+        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="{StaticResource AppMainColor}">
+            <TextBlock Style="{StaticResource SubTitleTextBlock}" >
+                <Run Text="#"/>
+                <Run Text="{x:Static resw:Resources.Settings}"/>
+            </TextBlock>
+        </Border>
+    
+        <!--Image-->
+        <Image 
+            Grid.Row="0" 
+            Grid.RowSpan="2"
+            Source="../Assets/Images/settings_cropped.png"
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Right"
+            Opacity="0.1"
+            Stretch="None"
+            UseLayoutRounding="True"
+            RenderOptions.BitmapScalingMode="Fant">
+            <Image.LayoutTransform>
+                <ScaleTransform ScaleX="1.5" ScaleY="1.5"></ScaleTransform>
+            </Image.LayoutTransform>
+        </Image>
         
-        <!--Language settings-->
-        <TextBlock Text="{x:Static resw:Resources.RegionAndLanguage}" Grid.Row="0" FontSize="24"/>
-        <StackPanel Grid.Row="1" Margin="5">
-            <TextBlock
-                Text="{x:Static resw:Resources.SelectDefaultLanguage}"
-                FontWeight="Light"
-                Foreground="#555555"
-                FontSize="12"
-                Margin="5"/>
-            <ComboBox
-                Margin="5"
-                Width="150"
-                HorizontalAlignment="Left"
-                SelectedValue="{Binding SelectedLanguage}"
-                SelectedValuePath="Content"
-                >
-                <ComboBox.Items>
-                    <ComboBoxItem Content="{x:Static resw:Resources.English}"/>
-                    <ComboBoxItem Content="{x:Static resw:Resources.Polish}"/>
-                </ComboBox.Items>    
-            </ComboBox>
-            
-        </StackPanel>
-        <!--UserPreferences-->
-        <TextBlock Text="{x:Static resw:Resources.UserPreferences}" Grid.Row="2" FontSize="24"/>
-        <StackPanel Grid.Row="3" Margin="5">
-            <TextBlock
-                Text="Clone repository with all branches"
-                FontWeight="Light"
-                Foreground="#555555"
-                FontSize="12"
-                Margin="5"/>
-            <controls:ToggleSwitchButton 
-                HorizontalAlignment="Left"
-                Content="Clone repository with all branches"/>
-
-        </StackPanel>
+        <Grid Margin="10,5" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
         
-        <!--Clone saving location-->
-        <TextBlock Text="Clone saving location" Grid.Row="4" FontSize="24"/>
-        <StackPanel Grid.Row="5" Margin="5">
-            <DockPanel LastChildFill="True">
-                <Button 
-                    DockPanel.Dock="Right"
-                    Content=". . ."
-                    Margin="5"
-                    Width="60"
-                    Command="{Binding OpenDirectoryFilePicker}"/>
-                <TextBox
-                    DockPanel.Dock="Left"
-                    Text="{Binding CurrentRepositorySavingPath}"
-                    IsReadOnly="True"
-                    Margin="5"
-                    />
-            </DockPanel>
-            
-            <Button
-                Margin="5"
-                Background="Transparent"
-                Command="{Binding OpenRepositoriesDirectoryCommand}"
-                BorderThickness="0"
-                BorderBrush="Transparent"
-                HorizontalAlignment="Left"
-                >
-                <TextBlock 
-                    Text="Open containing folder"
-                    FontSize="12"
+            <!--Language settings-->
+            <TextBlock Text="{x:Static resw:Resources.RegionAndLanguage}" Grid.Row="0" FontSize="24"/>
+            <StackPanel Grid.Row="1" Margin="5">
+                <TextBlock
+                    Text="{x:Static resw:Resources.SelectDefaultLanguage}"
                     FontWeight="Light"
-                    TextDecorations="Underline"
+                    Foreground="#555555"
+                    FontSize="12"
+                    Margin="5"/>
+                <ComboBox
+                    Margin="5"
+                    Width="150"
+                    HorizontalAlignment="Left"
+                    SelectedValue="{Binding SelectedLanguage}"
+                    SelectedValuePath="Content"
                     >
-                    <TextBlock.Style>
-                        <Style TargetType="TextBlock">
-                            <Style.Triggers>
-                                <Trigger Property ="IsMouseOver" Value="True">
-                                    <Setter Property= "Background" Value="Transparent"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}">
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="Transparent"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
-        </StackPanel>
+                    <ComboBox.Items>
+                        <ComboBoxItem Content="{x:Static resw:Resources.English}"/>
+                        <ComboBoxItem Content="{x:Static resw:Resources.Polish}"/>
+                    </ComboBox.Items>    
+                </ComboBox>
+            
+            </StackPanel>
+            <!--UserPreferences-->
+            <TextBlock Text="{x:Static resw:Resources.UserPreferences}" Grid.Row="2" FontSize="24"/>
+            <StackPanel Grid.Row="3" Margin="5">
+                <TextBlock
+                    Text="{x:Static resw:Resources.CloneRepositoryWIthAllBranches}"
+                    FontWeight="Light"
+                    Foreground="#555555"
+                    FontSize="12"
+                    Margin="5"/>
+                <controls:ToggleSwitchButton 
+                    HorizontalAlignment="Left"
+                    
+                    IsChecked="{Binding CloneWithAllBranches, UpdateSourceTrigger=PropertyChanged}"
+                    />
 
-        <!--Saving path-->
+            </StackPanel>
+        
+            <!--Clone saving location-->
+            <TextBlock Text="{x:Static resw:Resources.RepositoriesSavingLocation}" Grid.Row="4" FontSize="24"/>
+            <StackPanel Grid.Row="5" Margin="5">
+                <DockPanel LastChildFill="True" MaxWidth="1000" HorizontalAlignment="Left" MinWidth="700">
+                    <Button 
+                        DockPanel.Dock="Right"
+                        Content=". . ."
+                        Margin="5"
+                        Width="60"
+                        Command="{Binding OpenDirectoryFilePicker}"
+                        Background="{StaticResource GradientMainColor}"
+                        Foreground="White"
+                        Style="{StaticResource AppAppMainColorButton}"
+                        Height="Auto"/>
+                    <TextBox
+                        DockPanel.Dock="Left"
+                        Text="{Binding CurrentRepositorySavingPath}"
+                        IsReadOnly="True"
+                        Margin="5"
+                        />
+                </DockPanel>
+            
+                <Button
+                    Margin="5"
+                    Background="Transparent"
+                    Command="{Binding OpenRepositoriesDirectoryCommand}"
+                    BorderThickness="0"
+                    BorderBrush="Transparent"
+                    HorizontalAlignment="Left"
+                    Style="{StaticResource AppAppMainColorButton}"
+                    Foreground="Black"
+                    Height="Auto"
+                    >
+                    <TextBlock 
+                        Text="{x:Static resw:Resources.OpenContainingFolder}"
+                        FontSize="12"
+                        FontWeight="Light"
+                        TextDecorations="Underline">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <Trigger Property ="IsMouseOver" Value="True">
+                                        <Setter Property= "Foreground" Value="{StaticResource AppMainColor}"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    
+                </Button>
+            </StackPanel>
 
+
+
+        </Grid>
     </Grid>
 </UserControl>

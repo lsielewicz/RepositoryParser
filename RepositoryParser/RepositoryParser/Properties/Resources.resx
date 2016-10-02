@@ -628,4 +628,13 @@
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
   </data>
+  <data name="CloneRepositoryWIthAllBranches" xml:space="preserve">
+    <value>Clone repository with all branches</value>
+  </data>
+  <data name="OpenContainingFolder" xml:space="preserve">
+    <value>Open containing folder</value>
+  </data>
+  <data name="RepositoriesSavingLocation" xml:space="preserve">
+    <value>Repositories saving location</value>
+  </data>
 </root>

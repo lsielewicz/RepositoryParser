@@ -17,12 +17,14 @@ namespace RepositoryParser.ViewModel
     public class SettingsViewModel : RepositoryAnalyserViewModelBase
     {
 
-        private bool _isInitialized;
+        private readonly bool _isInitialized;
+        private bool _cloneWithAllBranches;
         private string _selectedLangauge;
         private string _currentRepositorySavingPath;
         private RelayCommand _restartApplicationCommand;
         private RelayCommand _openRepositoriesDirectory;
         private RelayCommand _openDirectoryFilePicker;
+        private RelayCommand _setCloneAllBranchesCommand;
 
         public SettingsViewModel()
         {
@@ -32,8 +34,29 @@ namespace RepositoryParser.ViewModel
                 SelectedLanguage = this.GetLocalizedString("English");
 
             CurrentRepositorySavingPath = ConfigurationService.Instance.Configuration.SavingRepositoryPath;
+            CloneWithAllBranches = ConfigurationService.Instance.Configuration.CloneAllBranches;
 
             _isInitialized = true;
+        }
+
+        public bool CloneWithAllBranches
+        {
+            get
+            {
+                return _cloneWithAllBranches;
+            }
+            set
+            {
+                if (_cloneWithAllBranches == value)
+                    return;
+                _cloneWithAllBranches = value;
+                if (_isInitialized)
+                {
+                    ConfigurationService.Instance.Configuration.CloneAllBranches = _cloneWithAllBranches;
+                    ConfigurationService.Instance.SaveChanges();
+                }
+                RaisePropertyChanged();
+            }
         }
 
         public string CurrentRepositorySavingPath
@@ -85,6 +108,17 @@ namespace RepositoryParser.ViewModel
                 OkButtonMessage = "Restart",
                 OkCommand = this.RestartApplicationCommand
             });
+        }
+
+        public RelayCommand SetCloneAllBranchesCommand
+        {
+            get
+            {
+                return _setCloneAllBranchesCommand ?? (_setCloneAllBranchesCommand = new RelayCommand(() =>
+                {
+                    CloneWithAllBranches = !CloneWithAllBranches;
+                }));
+            }
         }
 
         public RelayCommand RestartApplicationCommand

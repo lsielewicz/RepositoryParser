@@ -24,26 +24,28 @@ namespace RepositoryParser.Core.Services
         public bool IsCloned { get; private set; }
         public string ClonePath { get; set; }
 
-        public GitFilePersister(string path, bool clone, string clonePath="")
+        public GitFilePersister(string path, bool clone, string clonePath="", bool cloneAllBranches = true)
         {
-            {
-                if (clone)
-                    UrlPath = path;
-                else
-                    DirectoryPath = path;
+            if (clone)
+                UrlPath = path;
+            else
+                DirectoryPath = path;
 
-                ClonePath = clonePath;
-                IsCloned = !clone;
-                InitializeConnection();
+            ClonePath = clonePath;
+            IsCloned = !clone;
+            if (!IsCloned && !string.IsNullOrEmpty(UrlPath))
+            {
+                CloneRepository(cloneAllBranches:cloneAllBranches);
             }
+
         }
 
-        public GitFilePersister(string path, RepositoryCloneType cloneType, string userName, string passwd, string clonePath="")
+        public GitFilePersister(string path, RepositoryCloneType cloneType, string userName, string passwd, string clonePath="", bool cloneAllBranches = true)
         {
             ClonePath = clonePath;
             UrlPath = path;
             IsCloned = false;
-            CloneRepository(cloneType, userName, passwd);
+            CloneRepository(cloneType, userName, passwd, cloneAllBranches);
             
         }
 
@@ -223,24 +225,16 @@ namespace RepositoryParser.Core.Services
             return ChangeType.Modified;
         }
 
-        private void InitializeConnection()
-        {
-            if (!IsCloned && !string.IsNullOrEmpty(UrlPath))
-            {
-                CloneRepository();
-            }
-        }
-
-        private void CloneRepository(RepositoryCloneType cloneType=RepositoryCloneType.Public, string userName="", string passwd="")
+        private void CloneRepository(RepositoryCloneType cloneType=RepositoryCloneType.Public, string userName="", string passwd="", bool cloneAllBranches=true)
         {
             GitCloneService cloneService = new GitCloneService(UrlPath,ClonePath);
             if (cloneType == RepositoryCloneType.Public)
             {
-                cloneService.CloneRepository(true);
+                cloneService.CloneRepository(cloneAllBranches);
             }
             else
             {
-                cloneService.CloneRepository(true, cloneType, userName, passwd);
+                cloneService.CloneRepository(cloneAllBranches, cloneType, userName, passwd);
             }
             IsCloned = true;
             DirectoryPath = cloneService.DirectoryPath;

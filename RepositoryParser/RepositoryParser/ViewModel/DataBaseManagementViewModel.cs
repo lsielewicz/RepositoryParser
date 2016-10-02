@@ -226,10 +226,14 @@ namespace RepositoryParser.ViewModel
                             {
                                 case RepositoryCloneType.Private:
                                     _repositoryFilePersister = new GitFilePersister(UrlTextBox,
-                                        RepositoryCloneType.Private, username, password, ConfigurationService.Instance.Configuration.SavingRepositoryPath);
+                                        RepositoryCloneType.Private, username, password,
+                                        ConfigurationService.Instance.Configuration.SavingRepositoryPath,
+                                        ConfigurationService.Instance.Configuration.CloneAllBranches);
                                     break;
                                 case RepositoryCloneType.Public:
-                                    _repositoryFilePersister = new GitFilePersister(this.UrlTextBox, !_isLocal, ConfigurationService.Instance.Configuration.SavingRepositoryPath);
+                                    _repositoryFilePersister = new GitFilePersister(this.UrlTextBox, !_isLocal,
+                                        ConfigurationService.Instance.Configuration.SavingRepositoryPath,
+                                        ConfigurationService.Instance.Configuration.CloneAllBranches);
                                     break;
                             }
                             _repositoryFilePersister.AddRepositoryToDataBase(DbService.Instance.SessionFactory);

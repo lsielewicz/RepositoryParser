@@ -621,4 +621,13 @@
   <data name="Yes" xml:space="preserve">
     <value>Tak</value>
   </data>
+  <data name="CloneRepositoryWIthAllBranches" xml:space="preserve">
+    <value>Klonuj repozytorium ze wszystkimi gałęziami</value>
+  </data>
+  <data name="OpenContainingFolder" xml:space="preserve">
+    <value>Otwórz folder</value>
+  </data>
+  <data name="RepositoriesSavingLocation" xml:space="preserve">
+    <value>Miejsce zapisu repozytoriów</value>
+  </data>
 </root>

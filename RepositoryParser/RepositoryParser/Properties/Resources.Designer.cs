@@ -259,6 +259,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clone repository with all branches.
+        /// </summary>
+        public static string CloneRepositoryWIthAllBranches {
+            get {
+                return ResourceManager.GetString("CloneRepositoryWIthAllBranches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Code frequency analyse.
         /// </summary>
         public static string CodeFrequencyAnalyse {
@@ -1024,6 +1033,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open containing folder.
+        /// </summary>
+        public static string OpenContainingFolder {
+            get {
+                return ResourceManager.GetString("OpenContainingFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Overall chart.
         /// </summary>
         public static string OverallChart {
@@ -1110,6 +1128,15 @@ namespace RepositoryParser.Properties {
         public static string RegionAndLanguage {
             get {
                 return ResourceManager.GetString("RegionAndLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Repositories saving location.
+        /// </summary>
+        public static string RepositoriesSavingLocation {
+            get {
+                return ResourceManager.GetString("RepositoriesSavingLocation", resourceCulture);
             }
         }
         
