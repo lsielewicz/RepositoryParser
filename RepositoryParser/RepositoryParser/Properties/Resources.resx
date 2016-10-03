@@ -205,7 +205,7 @@
     <value>Error</value>
   </data>
   <data name="ExportMessage" xml:space="preserve">
-    <value>Export Succesed!</value>
+    <value>Export Successed!</value>
   </data>
   <data name="ExportTitle" xml:space="preserve">
     <value>Export</value>
@@ -582,5 +582,59 @@
   </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="EnterCredentials" xml:space="preserve">
+    <value>Enter the credentials to access</value>
+  </data>
+  <data name="LoginInformation" xml:space="preserve">
+    <value>Login information</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="DoYouReallyWantToExit" xml:space="preserve">
+    <value>Do you really want to exit?</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Polish" xml:space="preserve">
+    <value>Polish</value>
+  </data>
+  <data name="RegionAndLanguage" xml:space="preserve">
+    <value>Region and language</value>
+  </data>
+  <data name="RestartRequired" xml:space="preserve">
+    <value>The application language will be changed just after reboot</value>
+  </data>
+  <data name="SelectDefaultLanguage" xml:space="preserve">
+    <value>Select default language</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="UserPreferences" xml:space="preserve">
+    <value>User preferences</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="CloneRepositoryWIthAllBranches" xml:space="preserve">
+    <value>Clone repository with all branches</value>
+  </data>
+  <data name="OpenContainingFolder" xml:space="preserve">
+    <value>Open containing folder</value>
+  </data>
+  <data name="RepositoriesSavingLocation" xml:space="preserve">
+    <value>Repositories saving location</value>
   </data>
 </root>

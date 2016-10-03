@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using LibGit2Sharp;
 using NHibernate;
 using NHibernate.Util;
+using RepositoryParser.Core.Enum;
 using RepositoryParser.Core.Interfaces;
 using RepositoryParser.DataBaseManagementCore.Configuration;
 using RepositoryParser.DataBaseManagementCore.Entities;
@@ -21,23 +22,31 @@ namespace RepositoryParser.Core.Services
         public string DirectoryPath { get; set; }
         public string UrlPath { get; private set; }
         public bool IsCloned { get; private set; }
+        public string ClonePath { get; set; }
 
-        public GitFilePersister(string path)
+        public GitFilePersister(string path, bool clone, string clonePath="", bool cloneAllBranches = true)
         {
-            DirectoryPath = path;
+            if (clone)
+                UrlPath = path;
+            else
+                DirectoryPath = path;
+
+            ClonePath = clonePath;
+            IsCloned = !clone;
+            if (!IsCloned && !string.IsNullOrEmpty(UrlPath))
+            {
+                CloneRepository(cloneAllBranches:cloneAllBranches);
+            }
+
         }
 
-        public GitFilePersister(string path, bool clone)
+        public GitFilePersister(string path, RepositoryCloneType cloneType, string userName, string passwd, string clonePath="", bool cloneAllBranches = true)
         {
-            {
-                if (clone)
-                    UrlPath = path;
-                else
-                    DirectoryPath = path;
-
-                IsCloned = !clone;
-                InitializeConnection();
-            }
+            ClonePath = clonePath;
+            UrlPath = path;
+            IsCloned = false;
+            CloneRepository(cloneType, userName, passwd, cloneAllBranches);
+            
         }
 
         public void AddRepositoryToDataBase(ISessionFactory sessionFactory)
@@ -216,20 +225,17 @@ namespace RepositoryParser.Core.Services
             return ChangeType.Modified;
         }
 
-        private void InitializeConnection()
+        private void CloneRepository(RepositoryCloneType cloneType=RepositoryCloneType.Public, string userName="", string passwd="", bool cloneAllBranches=true)
         {
-            if (!IsCloned && !string.IsNullOrEmpty(UrlPath))
+            GitCloneService cloneService = new GitCloneService(UrlPath,ClonePath);
+            if (cloneType == RepositoryCloneType.Public)
             {
-                CloneRepository();
+                cloneService.CloneRepository(cloneAllBranches);
             }
-        }
-
-        private void CloneRepository()
-        {
-            string urlPath = Regex.Replace(UrlPath, @"https?", "git");
-            UrlPath = urlPath;
-            GitCloneService cloneService = new GitCloneService(urlPath);
-            cloneService.CloneRepository(true);
+            else
+            {
+                cloneService.CloneRepository(cloneAllBranches, cloneType, userName, passwd);
+            }
             IsCloned = true;
             DirectoryPath = cloneService.DirectoryPath;
         }

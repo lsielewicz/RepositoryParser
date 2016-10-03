@@ -61,7 +61,7 @@ namespace RepositoryParser.ViewModel.WeekdayActivityViewModels
         private string GetWeekday(int number)
         {
             string weekday = $"Weekday{number + 1}";
-            return ResourceManager.GetString(weekday);
+            return this.GetLocalizedString(weekday);
         }
     }
 }

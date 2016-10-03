@@ -61,6 +61,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string About {
+            get {
+                return ResourceManager.GetString("About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Activity of users.
         /// </summary>
         public static string ActivityAnalyseButton {
@@ -151,6 +160,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select item to see changes.
         /// </summary>
         public static string Changes {
@@ -237,6 +255,15 @@ namespace RepositoryParser.Properties {
         public static string ClearingDataBase {
             get {
                 return ResourceManager.GetString("ClearingDataBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clone repository with all branches.
+        /// </summary>
+        public static string CloneRepositoryWIthAllBranches {
+            get {
+                return ResourceManager.GetString("CloneRepositoryWIthAllBranches", resourceCulture);
             }
         }
         
@@ -457,6 +484,33 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you really want to exit?.
+        /// </summary>
+        public static string DoYouReallyWantToExit {
+            get {
+                return ResourceManager.GetString("DoYouReallyWantToExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English.
+        /// </summary>
+        public static string English {
+            get {
+                return ResourceManager.GetString("English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter the credentials to access.
+        /// </summary>
+        public static string EnterCredentials {
+            get {
+                return ResourceManager.GetString("EnterCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string Error {
@@ -475,7 +529,7 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export Succesed!.
+        ///   Looks up a localized string similar to Export Successed!.
         /// </summary>
         public static string ExportMessage {
             get {
@@ -664,6 +718,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Information.
+        /// </summary>
+        public static string Information {
+            get {
+                return ResourceManager.GetString("Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Legend.
         /// </summary>
         public static string Legend {
@@ -705,6 +768,15 @@ namespace RepositoryParser.Properties {
         public static string LocalAdress {
             get {
                 return ResourceManager.GetString("LocalAdress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login information.
+        /// </summary>
+        public static string LoginInformation {
+            get {
+                return ResourceManager.GetString("LoginInformation", resourceCulture);
             }
         }
         
@@ -925,6 +997,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No data to display, check filtering criteria.
         /// </summary>
         public static string NoDataToDisplay {
@@ -948,6 +1029,15 @@ namespace RepositoryParser.Properties {
         public static string NoSelectedRepositoriesMessage {
             get {
                 return ResourceManager.GetString("NoSelectedRepositoriesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open containing folder.
+        /// </summary>
+        public static string OpenContainingFolder {
+            get {
+                return ResourceManager.GetString("OpenContainingFolder", resourceCulture);
             }
         }
         
@@ -997,6 +1087,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Polish.
+        /// </summary>
+        public static string Polish {
+            get {
+                return ResourceManager.GetString("Polish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Presentation.
         /// </summary>
         public static string Presentation {
@@ -1024,11 +1123,38 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Region and language.
+        /// </summary>
+        public static string RegionAndLanguage {
+            get {
+                return ResourceManager.GetString("RegionAndLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Repositories saving location.
+        /// </summary>
+        public static string RepositoriesSavingLocation {
+            get {
+                return ResourceManager.GetString("RepositoriesSavingLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Repository.
         /// </summary>
         public static string Repository {
             get {
                 return ResourceManager.GetString("Repository", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The application language will be changed just after reboot.
+        /// </summary>
+        public static string RestartRequired {
+            get {
+                return ResourceManager.GetString("RestartRequired", resourceCulture);
             }
         }
         
@@ -1042,11 +1168,29 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select default language.
+        /// </summary>
+        public static string SelectDefaultLanguage {
+            get {
+                return ResourceManager.GetString("SelectDefaultLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Send data.
         /// </summary>
         public static string SendDataButton {
             get {
                 return ResourceManager.GetString("SendDataButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
             }
         }
         
@@ -1101,6 +1245,15 @@ namespace RepositoryParser.Properties {
         public static string UserActivityView {
             get {
                 return ResourceManager.GetString("UserActivityView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User preferences.
+        /// </summary>
+        public static string UserPreferences {
+            get {
+                return ResourceManager.GetString("UserPreferences", resourceCulture);
             }
         }
         
@@ -1218,6 +1371,15 @@ namespace RepositoryParser.Properties {
         public static string WeekdayActivityWindowTitle {
             get {
                 return ResourceManager.GetString("WeekdayActivityWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

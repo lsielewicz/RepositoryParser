@@ -14,6 +14,7 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _openFilteringCommand;
         private RelayCommand _openAnalysisCommand;
         private RelayCommand _goToStartScreenCommand;
+        private RelayCommand _openSettingsCommand;
         private bool _isDataBaseEmpty;
 
         public MainViewModel()
@@ -40,6 +41,17 @@ namespace RepositoryParser.ViewModel
                     return;
                 _isDataBaseEmpty = value;
                 RaisePropertyChanged();
+            }
+        }
+
+        public RelayCommand OpenSettingsCommand
+        {
+            get
+            {
+                return _openSettingsCommand ?? (_openAnalysisCommand = new RelayCommand(() =>
+                {
+                    this.NavigateTo(ViewModelLocator.Instance.SettingsViewModel);
+                }));
             }
         }
 

@@ -576,4 +576,58 @@
   <data name="Search" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="EnterCredentials" xml:space="preserve">
+    <value>Wprowadź uprawnienia, aby uzyskać dostęp</value>
+  </data>
+  <data name="LoginInformation" xml:space="preserve">
+    <value>Logowanie</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Informacja</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>O programie</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Anluluj</value>
+  </data>
+  <data name="DoYouReallyWantToExit" xml:space="preserve">
+    <value>Czy na pewno chcesz opuścić aplikację?</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>Angielski</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Nie</value>
+  </data>
+  <data name="Polish" xml:space="preserve">
+    <value>Polski</value>
+  </data>
+  <data name="RegionAndLanguage" xml:space="preserve">
+    <value>Region i język</value>
+  </data>
+  <data name="RestartRequired" xml:space="preserve">
+    <value>Język aplikacji zostanie zmieniony po ponownym uruchomieniu aplikacji.</value>
+  </data>
+  <data name="SelectDefaultLanguage" xml:space="preserve">
+    <value>Wybierz domyślny język</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Ustawienia</value>
+  </data>
+  <data name="UserPreferences" xml:space="preserve">
+    <value>Preferencje użytkownika</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Tak</value>
+  </data>
+  <data name="CloneRepositoryWIthAllBranches" xml:space="preserve">
+    <value>Klonuj repozytorium ze wszystkimi gałęziami</value>
+  </data>
+  <data name="OpenContainingFolder" xml:space="preserve">
+    <value>Otwórz folder</value>
+  </data>
+  <data name="RepositoriesSavingLocation" xml:space="preserve">
+    <value>Miejsce zapisu repozytoriów</value>
+  </data>
 </root>

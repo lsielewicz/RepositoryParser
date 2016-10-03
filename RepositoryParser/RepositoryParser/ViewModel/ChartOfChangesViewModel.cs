@@ -48,8 +48,8 @@ namespace RepositoryParser.ViewModel
                 else if (x.Color == ChangeType.Deleted)
                     deletedCounter++;
             });
-            ChildCollection.Add(new KeyValuePair<string, int>(ResourceManager.GetString("Added"),addedCounter));
-            ChildCollection.Add(new KeyValuePair<string, int>(ResourceManager.GetString("Deleted"), deletedCounter));
+            ChildCollection.Add(new KeyValuePair<string, int>(this.GetLocalizedString("Added"),addedCounter));
+            ChildCollection.Add(new KeyValuePair<string, int>(this.GetLocalizedString("Deleted"), deletedCounter));
         }
         #endregion
     }

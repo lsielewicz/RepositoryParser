@@ -12,7 +12,16 @@
             </GradientStopCollection>
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
-    
+
+    <LinearGradientBrush x:Key="GradientGrayColor" StartPoint="0,0" EndPoint="1,1" Opacity="1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Color="#444444" Offset="0" />
+                <GradientStop Color="#666666" Offset="1" />
+            </GradientStopCollection>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
     <SolidColorBrush x:Key="AppSecondMainColor" Color="#aaaaaa" />
     <SolidColorBrush x:Key="AppMainColor" Color="#1a472a" />
     <SolidColorBrush x:Key="DarkGray" Color="#5d5d5d"/>

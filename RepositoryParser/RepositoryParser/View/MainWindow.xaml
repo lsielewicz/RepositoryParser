@@ -12,6 +12,7 @@
         xmlns:viewModel="clr-namespace:RepositoryParser.ViewModel"
         xmlns:view="clr-namespace:RepositoryParser.View"
         xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
+        xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
         MinHeight="600" MinWidth="1050"
         ShowIconOnTitleBar="True"
@@ -24,7 +25,8 @@
         WindowStartupLocation="CenterScreen"  
         OverrideDefaultWindowCommandsBrush="Black"
         TitlebarHeight="40"
-        Closing="MainWindow_OnClosing">
+        Closing="MainWindow_OnClosing"
+        dialogs:DialogParticipation.Register="{Binding}">
 
     <Controls:MetroWindow.TitleTemplate>
         <DataTemplate>
@@ -98,7 +100,10 @@
         <DataTemplate DataType="{x:Type viewModel:AnalysisViewModel}">
             <view:AnalysisView/>
         </DataTemplate>
-        
+        <!--Settings-->
+        <DataTemplate DataType="{x:Type viewModel:SettingsViewModel}">
+            <view:SettingsView/>
+        </DataTemplate>
     </Window.Resources>
 
     <i:Interaction.Triggers>
@@ -118,8 +123,9 @@
         </Grid.ColumnDefinitions>
 
         <!--Buttons Panel: left -->
-        <StackPanel Grid.Row="1" Grid.Column="0">
-            <imageButton:ImageButton 
+        <DockPanel Grid.Row="1" Grid.Column="0" LastChildFill="False" Margin="0,0,0,20">
+            <imageButton:ImageButton
+                DockPanel.Dock="Top"
                 x:Name="DbManagementBtn"
                 Background="{StaticResource GradientMainColor}"
                 Command="{Binding OpenDataBaseManagementCommand}"
@@ -127,6 +133,7 @@
                 Text="{x:Static resw:Resources.DataBaseManagement}"/>
             
             <imageButton:ImageButton 
+                DockPanel.Dock="Top"
                 x:Name="PresentationBtn"
                 Background="{StaticResource GradientMainColor}"
                 Command="{Binding OpenPresentationCommand}"
@@ -135,6 +142,7 @@
                 IsEnabled="{Binding IsDataBaseEmpty, Converter={StaticResource NegativeBoolConventer}}"/>
                     
             <imageButton:ImageButton 
+                DockPanel.Dock="Top"
                 x:Name="FilteringBtn"
                 Background="{StaticResource GradientMainColor}"
                 Command="{Binding OpenFilteringCommand}"
@@ -143,13 +151,33 @@
                 IsEnabled="{Binding IsDataBaseEmpty, Converter={StaticResource NegativeBoolConventer}}"/>
 
             <imageButton:ImageButton 
+                DockPanel.Dock="Top"
                 x:Name="AnalysisBtn"
                 Background="{StaticResource GradientMainColor}"
                 Command="{Binding OpenAnalysisCommand}"
                 ImageSource="../Assets/Icons/Analysis_grey.png"
                 Text="{x:Static resw:Resources.AnalysisButton}"
                 IsEnabled="{Binding IsDataBaseEmpty, Converter={StaticResource NegativeBoolConventer}}"/>
-        </StackPanel>
+            
+            <imageButton:ImageButton 
+                DockPanel.Dock="Top"
+                x:Name="SettingsButton"
+                Background="{StaticResource GradientGrayColor}"
+                Command="{Binding OpenSettingsCommand}"
+                ImageSource="../Assets/Icons/PNG_DarkGray/Settings 3-100.png"
+                Text="{x:Static resw:Resources.Settings}"
+                Opacity="1"/>
+
+            <imageButton:ImageButton 
+                DockPanel.Dock="Top"
+                x:Name="About"
+                Background="{StaticResource GradientGrayColor}"
+                Command="{Binding}"
+                ImageSource="../Assets/Icons/PNG_DarkGray/About-100.png"
+                Text="{x:Static resw:Resources.About}"
+                Opacity="1"
+                Visibility="Hidden"/>
+        </DockPanel>
 
         <Border 
             Grid.Row="1" 

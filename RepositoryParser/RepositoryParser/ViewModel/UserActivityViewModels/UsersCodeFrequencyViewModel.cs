@@ -10,6 +10,8 @@ using Microsoft.Win32;
 using NHibernate;
 using NHibernate.SqlCommand;
 using NHibernate.Util;
+using RepositoryParser.Controls.MahAppsDialogOverloadings;
+using RepositoryParser.Controls.MahAppsDialogOverloadings.InformationDialog;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
 using RepositoryParser.DataBaseManagementCore.Configuration;
@@ -22,7 +24,6 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
     public class UsersCodeFrequencyViewModel : RepositoryAnalyserViewModelBase
     {
         #region Fields
-        private DifferencesColoringService _colorService;
         private readonly BackgroundWorker _dataCalcWorker;
         private ObservableCollection<KeyValuePair<string, int>> _addedLinesCollection;
         private ObservableCollection<KeyValuePair<string, int>> _deletedLinesCollection;
@@ -125,52 +126,51 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
         {
             _userCodeFreqList = new List<UserCodeFrequency>();
             List<string> authors = GetAuthors();
-            int added, deleted;
-            int sumAdded, sumDeleted;
-            sumAdded = sumDeleted = added = deleted = 0;
 
-            using (var session = DbService.Instance.SessionFactory.OpenSession())
+            int sumAdded=0, sumDeleted=0;
+
+            Parallel.ForEach(authors, author =>
             {
-                session.FlushMode = FlushMode.Never;
-                var query1 = FilteringHelper.Instance.GenerateQuery(session);
-
-                foreach (var author in authors)
+                using (var session = DbService.Instance.SessionFactory.OpenSession())
                 {
-                    added = deleted = 0;
+                    int added= 0, deleted=0;
                     if (author == string.Empty)
-                        continue;
+                        return;
 
                     Changes changezzz = null;
-                    var query = query1.Clone();
+                    var query = FilteringHelper.Instance.GenerateQuery(session);
                     var changeContents =
                         query.JoinAlias(c => c.Changes, () => changezzz, JoinType.InnerJoin)
                             .Where(c => c.Author == author)
                             .SelectList(list => list.Select(() => changezzz.ChangeContent))
                             .List<string>();
+
+                    changeContents = changeContents.Distinct().ToList();
                     changeContents.ForEach(changeContent =>
                     {
-                        _colorService = new DifferencesColoringService(changeContent, string.Empty);
-                        _colorService.FillColorDifferences();
+                        var colorServiceT = new DifferencesColoringService(changeContent, string.Empty);
+                        colorServiceT.FillColorDifferences();
 
-                        added += _colorService.TextAList.Count(x => x.Color == ChangeType.Added);
-                        deleted += _colorService.TextAList.Count(x => x.Color == ChangeType.Deleted);
+                        added += colorServiceT.TextAList.Count(x => x.Color == ChangeType.Added);
+                        deleted += colorServiceT.TextAList.Count(x => x.Color == ChangeType.Deleted);
                     });
                     sumAdded += added;
                     sumDeleted += deleted;
                     _userCodeFreqList.Add(new UserCodeFrequency(author, added, deleted));
                 }
+            });
 
 
-                _summaryList = new List<KeyValuePair<string, int>>()
-                    {
-                        new KeyValuePair<string, int>(ResourceManager.GetString("Added"), sumAdded),
-                        new KeyValuePair<string, int>(ResourceManager.GetString("Deleted"), sumDeleted)
-                    };
-                SummaryString = ResourceManager.GetString("Added") + ": " + sumAdded + " " +
-                                ResourceManager.GetString("Lines") + "\n" +
-                                ResourceManager.GetString("Deleted") + ": " + sumDeleted + " " +
-                                ResourceManager.GetString("Lines");
-            }
+            _summaryList = new List<KeyValuePair<string, int>>()
+                {
+                    new KeyValuePair<string, int>(this.GetLocalizedString("Added"), sumAdded),
+                    new KeyValuePair<string, int>(this.GetLocalizedString("Deleted"), sumDeleted)
+                };
+            SummaryString = this.GetLocalizedString("Added") + ": " + sumAdded + " " +
+                            this.GetLocalizedString("Lines") + "\n" +
+                            this.GetLocalizedString("Deleted") + ": " + sumDeleted + " " +
+                            this.GetLocalizedString("Lines");
+            
         }
 
 
@@ -243,7 +243,7 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
             this.SummaryString = string.Empty;
         }
 
-        private void ExportFile()
+        private async void ExportFile()
         {
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.FileName = "CodeFrequencyData";
@@ -260,12 +260,26 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
                     // Save document
                     string filename = dlg.FileName;
                     DataToCsv.CreateSummaryChartCSV(userCodeFreqList, _summaryString, filename);
-                    MessageBox.Show(ResourceManager.GetString("ExportMessage"),
-                        ResourceManager.GetString("ExportTitle"));
+
+                    await DialogHelper.Instance.ShowDialog(new CustomDialogEntryData()
+                    {
+                        MetroWindow = StaticServiceProvider.MetroWindowInstance,
+                        DialogTitle = this.GetLocalizedString("Information"),
+                        DialogMessage = this.GetLocalizedString("ExportMessage"),
+                        OkButtonMessage = "Ok",
+                        InformationType = InformationType.Information
+                    });
                 }
                 else
                 {
-                    MessageBox.Show(ResourceManager.GetString("ExportFailed"), ResourceManager.GetString("ExportTitle"));
+                    await DialogHelper.Instance.ShowDialog(new CustomDialogEntryData()
+                    {
+                        MetroWindow = StaticServiceProvider.MetroWindowInstance,
+                        DialogTitle = this.GetLocalizedString("Error"),
+                        DialogMessage = this.GetLocalizedString("ExportFailed"),
+                        OkButtonMessage = "Ok",
+                        InformationType = InformationType.Error
+                    });
                 }
             }
         }

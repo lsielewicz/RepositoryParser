@@ -126,8 +126,8 @@
       <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MahApps.Metro, Version=1.2.4.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\MahApps.Metro.dll</HintPath>
+    <Reference Include="MahApps.Metro, Version=1.3.0.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.3.0\lib\net45\MahApps.Metro.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -167,7 +167,7 @@
     </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\packages\MahApps.Metro.1.3.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml" />
@@ -210,12 +210,19 @@
       <HintPath>..\packages\Extended.Wpf.Toolkit.2.9\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ZetaLongPaths, Version=1.0.0.14, Culture=neutral, PublicKeyToken=b764f59068f31f38, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZetaLongPaths.1.0.0.14\lib\net40-full\ZetaLongPaths.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Configuration\ApplicationLanguage.cs" />
+    <Compile Include="Configuration\ConfigurationService.cs" />
+    <Compile Include="Configuration\RepositoryAnalyserConfiguration.cs" />
     <Compile Include="Conventers\BoolToBackgroundColorConventer.cs" />
     <Compile Include="Conventers\BoolToImageConventer.cs" />
     <Compile Include="Conventers\BoolToVisibilityConventer.cs" />
@@ -237,11 +244,14 @@
     <Compile Include="Conventers\ViewModelBaseToVisibilityConventer.cs" />
     <Compile Include="Helpers\ChartingHelper.cs" />
     <Compile Include="Helpers\CustomInputDialog.cs" />
+    <Compile Include="Helpers\DialogHelper.cs" />
     <Compile Include="Helpers\Enums\FilteringColumn.cs" />
     <Compile Include="Helpers\Enums\VisibilityConventerEnumDirection.cs" />
     <Compile Include="Helpers\FilteringHelper.cs" />
+    <Compile Include="Helpers\LocalizationConstants.cs" />
     <Compile Include="Helpers\SplashScreenHelper.cs" />
     <Compile Include="Helpers\StaticServiceProvider.cs" />
+    <Compile Include="Helpers\XmlSerializerHelper.cs" />
     <Compile Include="Properties\Resources.pl-PL.Designer.cs">
       <DependentUpon>Resources.pl-PL.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -262,6 +272,7 @@
     <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityFilesAnalyseViewModel.cs" />
     <Compile Include="ViewModel\PresentationViewModel.cs" />
     <Compile Include="ViewModel\RepositoryAnalyserViewModelBase.cs" />
+    <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\UserActivityViewModels\UsersActivityFilesAnalyseViewModel.cs" />
     <Compile Include="ViewModel\UserActivityViewModels\UsersActivityViewModel.cs" />
     <Compile Include="ViewModel\DayActivityViewModels\DayActivityViewModel.cs" />
@@ -322,6 +333,9 @@
     </Compile>
     <Compile Include="View\PresentationView.xaml.cs">
       <DependentUpon>PresentationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UndockedPresentationWindowView.xaml.cs">
       <DependentUpon>UndockedPresentationWindowView.xaml</DependentUpon>
@@ -457,6 +471,10 @@
     <Page Include="View\PresentationView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UndockedPresentationWindowView.xaml">
       <SubType>Designer</SubType>
@@ -748,6 +766,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Icons\PNG_DarkGray\ContiniousAnalyse_DarkGray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\PNG_DarkGray\Settings 3-100.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\PNG_DarkGray\About-100.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\settings_cropped.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
