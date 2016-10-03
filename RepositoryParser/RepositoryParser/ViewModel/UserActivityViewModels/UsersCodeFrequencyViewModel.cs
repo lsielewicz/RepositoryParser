@@ -145,6 +145,7 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
                             .SelectList(list => list.Select(() => changezzz.ChangeContent))
                             .List<string>();
 
+                    changeContents = changeContents.Distinct().ToList();
                     changeContents.ForEach(changeContent =>
                     {
                         var colorServiceT = new DifferencesColoringService(changeContent, string.Empty);
