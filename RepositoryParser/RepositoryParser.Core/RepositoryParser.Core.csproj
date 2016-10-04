@@ -180,6 +180,7 @@
     <Compile Include="Messages\RefreshMessageToPresentation.cs" />
     <Compile Include="Models\ChangesColorModel.cs" />
     <Compile Include="Models\ChartData.cs" />
+    <Compile Include="Models\CodeFrequencyDataRow.cs" />
     <Compile Include="Models\ExtendedChartSeries.cs" />
     <Compile Include="Models\GitCloneBranch.cs" />
     <Compile Include="Models\UserCodeFrequency.cs" />

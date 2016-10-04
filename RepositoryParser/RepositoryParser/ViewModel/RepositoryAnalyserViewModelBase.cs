@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 using System.Resources;
 using System.Threading;
 using System.Threading.Tasks;
+using De.TorstenMandelkow.MetroChart;
 using GalaSoft.MvvmLight;
 using RepositoryParser.Configuration;
+using RepositoryParser.Core.Models;
 
 namespace RepositoryParser.ViewModel
 {
@@ -80,6 +84,23 @@ namespace RepositoryParser.ViewModel
                     executeUponFinish(true);
                     return;
                 }
+            });
+        }
+
+        public void AddSeriesToChartCollection(IList collection ,string chartTitle, IEnumerable<ChartData> itemsSource)
+        {
+            collection.Add(new ExtendedChartSeries()
+            {
+                ChartTitle = chartTitle,
+                ChartSeries = new ChartSeries()
+                {
+                    Caption = chartTitle,
+                    DisplayMember = "ChartKey",
+                    ValueMember = "ChartValue",
+                    ItemsSource = null,
+                    ToolTip = chartTitle
+                },
+                ItemsSource = itemsSource
             });
         }
     }

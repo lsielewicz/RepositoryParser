@@ -253,4 +253,79 @@
         </ResourceDictionary>
         <!-- add more values with a different key -->
     </metroChart:ResourceDictionaryCollection>
+
+    <metroChart:ResourceDictionaryCollection x:Key="RepositoryAnalyserGradientPaletteSecond">
+        <ResourceDictionary>
+            <LinearGradientBrush x:Key="Brush7" StartPoint="0,0.5" EndPoint="1,0.5" Opacity="1">
+                <LinearGradientBrush.GradientStops>
+                    <GradientStopCollection>
+                        <GradientStop Color="#990000" Offset="0" />
+                        <GradientStop Color="#800000" Offset="1" />
+                    </GradientStopCollection>
+                </LinearGradientBrush.GradientStops>
+            </LinearGradientBrush>
+        </ResourceDictionary>
+        <ResourceDictionary>
+        <LinearGradientBrush x:Key="Brush8" StartPoint="0,0.5" EndPoint="1,0.5" Opacity="1">
+                <LinearGradientBrush.GradientStops>
+                    <GradientStopCollection>
+                        <GradientStop Color="#4169e1" Offset="0" />
+                        <GradientStop Color="#6897bb" Offset="1" />
+                    </GradientStopCollection>
+                </LinearGradientBrush.GradientStops>
+            </LinearGradientBrush>
+        </ResourceDictionary>
+        <ResourceDictionary>
+        <LinearGradientBrush x:Key="Brush10" StartPoint="0,0.5" EndPoint="1,0.5" Opacity="1">
+                <LinearGradientBrush.GradientStops>
+                    <GradientStopCollection>
+                        <GradientStop Color="#e54687" Offset="0" />
+                        <GradientStop Color="#b74157" Offset="1" />
+                    </GradientStopCollection>
+                </LinearGradientBrush.GradientStops>
+            </LinearGradientBrush>
+        </ResourceDictionary>
+        <ResourceDictionary>
+        <LinearGradientBrush x:Key="Brush11" StartPoint="0,0.5" EndPoint="1,0.5" Opacity="1">
+                <LinearGradientBrush.GradientStops>
+                    <GradientStopCollection>
+                        <GradientStop Color="#11e578" Offset="0" />
+                        <GradientStop Color="#00ccff" Offset="1" />
+                    </GradientStopCollection>
+                </LinearGradientBrush.GradientStops>
+            </LinearGradientBrush>
+        </ResourceDictionary>
+        <ResourceDictionary>
+        <LinearGradientBrush x:Key="Brush12" StartPoint="0,0.5" EndPoint="1,0.5" Opacity="1">
+                <LinearGradientBrush.GradientStops>
+                    <GradientStopCollection>
+                        <GradientStop Color="#dd3333" Offset="0" />
+                        <GradientStop Color="#b74157" Offset="1" />
+                    </GradientStopCollection>
+                </LinearGradientBrush.GradientStops>
+            </LinearGradientBrush>
+        </ResourceDictionary>
+        <ResourceDictionary>
+        <LinearGradientBrush x:Key="Brush13" StartPoint="0,0.5" EndPoint="1,0.5" Opacity="1">
+                <LinearGradientBrush.GradientStops>
+                    <GradientStopCollection>
+                        <GradientStop Color="#3d3936" Offset="0" />
+                        <GradientStop Color="#44403c" Offset="1" />
+                    </GradientStopCollection>
+                </LinearGradientBrush.GradientStops>
+            </LinearGradientBrush>
+        </ResourceDictionary>
+        <ResourceDictionary>
+        <LinearGradientBrush x:Key="Brush14" StartPoint="0,0.5" EndPoint="1,0.5" Opacity="1">
+                <LinearGradientBrush.GradientStops>
+                    <GradientStopCollection>
+                        <GradientStop Color="#e8471a" Offset="0" />
+                        <GradientStop Color="#e36817" Offset="1" />
+                    </GradientStopCollection>
+                </LinearGradientBrush.GradientStops>
+            </LinearGradientBrush>
+        </ResourceDictionary>
+      
+        <!-- add more values with a different key -->
+    </metroChart:ResourceDictionaryCollection>
 </ResourceDictionary>

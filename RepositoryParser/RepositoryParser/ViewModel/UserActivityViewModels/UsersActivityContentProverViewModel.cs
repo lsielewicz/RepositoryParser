@@ -1,4 +1,7 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using System.Collections.Generic;
+using GalaSoft.MvvmLight.Command;
+using RepositoryParser.Core.Models;
+using RepositoryParser.ViewModel.UserActivityViewModels.UsersActivityCodeFrequency;
 
 namespace RepositoryParser.ViewModel.UserActivityViewModels
 {

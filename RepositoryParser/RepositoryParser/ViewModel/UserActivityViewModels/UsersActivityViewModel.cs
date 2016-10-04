@@ -67,7 +67,9 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
         {
             get
             {
-                return ViewModelLocator.Instance.Filtering.AuthorsCollection.Count;
+                return ViewModelLocator.Instance.Filtering.SelectedAuthors.Count != 0
+                    ? ViewModelLocator.Instance.Filtering.SelectedAuthors.Count
+                    : ViewModelLocator.Instance.Filtering.AuthorsCollection.Count;
             }
         }
     }

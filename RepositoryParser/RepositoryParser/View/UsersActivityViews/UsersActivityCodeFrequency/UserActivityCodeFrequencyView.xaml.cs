@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace RepositoryParser.View.UsersActivityViews
+namespace RepositoryParser.View.UsersActivityViews.UsersActivityCodeFrequency
 {
     /// <summary>
     /// Interaction logic for UserActivityCodeFrequencyView.xaml

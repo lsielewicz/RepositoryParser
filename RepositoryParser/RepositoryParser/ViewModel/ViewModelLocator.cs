@@ -20,6 +20,7 @@ using RepositoryParser.ViewModel.DayActivityViewModels;
 using RepositoryParser.ViewModel.HourActivityViewModels;
 using RepositoryParser.ViewModel.MonthActivityViewModels;
 using RepositoryParser.ViewModel.UserActivityViewModels;
+using RepositoryParser.ViewModel.UserActivityViewModels.UsersActivityCodeFrequency;
 using RepositoryParser.ViewModel.WeekdayActivityViewModels;
 
 namespace RepositoryParser.ViewModel
