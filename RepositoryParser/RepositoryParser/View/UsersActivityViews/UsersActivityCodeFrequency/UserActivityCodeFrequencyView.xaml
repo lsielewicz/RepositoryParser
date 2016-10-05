@@ -9,12 +9,14 @@
              xmlns:usersActivityCodeFrequency="clr-namespace:RepositoryParser.ViewModel.UserActivityViewModels.UsersActivityCodeFrequency"
              xmlns:usersActivityCodeFrequency1="clr-namespace:RepositoryParser.View.UsersActivityViews.UsersActivityCodeFrequency"
              xmlns:extensions="clr-namespace:RepositoryParser.Controls.Extensions;assembly=RepositoryParser.Controls"
+             xmlns:enums="clr-namespace:RepositoryParser.Helpers.Enums"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator},Path=UsersCodeFrequency}"
              x:Name="Root">
     <UserControl.Resources>
         <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <conventers:CountOfRepositoriesToVisibilityConventer x:Key="CountOfRepositoriesToVisibilityConventer"/>
     </UserControl.Resources>
 
     <Grid>
@@ -26,7 +28,25 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TabControl>
+        <TextBlock
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Visibility="{Binding Path=CountOfSelectedRepositories, 
+                                 ConverterParameter={x:Static enums:VisibilityConventerEnumDirection.Inverse},
+                                 Converter={StaticResource CountOfRepositoriesToVisibilityConventer}}"
+            Text="{x:Static resw:Resources.NoDataToDisplay}"
+            Foreground="#666666"
+            FontSize="28"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontWeight="Light"
+            TextWrapping="WrapWithOverflow"/>
+
+        <TabControl
+            Grid.Row="0"
+            Visibility="{Binding Path=CountOfSelectedRepositories, 
+                                 ConverterParameter={x:Static enums:VisibilityConventerEnumDirection.Normal},
+                                 Converter={StaticResource CountOfRepositoriesToVisibilityConventer}}"            >
             <!--Added Chart-->
             <TabItem 
                 Header="{x:Static resw:Resources.AddedChart}"

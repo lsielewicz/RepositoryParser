@@ -10,6 +10,7 @@ using De.TorstenMandelkow.MetroChart;
 using GalaSoft.MvvmLight;
 using RepositoryParser.Configuration;
 using RepositoryParser.Core.Models;
+using RepositoryParser.Helpers;
 
 namespace RepositoryParser.ViewModel
 {
@@ -103,5 +104,14 @@ namespace RepositoryParser.ViewModel
                 ItemsSource = itemsSource
             });
         }
+
+        public int CountOfSelectedRepositories
+        {
+            get
+            {
+                return FilteringHelper.Instance.SelectedRepositories.Count;
+            }
+        }
+
     }
 }

@@ -82,14 +82,6 @@ namespace RepositoryParser.ViewModel
             }
         }
 
-        public int CountOfSelectedRepositories
-        {
-            get
-            {
-                return FilteringHelper.Instance.SelectedRepositories.Count;
-            }
-        }
-
         public async void ExportFile(string name) 
         {
             SaveFileDialog dlg = new SaveFileDialog();
