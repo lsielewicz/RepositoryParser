@@ -268,6 +268,9 @@
     <Compile Include="ViewModel\DayActivityViewModels\DayActivityFilesAnalyseViewModel.cs" />
     <Compile Include="ViewModel\FilesChartViewModelBase.cs" />
     <Compile Include="ViewModel\FilteringViewModel.cs" />
+    <Compile Include="ViewModel\HourActivityViewModels\HourActivityCodeFrequency\HourAddedChartViewModel.cs" />
+    <Compile Include="ViewModel\HourActivityViewModels\HourActivityCodeFrequency\HourCodeFrequencyViewModel.cs" />
+    <Compile Include="ViewModel\HourActivityViewModels\HourActivityCodeFrequency\HourDeletedChartViewModel.cs" />
     <Compile Include="ViewModel\HourActivityViewModels\HourActivityContentProviderViewModel.cs" />
     <Compile Include="ViewModel\HourActivityViewModels\HourActivityFilesAnalyseViewModel.cs" />
     <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityContentProviderViewModel.cs" />
@@ -326,6 +329,15 @@
     </Compile>
     <Compile Include="View\HourActivityViews\HourActivityChartView.xaml.cs">
       <DependentUpon>HourActivityChartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HourActivityViews\HourActivityCodeFrequency\HourAddedChartView.xaml.cs">
+      <DependentUpon>HourAddedChartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HourActivityViews\HourActivityCodeFrequency\HourCodeFrequencyView.xaml.cs">
+      <DependentUpon>HourCodeFrequencyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HourActivityViews\HourActivityCodeFrequency\HourDeletedChartView.xaml.cs">
+      <DependentUpon>HourDeletedChartView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\HourActivityViews\HourActivityContentProviderView.xaml.cs">
       <DependentUpon>HourActivityContentProviderView.xaml</DependentUpon>
@@ -457,6 +469,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\HourActivityViews\HourActivityChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HourActivityViews\HourActivityCodeFrequency\HourAddedChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HourActivityViews\HourActivityCodeFrequency\HourCodeFrequencyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HourActivityViews\HourActivityCodeFrequency\HourDeletedChartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

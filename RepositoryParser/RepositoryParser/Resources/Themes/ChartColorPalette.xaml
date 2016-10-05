@@ -269,8 +269,8 @@
         <LinearGradientBrush x:Key="Brush8" StartPoint="0,0.5" EndPoint="1,0.5" Opacity="1">
                 <LinearGradientBrush.GradientStops>
                     <GradientStopCollection>
-                        <GradientStop Color="#4169e1" Offset="0" />
-                        <GradientStop Color="#6897bb" Offset="1" />
+                        <GradientStop Color="#e8471a" Offset="0" />
+                        <GradientStop Color="#e36817" Offset="1" />
                     </GradientStopCollection>
                 </LinearGradientBrush.GradientStops>
             </LinearGradientBrush>
@@ -319,8 +319,8 @@
         <LinearGradientBrush x:Key="Brush14" StartPoint="0,0.5" EndPoint="1,0.5" Opacity="1">
                 <LinearGradientBrush.GradientStops>
                     <GradientStopCollection>
-                        <GradientStop Color="#e8471a" Offset="0" />
-                        <GradientStop Color="#e36817" Offset="1" />
+                        <GradientStop Color="#4169e1" Offset="0" />
+                        <GradientStop Color="#6897bb" Offset="1" />
                     </GradientStopCollection>
                 </LinearGradientBrush.GradientStops>
             </LinearGradientBrush>

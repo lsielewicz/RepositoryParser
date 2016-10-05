@@ -6,7 +6,20 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels
     {
         private RelayCommand _openChartViewCommand;
         private RelayCommand _openFilesAnalyseCommand;
+        private RelayCommand _openCodeFrequencyCommand;
         #region Getters setters
+
+        public RelayCommand OpenCodeFrequencyCommand
+        {
+            get
+            {
+                return _openCodeFrequencyCommand ?? (_openCodeFrequencyCommand = new RelayCommand(() =>
+                {
+                    this.NavigateTo(ViewModelLocator.Instance.HourCodeFrequencyViewModel);
+                }));
+            }
+        }
+
         public RelayCommand OpenChartViewCommand
         {
             get
