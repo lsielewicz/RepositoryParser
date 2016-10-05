@@ -261,6 +261,9 @@
     <Compile Include="ViewModel\ChartOfChangesViewModel.cs" />
     <Compile Include="ViewModel\ChartViewModelBase.cs" />
     <Compile Include="ViewModel\DataBaseManagementViewModel.cs" />
+    <Compile Include="ViewModel\DayActivityViewModels\DayActivityCodeFrequency\DayAddedChartViewModel.cs" />
+    <Compile Include="ViewModel\DayActivityViewModels\DayActivityCodeFrequency\DayCodeFrequencyViewModel.cs" />
+    <Compile Include="ViewModel\DayActivityViewModels\DayActivityCodeFrequency\DayDeletedChartViewModel.cs" />
     <Compile Include="ViewModel\DayActivityViewModels\DayActivityContentProviderViewModel.cs" />
     <Compile Include="ViewModel\DayActivityViewModels\DayActivityFilesAnalyseViewModel.cs" />
     <Compile Include="ViewModel\FilesChartViewModelBase.cs" />
@@ -299,6 +302,15 @@
     </Compile>
     <Compile Include="View\DayActivityViews\DayActivityChartView.xaml.cs">
       <DependentUpon>DayActivityChartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DayActivityViews\DayActivityCodeFrequency\DayActivityCodeFrequencyView.xaml.cs">
+      <DependentUpon>DayActivityCodeFrequencyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DayActivityViews\DayActivityCodeFrequency\DayAddedChartView.xaml.cs">
+      <DependentUpon>DayAddedChartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DayActivityViews\DayActivityCodeFrequency\DayDeletedChartView.xaml.cs">
+      <DependentUpon>DayDeletedChartView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\DayActivityViews\DayActivityContentProviderView.xaml.cs">
       <DependentUpon>DayActivityContentProviderView.xaml</DependentUpon>
@@ -413,6 +425,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\DayActivityViews\DayActivityChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DayActivityViews\DayActivityCodeFrequency\DayActivityCodeFrequencyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DayActivityViews\DayActivityCodeFrequency\DayAddedChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DayActivityViews\DayActivityCodeFrequency\DayDeletedChartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

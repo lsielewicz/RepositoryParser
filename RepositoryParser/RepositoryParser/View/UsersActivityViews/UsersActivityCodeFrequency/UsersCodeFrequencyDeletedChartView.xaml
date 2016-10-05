@@ -32,12 +32,11 @@
                             ChartBorderThickness="1"
                             ChartMargin="0"
                             Background="Transparent"
-                            ChartLegendVisibility="Visible"
                             Palette="{StaticResource RepositoryAnalyserGradientPaletteSecond}"
                             ClipToBounds="False"
-                            Height="{Binding CountOfAuthors, Converter={StaticResource IntToLenghtConventer}}"
-                            />
+                            Height="{Binding CountOfAuthors, Converter={StaticResource IntToLenghtConventer}}">
+            </metroChart:StackedBar100Chart>
         </ScrollViewer>
-        <metroChart:Legend Grid.Row="1" ItemsSource="{Binding ChartLegendItems}"/>
+        <!--<metroChart:Legend Grid.Row="1" ItemsSource="{Binding ChartLegendItems}"/>-->
     </Grid>
 </UserControl>

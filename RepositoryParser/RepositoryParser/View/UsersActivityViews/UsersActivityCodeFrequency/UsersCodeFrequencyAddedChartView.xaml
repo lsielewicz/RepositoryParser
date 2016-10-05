@@ -32,7 +32,7 @@
                             ChartBorderThickness="1"
                             ChartMargin="0"
                             Background="Transparent"
-                            ChartLegendVisibility="Visible"
+                            ChartLegendVisibility="Collapsed"
                             Palette="{StaticResource RepositoryAnalyserGradientPalette}"
                             ClipToBounds="False"
                             Height="{Binding CountOfAuthors, Converter={StaticResource IntToLenghtConventer}}"

@@ -17,6 +17,7 @@ using GalaSoft.MvvmLight.Ioc;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Practices.ServiceLocation;
 using RepositoryParser.ViewModel.DayActivityViewModels;
+using RepositoryParser.ViewModel.DayActivityViewModels.DayActivityCodeFrequency;
 using RepositoryParser.ViewModel.HourActivityViewModels;
 using RepositoryParser.ViewModel.MonthActivityViewModels;
 using RepositoryParser.ViewModel.UserActivityViewModels;
@@ -91,6 +92,15 @@ namespace RepositoryParser.ViewModel
             SimpleIoc.Default.Register<MonthActivityContiniousAnalyseViewModel>();
             SimpleIoc.Default.Register<WeekdayActivityContiniousAnalyseViewModel>();
             SimpleIoc.Default.Register<SettingsViewModel>();
+            SimpleIoc.Default.Register<DayCodeFrequencyViewModel>();
+        }
+
+        public DayCodeFrequencyViewModel DayCodeFrequencyViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<DayCodeFrequencyViewModel>();
+            }
         }
 
         public SettingsViewModel SettingsViewModel

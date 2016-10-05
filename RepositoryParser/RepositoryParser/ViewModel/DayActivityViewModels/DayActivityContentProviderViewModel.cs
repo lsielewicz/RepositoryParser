@@ -6,11 +6,23 @@ namespace RepositoryParser.ViewModel.DayActivityViewModels
     {
         private RelayCommand _openChartViewCommand;
         private RelayCommand _openFilesAnalyseCommand;
+        private RelayCommand _openCodeFrequencyCommand;
 
         #region Getters setters
         public override void OnLoad()
         {
             CurrentViewModel = null;
+        }
+
+        public RelayCommand OpenCodeFrequencyCommand
+        {
+            get
+            {
+                return _openCodeFrequencyCommand ?? (_openCodeFrequencyCommand = new RelayCommand(() =>
+                {
+                    this.NavigateTo(ViewModelLocator.Instance.DayCodeFrequencyViewModel);
+                }));
+            }
         }
 
         public RelayCommand OpenFilesAnalyseCommand
