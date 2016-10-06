@@ -298,6 +298,9 @@
     <Compile Include="ViewModel\WeekdayActivityViewModels\WeekdayActivityContentProviderViewModel.cs" />
     <Compile Include="ViewModel\WeekdayActivityViewModels\WeekdayActivityContiniousAnalyseViewModel.cs" />
     <Compile Include="ViewModel\WeekdayActivityViewModels\WeekdayActivityFilesAnalyseViewModel.cs" />
+    <Compile Include="ViewModel\WeekdayActivityViewModels\WeekdayCodeFrequency\WeekdayAddedChartViewModel.cs" />
+    <Compile Include="ViewModel\WeekdayActivityViewModels\WeekdayCodeFrequency\WeekdayCodeFrequencyViewModel.cs" />
+    <Compile Include="ViewModel\WeekdayActivityViewModels\WeekdayCodeFrequency\WeekdayDeletedChartViewModel.cs" />
     <Compile Include="View\AnalysisView.xaml.cs">
       <DependentUpon>AnalysisView.xaml</DependentUpon>
     </Compile>
@@ -399,6 +402,15 @@
     </Compile>
     <Compile Include="View\WeekdayActivityViews\WeekdayActivityChartView.xaml.cs">
       <DependentUpon>WeekdayActivityChartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\WeekdayActivityViews\WeekdayActivityCodeFrequency\WeekdayAddedChartView.xaml.cs">
+      <DependentUpon>WeekdayAddedChartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\WeekdayActivityViews\WeekdayActivityCodeFrequency\WeekdayCodeFrequencyView.xaml.cs">
+      <DependentUpon>WeekdayCodeFrequencyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\WeekdayActivityViews\WeekdayActivityCodeFrequency\WeekdayDeletedChartView.xaml.cs">
+      <DependentUpon>WeekdayDeletedChartView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\WeekdayActivityViews\WeekdayActivityContentProviderView.xaml.cs">
       <DependentUpon>WeekdayActivityContentProviderView.xaml</DependentUpon>
@@ -586,6 +598,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\WeekdayActivityViews\WeekdayActivityChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WeekdayActivityViews\WeekdayActivityCodeFrequency\WeekdayAddedChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WeekdayActivityViews\WeekdayActivityCodeFrequency\WeekdayCodeFrequencyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WeekdayActivityViews\WeekdayActivityCodeFrequency\WeekdayDeletedChartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

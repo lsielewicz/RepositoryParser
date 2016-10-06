@@ -77,7 +77,7 @@
                 Foreground="Black"
                 ImageSource="../../Assets/Icons/PNG_Gray/Code-100.png"
                 Text="{x:Static resw:Resources.CountOfLines}"
-                    Height="45"/>
+                Height="45"/>
             <imageButton:ImageButton 
                 Command="{Binding OpenFilesAnalyseCommand}" 
                 BorderBrush="{StaticResource LightGray}"

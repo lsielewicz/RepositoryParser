@@ -1,0 +1,121 @@
+﻿<UserControl x:Class="RepositoryParser.View.WeekdayActivityViews.WeekdayActivityCodeFrequency.WeekdayCodeFrequencyView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RepositoryParser.View.WeekdayActivityViews.WeekdayActivityCodeFrequency"
+             xmlns:resw="clr-namespace:RepositoryParser.Properties"
+             xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
+             xmlns:enums="clr-namespace:RepositoryParser.Helpers.Enums"
+             xmlns:monthActivityCodeFrequency="clr-namespace:RepositoryParser.View.MonthActivityViews.MonthActivityCodeFrequency"
+             xmlns:extensions="clr-namespace:RepositoryParser.Controls.Extensions;assembly=RepositoryParser.Controls"
+             xmlns:metroLoadingProgressRing="clr-namespace:RepositoryParser.Controls.MetroLoadingProgressRing;assembly=RepositoryParser.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             x:Name="Root"
+             DataContext="{Binding Source={StaticResource Locator}, Path=WeekdayCodeFrequencyViewModel}">
+    <UserControl.Resources>
+        <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <conventers:CountOfRepositoriesToVisibilityConventer x:Key="CountOfRepositoriesToVisibilityConventer"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Visibility="{Binding Path=CountOfSelectedRepositories, 
+                                 ConverterParameter={x:Static enums:VisibilityConventerEnumDirection.Inverse},
+                                 Converter={StaticResource CountOfRepositoriesToVisibilityConventer}}"
+            Text="{x:Static resw:Resources.NoDataToDisplay}"
+            Foreground="#666666"
+            FontSize="28"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontWeight="Light"
+            TextWrapping="WrapWithOverflow"/>
+
+        <TabControl
+            Grid.Row="0"
+            Visibility="{Binding Path=CountOfSelectedRepositories, 
+                        ConverterParameter={x:Static enums:VisibilityConventerEnumDirection.Normal},
+                        Converter={StaticResource CountOfRepositoriesToVisibilityConventer}}">
+            <!--Added Chart-->
+            <TabItem 
+                Header="{x:Static resw:Resources.AddedChart}"
+                DataContext="{Binding ElementName=Root, Path=DataContext.AddedChartViewModel}">
+                <local:WeekdayAddedChartView/>
+            </TabItem>
+            <!--Deleted Chart-->
+            <TabItem
+                Header="{x:Static resw:Resources.DeletedChart}"
+                DataContext="{Binding ElementName=Root, Path=DataContext.DeletedChartViewModel}">
+                <local:WeekdayDeletedChartView/>
+            </TabItem>
+            <!--Summary-->
+            <TabItem Header="{x:Static resw:Resources.Summary}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" 
+                            Background="{StaticResource AppMainColor}"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            >
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5">
+                            <TextBlock Foreground="{StaticResource Grey}"
+                                       Text="{Binding SummaryString}"
+                                       FontWeight="Light"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       FontSize="14" 
+                                       />
+                        </StackPanel>
+                    </Border>
+                    <DataGrid Grid.Row="1" Grid.Column="0"
+                        ItemsSource="{Binding CodeFrequencyDataRows}"
+                        CanUserSortColumns="True"
+                        AutoGenerateColumns="False"
+                        ColumnWidth="auto"
+                        CanUserAddRows="False"
+                        IsReadOnly="True"
+                        VerticalScrollBarVisibility="Auto"
+                        Style="{StaticResource AzureDataGrid}"
+                        extensions:DataGridExtensions.LastColumnFill="True"
+                        >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding ChartKey}" Header="{x:Static resw:Resources.Month}" SortDirection="Ascending"/>
+                            <DataGridTextColumn Binding="{Binding Repository}" Header="{x:Static resw:Resources.Repository}" Width="200">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style>
+                                        <Setter Property="FrameworkElement.HorizontalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding AddedLines}" Header="{x:Static resw:Resources.Added}" Width="Auto"/>
+                            <DataGridTextColumn Binding="{Binding DeletedLines}" Header="{x:Static resw:Resources.Deleted}"/>
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <!--Progress-->
+        <metroLoadingProgressRing:MetroLoadingProgressRing
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.RowSpan="2"
+            IsDataLoadingFlag="{Binding IsLoading,UpdateSourceTrigger=PropertyChanged}"
+            Text="{x:Static resw:Resources.AnalysingDataMessage}"/>
+    </Grid>
+</UserControl>
