@@ -106,14 +106,16 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels.HourActivityCodeFreq
                             {
                                 RepositoryValue = selectedRepository,
                                 ChartKey = TimeSpan.FromHours(hour).ToString("hh':'mm"),
-                                ChartValue = added
+                                ChartValue = added,
+                                NumericChartValue= hour
                             });
 
                             deletedItemsSource.Add(new ChartData()
                             {
                                 RepositoryValue = selectedRepository,
                                 ChartKey = TimeSpan.FromHours(hour).ToString("hh':'mm"),
-                                ChartValue = deleted
+                                ChartValue = deleted,
+                                NumericChartValue = hour
                             });
 
                             if (added != 0 || deleted != 0)

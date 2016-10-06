@@ -108,14 +108,16 @@ namespace RepositoryParser.ViewModel.DayActivityViewModels.DayActivityCodeFreque
                             {
                                 RepositoryValue = selectedRepository,
                                 ChartKey = day.ToString(),
-                                ChartValue = added
+                                ChartValue = added,
+                                NumericChartValue = day
                             });
 
                             deletedItemsSource.Add(new ChartData()
                             {
                                 RepositoryValue = selectedRepository,
                                 ChartKey = day.ToString(),
-                                ChartValue = deleted
+                                ChartValue = deleted,
+                                NumericChartValue = day
                             });
 
                             if (added != 0 || deleted != 0)

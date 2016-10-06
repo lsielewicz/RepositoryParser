@@ -53,11 +53,14 @@ namespace RepositoryParser.ViewModel
         public void DrawChart()
         {
             ChartInstance.Series.Clear();
-            
+            bool isOrdered=ExtendedChartSeries.Any(e => e.ItemsSource.Any(i => i.NumericChartValue != 0));
             ExtendedChartSeries.ForEach(c =>
             {
                 ChartInstance.Series.Add(c.ChartSeries);
-                c.ChartSeries.ItemsSource = c.ItemsSource.OrderBy(i=>i.ChartKey, new StringNumericComparer());
+                if (isOrdered)
+                    c.ChartSeries.ItemsSource = c.ItemsSource.OrderBy(i => i.NumericChartValue);
+                else
+                    c.ChartSeries.ItemsSource = c.ItemsSource;
             });
             this.ChartLegendItems = new ObservableCollection<ChartLegendItemViewModel>(ChartInstance.ChartLegendItems);
             this.RaisePropertyChanged("ChartLegendItems");
@@ -68,15 +71,26 @@ namespace RepositoryParser.ViewModel
             if (this.ExtendedChartSeries != null && this.ExtendedChartSeries.Any() && this.DataCollection != null)
             {
                 DataCollection.Clear();
+                bool isOrdered = ExtendedChartSeries.Any(e => e.ItemsSource.Any(i => i.NumericChartValue != 0));
                 ExtendedChartSeries.ForEach(c =>
                 {
                     if (c.ItemsSource == null || !c.ItemsSource.Any())
                         return;
-
-                    foreach (var item in c.ItemsSource.OrderBy(i=>i.ChartKey, new StringNumericComparer()))
+                    if (isOrdered)
                     {
-                        if(item.ChartValue != 0)
-                            DataCollection.Add(item);
+                        foreach (var item in c.ItemsSource.OrderBy(i => i.NumericChartValue))
+                        {
+                            if (item.ChartValue != 0)
+                                DataCollection.Add(item);
+                        }
+                    }
+                    else
+                    {
+                        foreach (var item in c.ItemsSource)
+                        {
+                            if (item.ChartValue != 0)
+                                DataCollection.Add(item);
+                        }
                     }
                 });
                 RaisePropertyChanged("DataCollection");
