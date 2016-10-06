@@ -21,6 +21,7 @@ using RepositoryParser.ViewModel.DayActivityViewModels.DayActivityCodeFrequency;
 using RepositoryParser.ViewModel.HourActivityViewModels;
 using RepositoryParser.ViewModel.HourActivityViewModels.HourActivityCodeFrequency;
 using RepositoryParser.ViewModel.MonthActivityViewModels;
+using RepositoryParser.ViewModel.MonthActivityViewModels.MonthActivityCodeFrequency;
 using RepositoryParser.ViewModel.UserActivityViewModels;
 using RepositoryParser.ViewModel.UserActivityViewModels.UsersActivityCodeFrequency;
 using RepositoryParser.ViewModel.WeekdayActivityViewModels;
@@ -95,6 +96,15 @@ namespace RepositoryParser.ViewModel
             SimpleIoc.Default.Register<SettingsViewModel>();
             SimpleIoc.Default.Register<DayCodeFrequencyViewModel>();
             SimpleIoc.Default.Register<HourCodeFrequencyViewModel>();
+            SimpleIoc.Default.Register<MonthCodeFrequencyViewModel>();
+        }
+
+        public MonthCodeFrequencyViewModel MonthCodeFrequencyViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<MonthCodeFrequencyViewModel>();
+            }
         }
 
         public HourCodeFrequencyViewModel HourCodeFrequencyViewModel

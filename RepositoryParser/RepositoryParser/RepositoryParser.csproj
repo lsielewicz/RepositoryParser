@@ -274,6 +274,9 @@
     <Compile Include="ViewModel\HourActivityViewModels\HourActivityCodeFrequency\HourDeletedChartViewModel.cs" />
     <Compile Include="ViewModel\HourActivityViewModels\HourActivityContentProviderViewModel.cs" />
     <Compile Include="ViewModel\HourActivityViewModels\HourActivityFilesAnalyseViewModel.cs" />
+    <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityCodeFrequency\MonthAddedChartViewModel.cs" />
+    <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityCodeFrequency\MonthCodeFrequencyViewModel.cs" />
+    <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityCodeFrequency\MonthDeletedChartViewModel.cs" />
     <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityContentProviderViewModel.cs" />
     <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityContiniousAnalyseViewModel.cs" />
     <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityFilesAnalyseViewModel.cs" />
@@ -348,6 +351,15 @@
     </Compile>
     <Compile Include="View\MonthActivityViews\MonthActivityChartView.xaml.cs">
       <DependentUpon>MonthActivityChartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MonthActivityViews\MonthActivityCodeFrequency\MonthAddedChartView.xaml.cs">
+      <DependentUpon>MonthAddedChartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MonthActivityViews\MonthActivityCodeFrequency\MonthCodeFrequencyView.xaml.cs">
+      <DependentUpon>MonthCodeFrequencyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MonthActivityViews\MonthActivityCodeFrequency\MonthDeletedChartView.xaml.cs">
+      <DependentUpon>MonthDeletedChartView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MonthActivityViews\MonthActivityContentProviderView.xaml.cs">
       <DependentUpon>MonthActivityContentProviderView.xaml</DependentUpon>
@@ -494,6 +506,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MonthActivityViews\MonthActivityChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MonthActivityViews\MonthActivityCodeFrequency\MonthAddedChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MonthActivityViews\MonthActivityCodeFrequency\MonthCodeFrequencyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MonthActivityViews\MonthActivityCodeFrequency\MonthDeletedChartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -841,6 +865,7 @@
   <ItemGroup>
     <Resource Include="Assets\Images\settings_cropped.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
