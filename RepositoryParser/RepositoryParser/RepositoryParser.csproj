@@ -243,6 +243,7 @@
     <Compile Include="Conventers\StringToImageConventer.cs" />
     <Compile Include="Conventers\ViewModelBaseToVisibilityConventer.cs" />
     <Compile Include="Helpers\ChartingHelper.cs" />
+    <Compile Include="Helpers\Comparers\StringNumericComparer.cs" />
     <Compile Include="Helpers\CustomInputDialog.cs" />
     <Compile Include="Helpers\DialogHelper.cs" />
     <Compile Include="Helpers\Enums\FilteringColumn.cs" />

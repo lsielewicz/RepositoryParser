@@ -94,7 +94,7 @@
                         extensions:DataGridExtensions.LastColumnFill="True"
                         >
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding NumericChartKey}" Header="{x:Static resw:Resources.Day}" SortDirection="Ascending"/>
+                            <DataGridTextColumn Binding="{Binding ChartKey}" Header="{x:Static resw:Resources.Hour}" SortDirection="Ascending"/>
                             <DataGridTextColumn Binding="{Binding Repository}" Header="{x:Static resw:Resources.Repository}" Width="200">
                                 <DataGridTextColumn.CellStyle>
                                     <Style>

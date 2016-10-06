@@ -13,6 +13,7 @@ using RepositoryParser.Controls.MahAppsDialogOverloadings.InformationDialog;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
 using RepositoryParser.Helpers;
+using RepositoryParser.Helpers.Comparers;
 
 namespace RepositoryParser.ViewModel
 {
@@ -52,11 +53,11 @@ namespace RepositoryParser.ViewModel
         public void DrawChart()
         {
             ChartInstance.Series.Clear();
-            ChartInstance.UpdateLayout();
+            
             ExtendedChartSeries.ForEach(c =>
             {
                 ChartInstance.Series.Add(c.ChartSeries);
-                c.ChartSeries.ItemsSource = c.ItemsSource;
+                c.ChartSeries.ItemsSource = c.ItemsSource.OrderBy(i=>i.ChartKey, new StringNumericComparer());
             });
             this.ChartLegendItems = new ObservableCollection<ChartLegendItemViewModel>(ChartInstance.ChartLegendItems);
             this.RaisePropertyChanged("ChartLegendItems");
@@ -72,7 +73,7 @@ namespace RepositoryParser.ViewModel
                     if (c.ItemsSource == null || !c.ItemsSource.Any())
                         return;
 
-                    foreach (var item in c.ItemsSource)
+                    foreach (var item in c.ItemsSource.OrderBy(i=>i.ChartKey, new StringNumericComparer()))
                     {
                         if(item.ChartValue != 0)
                             DataCollection.Add(item);

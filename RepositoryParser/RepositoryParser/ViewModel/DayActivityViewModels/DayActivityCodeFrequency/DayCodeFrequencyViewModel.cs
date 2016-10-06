@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using NHibernate.Criterion;
 using NHibernate.SqlCommand;
 using NHibernate.Util;
 using RepositoryParser.Core.Models;
@@ -75,21 +76,31 @@ namespace RepositoryParser.ViewModel.DayActivityViewModels.DayActivityCodeFreque
 
                             Changes changezzz = null;
                             var query = FilteringHelper.Instance.GenerateQuery(session, selectedRepository);
-                            var changeContents =
+                            var changeIds =
                                 query.JoinAlias(c => c.Changes, () => changezzz, JoinType.InnerJoin)
-                                    .Where(c => c.Date.Day == day)
-                                    .SelectList(list => list.Select(() => changezzz.ChangeContent))
-                                    .List<string>();
+                                .Where(c => c.Date.Day == day)
+                                .SelectList(list => list.SelectGroup(() => changezzz.Id))
+                                .List<int>();
 
-                            changeContents = changeContents.Distinct().ToList();
-                            changeContents.ForEach(changeContent =>
+                            changeIds.ForEach(changeId =>
                             {
-                                var colorServiceT = new DifferencesColoringService(changeContent, string.Empty);
-                                colorServiceT.FillColorDifferences();
+                                using (var session2 = DbService.Instance.SessionFactory.OpenSession())
+                                {
+                                    var getChangeContent =
+                                    session2.QueryOver<Changes>()
+                                       .Where(c => c.Id == changeId)
+                                       .Select(c => c.ChangeContent)
+                                       .SingleOrDefault<string>();
 
-                                added += colorServiceT.TextAList.Count(x => x.Color == ChangeType.Added);
-                                deleted += colorServiceT.TextAList.Count(x => x.Color == ChangeType.Deleted);
+                                    var colorServiceT = new DifferencesColoringService(getChangeContent, string.Empty);
+                                    colorServiceT.FillColorDifferences();
+
+                                    added += colorServiceT.TextAList.Count(x => x.Color == ChangeType.Added);
+                                    deleted += colorServiceT.TextAList.Count(x => x.Color == ChangeType.Deleted);
+                                }
+                               
                             });
+
                             sumAdded += added;
                             sumDeleted += deleted;
 
@@ -140,6 +151,7 @@ namespace RepositoryParser.ViewModel.DayActivityViewModels.DayActivityCodeFreque
 
             this.AddedChartViewModel.RedrawChart(this.AddedLinesChartList);
             this.DeletedChartViewModel.RedrawChart(this.DeletedLinesChartList);
+
             this.IsLoading = false;
         }
 

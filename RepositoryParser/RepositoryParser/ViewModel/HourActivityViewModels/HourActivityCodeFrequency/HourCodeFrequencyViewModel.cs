@@ -74,21 +74,31 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels.HourActivityCodeFreq
 
                             Changes changezzz = null;
                             var query = FilteringHelper.Instance.GenerateQuery(session, selectedRepository);
-                            var changeContents =
-                                query.JoinAlias(c => c.Changes, () => changezzz, JoinType.InnerJoin)
-                                    .Where(c => c.Date.Hour == hour)
-                                    .SelectList(list => list.Select(() => changezzz.ChangeContent))
-                                    .List<string>();
+                            var changeIds =
+                               query.JoinAlias(c => c.Changes, () => changezzz, JoinType.InnerJoin)
+                               .Where(c => c.Date.Hour == hour)
+                               .SelectList(list => list.SelectGroup(() => changezzz.Id))
+                               .List<int>();
 
-                            changeContents = changeContents.Distinct().ToList();
-                            changeContents.ForEach(changeContent =>
+                            changeIds.ForEach(changeId =>
                             {
-                                var colorServiceT = new DifferencesColoringService(changeContent, string.Empty);
-                                colorServiceT.FillColorDifferences();
+                                using (var session2 = DbService.Instance.SessionFactory.OpenSession())
+                                {
+                                    var getChangeContent =
+                                    session2.QueryOver<Changes>()
+                                       .Where(c => c.Id == changeId)
+                                       .Select(c => c.ChangeContent)
+                                       .SingleOrDefault<string>();
 
-                                added += colorServiceT.TextAList.Count(x => x.Color == ChangeType.Added);
-                                deleted += colorServiceT.TextAList.Count(x => x.Color == ChangeType.Deleted);
+                                    var colorServiceT = new DifferencesColoringService(getChangeContent, string.Empty);
+                                    colorServiceT.FillColorDifferences();
+
+                                    added += colorServiceT.TextAList.Count(x => x.Color == ChangeType.Added);
+                                    deleted += colorServiceT.TextAList.Count(x => x.Color == ChangeType.Deleted);
+                                }
+
                             });
+
                             sumAdded += added;
                             sumDeleted += deleted;
 
@@ -115,7 +125,8 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels.HourActivityCodeFreq
                                         Repository = selectedRepository,
                                         ChartKey = TimeSpan.FromHours(hour).ToString("hh':'mm"),
                                         AddedLines = added,
-                                        DeletedLines = deleted
+                                        DeletedLines = deleted,
+                                        NumericChartKey = hour
                                     });
                                 });
                             }
@@ -139,6 +150,7 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels.HourActivityCodeFreq
 
             this.AddedChartViewModel.RedrawChart(this.AddedLinesChartList);
             this.DeletedChartViewModel.RedrawChart(this.DeletedLinesChartList);
+           
             this.IsLoading = false;
         }
     }
