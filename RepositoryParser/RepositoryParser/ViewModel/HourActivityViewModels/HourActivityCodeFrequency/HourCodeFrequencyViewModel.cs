@@ -64,40 +64,35 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels.HourActivityCodeFreq
                     var addedItemsSource = new List<ChartData>();
                     var deletedItemsSource = new List<ChartData>();
 
-                    var hours = Enumerable.Range(0,24).ToList();
+                    var hours = Enumerable.Range(0, 24).ToList();
 
                     Parallel.ForEach(hours, hour =>
                     {
                         using (var session = DbService.Instance.SessionFactory.OpenSession())
                         {
                             int added = 0, deleted = 0;
+                            var commits =
+                                FilteringHelper.Instance.GenerateQuery(session, selectedRepository)
+                                    .List<Commit>()
+                                    .Where(c => c.Date.Hour == hour).Select(c => c.Id).Distinct().ToList();
 
-                            Changes changezzz = null;
-                            var query = FilteringHelper.Instance.GenerateQuery(session, selectedRepository);
-                            var changeIds =
-                               query.JoinAlias(c => c.Changes, () => changezzz, JoinType.InnerJoin)
-                               .Where(c => c.Date.Hour == hour)
-                               .SelectList(list => list.SelectGroup(() => changezzz.Id))
-                               .List<int>();
-
-                            changeIds.ForEach(changeId =>
+                            using (var session2 = DbService.Instance.SessionFactory.OpenSession())
                             {
-                                using (var session2 = DbService.Instance.SessionFactory.OpenSession())
-                                {
-                                    var getChangeContent =
+                                Commit commitAlias = null;
+                                var changes =
                                     session2.QueryOver<Changes>()
-                                       .Where(c => c.Id == changeId)
-                                       .Select(c => c.ChangeContent)
-                                       .SingleOrDefault<string>();
+                                        .JoinAlias(change => change.Commit, () => commitAlias, JoinType.InnerJoin)
+                                        .WhereRestrictionOn(() => commitAlias.Id).IsIn(commits).List<Changes>();
 
-                                    var colorServiceT = new DifferencesColoringService(getChangeContent, string.Empty);
+                                changes.ForEach(change =>
+                                {
+                                    var colorServiceT = new DifferencesColoringService(change.ChangeContent, string.Empty);
                                     colorServiceT.FillColorDifferences();
 
                                     added += colorServiceT.TextAList.Count(x => x.Color == ChangeType.Added);
                                     deleted += colorServiceT.TextAList.Count(x => x.Color == ChangeType.Deleted);
-                                }
-
-                            });
+                                });
+                            }
 
                             sumAdded += added;
                             sumDeleted += deleted;
@@ -107,7 +102,7 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels.HourActivityCodeFreq
                                 RepositoryValue = selectedRepository,
                                 ChartKey = TimeSpan.FromHours(hour).ToString("hh':'mm"),
                                 ChartValue = added,
-                                NumericChartValue= hour
+                                NumericChartValue = hour
                             });
 
                             deletedItemsSource.Add(new ChartData()
@@ -152,7 +147,7 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels.HourActivityCodeFreq
 
             this.AddedChartViewModel.RedrawChart(this.AddedLinesChartList);
             this.DeletedChartViewModel.RedrawChart(this.DeletedLinesChartList);
-           
+
             this.IsLoading = false;
         }
     }
