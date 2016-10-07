@@ -1,5 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using NHibernate.Criterion;
+using RepositoryParser.CommonUI;
+using RepositoryParser.CommonUI.BaseViewModels;
 using RepositoryParser.DataBaseManagementCore.Entities;
 using RepositoryParser.DataBaseManagementCore.Services;
 using RepositoryParser.Helpers;

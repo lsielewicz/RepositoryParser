@@ -2,22 +2,17 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using GalaSoft.MvvmLight.Command;
-using NHibernate.Criterion;
 using NHibernate.SqlCommand;
-using NHibernate.Transform;
 using RepositoryParser.DataBaseManagementCore.Entities;
 using RepositoryParser.DataBaseManagementCore.Services;
 using RepositoryParser.Helpers;
-using EnumerableExtensions = NHibernate.Util.EnumerableExtensions;
 
-namespace RepositoryParser.ViewModel
+namespace RepositoryParser.CommonUI.BaseViewModels
 {
     public abstract class FilesChartViewModelBase : ChartViewModelBase
     {

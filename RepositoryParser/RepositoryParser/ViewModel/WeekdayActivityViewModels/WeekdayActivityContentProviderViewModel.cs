@@ -1,4 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using RepositoryParser.CommonUI;
+using RepositoryParser.CommonUI.BaseViewModels;
 
 namespace RepositoryParser.ViewModel.WeekdayActivityViewModels
 {
@@ -7,6 +9,19 @@ namespace RepositoryParser.ViewModel.WeekdayActivityViewModels
         private RelayCommand _openChartViewCommand;
         private RelayCommand _openFilesAnalyseCommand;
         private RelayCommand _openContiniousAnalyseCommand;
+        private RelayCommand _openCodeFrequencyCommand;
+
+
+        public RelayCommand OpenCodeFrequencyCommand
+        {
+            get
+            {
+                return this._openCodeFrequencyCommand ?? (this._openCodeFrequencyCommand = new RelayCommand(() =>
+                {
+                    this.NavigateTo(ViewModelLocator.Instance.WeekdayCodeFrequencyViewModel);
+                }));
+            }
+        }
 
         public RelayCommand OpenContiniousAnalyseCommand
         {

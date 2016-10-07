@@ -12,17 +12,22 @@
   See http://www.galasoft.ch/mvvm
 */
 
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Practices.ServiceLocation;
+using RepositoryParser.ViewModel;
 using RepositoryParser.ViewModel.DayActivityViewModels;
+using RepositoryParser.ViewModel.DayActivityViewModels.DayActivityCodeFrequency;
 using RepositoryParser.ViewModel.HourActivityViewModels;
+using RepositoryParser.ViewModel.HourActivityViewModels.HourActivityCodeFrequency;
 using RepositoryParser.ViewModel.MonthActivityViewModels;
+using RepositoryParser.ViewModel.MonthActivityViewModels.MonthActivityCodeFrequency;
 using RepositoryParser.ViewModel.UserActivityViewModels;
+using RepositoryParser.ViewModel.UserActivityViewModels.UsersActivityCodeFrequency;
 using RepositoryParser.ViewModel.WeekdayActivityViewModels;
+using RepositoryParser.ViewModel.WeekdayActivityViewModels.WeekdayCodeFrequency;
 
-namespace RepositoryParser.ViewModel
+namespace RepositoryParser.CommonUI
 {
     /// <summary>
     /// This class contains static references to all the view models in the
@@ -90,6 +95,42 @@ namespace RepositoryParser.ViewModel
             SimpleIoc.Default.Register<MonthActivityContiniousAnalyseViewModel>();
             SimpleIoc.Default.Register<WeekdayActivityContiniousAnalyseViewModel>();
             SimpleIoc.Default.Register<SettingsViewModel>();
+            SimpleIoc.Default.Register<DayCodeFrequencyViewModel>();
+            SimpleIoc.Default.Register<HourCodeFrequencyViewModel>();
+            SimpleIoc.Default.Register<MonthCodeFrequencyViewModel>();
+            SimpleIoc.Default.Register<WeekdayCodeFrequencyViewModel>();
+        }
+
+        public WeekdayCodeFrequencyViewModel WeekdayCodeFrequencyViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<WeekdayCodeFrequencyViewModel>();
+            }
+        }
+
+        public MonthCodeFrequencyViewModel MonthCodeFrequencyViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<MonthCodeFrequencyViewModel>();
+            }
+        }
+
+        public HourCodeFrequencyViewModel HourCodeFrequencyViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<HourCodeFrequencyViewModel>();
+            }
+        }
+
+        public DayCodeFrequencyViewModel DayCodeFrequencyViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<DayCodeFrequencyViewModel>();
+            }
         }
 
         public SettingsViewModel SettingsViewModel

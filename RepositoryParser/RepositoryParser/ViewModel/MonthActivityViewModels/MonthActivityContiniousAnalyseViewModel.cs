@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using NHibernate.Criterion;
+using RepositoryParser.CommonUI.BaseViewModels;
 using RepositoryParser.Core.Models;
 using RepositoryParser.DataBaseManagementCore.Entities;
 using RepositoryParser.DataBaseManagementCore.Services;

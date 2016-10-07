@@ -9,6 +9,8 @@
              xmlns:resw="clr-namespace:RepositoryParser.Properties"
              xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
              xmlns:weekdayActivityViewModels="clr-namespace:RepositoryParser.ViewModel.WeekdayActivityViewModels"
+             xmlns:weekdayCodeFrequency="clr-namespace:RepositoryParser.ViewModel.WeekdayActivityViewModels.WeekdayCodeFrequency"
+             xmlns:weekdayActivityCodeFrequency="clr-namespace:RepositoryParser.View.WeekdayActivityViews.WeekdayActivityCodeFrequency"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator}, Path=WeekdayActivityContentProvider}"
@@ -17,6 +19,10 @@
         <!--Count of commits-->
         <DataTemplate DataType="{x:Type weekdayActivityViewModels:WeekDayActivityViewModel}">
             <local:WeekdayActivityChartView/>
+        </DataTemplate>
+        <!--Code Frequency-->
+        <DataTemplate DataType="{x:Type weekdayCodeFrequency:WeekdayCodeFrequencyViewModel}">
+            <weekdayActivityCodeFrequency:WeekdayCodeFrequencyView/>
         </DataTemplate>
         <!--Files-->
         <DataTemplate DataType="{x:Type weekdayActivityViewModels:WeekdayActivityFilesAnalyseViewModel}">
@@ -60,6 +66,18 @@
                     Foreground="Black"
                     ImageSource="../../Assets/Icons/PNG_Gray/Poll Topic-100.png"
                     Text="{x:Static resw:Resources.CountOfCommits}"
+                    Height="45"/>
+                <imageButton:ImageButton
+                    Command="{Binding OpenCodeFrequencyCommand}"
+                    x:Name="Btn2" 
+                    BorderBrush="{StaticResource LightGray}"
+                    BorderThickness="0,0,0,0.5"
+                    ImageHeight="32"
+                    ImageWidth="32"
+                    Background="Transparent"
+                    Foreground="Black"
+                    ImageSource="../../Assets/Icons/PNG_Gray/Code-100.png"
+                    Text="{x:Static resw:Resources.CountOfLines}"
                     Height="45"/>
                 <imageButton:ImageButton 
                     Command="{Binding OpenFilesAnalyseCommand}" 

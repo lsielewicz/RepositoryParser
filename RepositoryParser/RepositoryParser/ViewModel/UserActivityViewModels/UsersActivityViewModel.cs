@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using NHibernate.Criterion;
 using NHibernate.Util;
+using RepositoryParser.CommonUI.BaseViewModels;
 using RepositoryParser.Core.Models;
 using RepositoryParser.DataBaseManagementCore.Entities;
 using RepositoryParser.DataBaseManagementCore.Services;
@@ -63,12 +64,5 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
             return authors;
         }
 
-        public int CountOfAuthors
-        {
-            get
-            {
-                return ViewModelLocator.Instance.Filtering.AuthorsCollection.Count;
-            }
-        }
     }
 }

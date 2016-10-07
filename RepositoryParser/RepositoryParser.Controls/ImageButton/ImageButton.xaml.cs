@@ -10,11 +10,11 @@ namespace RepositoryParser.Controls.ImageButton
     /// </summary>
     public partial class ImageButton : Button
     {
-        public static DependencyProperty ImageSourceProperty = DependencyProperty.RegisterAttached("ImageSource",typeof(ImageSource),typeof(ImageButton),new FrameworkPropertyMetadata(null));
-        public static DependencyProperty TextProperty = DependencyProperty.RegisterAttached("Text",typeof(String),typeof(ImageButton),new FrameworkPropertyMetadata(String.Empty));
-        public static DependencyProperty ImageHeightProperty = DependencyProperty.RegisterAttached("ImageHeight",typeof(double), typeof(ImageButton), new PropertyMetadata(32.0));
-        public static DependencyProperty ImageWidthProperty = DependencyProperty.RegisterAttached("ImageWidth", typeof(double), typeof(ImageButton), new PropertyMetadata(32.0));
-        public static DependencyProperty IsTileProperty = DependencyProperty.RegisterAttached("IsTile", typeof(bool), typeof(ImageButton), new PropertyMetadata(false));
+        public static DependencyProperty ImageSourceProperty = DependencyProperty.Register("ImageSource",typeof(ImageSource),typeof(ImageButton),new FrameworkPropertyMetadata(null));
+        public static DependencyProperty TextProperty = DependencyProperty.Register("Text",typeof(String),typeof(ImageButton),new FrameworkPropertyMetadata(String.Empty));
+        public static DependencyProperty ImageHeightProperty = DependencyProperty.Register("ImageHeight",typeof(double), typeof(ImageButton), new PropertyMetadata(32.0));
+        public static DependencyProperty ImageWidthProperty = DependencyProperty.Register("ImageWidth", typeof(double), typeof(ImageButton), new PropertyMetadata(32.0));
+        public static DependencyProperty IsTileProperty = DependencyProperty.Register("IsTile", typeof(bool), typeof(ImageButton), new PropertyMetadata(false));
 
         public bool IsTile
         {

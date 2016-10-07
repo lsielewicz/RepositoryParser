@@ -5,7 +5,6 @@ using System.Data.SQLite;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Windows;
 using RepositoryParser.Core.Interfaces;
 
 namespace RepositoryParser.Core.Services

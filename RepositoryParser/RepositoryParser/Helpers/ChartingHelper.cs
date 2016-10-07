@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 using De.TorstenMandelkow.MetroChart;
-using RepositoryParser.ViewModel;
+using RepositoryParser.CommonUI.BaseViewModels;
 
 namespace RepositoryParser.Helpers
 {

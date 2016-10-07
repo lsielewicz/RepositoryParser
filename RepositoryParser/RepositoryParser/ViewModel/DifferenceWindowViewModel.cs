@@ -9,6 +9,7 @@ using System.Windows.Threading;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using NHibernate.Util;
+using RepositoryParser.CommonUI.BaseViewModels;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;

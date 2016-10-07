@@ -9,6 +9,8 @@
              xmlns:resw="clr-namespace:RepositoryParser.Properties"
              xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
              xmlns:userActivityViewModels="clr-namespace:RepositoryParser.ViewModel.UserActivityViewModels"
+             xmlns:usersActivityCodeFrequency="clr-namespace:RepositoryParser.ViewModel.UserActivityViewModels.UsersActivityCodeFrequency"
+             xmlns:usersActivityCodeFrequency1="clr-namespace:RepositoryParser.View.UsersActivityViews.UsersActivityCodeFrequency"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator}, Path=UsersActivityContentProvider}"
@@ -20,8 +22,8 @@
             <local:UserActivityChartView/>
         </DataTemplate>
         <!--Count of lines-->
-        <DataTemplate DataType="{x:Type userActivityViewModels:UsersCodeFrequencyViewModel}">
-            <local:UserActivityCodeFrequencyView/>
+        <DataTemplate DataType="{x:Type usersActivityCodeFrequency:UsersCodeFrequencyViewModel}">
+            <usersActivityCodeFrequency1:UserActivityCodeFrequencyView/>
         </DataTemplate>
         <!--Files-->
         <DataTemplate DataType="{x:Type userActivityViewModels:UsersActivityFilesAnalyseViewModel}">

@@ -2,11 +2,12 @@
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Forms;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using MahApps.Metro.Controls.Dialogs;
+using RepositoryParser.CommonUI;
+using RepositoryParser.CommonUI.BaseViewModels;
 using RepositoryParser.Configuration;
 using RepositoryParser.Controls.MahAppsDialogOverloadings;
 using RepositoryParser.Controls.MahAppsDialogOverloadings.InformationDialog;
@@ -16,8 +17,6 @@ using RepositoryParser.Core.Messages;
 using RepositoryParser.Core.Services;
 using RepositoryParser.DataBaseManagementCore.Services;
 using RepositoryParser.Helpers;
-using Application = System.Windows.Application;
-using MessageBox = System.Windows.MessageBox;
 
 namespace RepositoryParser.ViewModel
 {

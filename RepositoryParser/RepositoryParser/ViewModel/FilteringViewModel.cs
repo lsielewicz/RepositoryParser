@@ -9,6 +9,7 @@ using GalaSoft.MvvmLight.Messaging;
 using NHibernate.SqlCommand;
 using NHibernate.Transform;
 using NHibernate.Util;
+using RepositoryParser.CommonUI.BaseViewModels;
 using RepositoryParser.Core.Messages;
 using RepositoryParser.DataBaseManagementCore.Entities;
 using RepositoryParser.DataBaseManagementCore.Services;

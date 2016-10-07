@@ -10,6 +10,8 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:imageButton="clr-namespace:RepositoryParser.Controls.ImageButton;assembly=RepositoryParser.Controls"
              xmlns:monthActivityViewModels="clr-namespace:RepositoryParser.ViewModel.MonthActivityViewModels"
+             xmlns:monthActivityCodeFrequency="clr-namespace:RepositoryParser.ViewModel.MonthActivityViewModels.MonthActivityCodeFrequency"
+             xmlns:monthActivityCodeFrequency1="clr-namespace:RepositoryParser.View.MonthActivityViews.MonthActivityCodeFrequency"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator}, Path=MonthActivityContentProvider}">
@@ -17,6 +19,10 @@
         <!--Count of commits-->
         <DataTemplate DataType="{x:Type monthActivityViewModels:MonthActivityChartViewModel}">
             <local:MonthActivityChartView/>
+        </DataTemplate>
+        <!--Code Frequency-->
+        <DataTemplate DataType="{x:Type monthActivityCodeFrequency:MonthCodeFrequencyViewModel}">
+            <monthActivityCodeFrequency1:MonthCodeFrequencyView/>
         </DataTemplate>
         <!--Files-->
         <DataTemplate DataType="{x:Type monthActivityViewModels:MonthActivityFilesAnalyseViewModel}">
@@ -59,6 +65,18 @@
                 Foreground="Black"
                 ImageSource="../../Assets/Icons/PNG_Gray/Poll Topic-100.png"
                 Text="{x:Static resw:Resources.CountOfCommits}"
+                Height="45"/>
+            <imageButton:ImageButton
+                Command="{Binding OpenCodeFrequencyCommand}"
+                x:Name="Btn2" 
+                BorderBrush="{StaticResource LightGray}"
+                BorderThickness="0,0,0,0.5"
+                ImageHeight="32"
+                ImageWidth="32"
+                Background="Transparent"
+                Foreground="Black"
+                ImageSource="../../Assets/Icons/PNG_Gray/Code-100.png"
+                Text="{x:Static resw:Resources.CountOfLines}"
                 Height="45"/>
             <imageButton:ImageButton 
                 Command="{Binding OpenFilesAnalyseCommand}" 

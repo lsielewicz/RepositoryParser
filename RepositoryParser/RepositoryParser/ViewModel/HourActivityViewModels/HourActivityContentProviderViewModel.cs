@@ -1,4 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using RepositoryParser.CommonUI;
+using RepositoryParser.CommonUI.BaseViewModels;
 
 namespace RepositoryParser.ViewModel.HourActivityViewModels
 {
@@ -6,7 +8,20 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels
     {
         private RelayCommand _openChartViewCommand;
         private RelayCommand _openFilesAnalyseCommand;
+        private RelayCommand _openCodeFrequencyCommand;
         #region Getters setters
+
+        public RelayCommand OpenCodeFrequencyCommand
+        {
+            get
+            {
+                return _openCodeFrequencyCommand ?? (_openCodeFrequencyCommand = new RelayCommand(() =>
+                {
+                    this.NavigateTo(ViewModelLocator.Instance.HourCodeFrequencyViewModel);
+                }));
+            }
+        }
+
         public RelayCommand OpenChartViewCommand
         {
             get

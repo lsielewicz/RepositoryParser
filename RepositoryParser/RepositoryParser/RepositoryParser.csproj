@@ -220,6 +220,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CommonUI\BaseViewModels\CodeFrequencyViewModelBase.cs" />
+    <Compile Include="CommonUI\CodeFrequency\CodeFrequencySubChartViewModel.cs" />
     <Compile Include="Configuration\ApplicationLanguage.cs" />
     <Compile Include="Configuration\ConfigurationService.cs" />
     <Compile Include="Configuration\RepositoryAnalyserConfiguration.cs" />
@@ -243,6 +245,7 @@
     <Compile Include="Conventers\StringToImageConventer.cs" />
     <Compile Include="Conventers\ViewModelBaseToVisibilityConventer.cs" />
     <Compile Include="Helpers\ChartingHelper.cs" />
+    <Compile Include="Helpers\Comparers\StringNumericComparer.cs" />
     <Compile Include="Helpers\CustomInputDialog.cs" />
     <Compile Include="Helpers\DialogHelper.cs" />
     <Compile Include="Helpers\Enums\FilteringColumn.cs" />
@@ -259,19 +262,22 @@
     </Compile>
     <Compile Include="ViewModel\AnalysisViewModel.cs" />
     <Compile Include="ViewModel\ChartOfChangesViewModel.cs" />
-    <Compile Include="ViewModel\ChartViewModelBase.cs" />
+    <Compile Include="CommonUI\BaseViewModels\ChartViewModelBase.cs" />
     <Compile Include="ViewModel\DataBaseManagementViewModel.cs" />
+    <Compile Include="ViewModel\DayActivityViewModels\DayActivityCodeFrequency\DayCodeFrequencyViewModel.cs" />
     <Compile Include="ViewModel\DayActivityViewModels\DayActivityContentProviderViewModel.cs" />
     <Compile Include="ViewModel\DayActivityViewModels\DayActivityFilesAnalyseViewModel.cs" />
-    <Compile Include="ViewModel\FilesChartViewModelBase.cs" />
+    <Compile Include="CommonUI\BaseViewModels\FilesChartViewModelBase.cs" />
     <Compile Include="ViewModel\FilteringViewModel.cs" />
+    <Compile Include="ViewModel\HourActivityViewModels\HourActivityCodeFrequency\HourCodeFrequencyViewModel.cs" />
     <Compile Include="ViewModel\HourActivityViewModels\HourActivityContentProviderViewModel.cs" />
     <Compile Include="ViewModel\HourActivityViewModels\HourActivityFilesAnalyseViewModel.cs" />
+    <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityCodeFrequency\MonthCodeFrequencyViewModel.cs" />
     <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityContentProviderViewModel.cs" />
     <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityContiniousAnalyseViewModel.cs" />
     <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityFilesAnalyseViewModel.cs" />
     <Compile Include="ViewModel\PresentationViewModel.cs" />
-    <Compile Include="ViewModel\RepositoryAnalyserViewModelBase.cs" />
+    <Compile Include="CommonUI\BaseViewModels\RepositoryAnalyserViewModelBase.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\UserActivityViewModels\UsersActivityFilesAnalyseViewModel.cs" />
     <Compile Include="ViewModel\UserActivityViewModels\UsersActivityViewModel.cs" />
@@ -281,11 +287,12 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityChartViewModel.cs" />
     <Compile Include="ViewModel\UserActivityViewModels\UsersActivityContentProverViewModel.cs" />
-    <Compile Include="ViewModel\UserActivityViewModels\UsersCodeFrequencyViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="ViewModel\UserActivityViewModels\UsersActivityCodeFrequency\UsersCodeFrequencyViewModel.cs" />
+    <Compile Include="CommonUI\ViewModelLocator.cs" />
     <Compile Include="ViewModel\WeekdayActivityViewModels\WeekdayActivityContentProviderViewModel.cs" />
     <Compile Include="ViewModel\WeekdayActivityViewModels\WeekdayActivityContiniousAnalyseViewModel.cs" />
     <Compile Include="ViewModel\WeekdayActivityViewModels\WeekdayActivityFilesAnalyseViewModel.cs" />
+    <Compile Include="ViewModel\WeekdayActivityViewModels\WeekdayCodeFrequency\WeekdayCodeFrequencyViewModel.cs" />
     <Compile Include="View\AnalysisView.xaml.cs">
       <DependentUpon>AnalysisView.xaml</DependentUpon>
     </Compile>
@@ -297,6 +304,15 @@
     </Compile>
     <Compile Include="View\DayActivityViews\DayActivityChartView.xaml.cs">
       <DependentUpon>DayActivityChartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DayActivityViews\DayActivityCodeFrequency\DayActivityCodeFrequencyView.xaml.cs">
+      <DependentUpon>DayActivityCodeFrequencyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DayActivityViews\DayActivityCodeFrequency\DayAddedChartView.xaml.cs">
+      <DependentUpon>DayAddedChartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DayActivityViews\DayActivityCodeFrequency\DayDeletedChartView.xaml.cs">
+      <DependentUpon>DayDeletedChartView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\DayActivityViews\DayActivityContentProviderView.xaml.cs">
       <DependentUpon>DayActivityContentProviderView.xaml</DependentUpon>
@@ -313,6 +329,15 @@
     <Compile Include="View\HourActivityViews\HourActivityChartView.xaml.cs">
       <DependentUpon>HourActivityChartView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\HourActivityViews\HourActivityCodeFrequency\HourAddedChartView.xaml.cs">
+      <DependentUpon>HourAddedChartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HourActivityViews\HourActivityCodeFrequency\HourCodeFrequencyView.xaml.cs">
+      <DependentUpon>HourCodeFrequencyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HourActivityViews\HourActivityCodeFrequency\HourDeletedChartView.xaml.cs">
+      <DependentUpon>HourDeletedChartView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\HourActivityViews\HourActivityContentProviderView.xaml.cs">
       <DependentUpon>HourActivityContentProviderView.xaml</DependentUpon>
     </Compile>
@@ -321,6 +346,15 @@
     </Compile>
     <Compile Include="View\MonthActivityViews\MonthActivityChartView.xaml.cs">
       <DependentUpon>MonthActivityChartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MonthActivityViews\MonthActivityCodeFrequency\MonthAddedChartView.xaml.cs">
+      <DependentUpon>MonthAddedChartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MonthActivityViews\MonthActivityCodeFrequency\MonthCodeFrequencyView.xaml.cs">
+      <DependentUpon>MonthCodeFrequencyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MonthActivityViews\MonthActivityCodeFrequency\MonthDeletedChartView.xaml.cs">
+      <DependentUpon>MonthDeletedChartView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MonthActivityViews\MonthActivityContentProviderView.xaml.cs">
       <DependentUpon>MonthActivityContentProviderView.xaml</DependentUpon>
@@ -343,7 +377,7 @@
     <Compile Include="View\UsersActivityViews\UserActivityChartView.xaml.cs">
       <DependentUpon>UserActivityChartView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UsersActivityViews\UserActivityCodeFrequencyView.xaml.cs">
+    <Compile Include="View\UsersActivityViews\UsersActivityCodeFrequency\UserActivityCodeFrequencyView.xaml.cs">
       <DependentUpon>UserActivityCodeFrequencyView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UsersActivityViews\UserActivityContentProviderView.xaml.cs">
@@ -352,8 +386,23 @@
     <Compile Include="View\UsersActivityViews\UserActivityFilesAnalyseView.xaml.cs">
       <DependentUpon>UserActivityFilesAnalyseView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UsersActivityViews\UsersActivityCodeFrequency\UsersCodeFrequencyAddedChartView.xaml.cs">
+      <DependentUpon>UsersCodeFrequencyAddedChartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UsersActivityViews\UsersActivityCodeFrequency\UsersCodeFrequencyDeletedChartView.xaml.cs">
+      <DependentUpon>UsersCodeFrequencyDeletedChartView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\WeekdayActivityViews\WeekdayActivityChartView.xaml.cs">
       <DependentUpon>WeekdayActivityChartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\WeekdayActivityViews\WeekdayActivityCodeFrequency\WeekdayAddedChartView.xaml.cs">
+      <DependentUpon>WeekdayAddedChartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\WeekdayActivityViews\WeekdayActivityCodeFrequency\WeekdayCodeFrequencyView.xaml.cs">
+      <DependentUpon>WeekdayCodeFrequencyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\WeekdayActivityViews\WeekdayActivityCodeFrequency\WeekdayDeletedChartView.xaml.cs">
+      <DependentUpon>WeekdayDeletedChartView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\WeekdayActivityViews\WeekdayActivityContentProviderView.xaml.cs">
       <DependentUpon>WeekdayActivityContentProviderView.xaml</DependentUpon>
@@ -408,6 +457,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\DayActivityViews\DayActivityCodeFrequency\DayActivityCodeFrequencyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DayActivityViews\DayActivityCodeFrequency\DayAddedChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DayActivityViews\DayActivityCodeFrequency\DayDeletedChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\DayActivityViews\DayActivityContentProviderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -428,6 +489,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\HourActivityViews\HourActivityCodeFrequency\HourAddedChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HourActivityViews\HourActivityCodeFrequency\HourCodeFrequencyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HourActivityViews\HourActivityCodeFrequency\HourDeletedChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\HourActivityViews\HourActivityContentProviderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -437,6 +510,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MonthActivityViews\MonthActivityChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MonthActivityViews\MonthActivityCodeFrequency\MonthAddedChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MonthActivityViews\MonthActivityCodeFrequency\MonthCodeFrequencyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MonthActivityViews\MonthActivityCodeFrequency\MonthDeletedChartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -484,7 +569,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UsersActivityViews\UserActivityCodeFrequencyView.xaml">
+    <Page Include="View\UsersActivityViews\UsersActivityCodeFrequency\UserActivityCodeFrequencyView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -496,7 +581,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\UsersActivityViews\UsersActivityCodeFrequency\UsersCodeFrequencyAddedChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UsersActivityViews\UsersActivityCodeFrequency\UsersCodeFrequencyDeletedChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\WeekdayActivityViews\WeekdayActivityChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WeekdayActivityViews\WeekdayActivityCodeFrequency\WeekdayAddedChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WeekdayActivityViews\WeekdayActivityCodeFrequency\WeekdayCodeFrequencyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WeekdayActivityViews\WeekdayActivityCodeFrequency\WeekdayDeletedChartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -776,6 +881,7 @@
   <ItemGroup>
     <Resource Include="Assets\Images\settings_cropped.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

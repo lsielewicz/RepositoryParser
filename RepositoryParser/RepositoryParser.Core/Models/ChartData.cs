@@ -5,5 +5,6 @@
         public string ChartKey { get; set; }
         public int ChartValue { get; set; }
         public string RepositoryValue { get; set; }
+        public int NumericChartValue { get; set; }
     }
 }

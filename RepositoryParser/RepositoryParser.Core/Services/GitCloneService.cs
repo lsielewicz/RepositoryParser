@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 using LibGit2Sharp;
-using LibGit2Sharp.Handlers;
 using RepositoryParser.Core.Enum;
 using RepositoryParser.Core.Models;
 

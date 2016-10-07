@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using RepositoryParser.CommonUI.BaseViewModels;
 using RepositoryParser.Core.Models;
 using RepositoryParser.DataBaseManagementCore.Entities;
 using RepositoryParser.DataBaseManagementCore.Services;
@@ -49,11 +50,5 @@ namespace RepositoryParser.ViewModel.WeekdayActivityViewModels
             this.IsLoading = false;
         }
 
-        private string GetWeekday(int number)
-        {
-            string weekday = $"Weekday{number+1}";
-            return this.GetLocalizedString(weekday);
-        }
- 
     }
 }

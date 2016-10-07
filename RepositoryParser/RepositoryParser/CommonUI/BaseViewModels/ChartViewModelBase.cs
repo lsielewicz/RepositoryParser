@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows;
 using De.TorstenMandelkow.MetroChart;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
@@ -12,7 +11,7 @@ using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
 using RepositoryParser.Helpers;
 
-namespace RepositoryParser.ViewModel
+namespace RepositoryParser.CommonUI.BaseViewModels
 {
     public abstract class ChartViewModelBase : RepositoryAnalyserViewModelBase
     {
@@ -50,11 +49,14 @@ namespace RepositoryParser.ViewModel
         public void DrawChart()
         {
             ChartInstance.Series.Clear();
-            ChartInstance.UpdateLayout();
+            bool isOrdered=ExtendedChartSeries.Any(e => e.ItemsSource.Any(i => i.NumericChartValue != 0));
             ExtendedChartSeries.ForEach(c =>
             {
                 ChartInstance.Series.Add(c.ChartSeries);
-                c.ChartSeries.ItemsSource = c.ItemsSource;
+                if (isOrdered)
+                    c.ChartSeries.ItemsSource = c.ItemsSource.OrderBy(i => i.NumericChartValue);
+                else
+                    c.ChartSeries.ItemsSource = c.ItemsSource;
             });
             this.ChartLegendItems = new ObservableCollection<ChartLegendItemViewModel>(ChartInstance.ChartLegendItems);
             this.RaisePropertyChanged("ChartLegendItems");
@@ -65,26 +67,29 @@ namespace RepositoryParser.ViewModel
             if (this.ExtendedChartSeries != null && this.ExtendedChartSeries.Any() && this.DataCollection != null)
             {
                 DataCollection.Clear();
+                bool isOrdered = ExtendedChartSeries.Any(e => e.ItemsSource.Any(i => i.NumericChartValue != 0));
                 ExtendedChartSeries.ForEach(c =>
                 {
                     if (c.ItemsSource == null || !c.ItemsSource.Any())
                         return;
-
-                    foreach (var item in c.ItemsSource)
+                    if (isOrdered)
                     {
-                        if(item.ChartValue != 0)
-                            DataCollection.Add(item);
+                        foreach (var item in c.ItemsSource.OrderBy(i => i.NumericChartValue))
+                        {
+                            if (item.ChartValue != 0)
+                                DataCollection.Add(item);
+                        }
+                    }
+                    else
+                    {
+                        foreach (var item in c.ItemsSource)
+                        {
+                            if (item.ChartValue != 0)
+                                DataCollection.Add(item);
+                        }
                     }
                 });
                 RaisePropertyChanged("DataCollection");
-            }
-        }
-
-        public int CountOfSelectedRepositories
-        {
-            get
-            {
-                return FilteringHelper.Instance.SelectedRepositories.Count;
             }
         }
 

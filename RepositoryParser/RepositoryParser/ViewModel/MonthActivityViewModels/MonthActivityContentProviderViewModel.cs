@@ -1,4 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using RepositoryParser.CommonUI;
+using RepositoryParser.CommonUI.BaseViewModels;
 
 
 namespace RepositoryParser.ViewModel.MonthActivityViewModels
@@ -8,6 +10,18 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
         private RelayCommand _openChartViewCommand;
         private RelayCommand _openFilesAnalyseCommand;
         private RelayCommand _openContiniousAnalyseCommand;
+        private RelayCommand _openCodeFrequencyCommand;
+
+        public RelayCommand OpenCodeFrequencyCommand
+        {
+            get
+            {
+                return this._openCodeFrequencyCommand ?? (this._openCodeFrequencyCommand = new RelayCommand(() =>
+                {
+                    this.NavigateTo(ViewModelLocator.Instance.MonthCodeFrequencyViewModel);
+                }));
+            }
+        }
 
         public RelayCommand OpenContiniousAnalyseCommand
         {
