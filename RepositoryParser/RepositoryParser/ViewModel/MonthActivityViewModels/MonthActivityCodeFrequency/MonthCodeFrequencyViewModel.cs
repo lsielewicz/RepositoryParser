@@ -17,43 +17,11 @@ using RepositoryParser.Helpers;
 
 namespace RepositoryParser.ViewModel.MonthActivityViewModels.MonthActivityCodeFrequency
 {
-    public class MonthCodeFrequencyViewModel : RepositoryAnalyserViewModelBase
+    public class MonthCodeFrequencyViewModel : CodeFrequencyViewModelBase
     {
-        #region Fields
-        public List<ExtendedChartSeries> AddedLinesChartList;
-        public List<ExtendedChartSeries> DeletedLinesChartList;
-
-        public CodeFrequencySubChartViewModel AddedChartViewModel { get; set; }
-        public CodeFrequencySubChartViewModel DeletedChartViewModel { get; set; }
-
-        public string SummaryString { get; set; }
-        public ObservableCollection<CodeFrequencyDataRow> CodeFrequencyDataRows { get; private set; }
-        #endregion
-
-        public MonthCodeFrequencyViewModel()
+        public override async void FillData()
         {
-            this.AddedLinesChartList = new List<ExtendedChartSeries>();
-            this.DeletedLinesChartList = new List<ExtendedChartSeries>();
-            this.AddedChartViewModel = new CodeFrequencySubChartViewModel();
-            this.DeletedChartViewModel = new CodeFrequencySubChartViewModel();
-            this.CodeFrequencyDataRows = new ObservableCollection<CodeFrequencyDataRow>();
-        }
-
-        public override void OnLoad()
-        {
-            base.OnLoad();
-            this.FillData();
-        }
-
-        private async void FillData()
-        {
-            if (this.AddedLinesChartList != null && this.AddedLinesChartList.Any())
-                this.AddedLinesChartList.Clear();
-            if (this.DeletedLinesChartList != null && this.DeletedLinesChartList.Any())
-                this.DeletedLinesChartList.Clear();
-            if (this.CodeFrequencyDataRows != null && this.CodeFrequencyDataRows.Any())
-                this.CodeFrequencyDataRows.Clear();
-
+            this.ClearCollections();
             int sumAdded = 0, sumDeleted = 0;
 
             await Task.Run(new Action(() =>

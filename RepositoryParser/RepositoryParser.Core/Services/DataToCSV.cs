@@ -15,34 +15,37 @@ namespace RepositoryParser.Core.Services
         public static void CreateCSVFromDictionary(Dictionary<string, int> data, string csvPath)
         {
             String csv = String.Join(
-            Environment.NewLine,
-            data.Select(d => d.Key + ";\t" + d.Value)
-                 );
+                Environment.NewLine,
+                data.Select(d => d.Key + ";\t" + d.Value)
+                );
             File.WriteAllText(csvPath, csv, Encoding.UTF8);
         }
+
         public static void CreateCSVFromDictionary(Dictionary<int, int> data, string csvPath)
         {
             String csv = String.Join(
-            Environment.NewLine,
-            data.Select(d => d.Key + ";\t" + d.Value)
-                 );
+                Environment.NewLine,
+                data.Select(d => d.Key + ";\t" + d.Value)
+                );
             File.WriteAllText(csvPath, csv, Encoding.UTF8);
         }
+
         public static void CreateCSVFromGitCommitsList(List<Commit> data, string csvPath)
         {
             String csv = String.Join(
-            Environment.NewLine,
-            data.Select(d => d.Id + ";" + d.Message + ";" + d.Author + ";" + d.Date + ";" + d.Email)
-                 );
+                Environment.NewLine,
+                data.Select(d => d.Id + ";" + d.Message + ";" + d.Author + ";" + d.Date + ";" + d.Email)
+                );
             File.WriteAllText(csvPath, csv, Encoding.UTF8);
         }
+
         public static void CreateSummaryChartCSV(List<UserCodeFrequency> data, string data2, string csvPath)
         {
             String csv = String.Join(Environment.NewLine, data2);
             csv = String.Join(
-            Environment.NewLine,
-            data.Select(d => d.User + ";" + d.AddedLines + ";" + d.DeletedLines)
-                 );
+                Environment.NewLine,
+                data.Select(d => d.User + ";" + d.AddedLines + ";" + d.DeletedLines)
+                );
             File.WriteAllText(csvPath, csv, Encoding.UTF8);
         }
 
@@ -51,7 +54,15 @@ namespace RepositoryParser.Core.Services
             string csv = "ChartKey;ChartValue;RepositoryValue" + Environment.NewLine;
             csv += string.Join(Environment.NewLine,
                 data.Select(d => d.ChartKey + ";" + d.ChartValue + ";" + d.RepositoryValue));
-            File.WriteAllText(pathToSave,csv,Encoding.UTF8);
+            File.WriteAllText(pathToSave, csv, Encoding.UTF8);
         }
-    }
+
+        public static void SaveCodeFrequecyToCsv(IList<CodeFrequencyDataRow> data, string pathToSave)
+        {
+            string csv = "ChartKey;Added lines;Deleted lines; Repository" + Environment.NewLine;
+            csv += string.Join(Environment.NewLine,
+                data.Select(d => d.ChartKey + ";" + d.AddedLines + ";" + d.DeletedLines + ";" + d.Repository));
+            File.WriteAllText(pathToSave, csv, Encoding.UTF8);
+        }
+}
 }

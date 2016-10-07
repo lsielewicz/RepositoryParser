@@ -220,6 +220,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CommonUI\BaseViewModels\CodeFrequencyViewModelBase.cs" />
     <Compile Include="CommonUI\CodeFrequency\CodeFrequencySubChartViewModel.cs" />
     <Compile Include="Configuration\ApplicationLanguage.cs" />
     <Compile Include="Configuration\ConfigurationService.cs" />

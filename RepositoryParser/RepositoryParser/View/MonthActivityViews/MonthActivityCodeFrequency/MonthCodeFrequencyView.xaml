@@ -10,6 +10,7 @@
              xmlns:hourActivityCodeFrequency="clr-namespace:RepositoryParser.View.HourActivityViews.HourActivityCodeFrequency"
              xmlns:extensions="clr-namespace:RepositoryParser.Controls.Extensions;assembly=RepositoryParser.Controls"
              xmlns:metroLoadingProgressRing="clr-namespace:RepositoryParser.Controls.MetroLoadingProgressRing;assembly=RepositoryParser.Controls"
+             xmlns:circleHeaderButton="clr-namespace:RepositoryParser.Controls.CircleHeaderButton;assembly=RepositoryParser.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              x:Name="Root"
@@ -117,5 +118,18 @@
             Grid.RowSpan="2"
             IsDataLoadingFlag="{Binding IsLoading,UpdateSourceTrigger=PropertyChanged}"
             Text="{x:Static resw:Resources.AnalysingDataMessage}"/>
+        <DockPanel Grid.Row="1" HorizontalAlignment="Left" Margin="0">
+            <circleHeaderButton:CircleHeaderButton 
+                CommandParameter="{Binding ElementName=Root, Path=DataContext}"
+                Command="{Binding ExportFileCommand}"
+                ImageSource="../../../Assets/Icons/PNG_DarkGray/Export-100.png"
+                ToolTip="{x:Static resw:Resources.ExportToFileButton}"
+                Height="56"
+                Width="56"
+                ImageHeight="28" 
+                ImageWidth="28"
+                BorderBrush="{StaticResource AppMainColor}"
+                />
+        </DockPanel>
     </Grid>
 </UserControl>
