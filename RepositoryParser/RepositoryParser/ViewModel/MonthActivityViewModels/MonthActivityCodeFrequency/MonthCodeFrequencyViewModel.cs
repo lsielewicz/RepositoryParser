@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using NHibernate.SqlCommand;
 using NHibernate.Util;
+using RepositoryParser.CommonUI.BaseViewModels;
+using RepositoryParser.CommonUI.CodeFrequency;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
 using RepositoryParser.DataBaseManagementCore.Configuration;
 using RepositoryParser.DataBaseManagementCore.Entities;
 using RepositoryParser.DataBaseManagementCore.Services;
 using RepositoryParser.Helpers;
-using RepositoryParser.ViewModel.HourActivityViewModels.HourActivityCodeFrequency;
 
 namespace RepositoryParser.ViewModel.MonthActivityViewModels.MonthActivityCodeFrequency
 {
@@ -23,8 +23,8 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels.MonthActivityCodeFr
         public List<ExtendedChartSeries> AddedLinesChartList;
         public List<ExtendedChartSeries> DeletedLinesChartList;
 
-        public MonthAddedChartViewModel AddedChartViewModel { get; set; }
-        public MonthDeletedChartViewModel DeletedChartViewModel { get; set; }
+        public CodeFrequencySubChartViewModel AddedChartViewModel { get; set; }
+        public CodeFrequencySubChartViewModel DeletedChartViewModel { get; set; }
 
         public string SummaryString { get; set; }
         public ObservableCollection<CodeFrequencyDataRow> CodeFrequencyDataRows { get; private set; }
@@ -34,8 +34,8 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels.MonthActivityCodeFr
         {
             this.AddedLinesChartList = new List<ExtendedChartSeries>();
             this.DeletedLinesChartList = new List<ExtendedChartSeries>();
-            this.AddedChartViewModel = new MonthAddedChartViewModel();
-            this.DeletedChartViewModel = new MonthDeletedChartViewModel();
+            this.AddedChartViewModel = new CodeFrequencySubChartViewModel();
+            this.DeletedChartViewModel = new CodeFrequencySubChartViewModel();
             this.CodeFrequencyDataRows = new ObservableCollection<CodeFrequencyDataRow>();
         }
 
@@ -150,10 +150,6 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels.MonthActivityCodeFr
 
             this.IsLoading = false;
         }
-        private string GetMonth(int number)
-        {
-            string month = $"Month{number}";
-            return this.GetLocalizedString(month);
-        }
+
     }
 }

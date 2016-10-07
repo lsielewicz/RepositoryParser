@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Reflection;
 using System.Resources;
 using System.Threading;
@@ -12,21 +11,21 @@ using RepositoryParser.Configuration;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Helpers;
 
-namespace RepositoryParser.ViewModel
+namespace RepositoryParser.CommonUI.BaseViewModels
 {
     public abstract class RepositoryAnalyserViewModelBase : ViewModelBase
     {
         private bool _isLoading;
         private ViewModelBase _currentViewModel;
-        private readonly ResourceManager ResourceManager;
+        private readonly ResourceManager _resourceManager;
         protected RepositoryAnalyserViewModelBase()
         {
-            ResourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
+            _resourceManager = new ResourceManager("RepositoryParser.Properties.Resources", Assembly.GetExecutingAssembly());
         }
 
         public string GetLocalizedString(string resourceKey)
         {
-            return this.ResourceManager.GetString(resourceKey, ConfigurationService.Instance.CultureInfo);
+            return this._resourceManager.GetString(resourceKey, ConfigurationService.Instance.CultureInfo);
         }
 
         public ViewModelBase CurrentViewModel
@@ -111,6 +110,28 @@ namespace RepositoryParser.ViewModel
             {
                 return FilteringHelper.Instance.SelectedRepositories.Count;
             }
+        }
+
+        public int CountOfAuthors
+        {
+            get
+            {
+                return ViewModelLocator.Instance.Filtering.SelectedAuthors.Count != 0
+                    ? ViewModelLocator.Instance.Filtering.SelectedAuthors.Count
+                    : ViewModelLocator.Instance.Filtering.AuthorsCollection.Count;
+            }
+        }
+
+        public string GetWeekday(int number)
+        {
+            string weekday = $"Weekday{number + 1}";
+            return this.GetLocalizedString(weekday);
+        }
+
+        public string GetMonth(int number)
+        {
+            string month = $"Month{number}";
+            return this.GetLocalizedString(month);
         }
 
     }

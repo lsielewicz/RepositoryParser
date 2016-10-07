@@ -5,10 +5,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     d1p1:Ignorable="d" 
     xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro">
+    xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+    xmlns:commonUi="clr-namespace:RepositoryParser.CommonUI">
   <Application.Resources>
         <ResourceDictionary>
-            <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:RepositoryParser.ViewModel" />
+            <commonUi:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:RepositoryParser.ViewModel" />
             <ResourceDictionary.MergedDictionaries>
                 <!--RepositoryParser.Controls Lib-->
                 <ResourceDictionary Source="pack://application:,,,/RepositoryParser.Controls;component/Controls.xaml" />

@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using NHibernate.Criterion;
 using NHibernate.SqlCommand;
 using NHibernate.Util;
+using RepositoryParser.CommonUI.BaseViewModels;
+using RepositoryParser.CommonUI.CodeFrequency;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
 using RepositoryParser.DataBaseManagementCore.Configuration;
 using RepositoryParser.DataBaseManagementCore.Entities;
 using RepositoryParser.DataBaseManagementCore.Services;
 using RepositoryParser.Helpers;
-using RepositoryParser.ViewModel.MonthActivityViewModels.MonthActivityCodeFrequency;
 
 namespace RepositoryParser.ViewModel.WeekdayActivityViewModels.WeekdayCodeFrequency
 {
@@ -24,8 +23,8 @@ namespace RepositoryParser.ViewModel.WeekdayActivityViewModels.WeekdayCodeFreque
         public List<ExtendedChartSeries> AddedLinesChartList;
         public List<ExtendedChartSeries> DeletedLinesChartList;
 
-        public WeekdayAddedChartViewModel AddedChartViewModel { get; set; }
-        public WeekdayDeletedChartViewModel DeletedChartViewModel { get; set; }
+        public CodeFrequencySubChartViewModel AddedChartViewModel { get; set; }
+        public CodeFrequencySubChartViewModel DeletedChartViewModel { get; set; }
 
         public string SummaryString { get; set; }
         public ObservableCollection<CodeFrequencyDataRow> CodeFrequencyDataRows { get; private set; }
@@ -35,8 +34,8 @@ namespace RepositoryParser.ViewModel.WeekdayActivityViewModels.WeekdayCodeFreque
         {
             this.AddedLinesChartList = new List<ExtendedChartSeries>();
             this.DeletedLinesChartList = new List<ExtendedChartSeries>();
-            this.AddedChartViewModel = new WeekdayAddedChartViewModel();
-            this.DeletedChartViewModel = new WeekdayDeletedChartViewModel();
+            this.AddedChartViewModel = new CodeFrequencySubChartViewModel();
+            this.DeletedChartViewModel = new CodeFrequencySubChartViewModel();
             this.CodeFrequencyDataRows = new ObservableCollection<CodeFrequencyDataRow>();
         }
 
@@ -152,10 +151,6 @@ namespace RepositoryParser.ViewModel.WeekdayActivityViewModels.WeekdayCodeFreque
 
             this.IsLoading = false;
         }
-        private string GetWeekday(int number)
-        {
-            string weekday = $"Weekday{number + 1}";
-            return this.GetLocalizedString(weekday);
-        }
+
     }
 }

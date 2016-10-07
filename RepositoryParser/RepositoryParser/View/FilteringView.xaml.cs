@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Controls;
+using RepositoryParser.CommonUI;
 using RepositoryParser.ViewModel;
 
 namespace RepositoryParser.View

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows;
 using NHibernate.Criterion;
+using RepositoryParser.CommonUI.BaseViewModels;
 using RepositoryParser.Core.Models;
 using RepositoryParser.DataBaseManagementCore.Entities;
 using RepositoryParser.DataBaseManagementCore.Services;
@@ -50,12 +50,6 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
             this.DrawChart();
             this.FillDataCollection();
             this.IsLoading = false;
-        }
-
-        private string GetMonth(int number)
-        {
-            string month = $"Month{number}";
-            return this.GetLocalizedString(month); 
         }
 
     }

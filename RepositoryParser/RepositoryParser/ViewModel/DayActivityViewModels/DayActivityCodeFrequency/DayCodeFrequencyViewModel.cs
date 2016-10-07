@@ -1,21 +1,19 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using NHibernate.Criterion;
 using NHibernate.SqlCommand;
 using NHibernate.Util;
+using RepositoryParser.CommonUI.BaseViewModels;
+using RepositoryParser.CommonUI.CodeFrequency;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
 using RepositoryParser.DataBaseManagementCore.Configuration;
 using RepositoryParser.DataBaseManagementCore.Entities;
 using RepositoryParser.DataBaseManagementCore.Services;
 using RepositoryParser.Helpers;
-using RepositoryParser.ViewModel.UserActivityViewModels.UsersActivityCodeFrequency;
 
 namespace RepositoryParser.ViewModel.DayActivityViewModels.DayActivityCodeFrequency
 {
@@ -25,8 +23,8 @@ namespace RepositoryParser.ViewModel.DayActivityViewModels.DayActivityCodeFreque
         public List<ExtendedChartSeries> AddedLinesChartList;
         public List<ExtendedChartSeries> DeletedLinesChartList;
 
-        public DayAddedChartViewModel AddedChartViewModel { get; set; }
-        public DayDeletedChartViewModel DeletedChartViewModel { get; set; }
+        public CodeFrequencySubChartViewModel AddedChartViewModel { get; set; }
+        public CodeFrequencySubChartViewModel DeletedChartViewModel { get; set; }
 
         public string SummaryString { get; set; }
         public ObservableCollection<CodeFrequencyDataRow> CodeFrequencyDataRows { get; private set; }
@@ -36,8 +34,8 @@ namespace RepositoryParser.ViewModel.DayActivityViewModels.DayActivityCodeFreque
         {
             this.AddedLinesChartList = new List<ExtendedChartSeries>();
             this.DeletedLinesChartList = new List<ExtendedChartSeries>();
-            this.AddedChartViewModel = new DayAddedChartViewModel();
-            this.DeletedChartViewModel = new DayDeletedChartViewModel();
+            this.AddedChartViewModel = new CodeFrequencySubChartViewModel();
+            this.DeletedChartViewModel = new CodeFrequencySubChartViewModel();
             this.CodeFrequencyDataRows = new ObservableCollection<CodeFrequencyDataRow>();
         }
 

@@ -1,19 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
+using RepositoryParser.CommonUI.CodeFrequency;
 using RepositoryParser.Helpers;
-using RepositoryParser.ViewModel.HourActivityViewModels.HourActivityCodeFrequency;
 
 namespace RepositoryParser.View.HourActivityViews.HourActivityCodeFrequency
 {
@@ -27,7 +14,7 @@ namespace RepositoryParser.View.HourActivityViews.HourActivityCodeFrequency
             InitializeComponent();
             this.Loaded += (s, e) =>
             {
-                ChartingHelper.Instance.DrawChart<HourAddedChartViewModel>(this, this.ChartViewInstance);
+                ChartingHelper.Instance.DrawChart<CodeFrequencySubChartViewModel>(this, this.ChartViewInstance);
             };
         }
     }

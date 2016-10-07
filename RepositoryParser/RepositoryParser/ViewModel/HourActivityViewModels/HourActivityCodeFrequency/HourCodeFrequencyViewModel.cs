@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using NHibernate.SqlCommand;
 using NHibernate.Util;
+using RepositoryParser.CommonUI.BaseViewModels;
+using RepositoryParser.CommonUI.CodeFrequency;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
 using RepositoryParser.DataBaseManagementCore.Configuration;
 using RepositoryParser.DataBaseManagementCore.Entities;
 using RepositoryParser.DataBaseManagementCore.Services;
 using RepositoryParser.Helpers;
-using RepositoryParser.ViewModel.DayActivityViewModels.DayActivityCodeFrequency;
 
 namespace RepositoryParser.ViewModel.HourActivityViewModels.HourActivityCodeFrequency
 {
@@ -23,8 +23,8 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels.HourActivityCodeFreq
         public List<ExtendedChartSeries> AddedLinesChartList;
         public List<ExtendedChartSeries> DeletedLinesChartList;
 
-        public HourAddedChartViewModel AddedChartViewModel { get; set; }
-        public HourDeletedChartViewModel DeletedChartViewModel { get; set; }
+        public CodeFrequencySubChartViewModel AddedChartViewModel { get; set; }
+        public CodeFrequencySubChartViewModel DeletedChartViewModel { get; set; }
 
         public string SummaryString { get; set; }
         public ObservableCollection<CodeFrequencyDataRow> CodeFrequencyDataRows { get; private set; }
@@ -34,8 +34,8 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels.HourActivityCodeFreq
         {
             this.AddedLinesChartList = new List<ExtendedChartSeries>();
             this.DeletedLinesChartList = new List<ExtendedChartSeries>();
-            this.AddedChartViewModel = new HourAddedChartViewModel();
-            this.DeletedChartViewModel = new HourDeletedChartViewModel();
+            this.AddedChartViewModel = new CodeFrequencySubChartViewModel();
+            this.DeletedChartViewModel = new CodeFrequencySubChartViewModel();
             this.CodeFrequencyDataRows = new ObservableCollection<CodeFrequencyDataRow>();
         }
 

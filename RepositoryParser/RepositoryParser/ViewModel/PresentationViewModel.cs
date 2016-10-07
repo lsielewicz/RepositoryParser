@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Win32;
 using NHibernate.Util;
+using RepositoryParser.CommonUI.BaseViewModels;
 using RepositoryParser.Controls.MahAppsDialogOverloadings;
 using RepositoryParser.Controls.MahAppsDialogOverloadings.InformationDialog;
 using RepositoryParser.Core.Messages;

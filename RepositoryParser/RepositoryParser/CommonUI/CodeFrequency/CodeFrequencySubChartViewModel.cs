@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RepositoryParser.CommonUI.BaseViewModels;
 using RepositoryParser.Core.Models;
 
-namespace RepositoryParser.ViewModel.MonthActivityViewModels.MonthActivityCodeFrequency
+namespace RepositoryParser.CommonUI.CodeFrequency
 {
-    public class MonthDeletedChartViewModel : ChartViewModelBase
+    public class CodeFrequencySubChartViewModel : ChartViewModelBase
     {
         public override void FillChartData()
         {

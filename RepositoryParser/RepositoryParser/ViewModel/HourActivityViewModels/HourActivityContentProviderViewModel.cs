@@ -1,4 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using RepositoryParser.CommonUI;
+using RepositoryParser.CommonUI.BaseViewModels;
 
 namespace RepositoryParser.ViewModel.HourActivityViewModels
 {

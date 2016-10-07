@@ -4,9 +4,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using GalaSoft.MvvmLight;
 using NHibernate.SqlCommand;
 using NHibernate.Util;
+using RepositoryParser.CommonUI.BaseViewModels;
+using RepositoryParser.CommonUI.CodeFrequency;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
 using RepositoryParser.DataBaseManagementCore.Configuration;
@@ -22,8 +23,8 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels.UsersActivityCodeFre
         public List<ExtendedChartSeries> AddedLinesChartList;
         public List<ExtendedChartSeries> DeletedLinesChartList;
         
-        public UsersAddedChartViewModel AddedChartViewModel { get; set; }
-        public UsersDeletedChartViewModel DeletedChartViewModel { get; set; }
+        public CodeFrequencySubChartViewModel AddedChartViewModel { get; set; }
+        public CodeFrequencySubChartViewModel DeletedChartViewModel { get; set; }
         
         public string SummaryString { get; set; }
         public ObservableCollection<CodeFrequencyDataRow> CodeFrequencyDataRows { get; private set; }
@@ -33,8 +34,8 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels.UsersActivityCodeFre
         {
             this.AddedLinesChartList = new List<ExtendedChartSeries>();
             this.DeletedLinesChartList = new List<ExtendedChartSeries>();
-            this.AddedChartViewModel = new UsersAddedChartViewModel();
-            this.DeletedChartViewModel = new UsersDeletedChartViewModel();
+            this.AddedChartViewModel = new CodeFrequencySubChartViewModel();
+            this.DeletedChartViewModel = new CodeFrequencySubChartViewModel();
             CodeFrequencyDataRows = new ObservableCollection<CodeFrequencyDataRow>();
         }
 

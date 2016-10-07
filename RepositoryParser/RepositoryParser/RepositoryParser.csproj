@@ -220,6 +220,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CommonUI\CodeFrequency\CodeFrequencySubChartViewModel.cs" />
     <Compile Include="Configuration\ApplicationLanguage.cs" />
     <Compile Include="Configuration\ConfigurationService.cs" />
     <Compile Include="Configuration\RepositoryAnalyserConfiguration.cs" />
@@ -260,31 +261,23 @@
     </Compile>
     <Compile Include="ViewModel\AnalysisViewModel.cs" />
     <Compile Include="ViewModel\ChartOfChangesViewModel.cs" />
-    <Compile Include="ViewModel\ChartViewModelBase.cs" />
+    <Compile Include="CommonUI\BaseViewModels\ChartViewModelBase.cs" />
     <Compile Include="ViewModel\DataBaseManagementViewModel.cs" />
-    <Compile Include="ViewModel\DayActivityViewModels\DayActivityCodeFrequency\DayAddedChartViewModel.cs" />
     <Compile Include="ViewModel\DayActivityViewModels\DayActivityCodeFrequency\DayCodeFrequencyViewModel.cs" />
-    <Compile Include="ViewModel\DayActivityViewModels\DayActivityCodeFrequency\DayDeletedChartViewModel.cs" />
     <Compile Include="ViewModel\DayActivityViewModels\DayActivityContentProviderViewModel.cs" />
     <Compile Include="ViewModel\DayActivityViewModels\DayActivityFilesAnalyseViewModel.cs" />
-    <Compile Include="ViewModel\FilesChartViewModelBase.cs" />
+    <Compile Include="CommonUI\BaseViewModels\FilesChartViewModelBase.cs" />
     <Compile Include="ViewModel\FilteringViewModel.cs" />
-    <Compile Include="ViewModel\HourActivityViewModels\HourActivityCodeFrequency\HourAddedChartViewModel.cs" />
     <Compile Include="ViewModel\HourActivityViewModels\HourActivityCodeFrequency\HourCodeFrequencyViewModel.cs" />
-    <Compile Include="ViewModel\HourActivityViewModels\HourActivityCodeFrequency\HourDeletedChartViewModel.cs" />
     <Compile Include="ViewModel\HourActivityViewModels\HourActivityContentProviderViewModel.cs" />
     <Compile Include="ViewModel\HourActivityViewModels\HourActivityFilesAnalyseViewModel.cs" />
-    <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityCodeFrequency\MonthAddedChartViewModel.cs" />
     <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityCodeFrequency\MonthCodeFrequencyViewModel.cs" />
-    <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityCodeFrequency\MonthDeletedChartViewModel.cs" />
     <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityContentProviderViewModel.cs" />
     <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityContiniousAnalyseViewModel.cs" />
     <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityFilesAnalyseViewModel.cs" />
     <Compile Include="ViewModel\PresentationViewModel.cs" />
-    <Compile Include="ViewModel\RepositoryAnalyserViewModelBase.cs" />
+    <Compile Include="CommonUI\BaseViewModels\RepositoryAnalyserViewModelBase.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
-    <Compile Include="ViewModel\UserActivityViewModels\UsersActivityCodeFrequency\UsersAddedChartViewModel.cs" />
-    <Compile Include="ViewModel\UserActivityViewModels\UsersActivityCodeFrequency\UsersDeletedChartViewModel.cs" />
     <Compile Include="ViewModel\UserActivityViewModels\UsersActivityFilesAnalyseViewModel.cs" />
     <Compile Include="ViewModel\UserActivityViewModels\UsersActivityViewModel.cs" />
     <Compile Include="ViewModel\DayActivityViewModels\DayActivityViewModel.cs" />
@@ -294,13 +287,11 @@
     <Compile Include="ViewModel\MonthActivityViewModels\MonthActivityChartViewModel.cs" />
     <Compile Include="ViewModel\UserActivityViewModels\UsersActivityContentProverViewModel.cs" />
     <Compile Include="ViewModel\UserActivityViewModels\UsersActivityCodeFrequency\UsersCodeFrequencyViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="CommonUI\ViewModelLocator.cs" />
     <Compile Include="ViewModel\WeekdayActivityViewModels\WeekdayActivityContentProviderViewModel.cs" />
     <Compile Include="ViewModel\WeekdayActivityViewModels\WeekdayActivityContiniousAnalyseViewModel.cs" />
     <Compile Include="ViewModel\WeekdayActivityViewModels\WeekdayActivityFilesAnalyseViewModel.cs" />
-    <Compile Include="ViewModel\WeekdayActivityViewModels\WeekdayCodeFrequency\WeekdayAddedChartViewModel.cs" />
     <Compile Include="ViewModel\WeekdayActivityViewModels\WeekdayCodeFrequency\WeekdayCodeFrequencyViewModel.cs" />
-    <Compile Include="ViewModel\WeekdayActivityViewModels\WeekdayCodeFrequency\WeekdayDeletedChartViewModel.cs" />
     <Compile Include="View\AnalysisView.xaml.cs">
       <DependentUpon>AnalysisView.xaml</DependentUpon>
     </Compile>

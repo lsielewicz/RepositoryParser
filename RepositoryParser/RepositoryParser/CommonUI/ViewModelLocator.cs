@@ -12,10 +12,10 @@
   See http://www.galasoft.ch/mvvm
 */
 
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Practices.ServiceLocation;
+using RepositoryParser.ViewModel;
 using RepositoryParser.ViewModel.DayActivityViewModels;
 using RepositoryParser.ViewModel.DayActivityViewModels.DayActivityCodeFrequency;
 using RepositoryParser.ViewModel.HourActivityViewModels;
@@ -27,7 +27,7 @@ using RepositoryParser.ViewModel.UserActivityViewModels.UsersActivityCodeFrequen
 using RepositoryParser.ViewModel.WeekdayActivityViewModels;
 using RepositoryParser.ViewModel.WeekdayActivityViewModels.WeekdayCodeFrequency;
 
-namespace RepositoryParser.ViewModel
+namespace RepositoryParser.CommonUI
 {
     /// <summary>
     /// This class contains static references to all the view models in the

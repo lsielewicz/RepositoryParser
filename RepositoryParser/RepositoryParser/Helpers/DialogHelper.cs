@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MahApps.Metro.Controls.Dialogs;
+using RepositoryParser.CommonUI;
 using RepositoryParser.Controls.MahAppsDialogOverloadings;
 using RepositoryParser.Controls.MahAppsDialogOverloadings.InformationDialog;
-using RepositoryParser.ViewModel;
 
 namespace RepositoryParser.Helpers
 {

@@ -2,20 +2,16 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows;
-using System.Windows.Media;
 using De.TorstenMandelkow.MetroChart;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
-using NHibernate.Util;
 using RepositoryParser.Controls.MahAppsDialogOverloadings;
 using RepositoryParser.Controls.MahAppsDialogOverloadings.InformationDialog;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
 using RepositoryParser.Helpers;
-using RepositoryParser.Helpers.Comparers;
 
-namespace RepositoryParser.ViewModel
+namespace RepositoryParser.CommonUI.BaseViewModels
 {
     public abstract class ChartViewModelBase : RepositoryAnalyserViewModelBase
     {
