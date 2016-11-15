@@ -18,12 +18,22 @@ namespace RepositoryParser.CommonUI.BaseViewModels
 {
     public abstract class ChartViewModelBase : RepositoryAnalyserViewModelBase
     {
+        private ChartType _chartType;
         public List<ExtendedChartSeries> ExtendedChartSeries { get; protected set; }
         public ObservableCollection<ChartData> DataCollection { get; protected set; }
         public ObservableCollection<ChartLegendItemViewModel> ChartLegendItems { get; protected set; }
         public ChartBase PrimaryChartInstance { get; set; }
         public ChartBase SecondaryChartInstance { get; set; }
-        public ChartType CurrentChartType { get; set; }
+
+        public ChartType CurrentChartType
+        {
+            get { return _chartType; }
+            set
+            {
+                _chartType = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public virtual void FillChartData()
         {
@@ -169,7 +179,6 @@ namespace RepositoryParser.CommonUI.BaseViewModels
                             this.CurrentChartType = ChartType.Primary;
                             break;
                     }
-                    this.RaisePropertyChanged("CurrentChartType");
                 }));
             }
         }
