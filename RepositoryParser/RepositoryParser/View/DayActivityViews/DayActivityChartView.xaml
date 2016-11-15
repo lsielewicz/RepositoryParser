@@ -10,13 +10,16 @@
              xmlns:enums="clr-namespace:RepositoryParser.Helpers.Enums"
              xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
              xmlns:metroLoadingProgressRing="clr-namespace:RepositoryParser.Controls.MetroLoadingProgressRing;assembly=RepositoryParser.Controls"
+             xmlns:enum="clr-namespace:RepositoryParser.Core.Enum;assembly=RepositoryParser.Core"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              DataContext="{Binding Source={StaticResource Locator}, Path=DayActivity }"
+             x:Name="Root"
              >
     <UserControl.Resources>
         <conventers:CountOfRepositoriesToVisibilityConventer x:Key="CountOfRepositoriesToVisibilityConventer"/>
-        <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <conventers:IntegerToBooleanConventer x:Key="IntegerToBooleanConventer"/>
+        <conventers:ChartTypeToVisibilityConventer x:Key="ChartTypeToVisibilityConventer"/>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -46,24 +49,49 @@
                                  ConverterParameter={x:Static enums:VisibilityConventerEnumDirection.Normal},
                                  Converter={StaticResource CountOfRepositoriesToVisibilityConventer}}">
             <TabItem Header="{x:Static resw:Resources.Chart}">
-                <Grid>
+                <Grid x:Name="ChartsGrid">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-
+                    <!--Primary Chart-->
                     <metroChart:StackedColumnChart
-                    x:Name="ChartViewInstance"
-                    ChartTitle=""
-                    ChartSubTitle=""
-                    Padding="0"
-                    ChartBorderThickness="1"
-                    ChartMargin="0"
-                    Background="Transparent"
-                    ChartLegendVisibility="Visible"
-                    Palette="{StaticResource RepositoryAnalyserGradientPalette}"
-                    />
-                    <metroChart:Legend Grid.Row="1" ItemsSource="{Binding ChartLegendItems}"/>
+                        Visibility="{Binding Path=CurrentChartType, 
+                                                Converter={StaticResource ChartTypeToVisibilityConventer}, 
+                                                ConverterParameter={x:Static enum:ChartType.Primary}}"
+                        Grid.Row="0"
+                        x:Name="ChartViewInstance"
+                        ChartTitle=""
+                        ChartSubTitle=""
+                        Padding="0"
+                        ChartBorderThickness="1"
+                        ChartMargin="0"
+                        Background="Transparent"
+                        ChartLegendVisibility="Visible"
+                        Palette="{StaticResource RepositoryAnalyserGradientPalette}"/>
+                    <!--Secondary Chart-->
+                    <metroChart:StackedColumn100Chart
+                        Visibility="{Binding Path=CurrentChartType, 
+                                                Converter={StaticResource ChartTypeToVisibilityConventer},
+                                                ConverterParameter={x:Static enum:ChartType.Secondary}}"
+                        Grid.Row="0"
+                        x:Name="ChartViewInstance2"
+                        ChartTitle=""
+                        ChartSubTitle=""
+                        Padding="0"
+                        ChartBorderThickness="1"
+                        ChartMargin="0"
+                        Background="Transparent"
+                        ChartLegendVisibility="Visible"
+                        Palette="{StaticResource RepositoryAnalyserGradientPalette}"/>
+                    <!--Chart Legend-->
+                    <metroChart:Legend 
+                        Visibility="{Binding Path=CurrentChartType, 
+                                                Converter={StaticResource ChartTypeToVisibilityConventer}, 
+                                                ConverterParameter={x:Static enum:ChartType.Primary}}"
+                        Grid.Row="1" 
+                        ItemsSource="{Binding ChartLegendItems}"/>
+               
                 </Grid>
             </TabItem>
             <TabItem Header="{x:Static resw:Resources.List}">
@@ -95,16 +123,29 @@
         <metroLoadingProgressRing:MetroLoadingProgressRing
             Grid.Row="0"
             Grid.Column="0"
-            Grid.ColumnSpan="2"
             Text="{x:Static resw:Resources.AnalysingDataMessage}"
             IsDataLoadingFlag="{Binding Path=IsLoading, UpdateSourceTrigger=PropertyChanged}"/>
         
-        <DockPanel Grid.Row="1" HorizontalAlignment="Left" Margin="0">
+        <DockPanel 
+            Grid.Row="1" 
+            HorizontalAlignment="Left" 
+            Margin="0" 
+            IsEnabled="{Binding CountOfSelectedRepositories, Converter={StaticResource IntegerToBooleanConventer}}">
             <circleHeaderButton:CircleHeaderButton 
                 CommandParameter="{Binding ElementName=Root, Path=DataContext}"
                 Command="{Binding ExportFileCommand}"
                 ImageSource="../../Assets/Icons/PNG_DarkGray/Export-100.png"
                 ToolTip="{x:Static resw:Resources.ExportToFileButton}"
+                Height="56"
+                Width="56"
+                ImageHeight="28" 
+                ImageWidth="28"
+                BorderBrush="{StaticResource AppMainColor}"
+                />
+            <circleHeaderButton:CircleHeaderButton 
+                Command="{Binding SwitchChartTypeCommand}"
+                ImageSource="../../Assets/Icons/PNG_DarkGray/Switch On-100.png"
+                ToolTip="{x:Static resw:Resources.SwitchChartType}"
                 Height="56"
                 Width="56"
                 ImageHeight="28" 

@@ -1024,6 +1024,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Display with normal chart type.
+        /// </summary>
+        public static string NormalChartTypeToolTip {
+            get {
+                return ResourceManager.GetString("NormalChartTypeToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &gt; Select repository to enable all the filtering operations..
         /// </summary>
         public static string NoSelectedRepositoriesMessage {
@@ -1195,6 +1204,15 @@ namespace RepositoryParser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Display with stacked chart type.
+        /// </summary>
+        public static string StackedChartTypeToolTip {
+            get {
+                return ResourceManager.GetString("StackedChartTypeToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Summary.
         /// </summary>
         public static string Summary {
@@ -1209,6 +1227,15 @@ namespace RepositoryParser.Properties {
         public static string SvnRepository {
             get {
                 return ResourceManager.GetString("SvnRepository", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switch chart type.
+        /// </summary>
+        public static string SwitchChartType {
+            get {
+                return ResourceManager.GetString("SwitchChartType", resourceCulture);
             }
         }
         

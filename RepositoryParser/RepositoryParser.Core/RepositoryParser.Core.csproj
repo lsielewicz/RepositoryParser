@@ -168,6 +168,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enum\ChartType.cs" />
     <Compile Include="Enum\RepositoryCloneType.cs" />
     <Compile Include="Interfaces\IDifferencesColoringService.cs" />
     <Compile Include="Interfaces\IGitFilePersister.cs" />

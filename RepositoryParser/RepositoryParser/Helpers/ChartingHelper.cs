@@ -20,7 +20,18 @@ namespace RepositoryParser.Helpers
             var viewModel = view.DataContext as T;
             if (viewModel != null && chartBase != null)
             {
-                viewModel.ChartInstance = chartBase;
+                viewModel.PrimaryChartInstance = chartBase;
+                viewModel.FillChartData();
+            }
+        }
+
+        public void DrawCharts<T>(ContentControl view, ChartBase primaryChartbase, ChartBase secondaryChartBase) where T : ChartViewModelBase
+        {
+            var viewModel = view.DataContext as T;
+            if (viewModel != null && primaryChartbase != null && secondaryChartBase != null)
+            {
+                viewModel.PrimaryChartInstance = primaryChartbase;
+                viewModel.SecondaryChartInstance = secondaryChartBase;
                 viewModel.FillChartData();
             }
         }

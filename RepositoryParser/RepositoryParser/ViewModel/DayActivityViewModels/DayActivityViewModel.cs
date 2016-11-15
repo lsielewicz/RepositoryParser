@@ -44,7 +44,7 @@ namespace RepositoryParser.ViewModel.DayActivityViewModels
                         this.AddSeriesToChartInstance(selectedRepository, itemSource);
                     }));
                 });
-            },CancellationToken.None);
+            });
            
             this.DrawChart();
             this.FillDataCollection();
