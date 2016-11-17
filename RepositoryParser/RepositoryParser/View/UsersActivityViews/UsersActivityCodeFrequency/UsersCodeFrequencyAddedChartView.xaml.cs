@@ -17,7 +17,7 @@ namespace RepositoryParser.View.UsersActivityViews.UsersActivityCodeFrequency
 
         private void UsersCodeFrequencyAddedChartView_OnLoaded(object sender, RoutedEventArgs e)
         {
-            ChartingHelper.Instance.DrawChart<CodeFrequencySubChartViewModel>(this, this.ChartViewInstance);
+            ChartingHelper.Instance.DrawCharts<CodeFrequencySubChartViewModel>(this, this.ChartViewInstance,this.ChartViewInstance2);
         }
     }
 }
