@@ -16,7 +16,7 @@
              x:Name="Root"
              DataContext="{Binding Source={StaticResource Locator}, Path=HourCodeFrequencyViewModel}">
     <UserControl.Resources>
-        <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <conventers:IntegerToBooleanConventer x:Key="IntegerToBooleanConventer"/>
         <conventers:CountOfRepositoriesToVisibilityConventer x:Key="CountOfRepositoriesToVisibilityConventer"/>
     </UserControl.Resources>
 
@@ -118,12 +118,26 @@
             Grid.RowSpan="2"
             IsDataLoadingFlag="{Binding IsLoading,UpdateSourceTrigger=PropertyChanged}"
             Text="{x:Static resw:Resources.AnalysingDataMessage}"/>
-        <DockPanel Grid.Row="1" HorizontalAlignment="Left" Margin="0">
+        <DockPanel 
+            Grid.Row="1" 
+            HorizontalAlignment="Left" 
+            Margin="0"
+            IsEnabled="{Binding CountOfSelectedRepositories, Converter={StaticResource IntegerToBooleanConventer}}">
             <circleHeaderButton:CircleHeaderButton 
                 CommandParameter="{Binding ElementName=Root, Path=DataContext}"
                 Command="{Binding ExportFileCommand}"
                 ImageSource="../../../Assets/Icons/PNG_DarkGray/Export-100.png"
                 ToolTip="{x:Static resw:Resources.ExportToFileButton}"
+                Height="56"
+                Width="56"
+                ImageHeight="28" 
+                ImageWidth="28"
+                BorderBrush="{StaticResource AppMainColor}"
+                />
+            <circleHeaderButton:CircleHeaderButton 
+                Command="{Binding SwitchChartTypeCommand}"
+                ImageSource="../../../Assets/Icons/PNG_DarkGray/Switch On-100.png"
+                ToolTip="{x:Static resw:Resources.SwitchChartType}"
                 Height="56"
                 Width="56"
                 ImageHeight="28" 
