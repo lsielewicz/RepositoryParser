@@ -12,7 +12,7 @@ namespace RepositoryParser.View.HourActivityViews
         public HourActivityFilesAnalyseView()
         {
             InitializeComponent();
-            ChartingHelper.Instance.DrawChart<HourActivityFilesAnalyseViewModel>(this, this.ChartViewInstance);
+            ChartingHelper.Instance.DrawCharts<HourActivityFilesAnalyseViewModel>(this, this.ChartViewInstance,this.ChartViewInstance2);
         }
     }
 }

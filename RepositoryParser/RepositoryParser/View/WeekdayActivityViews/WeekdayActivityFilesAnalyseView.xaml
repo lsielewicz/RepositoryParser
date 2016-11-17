@@ -13,13 +13,15 @@
              xmlns:metroLoadingProgressRing="clr-namespace:RepositoryParser.Controls.MetroLoadingProgressRing;assembly=RepositoryParser.Controls"
              xmlns:circleHeaderButton="clr-namespace:RepositoryParser.Controls.CircleHeaderButton;assembly=RepositoryParser.Controls"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:enum="clr-namespace:RepositoryParser.Core.Enum;assembly=RepositoryParser.Core"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              DataContext="{Binding Source={StaticResource Locator}, Path=WeekdayActivityFilesAnalyseViewModel}"
              x:Name="Root">
     <UserControl.Resources>
         <conventers:CountOfRepositoriesToVisibilityConventer x:Key="CountOfRepositoriesToVisibilityConventer"/>
-        <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <conventers:IntegerToBooleanConventer x:Key="IntegerToBooleanConventer"/>
+        <conventers:ChartTypeToVisibilityConventer x:Key="ChartTypeToVisibilityConventer"/>
         <conventers:InverseBoolConventer x:Key="InverseBoolConventer"/>
     </UserControl.Resources>
 
@@ -98,8 +100,12 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-
-                    <metroChart:StackedBar100Chart
+                    <!--Primary Chart-->
+                    <metroChart:StackedBarChart
+                        Visibility="{Binding Path=CurrentChartType, 
+                                                Converter={StaticResource ChartTypeToVisibilityConventer}, 
+                                                ConverterParameter={x:Static enum:ChartType.Primary}}"
+                        Grid.Row="0"
                         x:Name="ChartViewInstance"
                         ChartTitle=""
                         ChartSubTitle=""
@@ -110,7 +116,29 @@
                         ChartLegendVisibility="Visible"
                         Palette="{StaticResource RepositoryAnalyserGradientPalette}"
                         />
-                    <metroChart:Legend Grid.Row="1" ItemsSource="{Binding ChartLegendItems}"/>
+                    <!--Secondary Chart-->
+                    <metroChart:StackedBar100Chart
+                        Visibility="{Binding Path=CurrentChartType, 
+                                                Converter={StaticResource ChartTypeToVisibilityConventer}, 
+                                                ConverterParameter={x:Static enum:ChartType.Secondary}}"
+                        Grid.Row="0"
+                        x:Name="ChartViewInstance2"
+                        ChartTitle=""
+                        ChartSubTitle=""
+                        Padding="0"
+                        ChartBorderThickness="1"
+                        ChartMargin="0"
+                        Background="Transparent"
+                        ChartLegendVisibility="Visible"
+                        Palette="{StaticResource RepositoryAnalyserGradientPalette}"
+                        />
+                    <!--Chart Legend-->
+                    <metroChart:Legend 
+                        Visibility="{Binding Path=CurrentChartType, 
+                                                Converter={StaticResource ChartTypeToVisibilityConventer}, 
+                                                ConverterParameter={x:Static enum:ChartType.Primary}}"
+                        Grid.Row="1" 
+                        ItemsSource="{Binding ChartLegendItems}"/>
                 </Grid>
             </TabItem>
             <TabItem Header="{x:Static resw:Resources.List}">
@@ -148,16 +176,26 @@
             IsDataLoadingFlag="{Binding Path=IsLoading, UpdateSourceTrigger=PropertyChanged}"/>
         <!--Export panel-->
         <DockPanel 
+            Grid.Row="1"
             Grid.Column="0"
-            Grid.Row="1" 
             HorizontalAlignment="Left" 
-            Margin="0">
+            Margin="0" 
+            IsEnabled="{Binding CountOfSelectedRepositories, Converter={StaticResource IntegerToBooleanConventer}}">
             <circleHeaderButton:CircleHeaderButton 
-                IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBoolConventer}, UpdateSourceTrigger=PropertyChanged}"
                 CommandParameter="{Binding ElementName=Root, Path=DataContext}"
                 Command="{Binding ExportFileCommand}"
                 ImageSource="../../Assets/Icons/PNG_DarkGray/Export-100.png"
                 ToolTip="{x:Static resw:Resources.ExportToFileButton}"
+                Height="56"
+                Width="56"
+                ImageHeight="28" 
+                ImageWidth="28"
+                BorderBrush="{StaticResource AppMainColor}"
+                />
+            <circleHeaderButton:CircleHeaderButton 
+                Command="{Binding SwitchChartTypeCommand}"
+                ImageSource="../../Assets/Icons/PNG_DarkGray/Switch On-100.png"
+                ToolTip="{x:Static resw:Resources.SwitchChartType}"
                 Height="56"
                 Width="56"
                 ImageHeight="28" 

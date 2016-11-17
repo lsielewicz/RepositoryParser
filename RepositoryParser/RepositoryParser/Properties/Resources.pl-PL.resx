@@ -630,4 +630,13 @@
   <data name="RepositoriesSavingLocation" xml:space="preserve">
     <value>Miejsce zapisu repozytoriów</value>
   </data>
+  <data name="NormalChartTypeToolTip" xml:space="preserve">
+    <value>Wyświetl za pomocą zwykłego wykresu</value>
+  </data>
+  <data name="StackedChartTypeToolTip" xml:space="preserve">
+    <value>Wyświetl za pomocą wykresu typu "stacked"</value>
+  </data>
+  <data name="SwitchChartType" xml:space="preserve">
+    <value>Zmień typ wykresu</value>
+  </data>
 </root>

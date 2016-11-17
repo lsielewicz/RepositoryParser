@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
 using De.TorstenMandelkow.MetroChart;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
 using RepositoryParser.Controls.MahAppsDialogOverloadings;
 using RepositoryParser.Controls.MahAppsDialogOverloadings.InformationDialog;
+using RepositoryParser.Core.Enum;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
 using RepositoryParser.Helpers;
@@ -15,10 +18,22 @@ namespace RepositoryParser.CommonUI.BaseViewModels
 {
     public abstract class ChartViewModelBase : RepositoryAnalyserViewModelBase
     {
+        private ChartType _chartType;
         public List<ExtendedChartSeries> ExtendedChartSeries { get; protected set; }
         public ObservableCollection<ChartData> DataCollection { get; protected set; }
         public ObservableCollection<ChartLegendItemViewModel> ChartLegendItems { get; protected set; }
-        public ChartBase ChartInstance { get; set; }
+        public ChartBase PrimaryChartInstance { get; set; }
+        public ChartBase SecondaryChartInstance { get; set; }
+
+        public ChartType CurrentChartType
+        {
+            get { return _chartType; }
+            set
+            {
+                _chartType = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public virtual void FillChartData()
         {
@@ -48,17 +63,26 @@ namespace RepositoryParser.CommonUI.BaseViewModels
 
         public void DrawChart()
         {
-            ChartInstance.Series.Clear();
+            this.PrimaryChartInstance.Series.Clear();
+            if (SecondaryChartInstance != null)
+            {
+                this.SecondaryChartInstance.Series.Clear();
+            }
             bool isOrdered=ExtendedChartSeries.Any(e => e.ItemsSource.Any(i => i.NumericChartValue != 0));
             ExtendedChartSeries.ForEach(c =>
             {
-                ChartInstance.Series.Add(c.ChartSeries);
+                this.PrimaryChartInstance.Series.Add(c.ChartSeries);
+                if (SecondaryChartInstance != null)
+                {
+                    this.SecondaryChartInstance.Series.Add(c.ChartSeries);
+                }
+
                 if (isOrdered)
                     c.ChartSeries.ItemsSource = c.ItemsSource.OrderBy(i => i.NumericChartValue);
                 else
                     c.ChartSeries.ItemsSource = c.ItemsSource;
             });
-            this.ChartLegendItems = new ObservableCollection<ChartLegendItemViewModel>(ChartInstance.ChartLegendItems);
+            this.ChartLegendItems = new ObservableCollection<ChartLegendItemViewModel>(PrimaryChartInstance.ChartLegendItems);
             this.RaisePropertyChanged("ChartLegendItems");
         }
 
@@ -84,7 +108,7 @@ namespace RepositoryParser.CommonUI.BaseViewModels
                     {
                         foreach (var item in c.ItemsSource)
                         {
-                            if (item.ChartValue != 0)
+                            //if (item.ChartValue != 0)
                                 DataCollection.Add(item);
                         }
                     }
@@ -123,7 +147,6 @@ namespace RepositoryParser.CommonUI.BaseViewModels
         }
 
         private RelayCommand<object> _exportFileCommand;
-
         public RelayCommand<object> ExportFileCommand
         {
             get
@@ -136,6 +159,26 @@ namespace RepositoryParser.CommonUI.BaseViewModels
                         return;
                     }
                     this.ExportFile(param.GetType().Name);
+                }));
+            }
+        }
+
+        private RelayCommand _switchChartTypeCommand;
+        public RelayCommand SwitchChartTypeCommand
+        {
+            get
+            {
+                return _switchChartTypeCommand ?? (_switchChartTypeCommand = new RelayCommand(() =>
+                {
+                    switch (CurrentChartType)
+                    {
+                        case ChartType.Primary:
+                            this.CurrentChartType = ChartType.Secondary;
+                            break;
+                        case ChartType.Secondary:
+                            this.CurrentChartType = ChartType.Primary;
+                            break;
+                    }
                 }));
             }
         }

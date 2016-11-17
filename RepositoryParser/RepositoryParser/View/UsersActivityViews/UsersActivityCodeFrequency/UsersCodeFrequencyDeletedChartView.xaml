@@ -7,6 +7,7 @@
              xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
              xmlns:metroChart="clr-namespace:De.TorstenMandelkow.MetroChart;assembly=De.TorstenMandelkow.MetroChart"
              xmlns:usersActivityCodeFrequency="clr-namespace:RepositoryParser.ViewModel.UserActivityViewModels.UsersActivityCodeFrequency"
+             xmlns:enum="clr-namespace:RepositoryParser.Core.Enum;assembly=RepositoryParser.Core"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              x:Name="Root"
@@ -15,7 +16,7 @@
     <UserControl.Resources>
         <conventers:CountOfRepositoriesToVisibilityConventer x:Key="CountOfRepositoriesToVisibilityConventer"/>
         <conventers:IntToLenghtConventer x:Key="IntToLenghtConventer"/>
-        <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <conventers:ChartTypeToVisibilityConventer x:Key="ChartTypeToVisibilityConventer"/>
     </UserControl.Resources>
 
     <Grid>
@@ -23,7 +24,12 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ScrollViewer>
+        <!--Primary Chart-->
+        <ScrollViewer
+            Grid.Row="0"
+            Visibility="{Binding Path=CurrentChartType, 
+                                    Converter={StaticResource ChartTypeToVisibilityConventer}, 
+                                    ConverterParameter={x:Static enum:ChartType.Primary}}">
             <metroChart:StackedBar100Chart
                             x:Name="ChartViewInstance"
                             ChartTitle=""
@@ -37,6 +43,24 @@
                             Height="{Binding CountOfAuthors, Converter={StaticResource IntToLenghtConventer}}">
             </metroChart:StackedBar100Chart>
         </ScrollViewer>
-        <!--<metroChart:Legend Grid.Row="1" ItemsSource="{Binding ChartLegendItems}"/>-->
+        <!--SecondaryChart-->
+        <ScrollViewer
+            Grid.Row="0"
+            Visibility="{Binding Path=CurrentChartType, 
+                                    Converter={StaticResource ChartTypeToVisibilityConventer}, 
+                                    ConverterParameter={x:Static enum:ChartType.Secondary}}">
+            <metroChart:StackedBarChart
+                            x:Name="ChartViewInstance2"
+                            ChartTitle=""
+                            ChartSubTitle=""
+                            Padding="0"
+                            ChartBorderThickness="1"
+                            ChartMargin="0"
+                            Background="Transparent"
+                            Palette="{StaticResource RepositoryAnalyserGradientPaletteSecond}"
+                            ClipToBounds="False"
+                            Height="{Binding CountOfAuthors, Converter={StaticResource IntToLenghtConventer}}">
+            </metroChart:StackedBarChart>
+        </ScrollViewer>
     </Grid>
 </UserControl>

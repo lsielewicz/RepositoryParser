@@ -9,6 +9,7 @@ using Microsoft.Win32;
 using RepositoryParser.CommonUI.CodeFrequency;
 using RepositoryParser.Controls.MahAppsDialogOverloadings;
 using RepositoryParser.Controls.MahAppsDialogOverloadings.InformationDialog;
+using RepositoryParser.Core.Enum;
 using RepositoryParser.Core.Models;
 using RepositoryParser.Core.Services;
 using RepositoryParser.Helpers;
@@ -100,6 +101,30 @@ namespace RepositoryParser.CommonUI.BaseViewModels
         }
 
         public abstract void FillData();
+
+        private RelayCommand _switchChartTypeCommand;
+        public RelayCommand SwitchChartTypeCommand
+        {
+            get
+            {
+                return _switchChartTypeCommand ?? (_switchChartTypeCommand = new RelayCommand(() =>
+                {
+                    switch (this.AddedChartViewModel.CurrentChartType)
+                    {
+                        case ChartType.Primary:
+                            this.AddedChartViewModel.CurrentChartType = ChartType.Secondary;
+                            this.DeletedChartViewModel.CurrentChartType = ChartType.Secondary;
+                            break;
+                        case ChartType.Secondary:
+                            this.AddedChartViewModel.CurrentChartType = ChartType.Primary;
+                            this.DeletedChartViewModel.CurrentChartType = ChartType.Primary;
+                            break;
+                    }
+                }));
+            }
+        }
+
+
 
     }
 }

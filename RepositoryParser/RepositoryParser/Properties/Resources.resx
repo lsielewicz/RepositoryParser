@@ -637,4 +637,13 @@
   <data name="RepositoriesSavingLocation" xml:space="preserve">
     <value>Repositories saving location</value>
   </data>
+  <data name="NormalChartTypeToolTip" xml:space="preserve">
+    <value>Display with normal chart type</value>
+  </data>
+  <data name="StackedChartTypeToolTip" xml:space="preserve">
+    <value>Display with stacked chart type</value>
+  </data>
+  <data name="SwitchChartType" xml:space="preserve">
+    <value>Switch chart type</value>
+  </data>
 </root>

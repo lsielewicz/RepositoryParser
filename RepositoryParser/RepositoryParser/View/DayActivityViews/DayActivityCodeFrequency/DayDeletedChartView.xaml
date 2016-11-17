@@ -5,23 +5,48 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RepositoryParser.View.DayActivityViews.DayActivityCodeFrequency"
              xmlns:metroChart="clr-namespace:De.TorstenMandelkow.MetroChart;assembly=De.TorstenMandelkow.MetroChart"
+             xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
+             xmlns:enum="clr-namespace:RepositoryParser.Core.Enum;assembly=RepositoryParser.Core"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    
+    <UserControl.Resources>
+        <conventers:ChartTypeToVisibilityConventer x:Key="ChartTypeToVisibilityConventer"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        <!--Primary Chart-->
         <metroChart:StackedColumnChart
-                            x:Name="ChartViewInstance"
-                            ChartTitle=""
-                            ChartSubTitle=""
-                            Padding="0"
-                            ChartBorderThickness="1"
-                            ChartMargin="0"
-                            Background="Transparent"
-                            ChartLegendVisibility="Collapsed"
-                            Palette="{StaticResource RepositoryAnalyserGradientPaletteSecond}"/>
-            <!--<metroChart:Legend Grid.Row="1" ItemsSource="{Binding ChartLegendItems}"/>-->
-         </Grid>
+            Visibility="{Binding Path=CurrentChartType, 
+                                 Converter={StaticResource ChartTypeToVisibilityConventer}, 
+                                 ConverterParameter={x:Static enum:ChartType.Primary}}"
+            Grid.Row="0"
+            x:Name="ChartViewInstance"
+            ChartTitle=""
+            ChartSubTitle=""
+            Padding="0"
+            ChartBorderThickness="1"
+            ChartMargin="0"
+            Background="Transparent"
+            ChartLegendVisibility="Collapsed"
+            Palette="{StaticResource RepositoryAnalyserGradientPaletteSecond}"/>
+        <!--Secondary Chart-->
+        <metroChart:StackedColumn100Chart
+            Visibility="{Binding Path=CurrentChartType, 
+                                 Converter={StaticResource ChartTypeToVisibilityConventer}, 
+                                 ConverterParameter={x:Static enum:ChartType.Secondary}}"
+            Grid.Row="0"
+            x:Name="ChartViewInstance2"
+            ChartTitle=""
+            ChartSubTitle=""
+            Padding="0"
+            ChartBorderThickness="1"
+            ChartMargin="0"
+            Background="Transparent"
+            ChartLegendVisibility="Collapsed"
+            Palette="{StaticResource RepositoryAnalyserGradientPaletteSecond}"/>
+    </Grid>
 </UserControl>

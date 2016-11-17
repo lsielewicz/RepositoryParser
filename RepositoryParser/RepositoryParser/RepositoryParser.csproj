@@ -229,9 +229,11 @@
     <Compile Include="Conventers\BoolToImageConventer.cs" />
     <Compile Include="Conventers\BoolToVisibilityConventer.cs" />
     <Compile Include="Conventers\ChangeTypeToBackgroundColorConventer.cs" />
+    <Compile Include="Conventers\ChartTypeToVisibilityConventer.cs" />
     <Compile Include="Conventers\CountOfRepositoriesToVisibilityConventer.cs" />
     <Compile Include="Conventers\DateFormat.cs" />
     <Compile Include="Conventers\EnumToColorConventer.cs" />
+    <Compile Include="Conventers\IntegerToBooleanConventer.cs" />
     <Compile Include="Conventers\IntegerToVisibilityConventer.cs" />
     <Compile Include="Conventers\IntToLenghtConventer.cs" />
     <Compile Include="Conventers\InverseBoolConventer.cs" />
@@ -881,7 +883,10 @@
   <ItemGroup>
     <Resource Include="Assets\Images\settings_cropped.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Assets\Icons\PNG_DarkGray\Switch On-100.png" />
+    <Resource Include="Assets\Icons\PNG_DarkGray\Switch Tracks Filled-100.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -12,6 +12,7 @@
                 xmlns:conventers="clr-namespace:RepositoryParser.Conventers"
                 xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
                 xmlns:metroLoadingProgressRing="clr-namespace:RepositoryParser.Controls.MetroLoadingProgressRing;assembly=RepositoryParser.Controls"
+                xmlns:enum="clr-namespace:RepositoryParser.Core.Enum;assembly=RepositoryParser.Core"
                 mc:Ignorable="d" 
                 d:DesignHeight="600" d:DesignWidth="600"
                 DataContext="{Binding Source={StaticResource Locator}, Path=UsersActivity}"
@@ -20,7 +21,8 @@
     <UserControl.Resources>
         <conventers:CountOfRepositoriesToVisibilityConventer x:Key="CountOfRepositoriesToVisibilityConventer"/>
         <conventers:IntToLenghtConventer x:Key="IntToLenghtConventer"/>
-        <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <conventers:IntegerToBooleanConventer x:Key="IntegerToBooleanConventer"/>
+        <conventers:ChartTypeToVisibilityConventer x:Key="ChartTypeToVisibilityConventer"/>
     </UserControl.Resources>
     
     <Grid>
@@ -56,8 +58,13 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <ScrollViewer>
-                        <metroChart:StackedBar100Chart
+                    <!--Primary Chart-->
+                    <ScrollViewer
+                        Grid.Row="0"
+                        Visibility="{Binding Path=CurrentChartType, 
+                                                Converter={StaticResource ChartTypeToVisibilityConventer}, 
+                                                ConverterParameter={x:Static enum:ChartType.Primary}}">
+                        <metroChart:StackedBarChart
                             x:Name="ChartViewInstance"
                             ChartTitle=""
                             ChartSubTitle=""
@@ -68,10 +75,34 @@
                             ChartLegendVisibility="Visible"
                             Palette="{StaticResource RepositoryAnalyserGradientPalette}"
                             ClipToBounds="False"
-                            Height="{Binding CountOfAuthors, Converter={StaticResource IntToLenghtConventer}}"
-                            />
+                            Height="{Binding CountOfAuthors, Converter={StaticResource IntToLenghtConventer}}"/>
                     </ScrollViewer>
-                    <metroChart:Legend Grid.Row="1" ItemsSource="{Binding ChartLegendItems}"/>
+                    <!--Secondary Chart-->
+                    <ScrollViewer
+                        Grid.Row="0"
+                        Visibility="{Binding Path=CurrentChartType, 
+                                                Converter={StaticResource ChartTypeToVisibilityConventer}, 
+                                                ConverterParameter={x:Static enum:ChartType.Secondary}}">
+                        <metroChart:StackedBar100Chart
+                            x:Name="ChartViewInstance2"
+                            ChartTitle=""
+                            ChartSubTitle=""
+                            Padding="0"
+                            ChartBorderThickness="1"
+                            ChartMargin="0"
+                            Background="Transparent"
+                            ChartLegendVisibility="Visible"
+                            Palette="{StaticResource RepositoryAnalyserGradientPalette}"
+                            ClipToBounds="False"
+                            Height="{Binding CountOfAuthors, Converter={StaticResource IntToLenghtConventer}}"/>
+                    </ScrollViewer>
+                    <!--Chart Legend-->
+                    <metroChart:Legend 
+                        Visibility="{Binding Path=CurrentChartType, 
+                                                Converter={StaticResource ChartTypeToVisibilityConventer}, 
+                                                ConverterParameter={x:Static enum:ChartType.Primary}}"
+                        Grid.Row="1" 
+                        ItemsSource="{Binding ChartLegendItems}"/>
                 </Grid>
             </TabItem>
             <TabItem Header="{x:Static resw:Resources.List}">
@@ -104,12 +135,26 @@
             Grid.Column="0"
             Text="{x:Static resw:Resources.AnalysingDataMessage}"
             IsDataLoadingFlag="{Binding Path=IsLoading, UpdateSourceTrigger=PropertyChanged}"/>
-        <DockPanel Grid.Row="1" HorizontalAlignment="Left" Margin="0">
+        <DockPanel 
+            Grid.Row="1" 
+            HorizontalAlignment="Left"
+            Margin="0"
+            IsEnabled="{Binding CountOfSelectedRepositories, Converter={StaticResource IntegerToBooleanConventer}}">
             <circleHeaderButton:CircleHeaderButton
                 CommandParameter="{Binding ElementName=Root, Path=DataContext}"
                 Command="{Binding ExportFileCommand}"
                 ImageSource="../../Assets/Icons/PNG_DarkGray/Export-100.png"
                 ToolTip="{x:Static resw:Resources.ExportToFileButton}"
+                Height="56"
+                Width="56"
+                ImageHeight="28" 
+                ImageWidth="28"
+                BorderBrush="{StaticResource AppMainColor}"
+                />
+            <circleHeaderButton:CircleHeaderButton 
+                Command="{Binding SwitchChartTypeCommand}"
+                ImageSource="../../Assets/Icons/PNG_DarkGray/Switch On-100.png"
+                ToolTip="{x:Static resw:Resources.SwitchChartType}"
                 Height="56"
                 Width="56"
                 ImageHeight="28" 
