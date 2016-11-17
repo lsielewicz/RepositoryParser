@@ -14,7 +14,7 @@ namespace RepositoryParser.View.WeekdayActivityViews.WeekdayActivityCodeFrequenc
             InitializeComponent();
             this.Loaded += (s, e) =>
             {
-                ChartingHelper.Instance.DrawChart<CodeFrequencySubChartViewModel>(this, this.ChartViewInstance);
+                ChartingHelper.Instance.DrawCharts<CodeFrequencySubChartViewModel>(this, this.ChartViewInstance,this.ChartViewInstance2);
             };
         }
     }

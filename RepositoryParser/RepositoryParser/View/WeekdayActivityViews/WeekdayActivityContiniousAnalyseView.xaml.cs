@@ -12,7 +12,7 @@ namespace RepositoryParser.View.WeekdayActivityViews
         public WeekdayActivityContiniousAnalyseView()
         {
             InitializeComponent();
-            ChartingHelper.Instance.DrawChart<WeekdayActivityContiniousAnalyseViewModel>(this,this.ChartViewInstance);
+            ChartingHelper.Instance.DrawCharts<WeekdayActivityContiniousAnalyseViewModel>(this,this.ChartViewInstance, this.ChartViewInstance2);
         }
     }
 }
