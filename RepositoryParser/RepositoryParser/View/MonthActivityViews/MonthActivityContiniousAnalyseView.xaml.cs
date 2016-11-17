@@ -12,7 +12,7 @@ namespace RepositoryParser.View.MonthActivityViews
         public MonthActivityContiniousAnalyseView()
         {
             InitializeComponent();
-            ChartingHelper.Instance.DrawChart<MonthActivityContiniousAnalyseViewModel>(this,this.ChartViewInstance);
+            ChartingHelper.Instance.DrawCharts<MonthActivityContiniousAnalyseViewModel>(this,this.ChartViewInstance,this.ChartViewInstance2);
         }
     }
 }

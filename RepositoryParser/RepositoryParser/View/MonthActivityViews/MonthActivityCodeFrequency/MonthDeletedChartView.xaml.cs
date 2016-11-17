@@ -14,7 +14,7 @@ namespace RepositoryParser.View.MonthActivityViews.MonthActivityCodeFrequency
             InitializeComponent();
             this.Loaded += (s, e) =>
             {
-                ChartingHelper.Instance.DrawChart<CodeFrequencySubChartViewModel>(this, this.ChartViewInstance);
+                ChartingHelper.Instance.DrawCharts<CodeFrequencySubChartViewModel>(this, this.ChartViewInstance, this.ChartViewInstance2);
             };
         }
     }

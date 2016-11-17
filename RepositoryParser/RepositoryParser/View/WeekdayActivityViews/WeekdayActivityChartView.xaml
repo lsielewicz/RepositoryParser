@@ -20,7 +20,8 @@
              x:Name="Root">
     <UserControl.Resources>
         <conventers:CountOfRepositoriesToVisibilityConventer x:Key="CountOfRepositoriesToVisibilityConventer"/>
-        <conventers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <conventers:IntegerToBooleanConventer x:Key="IntegerToBooleanConventer"/>
+        <conventers:ChartTypeToVisibilityConventer x:Key="ChartTypeToVisibilityConventer"/>
     </UserControl.Resources>
     
     <Grid>
