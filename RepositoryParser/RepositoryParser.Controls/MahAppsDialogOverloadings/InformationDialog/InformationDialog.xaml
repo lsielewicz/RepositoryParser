@@ -54,7 +54,7 @@
             </Style.Triggers>
         </Style>
     </dialogs:CustomDialog.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -72,12 +72,12 @@
             </Grid.RowDefinitions>
             <!--Image-->
             <Image
-                Grid.Row="0"
+                Grid.Row="1"
                 Grid.Column="0"
-                Grid.RowSpan="2"
                 RenderOptions.BitmapScalingMode="Fant"
                 Stretch="None"
-                VerticalAlignment="Center">
+                VerticalAlignment="Center"
+                HorizontalAlignment="Left">
                 <Image.Style>
                     <Style TargetType="{x:Type Image}">
                         <Setter Property="Source" Value="../Icons/White/Info_white_100.png"/>
@@ -99,7 +99,7 @@
                 Grid.Column="1"
                 VerticalAlignment="Top"
                 FontWeight="Normal"
-                Margin="20 0 0 0"
+                Margin="20 0 20 0"
                 FontSize="30"
                 Text="{Binding DialogTitle, UpdateSourceTrigger=PropertyChanged}"
                 TextWrapping="NoWrap"

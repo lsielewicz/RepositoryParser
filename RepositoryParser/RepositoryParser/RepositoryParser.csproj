@@ -79,7 +79,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>RepositoryAnalyserIcon_BLUE.ico</ApplicationIcon>
+    <ApplicationIcon>icon_2.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>4648EEDE4895459D3AE8B628CF249DE60FCC2651</ManifestCertificateThumbprint>
@@ -886,6 +886,15 @@
   <ItemGroup>
     <Resource Include="Assets\Icons\PNG_DarkGray\Switch On-100.png" />
     <Resource Include="Assets\Icons\PNG_DarkGray\Switch Tracks Filled-100.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon_2.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\icon_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\RepositoryAnalyserIcon_Green.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
