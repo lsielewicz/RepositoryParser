@@ -134,7 +134,8 @@ namespace RepositoryParser.CommonUI.BaseViewModels
             bool? result = dlg.ShowDialog();
             if (result == true)
             {
-                DataToCsv.SaveChartReportToCsv(DataCollection,dlg.FileName);
+                //DataToCsv.SaveChartReportToCsv(DataCollection, dlg.FileName, newName);
+                FilteringHelper.Instance.SaveChartReportToCsv(DataCollection, dlg.FileName, newName);
                 await DialogHelper.Instance.ShowDialog(new CustomDialogEntryData()
                 {
                     MetroWindow = StaticServiceProvider.MetroWindowInstance,

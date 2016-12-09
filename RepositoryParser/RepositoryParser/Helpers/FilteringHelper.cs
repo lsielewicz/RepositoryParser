@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Text;
 using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.SqlCommand;
 using NHibernate.Transform;
+using RepositoryParser.Core.Models;
 using RepositoryParser.DataBaseManagementCore.Entities;
 
 namespace RepositoryParser.Helpers
@@ -137,5 +141,34 @@ namespace RepositoryParser.Helpers
 
             return query;
         }
+
+
+        public void SaveChartReportToCsv(ObservableCollection<ChartData> data, string pathToSave, string title = "")
+        {
+
+            string csv = $"{title}{Environment.NewLine}Date,{DateTime.Now.Date}{Environment.NewLine}{Environment.NewLine}Key,Value,Repository{Environment.NewLine}";
+            csv += string.Join(Environment.NewLine,
+                data.Select(d => d.ChartKey + "," + d.ChartValue + "," + d.RepositoryValue));
+
+            csv += $"{Environment.NewLine}{Environment.NewLine}Filtering" +
+                   $"{Environment.NewLine}Repositories," +
+                   string.Join(",", this.SelectedRepositories) +
+                   $"{Environment.NewLine}Date:,{this.DateFrom ?? "Undefined"},-,{this.DateTo ?? "Undefined"}" +
+                   $"{Environment.NewLine}Message criteria:,{this.MessageCriteria ?? "None"}";
+
+            if (this.SelectedAuthors.Any())
+            {
+                csv += $"{Environment.NewLine}Authors:," + string.Join(",", this.SelectedAuthors);
+            }
+            else
+            {
+                csv += $"{Environment.NewLine}Authors:,All";
+            }
+            
+
+            File.WriteAllText(pathToSave, csv, Encoding.UTF8);
+        }
+
+
     }
 }

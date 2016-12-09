@@ -49,11 +49,15 @@ namespace RepositoryParser.Core.Services
             File.WriteAllText(csvPath, csv, Encoding.UTF8);
         }
 
-        public static void SaveChartReportToCsv(ObservableCollection<ChartData> data, string pathToSave)
+        public static void SaveChartReportToCsv(ObservableCollection<ChartData> data, string pathToSave, string title="")
         {
-            string csv = "ChartKey;ChartValue;RepositoryValue" + Environment.NewLine;
+
+            string csv = $"{title}{Environment.NewLine}Date,{DateTime.Now.Date}{Environment.NewLine}{Environment.NewLine}Key,Value,Repository{Environment.NewLine}";
             csv += string.Join(Environment.NewLine,
-                data.Select(d => d.ChartKey + ";" + d.ChartValue + ";" + d.RepositoryValue));
+                data.Select(d => d.ChartKey + "," + d.ChartValue + "," + d.RepositoryValue));
+
+            //csv += $"{Environment.NewLine}Filtering{Environment.NewLine}Repositories" + string.Join(",",)
+
             File.WriteAllText(pathToSave, csv, Encoding.UTF8);
         }
 
