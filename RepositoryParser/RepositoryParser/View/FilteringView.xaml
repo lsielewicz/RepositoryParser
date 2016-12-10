@@ -291,7 +291,7 @@
                     BorderBrush="{StaticResource LightGray}"
                     BorderThickness="0,0,0,0.5"
                     />
-                <imageButton:ImageButton 
+<!--                <imageButton:ImageButton 
                     x:Name="SendBtn"
                     Command="{Binding SendDataCommand}"
                     Height="45"
@@ -302,7 +302,7 @@
                     Background="Transparent"
                     Foreground="Black"
                     ImageSource="../Assets/Icons/PNG_Gray/Send_LightGray.png"
-                    Text="{x:Static resw:Resources.SendDataButton}"/>
+                    Text="{x:Static resw:Resources.SendDataButton}"/>-->
             </StackPanel>
 
             <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" VerticalAlignment="Center" >

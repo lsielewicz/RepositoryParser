@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using GalaSoft.MvvmLight.Command;
@@ -36,6 +37,7 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _selectedAuthorsItemChanged;
         private RelayCommand<object> _clearSpecifiedFilterCommand;
         private bool _isInitialized;
+        private object _sync = new object();
 
         public List<string> SelectedRepositories
         {
@@ -379,11 +381,14 @@ namespace RepositoryParser.ViewModel
 
         private async void GetAuthors()
         {
-            AuthorsCollection.Clear();
+            if (this.AuthorsCollection.Any())
+            {
+                AuthorsCollection.Clear();
+            }
 
             await Task.Run(() =>
             {
-                this.SelectedRepositories.ForEach(selectedRepository =>
+                this.SelectedRepositories.ToList().ForEach(selectedRepository =>
                 {
                     using (var session = DbService.Instance.SessionFactory.OpenSession())
                     {
@@ -416,7 +421,6 @@ namespace RepositoryParser.ViewModel
                 });
             });
 
-          
         }
 
         public void ResetInitialization()
