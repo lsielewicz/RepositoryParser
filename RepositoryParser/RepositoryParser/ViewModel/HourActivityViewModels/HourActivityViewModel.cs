@@ -21,14 +21,14 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels
             await Task.Run(() =>
             {
                 this.IsLoading = true;
-                FilteringHelper.Instance.SelectedRepositories.ForEach(selectedRepository =>
+                this.FilteringInstance.SelectedRepositories.ForEach(selectedRepository =>
                 {
                     var itemSource = new List<ChartData>();
                     for (int i = 0; i <= 23; i++)
                     {
                         using (var session = DbService.Instance.SessionFactory.OpenSession())
                         {
-                            var query = FilteringHelper.Instance.GenerateQuery(session, selectedRepository);
+                            var query = this.FilteringInstance.GenerateQuery(session, selectedRepository);
                             var commitsCount =
                                 query.Where(c => c.Date.Hour == i).Select(Projections.CountDistinct<Commit>(x => x.Revision)).FutureValue<int>().Value;
 

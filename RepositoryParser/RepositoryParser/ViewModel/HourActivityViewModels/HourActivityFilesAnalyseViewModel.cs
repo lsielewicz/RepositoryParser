@@ -28,7 +28,7 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels
                     {
                         Changes changes = null;
                         var query =
-                            FilteringHelper.Instance.GenerateQuery(session)
+                            this.FilteringInstance.GenerateQuery(session)
                                 .JoinAlias(c => c.Changes, () => changes, JoinType.InnerJoin)
                                 .Where(() => changes.Path == selectedFilePath);
                         var itemSource = new List<ChartData>();

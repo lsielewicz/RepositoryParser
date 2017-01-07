@@ -19,12 +19,12 @@ namespace RepositoryParser.ViewModel.WeekdayActivityViewModels
             await Task.Run(() =>
             {
                 this.IsLoading = true;
-                FilteringHelper.Instance.SelectedRepositories.ForEach(selectedRepository =>
+                this.FilteringInstance.SelectedRepositories.ForEach(selectedRepository =>
                 {
                     var itemSource = new List<ChartData>();
                     using (var session = DbService.Instance.SessionFactory.OpenSession())
                     {
-                        var query = FilteringHelper.Instance.GenerateQuery(session, selectedRepository);
+                        var query = this.FilteringInstance.GenerateQuery(session, selectedRepository);
                         var commitsDates = query.List<Commit>();
                         for (int i = 0; i <= 6; i++)
                         {

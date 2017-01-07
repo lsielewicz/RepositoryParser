@@ -43,6 +43,11 @@ namespace RepositoryParser.CommonUI.BaseViewModels
             }
         }
 
+        public FilteringHelper FilteringInstance
+        {
+            get { return FilteringHelper.Instance; }
+        }
+
         public bool IsLoading
         {
             get { return _isLoading; }
@@ -108,7 +113,7 @@ namespace RepositoryParser.CommonUI.BaseViewModels
         {
             get
             {
-                return FilteringHelper.Instance.SelectedRepositories.Count;
+                return this.FilteringInstance.SelectedRepositories.Count;
             }
         }
 

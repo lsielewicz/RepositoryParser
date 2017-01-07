@@ -27,7 +27,7 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels.HourActivityCodeFreq
             await Task.Run(new Action(() =>
             {
                 this.IsLoading = true;
-                FilteringHelper.Instance.SelectedRepositories.ForEach(selectedRepository =>
+                this.FilteringInstance.SelectedRepositories.ForEach(selectedRepository =>
                 {
                     var addedItemsSource = new List<ChartData>();
                     var deletedItemsSource = new List<ChartData>();
@@ -40,7 +40,7 @@ namespace RepositoryParser.ViewModel.HourActivityViewModels.HourActivityCodeFreq
                         {
                             int added = 0, deleted = 0;
                             var commits =
-                                FilteringHelper.Instance.GenerateQuery(session, selectedRepository)
+                                this.FilteringInstance.GenerateQuery(session, selectedRepository)
                                     .List<Commit>()
                                     .Where(c => c.Date.Hour == hour).Select(c => c.Id).Distinct().ToList();
 

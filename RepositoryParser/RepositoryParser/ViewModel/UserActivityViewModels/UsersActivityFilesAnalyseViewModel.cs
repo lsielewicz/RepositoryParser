@@ -31,7 +31,7 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
                     {
                         Changes changes = null;
                         var query =
-                            FilteringHelper.Instance.GenerateQuery(session)
+                            this.FilteringInstance.GenerateQuery(session)
                                 .JoinAlias(c => c.Changes, () => changes, JoinType.InnerJoin)
                                 .Where(() => changes.Path == selectedFilePath);
 
@@ -72,7 +72,7 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
             using (var session = DbService.Instance.SessionFactory.OpenSession())
             {
                 Changes changes = null;
-                var authorsIds = FilteringHelper.Instance.GenerateQuery(session)
+                var authorsIds = this.FilteringInstance.GenerateQuery(session)
                     .JoinAlias(c => c.Changes, () => changes, JoinType.InnerJoin)
                     .Where(() => changes.Path == selectedFilePath)
                     .SelectList(list => list.SelectGroup(c => c.Author))

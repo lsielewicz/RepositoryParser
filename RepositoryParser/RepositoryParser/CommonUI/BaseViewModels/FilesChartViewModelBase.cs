@@ -77,13 +77,13 @@ namespace RepositoryParser.CommonUI.BaseViewModels
             await Task.Run(() =>
             {
                 this.IsLoading = true;
-                FilteringHelper.Instance.SelectedRepositories.ForEach(selectedRepository =>
+                this.FilteringInstance.SelectedRepositories.ForEach(selectedRepository =>
                 {
                     using (var session = DbService.Instance.SessionFactory.OpenSession())
                     {
                         Changes changesAlias = null;
                         var changesPaths =
-                           FilteringHelper.Instance.GenerateQuery(session, selectedRepository)
+                           this.FilteringInstance.GenerateQuery(session, selectedRepository)
                                 .JoinAlias(c => c.Changes, () => changesAlias, JoinType.InnerJoin)
                                 .SelectList(list => list.Select(() => changesAlias.Path))
                                 .List<string>();

@@ -19,14 +19,14 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
             await Task.Run(() =>
             {
                 this.IsLoading = true;
-                FilteringHelper.Instance.SelectedRepositories.ForEach(selectedRepository =>
+                this.FilteringInstance.SelectedRepositories.ForEach(selectedRepository =>
                 {
                     var itemSource = new List<ChartData>();
                     for (int i = 1; i <= 12; i++)
                     {
                         using (var session = DbService.Instance.SessionFactory.OpenSession())
                         {
-                            var query = FilteringHelper.Instance.GenerateQuery(session, selectedRepository);
+                            var query = this.FilteringInstance.GenerateQuery(session, selectedRepository);
                             var commitsCount =
                                 query.Where(c => c.Date.Month == i)
                                     .Select(Projections.CountDistinct<Commit>(x => x.Revision))

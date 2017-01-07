@@ -24,7 +24,7 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
                 this.IsLoading = true;
                 this.CountOfRows = 0;
                 List<int> alreadyAddedYears = new List<int>();
-                FilteringHelper.Instance.SelectedRepositories.ForEach(selectedRepository =>
+                this.FilteringInstance.SelectedRepositories.ForEach(selectedRepository =>
                 {
                     var itemSource = new List<ChartData>();
                     int maxYear = GetMaxYear(selectedRepository);
@@ -43,7 +43,7 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
                         {
                             using (var session = DbService.Instance.SessionFactory.OpenSession())
                             {
-                                var query = FilteringHelper.Instance.GenerateQuery(session, selectedRepository);
+                                var query = this.FilteringInstance.GenerateQuery(session, selectedRepository);
                                 var commitsCount =
                                     query.Where(c => c.Date.Month == month && c.Date.Year == year)
                                         .Select(Projections.CountDistinct<Commit>(x => x.Revision))
@@ -85,7 +85,7 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
             using (var session = DbService.Instance.SessionFactory.OpenSession())
             {
                 var maxYear =
-                    FilteringHelper.Instance.GenerateQuery(session, selectedRepository)
+                    this.FilteringInstance.GenerateQuery(session, selectedRepository)
                         .Select(Projections.ProjectionList().Add(Projections.Max<Commit>(c => c.Date.Year)))
                         .List<int>()
                         .First();
@@ -98,7 +98,7 @@ namespace RepositoryParser.ViewModel.MonthActivityViewModels
             using (var session = DbService.Instance.SessionFactory.OpenSession())
             {
                 var maxYear =
-                    FilteringHelper.Instance.GenerateQuery(session, selectedRepository)
+                    this.FilteringInstance.GenerateQuery(session, selectedRepository)
                         .Select(Projections.ProjectionList().Add(Projections.Min<Commit>(c => c.Date.Year)))
                         .List<int>()
                         .First();

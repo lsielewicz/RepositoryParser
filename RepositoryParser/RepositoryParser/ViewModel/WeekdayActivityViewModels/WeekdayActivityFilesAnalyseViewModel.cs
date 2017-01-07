@@ -27,7 +27,7 @@ namespace RepositoryParser.ViewModel.WeekdayActivityViewModels
                     {
                         Changes changes = null;
                         var commits =
-                            FilteringHelper.Instance.GenerateQuery(session)
+                            this.FilteringInstance.GenerateQuery(session)
                                 .JoinAlias(c => c.Changes, () => changes, JoinType.InnerJoin)
                                 .Where(() => changes.Path == selectedFilePath).List<Commit>();
                         var itemSource = new List<ChartData>();

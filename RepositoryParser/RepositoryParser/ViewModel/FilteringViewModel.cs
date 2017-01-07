@@ -37,24 +37,23 @@ namespace RepositoryParser.ViewModel
         private RelayCommand _selectedAuthorsItemChanged;
         private RelayCommand<object> _clearSpecifiedFilterCommand;
         private bool _isInitialized;
-        private object _sync = new object();
 
         public List<string> SelectedRepositories
         {
-            get { return FilteringHelper.Instance.SelectedRepositories; }
+            get { return this.FilteringInstance.SelectedRepositories; }
             set
             {
-                FilteringHelper.Instance.SelectedRepositories = value;
+                this.FilteringInstance.SelectedRepositories = value;
                 RaisePropertyChanged();
             }
         }
 
         public List<string> SelectedAuthors
         {
-            get { return FilteringHelper.Instance.SelectedAuthors; }
+            get { return this.FilteringInstance.SelectedAuthors; }
             set
             {
-                FilteringHelper.Instance.SelectedAuthors = value;
+                this.FilteringInstance.SelectedAuthors = value;
                 RaisePropertyChanged();
             }
         }
@@ -125,7 +124,7 @@ namespace RepositoryParser.ViewModel
 
         public FilteringViewModel()
         {
-            FilteringHelper.Instance.SelectedRepositories = new List<string>();
+            this.FilteringInstance.SelectedRepositories = new List<string>();
             Messenger.Default.Register<RefreshMessageToFiltering>(this, x=>HandleRefreshMessage(x.Refresh));
             _commitsList = new List<Commit>();
             _repositoryTypeDictionary = new Dictionary<string, string>();
@@ -237,12 +236,12 @@ namespace RepositoryParser.ViewModel
 
         public string MessageTextBox
         {
-            get { return FilteringHelper.Instance.MessageCriteria; }
+            get { return this.FilteringInstance.MessageCriteria; }
             set
             {
-                if (FilteringHelper.Instance.MessageCriteria != value)
+                if (this.FilteringInstance.MessageCriteria != value)
                 {
-                    FilteringHelper.Instance.MessageCriteria = value;
+                    this.FilteringInstance.MessageCriteria = value;
                     this.SendMessageToDisplay();
                     RaisePropertyChanged();
                 }
@@ -251,12 +250,12 @@ namespace RepositoryParser.ViewModel
 
         public string FromDate
         {
-            get { return FilteringHelper.Instance.DateFrom; }
+            get { return this.FilteringInstance.DateFrom; }
             set
             {
-                if (FilteringHelper.Instance.DateFrom != value)
+                if (this.FilteringInstance.DateFrom != value)
                 {
-                    FilteringHelper.Instance.DateFrom = value;
+                    this.FilteringInstance.DateFrom = value;
                     this.SendMessageToDisplay();
                     RaisePropertyChanged();
                 }
@@ -265,12 +264,12 @@ namespace RepositoryParser.ViewModel
 
         public string ToDate
         {
-            get { return FilteringHelper.Instance.DateTo; }
+            get { return this.FilteringInstance.DateTo; }
             set
             {
-                if (FilteringHelper.Instance.DateTo != value)
+                if (this.FilteringInstance.DateTo != value)
                 {
-                    FilteringHelper.Instance.DateTo = value;
+                    this.FilteringInstance.DateTo = value;
                     this.SendMessageToDisplay();
                     RaisePropertyChanged();
                 }
@@ -294,13 +293,13 @@ namespace RepositoryParser.ViewModel
 
         public string BranchSelectedItem
         {
-            get { return FilteringHelper.Instance.SelectedBranch; }
+            get { return this.FilteringInstance.SelectedBranch; }
             set
             {
-                if (FilteringHelper.Instance.SelectedBranch != value)
+                if (this.FilteringInstance.SelectedBranch != value)
                 {
-                    FilteringHelper.Instance.SelectedBranch = value;
-                    if (FilteringHelper.Instance.SelectedBranch != null)
+                    this.FilteringInstance.SelectedBranch = value;
+                    if (this.FilteringInstance.SelectedBranch != null)
                     {
                         this.SendMessageToDisplay();
                     }
@@ -322,8 +321,8 @@ namespace RepositoryParser.ViewModel
 
         private void GetBranches()
         {
-            if (FilteringHelper.Instance.SelectedRepositories == null || !FilteringHelper.Instance.SelectedRepositories.Any() ||
-                FilteringHelper.Instance.SelectedRepositories.First() == null)
+            if (this.FilteringInstance.SelectedRepositories == null || !this.FilteringInstance.SelectedRepositories.Any() ||
+                this.FilteringInstance.SelectedRepositories.First() == null)
                 return;
 
             if(BranchCollection != null && BranchCollection.Any())
@@ -335,7 +334,7 @@ namespace RepositoryParser.ViewModel
                     if (BranchCollection != null && BranchCollection.Any())
                         BranchCollection.Clear();
 
-                    if (string.IsNullOrEmpty(FilteringHelper.Instance.SelectedRepositories.First()))
+                    if (string.IsNullOrEmpty(this.FilteringInstance.SelectedRepositories.First()))
                     {
                         var branches =
                             session.QueryOver<Branch>().List<Branch>();
@@ -346,7 +345,7 @@ namespace RepositoryParser.ViewModel
                         var branches =
                             session.QueryOver<Branch>()
                                 .JoinAlias(branch => branch.Repository, () => repository, JoinType.InnerJoin)
-                                .Where(() => repository.Name == FilteringHelper.Instance.SelectedRepositories.First())
+                                .Where(() => repository.Name == this.FilteringInstance.SelectedRepositories.First())
                                 .TransformUsing(Transformers.DistinctRootEntity)
                                 .List<Branch>();
 
@@ -461,7 +460,7 @@ namespace RepositoryParser.ViewModel
 
                 if (this.SelectedRepositories != null && this.SelectedRepositories.Any())
                 {
-                    var commits = FilteringHelper.Instance.GenerateQuery(session).List();
+                    var commits = this.FilteringInstance.GenerateQuery(session).List();
                     commits.ForEach(commit => _commitsList.Add(commit));
                 }
 

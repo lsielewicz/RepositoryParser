@@ -13,11 +13,6 @@ namespace RepositoryParser.Core.Services
         public List<ChangesColorModel> TextAList { get; set; }
         public List<ChangesColorModel> TextBList { get; set; }
 
-        public DifferencesColoringService()
-        {
-            TextAList=new List<ChangesColorModel>();
-            TextBList=new List<ChangesColorModel>();
-        }
         public DifferencesColoringService(string texta, string textb)
         {
             this.ColorlessTextA = texta;

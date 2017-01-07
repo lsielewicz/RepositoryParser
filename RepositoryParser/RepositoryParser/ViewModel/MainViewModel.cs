@@ -21,7 +21,7 @@ namespace RepositoryParser.ViewModel
 
         public MainViewModel()
         {
-            FilteringHelper.Instance.Initialize();
+            this.FilteringInstance.Initialize();
             CurrentViewModel = ViewModelLocator.Instance.Presentation;
             CurrentViewModel = ViewModelLocator.Instance.Filtering;
             CurrentViewModel = ViewModelLocator.Instance.DataBaseManagement;

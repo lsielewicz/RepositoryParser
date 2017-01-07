@@ -252,7 +252,7 @@ namespace RepositoryParser.ViewModel
 
             using (var session = DbService.Instance.SessionFactory.OpenSession())
             {
-                var commits = FilteringHelper.Instance.GenerateQuery(session).List<Commit>();
+                var commits = this.FilteringInstance.GenerateQuery(session).List<Commit>();
                 commits.ForEach(
                     commit =>
                     {

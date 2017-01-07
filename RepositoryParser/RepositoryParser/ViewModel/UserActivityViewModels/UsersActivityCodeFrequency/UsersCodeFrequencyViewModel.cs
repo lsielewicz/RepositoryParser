@@ -27,7 +27,7 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels.UsersActivityCodeFre
             await Task.Run(new Action(() =>
             {
                 this.IsLoading = true;
-                FilteringHelper.Instance.SelectedRepositories.ForEach(selectedRepository =>
+                this.FilteringInstance.SelectedRepositories.ForEach(selectedRepository =>
                 {
                     var addedItemsSource = new List<ChartData>();
                     var deletedItemsSource = new List<ChartData>();
@@ -43,7 +43,7 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels.UsersActivityCodeFre
                                 return;
 
                             Changes changezzz = null;
-                            var query = FilteringHelper.Instance.GenerateQuery(session, selectedRepository);
+                            var query = this.FilteringInstance.GenerateQuery(session, selectedRepository);
                             var changeIds =
                                 query.JoinAlias(c => c.Changes, () => changezzz, JoinType.InnerJoin)
                                 .Where(c => c.Author == author)
@@ -121,7 +121,7 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels.UsersActivityCodeFre
             List<string> authors = new List<string>();
             using (var session = DbService.Instance.SessionFactory.OpenSession())
             {
-                var query = FilteringHelper.Instance.GenerateQuery(session, selectedRepository);
+                var query = this.FilteringInstance.GenerateQuery(session, selectedRepository);
                 var authorsIds = query.SelectList(list => list.SelectGroup(c => c.Author)).List<string>();
                 authorsIds.ForEach(author => authors.Add(author));
             }

@@ -21,7 +21,7 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
             await Task.Run(() =>
             {
                 this.IsLoading = true;
-                FilteringHelper.Instance.SelectedRepositories.ForEach(selectedRepository =>
+                this.FilteringInstance.SelectedRepositories.ForEach(selectedRepository =>
                 {
                     var itemSource = new List<ChartData>();
                     var authors = GetAuthors(selectedRepository);
@@ -29,7 +29,7 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
                     {
                         using (var session = DbService.Instance.SessionFactory.OpenSession())
                         {
-                            var query = FilteringHelper.Instance.GenerateQuery(session, selectedRepository);
+                            var query = this.FilteringInstance.GenerateQuery(session, selectedRepository);
                             var commitsCount = query.Where(c => c.Author == author).Select(Projections.CountDistinct<Commit>(x => x.Revision)).FutureValue<int>().Value;
 
                             itemSource.Add(new ChartData()
@@ -57,7 +57,7 @@ namespace RepositoryParser.ViewModel.UserActivityViewModels
             List<string> authors = new List<string>();
             using (var session = DbService.Instance.SessionFactory.OpenSession())
             {
-                var query = FilteringHelper.Instance.GenerateQuery(session,selectedRepository);
+                var query = this.FilteringInstance.GenerateQuery(session,selectedRepository);
                 var authorsIds = query.SelectList(list => list.SelectGroup(c => c.Author)).List<string>();
                 authorsIds.ForEach(author=>authors.Add(author));
             }
