@@ -135,6 +135,11 @@ namespace RepositoryParser.ViewModel
             {
                 return _openRepositoriesDirectory ?? (_openRepositoriesDirectory = new RelayCommand(() =>
                 {
+                    var directoryPath = ConfigurationService.Instance.Configuration.SavingRepositoryPath;
+                    if (!ZetaLongPaths.ZlpIOHelper.DirectoryExists(directoryPath))
+                    {
+                        ZetaLongPaths.ZlpIOHelper.CreateDirectory(directoryPath);
+                    }
                     Process.Start(ConfigurationService.Instance.Configuration.SavingRepositoryPath);
                 }));
             }
